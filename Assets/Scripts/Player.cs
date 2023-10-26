@@ -1,60 +1,96 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Security.Cryptography;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
-  //Random Varible ideas
+    // Player movement speed
+    public float moveSpeed = 5.0f;
+    // Player turn speed
+    public float turnSpeed = 10.0f;
+    // Player jump force
+    public float jumpForce = 10.0f;
+    // Camera rotation speed
+    public float cameraRotationSpeed = 2.0f;
+    // Camera follow speed
+    public float cameraFollowSpeed = 5.0f;
+    // Layer mask for ground check
+    public LayerMask groundLayer;
+    // Transform for camera pivot
+    public Transform cameraPivot;
 
-    Rigidbody rb;
+    // Get the player's rigidbody
+    private Rigidbody rb;
+    // Get the main camera's transform
+    private Transform playerCamera;
+    // Check if the player is grounded
+    [SerializeField] bool isGrounded;
+    // Player horizontal rotation
+    private float horizontalRotation;
+    // Player vertical rotation
+    private float verticalRotation;
 
-    public float speed = 3;
-    Vector3 Vec;
-
-
-    // Start is called before the first frame update
     void Start()
     {
-
+        // Get the player's rigidbody
         rb = GetComponent<Rigidbody>();
-
+        // Get the main camera's transform
+        playerCamera = Camera.main.transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
-       
-        // just a simple jump function
-        //works well with the movement of player.
-        //speed can be adjusted by increasing the Y and or increase the 6 to more.
-        // the speed to side to side maybe can be less but i like the movement and jump 
-        //movement feels ok i think.
+        // Check if the player is grounded
+        isGrounded = Physics.CheckSphere(transform.position, 1.5f, groundLayer);
 
+        // Get input for movement
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        //also the jump though needs a condition if player is touching ground but thats after.
-        //im happy with this for starting out movement but can be adjusted as we go.
+        // Calculate movement direction
+        Vector3 forward = playerCamera.forward;
+        Vector3 right = playerCamera.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+        Vector3 moveDirection = forward * verticalInput + right * horizontalInput;
 
-        if (Input.GetKeyDown("space"))
+        // Apply movement
+        Vector3 velocity = moveDirection * moveSpeed;
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+
+        // Rotate the player to face the direction of movement
+        if (moveDirection != Vector3.zero)
         {
-            rb.velocity = new Vector3(0, 6, 0);
-
+            Quaternion newRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, turnSpeed * Time.deltaTime);
         }
 
-        Vec = transform.localPosition;
+        // Rotate the camera
+        float cameraRotationY = Input.GetAxis("Mouse X") * cameraRotationSpeed;
+        float cameraRotationX = -Input.GetAxis("Mouse Y") * cameraRotationSpeed;
+        horizontalRotation += cameraRotationY;
+        verticalRotation += cameraRotationX;
+        verticalRotation = Mathf.Clamp(verticalRotation, -90, 90);
+
+        // Apply camera rotation
+        cameraPivot.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+        transform.rotation = Quaternion.Euler(0, horizontalRotation, 0);
+
+        // Move the camera to follow the player smoothly
+        Vector3 targetCameraPos = transform.position - transform.forward * 5.0f + Vector3.up * 2.0f;
+        playerCamera.position = Vector3.Lerp(playerCamera.position, targetCameraPos, cameraFollowSpeed * Time.deltaTime);
+
+        // Make the camera automatically look at the player
+        playerCamera.LookAt(transform.position + transform.up * 1.5f);
         
-        Vec.x += Input.GetAxis("Horizontal") * Time.deltaTime * 20;
-        Vec.z += Input.GetAxis("Vertical") * Time.deltaTime * 20;
-        transform.localPosition = Vec;
-
-       
-
-
-
-
+        // Jump
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            // Apply jump force
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
-
-   
 }
