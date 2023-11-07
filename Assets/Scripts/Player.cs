@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
             Quaternion newRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, turnSpeed * Time.deltaTime);
         }
-
+        /*
         // Rotate the camera
         float cameraRotationY = Input.GetAxis("Mouse X") * cameraRotationSpeed;
         float cameraRotationX = -Input.GetAxis("Mouse Y") * cameraRotationSpeed;
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
         // Make the camera automatically look at the player
         playerCamera.LookAt(transform.position + transform.up * 1.5f);
-        
+        */
         // Jump
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
