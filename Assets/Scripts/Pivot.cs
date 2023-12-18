@@ -7,15 +7,14 @@ public class Pivot : MonoBehaviour
 
     public Transform pivotPoint;
     public float rSpeed = 2.5f;
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // this script just spins around a point, i needed this for testing iso angles
         if (pivotPoint != null){
             float rAngle = rSpeed * Time.deltaTime;
 

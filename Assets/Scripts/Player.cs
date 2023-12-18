@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float speed = 2.5f;
     
-    [SerializeField] private float turnSpeed = 360;
+    [SerializeField] private float turnSpeed = 720;
+    [SerializeField] private Transform model;
     private Vector3 input;
     void Start()
     {
-        // Get the player's rigidbody
-        rb = GetComponent<Rigidbody>();
+
     }
 
     void Update()
@@ -27,22 +26,32 @@ public class Player : MonoBehaviour
     }
 
     void GetPlayerInputs(){
+        // gets both controller and keyboard input. theres a better way for gamepad using 
+        // Vector2 stickValue = Gamepad.current.leftStick.ReadValue();
+        // input = new Vector3(stickValue.x, 0, stickValue.y);
         input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
     void Move(){
+        // for now, this is fine enough for movement, the 'SkewToIso' functioon is inside of the IsoGlobals, 
+        // just multiplies it by matrix to align movements to 45 degree angle.
+        // If we want jumping we may need to find another way to handle player movement, if you jump and dont press any buttons
+        // you'll just fall vertical.
         if (input != Vector3.zero){
-            rb.MovePosition(transform.position + (transform.forward * input.magnitude) * speed * Time.deltaTime);
+            Vector3 movement = input.SkewToIso() * input.normalized.magnitude * speed * Time.deltaTime;
+            rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+        } else {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
         }
     }
 
     void PlayerLook(){
-        if (input != Vector3.zero){
+        // TODO: add a model for testin
+        if (input == Vector3.zero) return;
 
-            var relative = (transform.position + input.SkewToIso()) - transform.position;
-            var rotation = Quaternion.LookRotation(relative, Vector3.up);
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, turnSpeed * Time.deltaTime);
-        }
+        // this logic is specifically for having a model be a child of the gameobject with a rigidbody (rigidbody doesn't rotate)
+        Quaternion rotation = Quaternion.LookRotation(input.SkewToIso(), Vector3.up);
+        model.rotation = Quaternion.RotateTowards(model.rotation, rotation, turnSpeed * Time.deltaTime);
+        
     }
 }
