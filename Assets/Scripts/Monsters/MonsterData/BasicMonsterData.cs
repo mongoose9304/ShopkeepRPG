@@ -13,5 +13,7 @@ public class BasicMonsterData : ScriptableObject
     [SerializeField] protected bool[] jobs = new bool[5];
     [Tooltip("Set the bool to true if a monster can perform it. 0 running shop, 1 fighting, 2 diving, 3 gathering, 4 digging")]
     [SerializeField] protected bool[] specializations = new bool[5];
+    [Tooltip("background information on monster")]
+    [SerializeField] protected string lore;
     //add battle stats
 }

@@ -18,5 +18,5 @@ public class BasicMonster : MonoBehaviour
 
     [Header("BaseStats")]
     [SerializeField] protected BasicMonsterData myData_;
-    //add base battle stats
+ 
 }
