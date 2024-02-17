@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 106220451}
   - component: {fileID: 106220450}
   m_Layer: 5
-  m_Name: Text (TMP) (2)
+  m_Name: Def
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -444,7 +444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 432, y: -16.8}
+  m_AnchoredPosition: {x: 432, y: -16.800049}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &139432526
@@ -497,7 +497,7 @@ GameObject:
   - component: {fileID: 159397779}
   - component: {fileID: 159397778}
   m_Layer: 5
-  m_Name: HelloMyNameIs (4)
+  m_Name: ContractText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 209004989}
   - component: {fileID: 209004988}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: Spd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1194,6 +1194,7 @@ GameObject:
   - component: {fileID: 463186993}
   - component: {fileID: 463186995}
   - component: {fileID: 463186994}
+  - component: {fileID: 463186996}
   m_Layer: 5
   m_Name: FishIcon
   m_TagString: Untagged
@@ -1258,6 +1259,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463186992}
   m_CullTransparentMesh: 1
+--- !u!114 &463186996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 463186992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c08c0cfdef07e240a7db784df0070dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRef: {fileID: 1407551644}
+  myText: A monster with this skill can go fishing to aquire various fish. A monster
+    that specialzies in this can dive to aquire treasure and fish.
 --- !u!1 &486455201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1595,6 +1611,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 589904451}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &589904453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 589904451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &646796355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1709,6 +1736,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 646796355}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &646796357 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 646796355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &702686352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,6 +1945,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 735313711}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &735313713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 735313711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &747553930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,6 +1967,7 @@ GameObject:
   - component: {fileID: 747553931}
   - component: {fileID: 747553933}
   - component: {fileID: 747553932}
+  - component: {fileID: 747553934}
   m_Layer: 5
   m_Name: MiningIcon
   m_TagString: Untagged
@@ -1982,6 +2032,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747553930}
   m_CullTransparentMesh: 1
+--- !u!114 &747553934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747553930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c08c0cfdef07e240a7db784df0070dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRef: {fileID: 1407551644}
+  myText: A monster with this skill can mine for ore. A monster that specialzies
+    in this can dig up artifacts instead.
 --- !u!1 &834411413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,7 +2087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1383, y: -0.7999878}
+  m_AnchoredPosition: {x: -1383, y: -0.8000488}
   m_SizeDelta: {x: 500, y: 350}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &834411415
@@ -2173,6 +2238,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 896692737}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &896692739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 896692737}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910637171
 GameObject:
   m_ObjectHideFlags: 0
@@ -2455,7 +2531,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2475,7 +2551,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 432491398}
   m_FillRect: {fileID: 941815459}
   m_HandleRect: {fileID: 432491397}
@@ -2499,7 +2575,7 @@ GameObject:
   - component: {fileID: 1013696225}
   - component: {fileID: 1013696224}
   m_Layer: 5
-  m_Name: Text (TMP) (4)
+  m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2633,7 +2709,7 @@ GameObject:
   - component: {fileID: 1015151281}
   - component: {fileID: 1015151280}
   m_Layer: 5
-  m_Name: HelloMyNameIs (2)
+  m_Name: Leveltext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3520,6 +3596,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 1276942835}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1276942837 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 1276942835}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1407551642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3532,7 +3619,7 @@ GameObject:
   - component: {fileID: 1407551645}
   - component: {fileID: 1407551644}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3667,7 +3754,7 @@ GameObject:
   - component: {fileID: 1422710266}
   - component: {fileID: 1422710265}
   m_Layer: 5
-  m_Name: Text (TMP) (5)
+  m_Name: WorkEthic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4132,6 +4219,7 @@ GameObject:
   - component: {fileID: 1582770049}
   - component: {fileID: 1582770051}
   - component: {fileID: 1582770050}
+  - component: {fileID: 1582770052}
   m_Layer: 5
   m_Name: ShopIcon
   m_TagString: Untagged
@@ -4196,6 +4284,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582770048}
   m_CullTransparentMesh: 1
+--- !u!114 &1582770052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582770048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c08c0cfdef07e240a7db784df0070dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRef: {fileID: 1407551644}
+  myText: A monster with this skill can advertise the shop to increase the amount
+    of customers. A monster that specialzies in this can run the shop in your abscence.
 --- !u!1 &1682953341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4318,6 +4421,7 @@ GameObject:
   - component: {fileID: 1772958889}
   - component: {fileID: 1772958891}
   - component: {fileID: 1772958890}
+  - component: {fileID: 1772958892}
   m_Layer: 5
   m_Name: LumberIcon
   m_TagString: Untagged
@@ -4382,6 +4486,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772958888}
   m_CullTransparentMesh: 1
+--- !u!114 &1772958892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772958888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c08c0cfdef07e240a7db784df0070dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRef: {fileID: 1407551644}
+  myText: A monster with this skill can chop down trees to aquire lumber. A monster
+    that specialzies in this can gather various materials from the forest as well.
 --- !u!1 &1819139011
 GameObject:
   m_ObjectHideFlags: 0
@@ -4394,7 +4513,7 @@ GameObject:
   - component: {fileID: 1819139014}
   - component: {fileID: 1819139013}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4530,7 +4649,7 @@ GameObject:
   - component: {fileID: 1847632906}
   - component: {fileID: 1847632905}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: Atk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4741,7 +4860,7 @@ GameObject:
   - component: {fileID: 1877364135}
   - component: {fileID: 1877364134}
   m_Layer: 5
-  m_Name: HelloMyNameIs (3)
+  m_Name: RaceText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4764,7 +4883,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 91.083, y: -7.4706116}
-  m_SizeDelta: {x: 100.89, y: 50.6718}
+  m_SizeDelta: {x: 108.92, y: 50.6718}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1877364134
 MonoBehaviour:
@@ -4813,10 +4932,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 22.35
   m_fontSizeBase: 18
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -4872,6 +4991,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1934863281}
+  - component: {fileID: 1934863282}
   m_Layer: 5
   m_Name: MonsterID
   m_TagString: Untagged
@@ -4908,6 +5028,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1934863282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934863280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bd40575884d3b942a314612a61ce04c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
+  monsterImageReference: {fileID: 1094664479}
+  monsterElementReference: {fileID: 139432526}
+  elementSprites:
+  - {fileID: 21300000, guid: 13c4dc43e3ba94841bf0ba3b61512c40, type: 3}
+  - {fileID: 21300000, guid: fb3bc6e1cd2fbc845b7ad653ab37c9ed, type: 3}
+  - {fileID: 21300000, guid: d167f554c9c75d34785de88e0dacb949, type: 3}
+  - {fileID: 21300000, guid: b9f83b433c1799740912fdc6a628ecb9, type: 3}
+  - {fileID: 21300000, guid: 3f01d172c5aff8046a6b0682c5651e23, type: 3}
+  monsterNameTextField: {fileID: 1133287353}
+  monsterRaceTextField: {fileID: 1877364134}
+  monsterLevelTextField: {fileID: 1015151280}
+  monsterContractTextField: {fileID: 159397778}
+  decriptionText: {fileID: 1407551644}
+  loreTextField: {fileID: 1819139013}
+  attackTextField: {fileID: 1847632905}
+  defenceTextField: {fileID: 106220450}
+  speedTextField: {fileID: 209004988}
+  healthTextField: {fileID: 1013696224}
+  workEthicTextField: {fileID: 1422710265}
+  WorkImages:
+  - {fileID: 1582770050}
+  - {fileID: 2081947415}
+  - {fileID: 463186994}
+  - {fileID: 1772958890}
+  - {fileID: 747553932}
+  mondayReference: {fileID: 3294910709057506355}
+  tuesdayReference: {fileID: 1276942837}
+  wednesdayReference: {fileID: 646796357}
+  thursdayReference: {fileID: 896692739}
+  fridayReference: {fileID: 735313713}
+  saturdayReference: {fileID: 589904453}
+  sundayReference: {fileID: 2030918706}
 --- !u!1 &1979513416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,6 +5254,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 2030918704}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2030918706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 2030918704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2052207541
 GameObject:
   m_ObjectHideFlags: 0
@@ -5192,6 +5368,7 @@ GameObject:
   - component: {fileID: 2081947414}
   - component: {fileID: 2081947416}
   - component: {fileID: 2081947415}
+  - component: {fileID: 2081947417}
   m_Layer: 5
   m_Name: FightingIcon
   m_TagString: Untagged
@@ -5256,6 +5433,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081947413}
   m_CullTransparentMesh: 1
+--- !u!114 &2081947417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081947413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c08c0cfdef07e240a7db784df0070dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRef: {fileID: 1407551644}
+  myText: A monster with this skill can scout the hells to aquire various items.
+    A monster that specialzies in this can fight other demons to aquire even more
+    items.
 --- !u!1001 &3294910709057506353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5358,6 +5551,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7709156492824757462, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
   m_PrefabInstance: {fileID: 3294910709057506353}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3294910709057506355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5927330804353260062, guid: dbad4336881a3de4c86d0c837dc81dc3, type: 3}
+  m_PrefabInstance: {fileID: 3294910709057506353}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
