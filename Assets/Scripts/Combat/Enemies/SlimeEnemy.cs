@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class SlimeEnemy : BasicEnemy
 {
-   public override void Move()
+  //  [SerializeField] 
+    public override void Attack()
     {
-        if(player)
-        {
-
-        }
+      
     }
 }
