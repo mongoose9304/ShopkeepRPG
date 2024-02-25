@@ -4,62 +4,103 @@ using UnityEngine;
 
 public class CombatPlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private float speed = 2.5f;
+    public float maxdashCoolDown;
+    public float moveSpeed;
+    public float moveSpeedModifier;
+    public float dashDistance;
+    public float dashCoolDown;
+    public float dashTime;
+    public bool isDashing;
+    Vector3 moveInput;
+    Rigidbody rb;
+   
 
-    [SerializeField] private float turnSpeed = 720;
-    [SerializeField] private Transform model;
-    private Vector3 input;
-    void Start()
+    private void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
+    // Update is called once per frame
 
     void Update()
     {
-        GetPlayerInputs();
-        PlayerLook();
-    }
-
-    void FixedUpdate()
-    {
-        Move();
-       
-    }
-
-    void GetPlayerInputs()
-    {
-        // gets both controller and keyboard input. theres a better way for gamepad using 
-        // Vector2 stickValue = Gamepad.current.leftStick.ReadValue();
-        // input = new Vector3(stickValue.x, 0, stickValue.y);
-        input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-    }
-
-    void Move()
-    {
-        // for now, this is fine enough for movement, the 'SkewToIso' functioon is inside of the IsoGlobals, 
-        // just multiplies it by matrix to align movements to 45 degree angle.
-        // If we want jumping we may need to find another way to handle player movement, if you jump and dont press any buttons
-        // you'll just fall vertical.
-        if (input != Vector3.zero)
+        GetInput();
+        if (!isDashing)
         {
-            Vector3 movement = input * input.normalized.magnitude * speed * Time.deltaTime;
-            rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
+
+
+            if (dashCoolDown > 0)
+                dashCoolDown -= Time.deltaTime;
+
+
+            //rb.MovePosition(rb.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
+            transform.position= (transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
+            if (moveInput != Vector3.zero)
+                transform.forward = moveInput;
+
+
         }
         else
         {
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+            if (dashTime > 0)
+            {
+                dashTime -= Time.deltaTime;
+                if (dashTime <= 0)
+                {
+                    isDashing = false;
+                    GroundCheck();
+                }
+            }
+            rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
         }
     }
-
-    void PlayerLook()
+    public void OnDash()
     {
-        // TODO: add a model for testin
-        if (input == Vector3.zero) return;
+        if (dashCoolDown <= 0)
+        {
+            dashCoolDown = maxdashCoolDown;
+            DashAction();
+        }
+    }
+    void GetInput()
+    {
+        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+       
+        
+    }
+    private void DashAction()
+    {
+        isDashing = true;
+        dashTime = 0.2f;
+    }
+    private Vector3 PreventFalling()
+    {
+        // Stop walking
+        var dir = transform.TransformDirection(Vector3.down);
+        Vector3 newInput = moveInput;
+        // Up
 
-        // this logic is specifically for having a model be a child of the gameobject with a rigidbody (rigidbody doesn't rotate)
-        Quaternion rotation = Quaternion.LookRotation(input, Vector3.up);
-        model.rotation = Quaternion.RotateTowards(model.rotation, rotation, turnSpeed * Time.deltaTime);
-
+        if (!Physics.Raycast(transform.position - new Vector3(0f, 0f, 1), dir, 10))
+            if (newInput.z < 0)
+                newInput.z = 0;
+        // Down
+        if (!Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), dir, 10))
+            if (newInput.z > 0)
+                newInput.z = 0;
+        //Left
+        if (!Physics.Raycast(transform.position - new Vector3(-1, 0f, 0f), dir, 10))
+            if (newInput.x > 0)
+                newInput.x = 0;
+        //Right
+        if (!Physics.Raycast(transform.position - new Vector3(1, 0f, 0f), dir, 10))
+            if (newInput.x < 0)
+                newInput.x = 0;
+        return newInput;
+    }
+    private void GroundCheck()
+    {
+        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
+        {
+            transform.position = new Vector3(0, 1, 0);
+        }
     }
 }
