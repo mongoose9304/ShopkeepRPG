@@ -7,13 +7,15 @@ public class CombatPlayerMovement : MonoBehaviour
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
+    public float dampModifier;
     public float dashDistance;
     public float dashCoolDown;
     public float dashTime;
     public bool isDashing;
     Vector3 moveInput;
     Rigidbody rb;
-   
+    private Vector3 velocity = Vector3.zero;
+
 
     private void Start()
     {
@@ -33,7 +35,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
             //rb.MovePosition(rb.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
-            transform.position= (transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
+            // transform.position= (transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
+            transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
             if (moveInput != Vector3.zero)
                 transform.forward = moveInput;
 
@@ -50,10 +53,14 @@ public class CombatPlayerMovement : MonoBehaviour
                     GroundCheck();
                 }
             }
-            rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+            // rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+           // transform.position += (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+            transform.position = Vector3.SmoothDamp(transform.position,transform.position+( transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance), ref velocity, dampModifier);
+            Debug.Log("Math :" + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+            //rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
         }
     }
-    public void OnDash()
+    private void OnDash()
     {
         if (dashCoolDown <= 0)
         {
@@ -64,7 +71,10 @@ public class CombatPlayerMovement : MonoBehaviour
     void GetInput()
     {
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-       
+       if(Input.GetButtonDown("Fire2"))
+        {
+            OnDash();
+        }
         
     }
     private void DashAction()
