@@ -12,7 +12,7 @@ public class DamageCollider : MonoBehaviour
     {
         if(other.gameObject.tag=="Enemy")
         {
-            Debug.Log("RobHitEnemy");
+           
             if(other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
                 basicEnemyRef.ApplyDamage(damage, hitStun, element) ;

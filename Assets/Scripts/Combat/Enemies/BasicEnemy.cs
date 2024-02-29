@@ -11,10 +11,12 @@ public class BasicEnemy : MonoBehaviour
     public float maxAttackCooldown;
     public Element myElement;
     public float moveSpeed;
+
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     [Header("CurrentValues")]
+    public bool canMove;
     float currentTimeStunned;
-    float currentHitstun;
+    protected float currentHitstun;
     float currentAttackCooldown;
     float currentHealth;
     Element myWeakness;
@@ -22,7 +24,7 @@ public class BasicEnemy : MonoBehaviour
     [Header("References")]
     public GameObject stunIcon;
     public GameObject player;
-    [SerializeField] NavMeshAgent agent;
+    [SerializeField]protected NavMeshAgent agent;
 
     private void Start()
     {
@@ -46,7 +48,7 @@ public class BasicEnemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (currentHitstun > 0)
         {
@@ -79,6 +81,7 @@ public class BasicEnemy : MonoBehaviour
     //Application of damage
     public void ApplyDamage(float damage_,float hitstun_,Element element_)
     {
+       
         if (!superArmor)
             currentHitstun += hitstun_;
         if(element_==myWeakness&&element_!=Element.Neutral)
@@ -98,7 +101,10 @@ public class BasicEnemy : MonoBehaviour
     }
     public virtual void Move()
     {
-        agent.SetDestination(player.transform.position);
+        if (canMove)
+            agent.SetDestination(player.transform.position);
+        else
+            agent.ResetPath();
     }
     public void WaitingToAttack()
     {
