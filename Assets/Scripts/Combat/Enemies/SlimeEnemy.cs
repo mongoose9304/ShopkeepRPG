@@ -12,7 +12,7 @@ public class SlimeEnemy : BasicEnemy
     float currentJumpPercentage;
     bool isJumping;
     bool isSlaming;
- 
+    [SerializeField] GameObject slamParticleEffect;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
@@ -36,6 +36,7 @@ public class SlimeEnemy : BasicEnemy
         isJumping = false;
         agent.enabled = true;
         EndAttack();
+        Instantiate(slamParticleEffect, transform.position, Quaternion.Euler(new Vector3(-90,0,0)));
     }
     private void SlamDown()
     {
