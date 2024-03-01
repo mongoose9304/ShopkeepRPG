@@ -15,6 +15,8 @@ public class SlimeEnemy : BasicEnemy
  
     public override void Attack()
     {
+        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
+            return;
         canMove = false;
         isJumping = true ;
         isSlaming = false;
@@ -22,6 +24,9 @@ public class SlimeEnemy : BasicEnemy
         jumpStart = transform.position.y;
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
+        GameObject obj = GetAvailableAttackIcon();
+        obj.transform.position = transform.position;
+        obj.SetActive(true);
     }
 
     private void LandJump()

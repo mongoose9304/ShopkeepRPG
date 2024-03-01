@@ -11,7 +11,7 @@ public class BasicEnemy : MonoBehaviour
     public float maxAttackCooldown;
     public Element myElement;
     public float moveSpeed;
-
+    public float attackDistance;
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     [Header("CurrentValues")]
     public bool canMove;
@@ -25,6 +25,7 @@ public class BasicEnemy : MonoBehaviour
     public GameObject stunIcon;
     public GameObject player;
     [SerializeField]protected NavMeshAgent agent;
+    [SerializeField] List<GameObject> attackIcons;
 
     private void Start()
     {
@@ -92,12 +93,14 @@ public class BasicEnemy : MonoBehaviour
     }
     public virtual void Attack()
     {
-    
+        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
+            return;
     }
 
     public void EndAttack()
     {
         superArmor = false;
+        ResetAttackIcons();
     }
     public virtual void Move()
     {
@@ -108,13 +111,34 @@ public class BasicEnemy : MonoBehaviour
     }
     public void WaitingToAttack()
     {
+        
         currentAttackCooldown -= Time.deltaTime;
 
         if(currentAttackCooldown<=0)
         {
+
             currentAttackCooldown = maxAttackCooldown;
             Attack();
         }
     }
-    
+   protected GameObject GetAvailableAttackIcon()
+    {
+        foreach(GameObject obj in attackIcons)
+        {
+            if(!obj.activeInHierarchy)
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
+    protected void ResetAttackIcons()
+    {
+        foreach (GameObject obj in attackIcons)
+        {
+            obj.SetActive(false);
+        }
+      
+    }
+
 }
