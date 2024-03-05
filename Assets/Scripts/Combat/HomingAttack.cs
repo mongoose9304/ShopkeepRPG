@@ -7,6 +7,8 @@ public class HomingAttack : MonoBehaviour
     [SerializeField] float maxLifeTime;
     [SerializeField] float moveSpeed;
     [SerializeField] float lookSpeed;
+    [SerializeField] float homingCheckDelayMax;
+    float homingCheckDelay;
     [SerializeField] bool isHoming;
     [SerializeField] string homingTag;
     Transform target;
@@ -27,12 +29,22 @@ public class HomingAttack : MonoBehaviour
         }
         else
         {
-            if(Physics.Raycast(transform.position, transform.forward,out hit,10))
+            homingCheckDelay -= Time.deltaTime;
+            if (homingCheckDelay <= 0)
             {
-              if( hit.transform.tag==homingTag)
+                homingCheckDelay = homingCheckDelayMax;
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position+transform.forward*2, 3);
+                foreach (var hitCollider in hitColliders)
                 {
-                    target = hit.transform;
+                    if (hitCollider.transform.tag == homingTag)
+                    {
+                        if (!target)
+                            target = hitCollider.transform;
+                        if(Vector3.Distance(transform.position,target.position)> Vector3.Distance(transform.position,hitCollider.transform.position))
+                        target = hitCollider.transform;
+                    }
                 }
+               
             }
         }
 

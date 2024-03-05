@@ -10,6 +10,11 @@ public class CombatPlayerActions : MonoBehaviour
     private float BasicMeleeCooldown = 0.0f;
     [SerializeField] private GameObject BasicMeleePivotObject;
     [SerializeField] BasicMeleeObject meleeObject;
+    [Header("BasicRanged")]
+    [SerializeField] private float fireRate;
+    private float currentFireRate = 0.0f;
+    [SerializeField] private GameObject rangedProjectile;
+    [SerializeField] Transform spawnPosition;
 
     private void Update()
     {
@@ -19,6 +24,13 @@ public class CombatPlayerActions : MonoBehaviour
             BasicMelee();
           
         }
+        else if(Input.GetButton("Fire3"))
+        {
+            BasicRanged();
+        }
+
+
+
         if(Input.GetButtonUp("Fire1"))
         {
             meleeObject.ReleaseMeleeButton();
@@ -29,6 +41,7 @@ public class CombatPlayerActions : MonoBehaviour
     private void Cooldowns()
     {
         BasicMeleeCooldown -= Time.deltaTime;
+        currentFireRate -= Time.deltaTime;
     }
 
     private void BasicMelee()
@@ -36,6 +49,14 @@ public class CombatPlayerActions : MonoBehaviour
         if(meleeObject.TryToAttack())
         {
             BasicMeleeCooldown =BasicMeleeCooldownMax;
+        }
+    }
+    private void BasicRanged()
+    {
+        if(currentFireRate<=0)
+        {
+            Instantiate(rangedProjectile, spawnPosition.position, spawnPosition.rotation);
+            currentFireRate = fireRate;
         }
     }
    
