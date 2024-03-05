@@ -18,6 +18,7 @@ public class CombatPlayerMovement : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
    [SerializeField] LayerMask wallMask;
     GameObject lockOnTarget;
+    [SerializeField] GameObject dashEffect;
 
     private void Start()
     {
@@ -86,6 +87,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         isDashing = true;
         dashTime = 0.2f;
+        Instantiate(dashEffect, transform.position, transform.rotation);
     }
     private Vector3 PreventFalling()
     {

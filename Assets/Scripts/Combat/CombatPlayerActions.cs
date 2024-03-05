@@ -18,6 +18,7 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private int projectileLimit;
 
     [SerializeField] Transform spawnPosition;
+    
     private GameObject tempObj;
     private void Start()
     {
