@@ -13,11 +13,15 @@ public class CombatPlayerActions : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButton("Fire1")&&BasicMeleeCooldown<=0)
+        if(Input.GetButton("Fire1"))
         {
            
             BasicMelee();
           
+        }
+        if(Input.GetButtonUp("Fire1"))
+        {
+            meleeObject.ReleaseMeleeButton();
         }
         Cooldowns();
     }
@@ -34,4 +38,5 @@ public class CombatPlayerActions : MonoBehaviour
             BasicMeleeCooldown =BasicMeleeCooldownMax;
         }
     }
+   
 }

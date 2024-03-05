@@ -8,19 +8,27 @@ public class BasicMeleeObject : MonoBehaviour
     [SerializeField] private Quaternion startRotaton;
     [SerializeField] private Quaternion startRotatonB;
     [SerializeField] private float attackDurationMax;
-     private float attackDurationCurrent;
+    [SerializeField] private float framePauseDurationMax;
+    private float attackDurationCurrent;
     [SerializeField] private float damage;
     [SerializeField] private Element damageType;
     [SerializeField] private float hitStun;
     [SerializeField] private GameObject weaponObject;
-    //make private after test
-    [SerializeField] private bool queuedAttack;
-    [SerializeField] private bool rightAttackDirection;
+    
+     private bool queuedAttack;
+     private bool rightAttackDirection;
+    private float framePauseDuration;
 
     private void Update()
     {
         if(weaponObject.activeInHierarchy)
         {
+
+            if(framePauseDuration>0)
+            {
+                framePauseDuration -= Time.deltaTime;
+                return;
+            }
             if(rightAttackDirection)
             transform.Rotate(0.0f, swingSpeed*Time.deltaTime, 0.0f, Space.Self);
             else
@@ -65,6 +73,14 @@ public class BasicMeleeObject : MonoBehaviour
             rightAttackDirection = true;
             return true;
         }
+    }
+    public void ReleaseMeleeButton()
+    {
+        queuedAttack = false;
+    }
+    public void PauseOnHitEffect()
+    {
+        framePauseDuration = framePauseDurationMax;
     }
    
 }
