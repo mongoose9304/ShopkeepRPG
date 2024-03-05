@@ -12,6 +12,7 @@ public class BasicEnemy : MonoBehaviour
     public Element myElement;
     public float moveSpeed;
     public float attackDistance;
+    public float knockBackMax;
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     [Header("CurrentValues")]
     public bool canMove;
@@ -20,6 +21,10 @@ public class BasicEnemy : MonoBehaviour
     float currentAttackCooldown;
     float currentHealth;
     Element myWeakness;
+    float currentKnockbackPower;
+    float currentKnockbackTime;
+    private Vector3 knockbackRefVector;
+    Vector3 knockBackDirection;
     bool superArmor;
     [Header("References")]
     public GameObject stunIcon;
@@ -68,23 +73,32 @@ public class BasicEnemy : MonoBehaviour
         stunIcon.SetActive(true);
         currentHitstun -= Time.deltaTime;
         currentTimeStunned += Time.deltaTime;
+        if(currentKnockbackTime>0)
+        {
+            currentKnockbackTime -= Time.deltaTime;
+            transform.position = Vector3.SmoothDamp(transform.position,transform.position+(knockBackDirection*currentKnockbackPower*Time.deltaTime),ref knockbackRefVector ,0.3f);
+        }
         if(currentTimeStunned>=maxHitstun||currentHitstun<=0)
         {
             superArmor = true;
             currentTimeStunned = 0;
             currentHitstun = 0;
             stunIcon.SetActive(false);
+            agent.enabled = true;
         }
 
 
     }
 
     //Application of damage
-    public void ApplyDamage(float damage_,float hitstun_,Element element_)
+    public void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null)
     {
-       
+
         if (!superArmor)
+        {
             currentHitstun += hitstun_;
+            KnockBack(knockBack_,knockBackObject);
+        }
         if(element_==myWeakness&&element_!=Element.Neutral)
         {
             damage_ *= 1.5f;
@@ -139,6 +153,18 @@ public class BasicEnemy : MonoBehaviour
             obj.SetActive(false);
         }
       
+    }
+    private void KnockBack(float knockBackPower,GameObject knockBackObject)
+    {
+        if (knockBackPower <= 0||!knockBackObject)
+            return;
+
+        agent.enabled = false;
+        currentKnockbackTime = knockBackMax;
+        currentKnockbackPower = knockBackPower;
+        knockBackDirection = (transform.position - knockBackObject.transform.position).normalized;
+        knockBackDirection.y = 0;
+
     }
 
 }

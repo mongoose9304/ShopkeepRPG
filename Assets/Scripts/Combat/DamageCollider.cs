@@ -7,6 +7,7 @@ public class DamageCollider : MonoBehaviour
     BasicEnemy basicEnemyRef;
     public float damage;
     public float hitStun;
+    public float knockBack;
     public Element element;
     public BasicMeleeObject meleeObject;
     private void OnTriggerEnter(Collider other)
@@ -16,7 +17,7 @@ public class DamageCollider : MonoBehaviour
            
             if(other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
-                basicEnemyRef.ApplyDamage(damage, hitStun, element) ;
+                basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject) ;
                 if (meleeObject)
                     meleeObject.PauseOnHitEffect();
             }
