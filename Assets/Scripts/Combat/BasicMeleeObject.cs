@@ -56,6 +56,8 @@ public class BasicMeleeObject : MonoBehaviour
             rightAttackDirection = !rightAttackDirection;
             attackDurationCurrent = attackDurationMax;
             queuedAttack=false;
+            weaponObject.GetComponent<CapsuleCollider>().enabled = false;
+            weaponObject.GetComponent<CapsuleCollider>().enabled = true;
         }
         else
         weaponObject.SetActive(false);

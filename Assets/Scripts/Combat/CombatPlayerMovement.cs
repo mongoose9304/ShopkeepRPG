@@ -17,6 +17,7 @@ public class CombatPlayerMovement : MonoBehaviour
     Rigidbody rb;
     private Vector3 velocity = Vector3.zero;
    [SerializeField] LayerMask wallMask;
+    GameObject lockOnTarget;
 
     private void Start()
     {
