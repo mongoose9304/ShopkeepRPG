@@ -14,8 +14,15 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private float fireRate;
     private float currentFireRate = 0.0f;
     [SerializeField] private GameObject rangedProjectile;
-    [SerializeField] Transform spawnPosition;
+    [SerializeField] private List<GameObject> projectiles=new List<GameObject>();
+    [SerializeField] private int projectileLimit;
 
+    [SerializeField] Transform spawnPosition;
+    private GameObject tempObj;
+    private void Start()
+    {
+        SetUpProjectiles();
+    }
     private void Update()
     {
         if(Input.GetButton("Fire1"))
@@ -55,9 +62,37 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if(currentFireRate<=0)
         {
-            Instantiate(rangedProjectile, spawnPosition.position, spawnPosition.rotation);
+            tempObj = GetAvailableProjectile();
+            tempObj.transform.position = spawnPosition.position;
+            tempObj.transform.rotation = spawnPosition.rotation;
+            tempObj.SetActive(true);
             currentFireRate = fireRate;
         }
+    }
+    private void SetUpProjectiles()
+    {
+        if (projectiles.Count > 0)
+        {
+            foreach (GameObject obj in projectiles)
+                Destroy(obj);
+            projectiles.Clear();
+        }
+        for(int i=0;i<projectileLimit;i++)
+        {
+            tempObj = Instantiate(rangedProjectile, spawnPosition.position, spawnPosition.rotation);
+            tempObj.SetActive(false);
+            projectiles.Add(tempObj);
+            tempObj = null;
+        }
+    }
+    GameObject GetAvailableProjectile()
+    {
+        foreach (GameObject obj in projectiles)
+        {
+            if (!obj.activeInHierarchy)
+                return obj;
+        }
+        return null;
     }
    
 }
