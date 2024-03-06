@@ -20,6 +20,15 @@ public class CombatPlayerMovement : MonoBehaviour
     GameObject lockOnTarget;
     [SerializeField] GameObject dashEffect;
 
+    //targeting and lock on
+    [SerializeField] GameObject currentTarget;
+    [SerializeField] bool hardLockOn;
+    [SerializeField] GameObject lockOnIcon;
+    [SerializeField] Transform lockOnCheckPosition;
+    [SerializeField] List<GameObject> currentEnemiesList=new List<GameObject>();
+    [SerializeField] string enemyTag;
+    [SerializeField] float minDistanceBetweenRetargets;
+    [SerializeField] float MaxLockOnDistance;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,6 +39,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         GetInput();
      moveInput=PreventGoingThroughWalls(moveInput);
+        CheckForSoftLockOn();
         if (!isDashing)
         {
 
@@ -44,8 +54,7 @@ public class CombatPlayerMovement : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
             if (moveInput != Vector3.zero)
                 transform.forward = moveInput;
-
-           
+            LookAtCurrentTarget();
         }
         else
         {
@@ -145,5 +154,60 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             transform.position = new Vector3(0, 1, 0);
         }
+    }
+
+    void CheckForSoftLockOn()
+    {
+        if (hardLockOn||currentEnemiesList.Count==0)
+            return;
+
+        if (!currentTarget)
+            currentTarget = currentEnemiesList[0];
+
+       foreach(GameObject obj in currentEnemiesList)
+        {
+            if (Vector3.Distance(lockOnCheckPosition.position, obj.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position)-minDistanceBetweenRetargets)
+                currentTarget = obj;
+        }
+        if (Vector3.Distance(lockOnCheckPosition.position, currentTarget.transform.position) > MaxLockOnDistance)
+            currentTarget = null;
+
+        if(currentTarget)
+        {
+            lockOnIcon.transform.position = currentTarget.transform.position;
+            lockOnIcon.SetActive(true);
+        }
+        else
+        {
+
+            lockOnIcon.SetActive(false);
+        }
+
+    }
+    void LookAtCurrentTarget()
+    {
+        if (!currentTarget)
+            return;
+        transform.LookAt(currentTarget.transform);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+    }
+    public void SetCurrentEnemyList(List<GameObject> objectsToSet)
+    {
+        currentEnemiesList.Clear();
+        foreach(GameObject obj in objectsToSet)
+        {
+            currentEnemiesList.Add(obj);
+        }
+    }
+    public void AddEnemy(GameObject obj_)
+    {
+
+        currentEnemiesList.Add(obj_);
+    }
+    private void CleanCurrentEnemyList()
+    {
+       
+       currentEnemiesList.RemoveAll(null);
+       
     }
 }
