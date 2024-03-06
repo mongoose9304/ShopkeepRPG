@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using MoreMountains.Feedbacks;
 // this is a mostly virtual class all the enemies should inherit from. Contains all the default things enemies need. 
 public class BasicEnemy : MonoBehaviour
 {
@@ -37,6 +38,11 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     float currentDamageTextAlpha;
+    [Header("Feel")]
+   [SerializeField] MMF_Player textSpawner;
+   public MMF_FloatingText floatingText;
+
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -58,6 +64,7 @@ public class BasicEnemy : MonoBehaviour
                 break;
         }
         currentHealth = maxHealth;
+        floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
     }
 
     protected virtual void Update()
@@ -111,11 +118,15 @@ public class BasicEnemy : MonoBehaviour
         }
         currentHealth -= damage_;
 
-        //damage text 
-        damageText.text = damage_.ToString();
-        damageText.color = Color.white;
-        currentDamageTextAlpha = 1;
-        currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
+        floatingText.Value = damage_.ToString();
+        textSpawner.PlayFeedbacks();
+       
+        /*   //damage text 
+           damageText.text = damage_.ToString();
+           damageText.color = Color.white;
+           currentDamageTextAlpha = 1;
+           currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
+        */
     }
     protected void FadeDamageText()
     {
