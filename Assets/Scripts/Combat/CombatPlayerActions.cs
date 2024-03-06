@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CombatPlayerActions : MonoBehaviour
 {
-    
+    [SerializeField] CombatPlayerMovement combatMovement;
     [Header("BasicMelee")]
     [SerializeField] private float BasicMeleeCooldownMax;
     private float BasicMeleeCooldown = 0.0f;
@@ -67,6 +67,10 @@ public class CombatPlayerActions : MonoBehaviour
             tempObj.transform.position = spawnPosition.position;
             tempObj.transform.rotation = spawnPosition.rotation;
             tempObj.SetActive(true);
+            if (combatMovement.GetCurrentTarget() != null)
+                tempObj.GetComponent<HomingAttack>().target = combatMovement.GetCurrentTarget().transform;
+            else
+                tempObj.GetComponent<HomingAttack>().target = null;
             currentFireRate = fireRate;
         }
     }

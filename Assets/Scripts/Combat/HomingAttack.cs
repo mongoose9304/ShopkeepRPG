@@ -11,7 +11,7 @@ public class HomingAttack : MonoBehaviour
     float homingCheckDelay;
     [SerializeField] bool isHoming;
     [SerializeField] string homingTag;
-    Transform target;
+    public Transform target;
     Quaternion rotation;
     Vector3 direction;
     float currentLifeTime;
@@ -27,26 +27,7 @@ public class HomingAttack : MonoBehaviour
             // slerp to the desired rotation over time
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, lookSpeed * Time.deltaTime);
         }
-        else
-        {
-            homingCheckDelay -= Time.deltaTime;
-            if (homingCheckDelay <= 0)
-            {
-                homingCheckDelay = homingCheckDelayMax;
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position+transform.forward*2, 3);
-                foreach (var hitCollider in hitColliders)
-                {
-                    if (hitCollider.transform.tag == homingTag)
-                    {
-                        if (!target)
-                            target = hitCollider.transform;
-                        if(Vector3.Distance(transform.position,target.position)> Vector3.Distance(transform.position,hitCollider.transform.position))
-                        target = hitCollider.transform;
-                    }
-                }
-               
-            }
-        }
+       
 
         transform.position += (transform.forward * Time.deltaTime * moveSpeed);
         currentLifeTime -= Time.deltaTime;

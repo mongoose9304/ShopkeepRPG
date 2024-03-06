@@ -210,4 +210,9 @@ public class CombatPlayerMovement : MonoBehaviour
        currentEnemiesList.RemoveAll(null);
        
     }
+    public GameObject GetCurrentTarget()
+    {
+        return currentTarget;
+    }
+        
 }
