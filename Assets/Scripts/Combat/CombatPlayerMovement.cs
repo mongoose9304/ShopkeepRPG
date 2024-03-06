@@ -94,6 +94,8 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void DashAction()
     {
+        if (moveInput != Vector3.zero)
+            transform.forward = moveInput;
         isDashing = true;
         dashTime = 0.2f;
         Instantiate(dashEffect, transform.position, transform.rotation);

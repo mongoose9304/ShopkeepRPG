@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 // this is a mostly virtual class all the enemies should inherit from. Contains all the default things enemies need. 
 public class BasicEnemy : MonoBehaviour
 {
@@ -31,10 +32,15 @@ public class BasicEnemy : MonoBehaviour
     public GameObject player;
     [SerializeField]protected NavMeshAgent agent;
     [SerializeField] List<GameObject> attackIcons;
-
+    [SerializeField] protected TextMeshProUGUI damageText;
+    [SerializeField] float maxTimeBeforeDamageTextFades;
+    [SerializeField] float currentTimeBeforeDamageTextFades;
+    [SerializeField] float fadeTimeMultiplier;
+    float currentDamageTextAlpha;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        currentHealth = maxHealth;
         //determine my weakness
         switch(myElement)
         {
@@ -104,6 +110,24 @@ public class BasicEnemy : MonoBehaviour
             damage_ *= 1.5f;
         }
         currentHealth -= damage_;
+
+        //damage text 
+        damageText.text = damage_.ToString();
+        damageText.color = Color.white;
+        currentDamageTextAlpha = 1;
+        currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
+    }
+    protected void FadeDamageText()
+    {
+        if(currentTimeBeforeDamageTextFades>0)
+        {
+            currentTimeBeforeDamageTextFades -= Time.deltaTime;
+        }
+        else
+        {
+            damageText.color = new Color(1, 1, 1, currentDamageTextAlpha);
+            currentDamageTextAlpha -= Time.deltaTime;
+        }
     }
     public virtual void Attack()
     {
