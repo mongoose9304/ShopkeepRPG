@@ -146,18 +146,7 @@ public class BasicEnemy : MonoBehaviour
         attackIconPooler.ResetAllObjects();
         Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
-    protected void FadeDamageText()
-    {
-        if(currentTimeBeforeDamageTextFades>0)
-        {
-            currentTimeBeforeDamageTextFades -= Time.deltaTime;
-        }
-        else
-        {
-            damageText.color = new Color(1, 1, 1, currentDamageTextAlpha);
-            currentDamageTextAlpha -= Time.deltaTime;
-        }
-    }
+   
     public virtual void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)

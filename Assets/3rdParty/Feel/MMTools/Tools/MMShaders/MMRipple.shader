@@ -87,5 +87,5 @@ Shader "MoreMountains/MMRipple"
         }
 
     }
-    FallBack "Particle/AlphaBlended"
+   // FallBack "Particle/AlphaBlended"
 }

@@ -50,7 +50,7 @@ public class SlimeEnemy : BasicEnemy
 
     protected override void Update()
     {
-        FadeDamageText();
+       
         if (!isJumping)
         {
             if (currentHitstun > 0)
