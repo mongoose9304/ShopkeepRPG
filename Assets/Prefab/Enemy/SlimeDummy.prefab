@@ -311,10 +311,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4892686752151508633}
-  - {fileID: 234690407693651961}
   - {fileID: 8038895409152578860}
   - {fileID: 5229695876715858041}
+  - {fileID: 627962914815523414}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6314173209146273319
@@ -424,7 +423,7 @@ MonoBehaviour:
   maxHitstun: 5
   maxAttackCooldown: 3
   myElement: 0
-  moveSpeed: 1
+  moveSpeed: 10
   attackDistance: 5
   knockBackMax: 0.2
   canMove: 0
@@ -449,6 +448,7 @@ MonoBehaviour:
   jumpHeight: 4
   lowestJumpPercentage: 0.25
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
+  JumpEffect: {fileID: 0}
 --- !u!1 &5048036132593025160
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +864,7 @@ MonoBehaviour:
   DebugActive: 0
   FeedbacksList:
   - rid: 6620153069515046913
+  - rid: 6620153199442264067
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -979,6 +980,81 @@ MonoBehaviour:
         PositionMode: 1
         TargetTransform: {fileID: 0}
         Direction: {x: 0, y: 0, z: 0}
+    - rid: 6620153199442264067
+      type: {class: MMF_Wiggle, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
+      data:
+        Active: 1
+        UniqueID: -1542481343
+        Label: Wiggle
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 3602769617026962019}
+        DebugActive: 0
+        TargetWiggle: {fileID: 0}
+        WigglePosition: 1
+        WigglePositionDuration: 0
+        WiggleRotation: 0
+        WiggleRotationDuration: 0
+        WiggleScale: 0
+        WiggleScaleDuration: 0
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1086,106 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6434607254702708489}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6497003687292469740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 627962914815523414}
+  - component: {fileID: 3977971309013245017}
+  m_Layer: 0
+  m_Name: SlimeHapticHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &627962914815523414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497003687292469740}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 234690407693651961}
+  - {fileID: 4892686752151508633}
+  m_Father: {fileID: 3856738759050230793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3977971309013245017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497003687292469740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aade595aee3a1d24c9845361684f77d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mode: 2
+  Timescale: 0
+  Intensity: 0.02
+  MaximumVelocity: 0.5
+  MinimumScale: {x: 0.2, y: 0.2, z: 0.2}
+  MaximumScale: {x: 2, y: 2, z: 2}
+  RescaleX: 1
+  RescaleY: 1
+  RescaleZ: 1
+  RotateToMatchDirection: 0
+  AutoSquashOnStop: 1
+  SquashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  SquashVelocityThreshold: 11
+  SquashDuration: {x: 0.25, y: 0.5}
+  SquashIntensity: {x: 0, y: 1}
+  Spring: 1
+  SpringDamping: 0.3
+  SpringFrequency: 3
+  SpringSpeed: 10
+  Velocity: {x: 0, y: 0, z: 0}
+  RemappedVelocity: 0
+  VelocityMagnitude: 0
 --- !u!1 &6746166376975699111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,12 +1389,12 @@ Transform:
   m_GameObject: {fileID: 7470086553091500663}
   serializedVersion: 2
   m_LocalRotation: {x: -0.39340413, y: 0.5875655, z: -0.39340413, w: 0.5875655}
-  m_LocalPosition: {x: 1.5037661e-32, y: 0.0631712, z: -0.008183928}
+  m_LocalPosition: {x: 0, y: 0.06317121, z: -0.008183479}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3750668822299423146}
-  m_Father: {fileID: 3856738759050230793}
+  m_Father: {fileID: 627962914815523414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8634182001094996640
 GameObject:
@@ -1276,12 +1452,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9137286772023842600}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3856738759050230793}
+  m_Father: {fileID: 627962914815523414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2435166057637512102
 SkinnedMeshRenderer:

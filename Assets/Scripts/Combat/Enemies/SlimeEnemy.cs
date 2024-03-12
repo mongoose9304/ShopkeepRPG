@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class SlimeEnemy : BasicEnemy
 {
     [SerializeField] Vector3 jumpSpeed;
@@ -10,9 +10,11 @@ public class SlimeEnemy : BasicEnemy
     float jumpStart;
      float jumpEnd;
     float currentJumpPercentage;
+    float currentMoveSpeedPercent;
     bool isJumping;
     bool isSlaming;
     [SerializeField] GameObject slamParticleEffect;
+    [SerializeField] MMF_Player JumpEffect;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
@@ -27,6 +29,7 @@ public class SlimeEnemy : BasicEnemy
         GameObject obj = GetAvailableAttackIcon();
         obj.transform.position = transform.position;
         obj.SetActive(true);
+       // JumpEffect.PlayFeedbacks();
     }
 
     private void LandJump()
@@ -79,5 +82,20 @@ public class SlimeEnemy : BasicEnemy
 
             }
         }
+    }
+    public override void Move()
+    {
+        if (canMove)
+        {
+            agent.SetDestination(player.transform.position);
+            agent.speed = moveSpeed * currentMoveSpeedPercent;
+            currentMoveSpeedPercent -= Time.deltaTime;
+            if (currentMoveSpeedPercent <= 0)
+            {
+                currentMoveSpeedPercent = 1;
+            }
+        }
+        else
+            agent.ResetPath();
     }
 }
