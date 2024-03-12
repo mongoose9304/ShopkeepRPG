@@ -29,7 +29,7 @@ public class SlimeEnemy : BasicEnemy
         GameObject obj = GetAvailableAttackIcon();
         obj.transform.position = transform.position;
         obj.SetActive(true);
-       // JumpEffect.PlayFeedbacks();
+        JumpEffect.PlayFeedbacks();
     }
 
     private void LandJump()

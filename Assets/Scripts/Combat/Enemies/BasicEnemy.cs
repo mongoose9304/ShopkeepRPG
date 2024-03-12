@@ -40,7 +40,8 @@ public class BasicEnemy : MonoBehaviour
     float currentDamageTextAlpha;
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
-   public MMF_FloatingText floatingText;
+    [SerializeField] MMF_Player hitEffects;
+    public MMF_FloatingText floatingText;
 
 
     private void Start()
@@ -120,7 +121,8 @@ public class BasicEnemy : MonoBehaviour
 
         floatingText.Value = damage_.ToString();
         textSpawner.PlayFeedbacks();
-       
+        if (hitEffects)
+            hitEffects.PlayFeedbacks();
         /*   //damage text 
            damageText.text = damage_.ToString();
            damageText.color = Color.white;
