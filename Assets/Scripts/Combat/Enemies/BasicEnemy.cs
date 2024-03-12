@@ -32,16 +32,17 @@ public class BasicEnemy : MonoBehaviour
     public GameObject stunIcon;
     public GameObject player;
     [SerializeField]protected NavMeshAgent agent;
-    [SerializeField] List<GameObject> attackIcons;
     [SerializeField] protected TextMeshProUGUI damageText;
     [SerializeField] float maxTimeBeforeDamageTextFades;
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
+    [SerializeField] GameObject[] deathEffects;
     float currentDamageTextAlpha;
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
+    [SerializeField] protected MMMiniObjectPooler attackIconPooler;
 
 
     private void Start()
@@ -66,6 +67,7 @@ public class BasicEnemy : MonoBehaviour
         }
         currentHealth = maxHealth;
         floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
+        attackIconPooler = GetComponent<MMMiniObjectPooler>();
     }
 
     protected virtual void Update()
@@ -118,7 +120,11 @@ public class BasicEnemy : MonoBehaviour
             damage_ *= 1.5f;
         }
         currentHealth -= damage_;
-
+        if(currentHealth<=0)
+        {
+            Death();
+            return;
+        }
         floatingText.Value = damage_.ToString();
         textSpawner.PlayFeedbacks();
         if (hitEffects)
@@ -129,6 +135,12 @@ public class BasicEnemy : MonoBehaviour
            currentDamageTextAlpha = 1;
            currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
         */
+    }
+    public virtual void Death()
+    {
+        gameObject.SetActive(false);
+        attackIconPooler.ResetAllObjects();
+        Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
     protected void FadeDamageText()
     {
@@ -151,7 +163,7 @@ public class BasicEnemy : MonoBehaviour
     public void EndAttack()
     {
         superArmor = false;
-        ResetAttackIcons();
+        attackIconPooler.ResetAllObjects();
     }
     public virtual void Move()
     {
@@ -172,25 +184,7 @@ public class BasicEnemy : MonoBehaviour
             Attack();
         }
     }
-   protected GameObject GetAvailableAttackIcon()
-    {
-        foreach(GameObject obj in attackIcons)
-        {
-            if(!obj.activeInHierarchy)
-            {
-                return obj;
-            }
-        }
-        return null;
-    }
-    protected void ResetAttackIcons()
-    {
-        foreach (GameObject obj in attackIcons)
-        {
-            obj.SetActive(false);
-        }
-      
-    }
+   
     private void KnockBack(float knockBackPower,GameObject knockBackObject)
     {
         if (knockBackPower <= 0||!knockBackObject)

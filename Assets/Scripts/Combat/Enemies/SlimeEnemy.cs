@@ -15,6 +15,7 @@ public class SlimeEnemy : BasicEnemy
     bool isSlaming;
     [SerializeField] GameObject slamParticleEffect;
     [SerializeField] MMF_Player JumpEffect;
+   
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
@@ -26,7 +27,7 @@ public class SlimeEnemy : BasicEnemy
         jumpStart = transform.position.y;
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
-        GameObject obj = GetAvailableAttackIcon();
+        GameObject obj = attackIconPooler.GetPooledGameObject();
         obj.transform.position = transform.position;
         obj.SetActive(true);
         JumpEffect.PlayFeedbacks();

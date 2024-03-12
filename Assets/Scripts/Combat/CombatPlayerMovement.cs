@@ -154,7 +154,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
         {
-            transform.position = new Vector3(0, 1, 0);
+            transform.position = new Vector3(0, 0.66f, 0);
         }
     }
 
@@ -168,6 +168,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
        foreach(GameObject obj in currentEnemiesList)
         {
+            if (!obj.activeInHierarchy)
+                continue;
             if (Vector3.Distance(lockOnCheckPosition.position, obj.transform.position) < Vector3.Distance(transform.position, currentTarget.transform.position)-minDistanceBetweenRetargets)
                 currentTarget = obj;
         }
@@ -184,12 +186,15 @@ public class CombatPlayerMovement : MonoBehaviour
 
             lockOnIcon.SetActive(false);
         }
+        if (!currentTarget.activeInHierarchy)
+            currentTarget = null;
 
     }
     void LookAtCurrentTarget()
     {
         if (!currentTarget)
             return;
+       
         transform.LookAt(currentTarget.transform);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }

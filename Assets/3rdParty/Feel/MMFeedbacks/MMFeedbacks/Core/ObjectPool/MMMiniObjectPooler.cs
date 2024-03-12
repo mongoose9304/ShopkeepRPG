@@ -191,6 +191,21 @@ namespace MoreMountains.Feedbacks
 		}
 
 		/// <summary>
+		/// Resets All Active Objects
+		/// </summary>
+		/// <returns>The pooled game object.</returns>
+		public virtual void ResetAllObjects()
+		{
+			// we go through the pool looking for an inactive object
+			for (int i = 0; i < _objectPool.PooledGameObjects.Count; i++)
+			{
+				_objectPool.PooledGameObjects[i].gameObject.SetActive(false);
+				
+			}
+			
+		}
+
+		/// <summary>
 		/// Adds one object of the specified type (in the inspector) to the pool.
 		/// </summary>
 		/// <returns>The one object to the pool.</returns>
