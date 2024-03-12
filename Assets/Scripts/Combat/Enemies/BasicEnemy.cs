@@ -20,7 +20,7 @@ public class BasicEnemy : MonoBehaviour
     public bool canMove;
     float currentTimeStunned;
     protected float currentHitstun;
-    float currentAttackCooldown;
+    float currentAttackCooldown=0.2f;
     float currentHealth;
     Element myWeakness;
     float currentKnockbackPower;
@@ -48,6 +48,7 @@ public class BasicEnemy : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        
         currentHealth = maxHealth;
         //determine my weakness
         switch(myElement)
@@ -81,9 +82,12 @@ public class BasicEnemy : MonoBehaviour
         WaitingToAttack();
         
     }
+    private void OnEnable()
+    {
+        currentHealth = maxHealth;
+    }
 
-
-//Check if the enemy is stunned and activate superarmor if it has been too much time stunned
+    //Check if the enemy is stunned and activate superarmor if it has been too much time stunned
     protected void CheckStun()
     {
         stunIcon.SetActive(true);

@@ -180,14 +180,15 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             lockOnIcon.transform.position = currentTarget.transform.position;
             lockOnIcon.SetActive(true);
+            if (!currentTarget.activeInHierarchy)
+                currentTarget = null;
         }
         else
         {
 
             lockOnIcon.SetActive(false);
         }
-        if (!currentTarget.activeInHierarchy)
-            currentTarget = null;
+       
 
     }
     void LookAtCurrentTarget()
