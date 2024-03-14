@@ -8,7 +8,6 @@ public class BasicMeleeObject : MonoBehaviour
     [SerializeField] private Quaternion startRotaton;
     [SerializeField] private Quaternion startRotatonB;
     [SerializeField] private float attackDurationMax;
-    [SerializeField] private float framePauseDurationMax;
     private float attackDurationCurrent;
     [SerializeField] private float damage;
     [SerializeField] private Element damageType;
@@ -17,18 +16,13 @@ public class BasicMeleeObject : MonoBehaviour
     
      private bool queuedAttack;
      private bool rightAttackDirection;
-    private float framePauseDuration;
 
     private void Update()
     {
         if(weaponObject.activeInHierarchy)
         {
 
-            if(framePauseDuration>0)
-            {
-                framePauseDuration -= Time.deltaTime;
-                return;
-            }
+           
             if(rightAttackDirection)
             transform.Rotate(0.0f, swingSpeed*Time.deltaTime, 0.0f, Space.Self);
             else
@@ -80,9 +74,6 @@ public class BasicMeleeObject : MonoBehaviour
     {
         queuedAttack = false;
     }
-    public void PauseOnHitEffect()
-    {
-        framePauseDuration = framePauseDurationMax;
-    }
+  
    
 }

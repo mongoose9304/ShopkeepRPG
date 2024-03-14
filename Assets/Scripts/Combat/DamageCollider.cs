@@ -18,8 +18,7 @@ public class DamageCollider : MonoBehaviour
             if(other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
                 basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject) ;
-                if (meleeObject)
-                    meleeObject.PauseOnHitEffect();
+               
             }
         }
     }
