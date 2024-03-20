@@ -20,6 +20,7 @@ public class TempEnemySpawner : MonoBehaviour
           obj=  pooler.GetPooledGameObject();
           obj.transform.position = spawns[Random.Range(0, spawns.Length)].position;
             obj.SetActive(true);
+            if(!GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().GetCurrentEnemyList().Contains(obj))
              GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().AddEnemy(obj);
         }
     }
@@ -34,7 +35,8 @@ public class TempEnemySpawner : MonoBehaviour
             obj = pooler.GetPooledGameObject();
             obj.transform.position = spawns[Random.Range(0, spawns.Length)].position;
             obj.SetActive(true);
-            GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().AddEnemy(obj);
+            if (!GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().GetCurrentEnemyList().Contains(obj))
+                GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().AddEnemy(obj);
         }
     }
 }

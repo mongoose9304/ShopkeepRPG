@@ -400,7 +400,7 @@ namespace MoreMountains.Feedbacks
 
 			_direction = (direction != Vector3.zero) ? direction + this.transform.up : this.transform.up;
 
-			this.transform.position = position;
+			//this.transform.position = position;
 
 			GameObject nextGameObject = _pooler.GetPooledGameObject();
 

@@ -68,6 +68,9 @@ public class BasicEnemy : MonoBehaviour
         }
         currentHealth = maxHealth;
         floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
+        //fix this later, if the enemies have the same channel thier damage numbers will appear even if they are not hit =(
+        floatingText.Channel = Random.Range(0, 1000000);
+        textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
         attackIconPooler = GetComponent<MMMiniObjectPooler>();
     }
 
@@ -113,7 +116,7 @@ public class BasicEnemy : MonoBehaviour
     //Application of damage
     public void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null)
     {
-
+       
         if (!superArmor)
         {
             currentHitstun += hitstun_;
@@ -130,6 +133,7 @@ public class BasicEnemy : MonoBehaviour
             return;
         }
         floatingText.Value = damage_.ToString();
+        if(textSpawner)
         textSpawner.PlayFeedbacks();
         if (hitEffects)
             hitEffects.PlayFeedbacks();

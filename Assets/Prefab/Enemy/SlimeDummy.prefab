@@ -254,7 +254,6 @@ GameObject:
   - component: {fileID: 7475818529260720904}
   - component: {fileID: 2772610368145284611}
   - component: {fileID: 2334537997967041440}
-  - component: {fileID: 9073460552479662898}
   m_Layer: 0
   m_Name: DamageTextSpawner
   m_TagString: Untagged
@@ -605,7 +604,7 @@ MonoBehaviour:
   FeedbacksIntensity: 1
   Events:
     TriggerMMFeedbacksEvents: 0
-    TriggerUnityEvents: 1
+    TriggerUnityEvents: 0
     OnPlay:
       m_PersistentCalls:
         m_Calls: []
@@ -646,7 +645,7 @@ MonoBehaviour:
         Label: Floating Text
         ChannelMode: 0
         Channel: 0
-        MMChannelDefinition: {fileID: 0}
+        MMChannelDefinition: {fileID: 11400000, guid: 6ba165fd91edb434aa2f1cd6f6b05885, type: 2}
         Chance: 100
         DisplayColor: {r: 1, g: 1, b: 1, a: 1}
         Timing:
@@ -743,13 +742,13 @@ MonoBehaviour:
           m_NumAlphaKeys: 2
         ForceLifetime: 0
         Lifetime: 0.5
-        PositionMode: 1
+        PositionMode: 2
         TargetTransform: {fileID: 0}
         Direction: {x: 0, y: 0, z: 0}
     - rid: 6620153199442264067
       type: {class: MMF_Wiggle, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -1542481343
         Label: Wiggle
         ChannelMode: 0
@@ -821,18 +820,6 @@ MonoBehaviour:
         WiggleRotationDuration: 0
         WiggleScale: 0
         WiggleScaleDuration: 0
---- !u!114 &9073460552479662898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4390442326397100703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c58e2e3fd12f73744a0f3ed6fa0e7a07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4629908058998880066
 GameObject:
   m_ObjectHideFlags: 0

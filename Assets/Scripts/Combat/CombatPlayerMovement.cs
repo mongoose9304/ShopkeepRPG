@@ -26,6 +26,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] GameObject lockOnIcon;
     [SerializeField] Transform lockOnCheckPosition;
     [SerializeField] List<GameObject> currentEnemiesList=new List<GameObject>();
+    
     [SerializeField] string enemyTag;
     [SerializeField] float minDistanceBetweenRetargets;
     [SerializeField] float MaxLockOnDistance;
@@ -211,6 +212,10 @@ public class CombatPlayerMovement : MonoBehaviour
     {
 
         currentEnemiesList.Add(obj_);
+    }
+    public List<GameObject> GetCurrentEnemyList()
+    {
+        return currentEnemiesList;
     }
     private void CleanCurrentEnemyList()
     {
