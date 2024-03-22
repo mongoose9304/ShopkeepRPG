@@ -20,7 +20,7 @@ public class CombatPlayerMovement : MonoBehaviour
    [SerializeField] LayerMask wallMask;
     GameObject lockOnTarget;
     [SerializeField] GameObject dashEffect;
-
+    [SerializeField] CombatPlayerActions combatActions;
     //targeting and lock on
     [SerializeField] GameObject currentTarget;
     [SerializeField] bool hardLockOn;
@@ -56,6 +56,8 @@ public class CombatPlayerMovement : MonoBehaviour
     void Update()
     {
         ChargeMana();
+        if (combatActions.isBusy)
+            return;
         GetInput();
      moveInput=PreventGoingThroughWalls(moveInput);
         CheckForSoftLockOn();

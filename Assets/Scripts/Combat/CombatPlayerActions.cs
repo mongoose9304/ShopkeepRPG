@@ -18,6 +18,12 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private List<GameObject> projectiles=new List<GameObject>();
     [SerializeField] private int projectileLimit;
     [SerializeField] Transform spawnPosition;
+    [Header("SpecialAttacks")]
+    [SerializeField] PlayerSpecialAttack specialA;
+    float currentSpecialACooldown;
+    [SerializeField] PlayerSpecialAttack specialB;
+    public bool isBusy;
+    float currentSpecialBCooldown;
     private GameObject tempObj;
     private void Start()
     {
@@ -25,6 +31,16 @@ public class CombatPlayerActions : MonoBehaviour
     }
     private void Update()
     {
+        if(specialA.isBusy||specialB.isBusy)
+        {
+            isBusy = true;
+            return;
+        }
+        else
+        {
+            isBusy = false;
+        }
+
         if(Input.GetButton("Fire1"))
         {
            
@@ -35,10 +51,17 @@ public class CombatPlayerActions : MonoBehaviour
         {
             BasicRanged();
         }
+        else if(Input.GetButton("Special1"))
+        {
+            UseSpecialAttack(true);
+        }
+        else if (Input.GetButton("Special2"))
+        {
+            UseSpecialAttack(false);
+        }
 
 
-
-        if(Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire1"))
         {
             meleeObject.ReleaseMeleeButton();
         }
@@ -49,6 +72,8 @@ public class CombatPlayerActions : MonoBehaviour
     {
         BasicMeleeCooldown -= Time.deltaTime;
         currentFireRate -= Time.deltaTime;
+        currentSpecialACooldown -= Time.deltaTime;
+        currentSpecialBCooldown -= Time.deltaTime;
     }
 
     private void BasicMelee()
@@ -75,6 +100,30 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = null;
             currentFireRate = fireRate;
         }
+    }
+    private void UseSpecialAttack(bool specialA_)
+    {
+        if (specialA.isBusy || specialB.isBusy)
+            return;
+
+        if(specialA_)
+        {
+            if (combatMovement.GetCurrentMana() < specialA.manaCost||currentSpecialACooldown>0)
+                return;
+
+            currentSpecialACooldown = specialA.maxCoolDown;
+            specialA.OnPress(this.gameObject);
+            Debug.Log("SpecA");
+        }
+        else
+        {
+            if (combatMovement.GetCurrentMana() < specialB.manaCost || currentSpecialBCooldown > 0)
+                return;
+            currentSpecialBCooldown = specialB.maxCoolDown;
+            specialB.OnPress(this.gameObject);
+            Debug.Log("SpecB");
+        }
+
     }
     private void SetUpProjectiles()
     {
