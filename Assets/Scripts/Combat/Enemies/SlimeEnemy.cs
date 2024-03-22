@@ -7,6 +7,7 @@ public class SlimeEnemy : BasicEnemy
     [SerializeField] Vector3 jumpSpeed;
     [SerializeField] float jumpHeight;
     [SerializeField] float lowestJumpPercentage;
+    public float slamRange;
     float jumpStart;
      float jumpEnd;
     float currentJumpPercentage;
@@ -41,6 +42,14 @@ public class SlimeEnemy : BasicEnemy
         agent.enabled = true;
         EndAttack();
         Instantiate(slamParticleEffect, transform.position, Quaternion.Euler(new Vector3(-90,0,0)));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRange);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.tag == "Player")
+            {
+                hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage,0,myElement,0,this.gameObject);
+            }
+        }
     }
     private void SlamDown()
     {

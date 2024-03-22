@@ -15,6 +15,7 @@ public class BasicEnemy : MonoBehaviour
     public float moveSpeed;
     public float attackDistance;
     public float knockBackMax;
+    public float damage;
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     [Header("CurrentValues")]
     public bool canMove;

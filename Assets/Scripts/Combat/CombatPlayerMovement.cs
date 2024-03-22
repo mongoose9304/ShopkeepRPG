@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Tools;
 public class CombatPlayerMovement : MonoBehaviour
 {
     public float maxdashCoolDown;
@@ -30,9 +30,20 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] string enemyTag;
     [SerializeField] float minDistanceBetweenRetargets;
     [SerializeField] float MaxLockOnDistance;
+    [Header("UI")]
+    public MMProgressBar healthBar;
+    //put stats in a script where all player stats can be held later. Only here for temp testing
+    public float maxHealth;
+    public Element myWeakness;
+    public float maxMana;
+    float currentHealth;
+    float currentMana;
+    private GameObject tempObj;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        currentHealth = maxHealth;
+        currentMana = maxMana;
     }
     // Update is called once per frame
 
@@ -227,5 +238,24 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         return currentTarget;
     }
+    public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    {
         
+        if (element_ == myWeakness && element_ != Element.Neutral)
+        {
+            damage_ *= 1.5f;
+        }
+        currentHealth -= damage_;
+        if (currentHealth <= 0)
+        {
+            Death();
+            return;
+        }
+        healthBar.UpdateBar01(currentHealth/maxHealth);
+       
+    }
+    public void Death()
+    {
+
+    }
 }

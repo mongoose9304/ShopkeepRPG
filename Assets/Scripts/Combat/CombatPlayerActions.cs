@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CombatPlayerActions : MonoBehaviour
 {
     [SerializeField] CombatPlayerMovement combatMovement;
@@ -16,9 +15,7 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private GameObject rangedProjectile;
     [SerializeField] private List<GameObject> projectiles=new List<GameObject>();
     [SerializeField] private int projectileLimit;
-
     [SerializeField] Transform spawnPosition;
-    
     private GameObject tempObj;
     private void Start()
     {
