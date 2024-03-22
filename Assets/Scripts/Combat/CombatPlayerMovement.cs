@@ -11,6 +11,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public float dashDistance;
     public float dashCoolDown;
     public float dashTime;
+    public float dashCost;
     public bool isDashing;
     Vector3 moveInput;
     Vector3 newInput;
@@ -30,15 +31,20 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] string enemyTag;
     [SerializeField] float minDistanceBetweenRetargets;
     [SerializeField] float MaxLockOnDistance;
-    [Header("UI")]
-    public MMProgressBar healthBar;
+   
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     public Element myWeakness;
     public float maxMana;
+    public float maxManaRechargeDelay;
+    public float manaRechargeRate;
     float currentHealth;
     float currentMana;
+    float currentManaRechargeDelay;
     private GameObject tempObj;
+    [Header("UI")]
+    public MMProgressBar healthBar;
+    public MMProgressBar manaBar;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,6 +55,7 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        ChargeMana();
         GetInput();
      moveInput=PreventGoingThroughWalls(moveInput);
         CheckForSoftLockOn();
@@ -106,6 +113,9 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void DashAction()
     {
+        if (currentMana < dashCost)
+            return;
+        UseMana(dashCost);
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         isDashing = true;
@@ -257,5 +267,30 @@ public class CombatPlayerMovement : MonoBehaviour
     public void Death()
     {
 
+    }
+    public float GetCurrentMana()
+    {
+        return currentMana;
+    }
+    public void UseMana(float manaToUse_)
+    {
+        currentMana -= manaToUse_;
+        manaBar.UpdateBar01(currentMana / maxMana);
+        currentManaRechargeDelay = maxManaRechargeDelay;
+
+    }
+    private void ChargeMana()
+    {
+        if (currentManaRechargeDelay > 0)
+        {
+            currentManaRechargeDelay -= Time.deltaTime;
+            return;
+        }
+      
+        currentMana += manaRechargeRate * Time.deltaTime;
+
+        if (currentMana >= maxMana)
+            currentMana = maxMana;
+        manaBar.UpdateBar01(currentMana / maxMana);
     }
 }

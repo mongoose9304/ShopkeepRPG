@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class CombatPlayerActions : MonoBehaviour
 {
     [SerializeField] CombatPlayerMovement combatMovement;
@@ -11,6 +12,7 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] BasicMeleeObject meleeObject;
     [Header("BasicRanged")]
     [SerializeField] private float fireRate;
+    [SerializeField] private float fireCost;
     private float currentFireRate = 0.0f;
     [SerializeField] private GameObject rangedProjectile;
     [SerializeField] private List<GameObject> projectiles=new List<GameObject>();
@@ -60,6 +62,9 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if(currentFireRate<=0)
         {
+            if (combatMovement.GetCurrentMana() < fireCost)
+                return;
+            combatMovement.UseMana(fireCost);
             tempObj = GetAvailableProjectile();
             tempObj.transform.position = spawnPosition.position;
             tempObj.transform.rotation = spawnPosition.rotation;
