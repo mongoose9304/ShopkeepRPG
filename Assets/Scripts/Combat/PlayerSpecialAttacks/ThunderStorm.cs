@@ -7,6 +7,7 @@ public class ThunderStorm : PlayerSpecialAttack
     public GameObject particleEffect;
     [SerializeField] float lowestJumpPercentage;
     [SerializeField] Vector3 jumpSpeed;
+    [SerializeField]float slamRange;
     bool isJumping;
     bool isLanding;
     public float jumpHeight;
@@ -45,7 +46,15 @@ public class ThunderStorm : PlayerSpecialAttack
             {
                 isLanding = false;
                 isBusy = false;
-                
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRange);
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.tag == "Enemy")
+                    {
+                        hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(baseDamage, 0, myElement, 0, this.gameObject);
+                    }
+                }
+
             }
         }
 

@@ -9,6 +9,7 @@ public class PlayerSpecialAttack : MonoBehaviour
     public float baseDamage;
     public bool isBusy;
     public GameObject Player;
+    public Element myElement;
 
     public virtual void OnPress(GameObject obj_)
     {

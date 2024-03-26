@@ -110,7 +110,7 @@ public class CombatPlayerActions : MonoBehaviour
         {
             if (combatMovement.GetCurrentMana() < specialA.manaCost||currentSpecialACooldown>0)
                 return;
-
+            combatMovement.UseMana(specialA.manaCost);
             currentSpecialACooldown = specialA.maxCoolDown;
             specialA.OnPress(this.gameObject);
             Debug.Log("SpecA");
@@ -119,6 +119,7 @@ public class CombatPlayerActions : MonoBehaviour
         {
             if (combatMovement.GetCurrentMana() < specialB.manaCost || currentSpecialBCooldown > 0)
                 return;
+            combatMovement.UseMana(specialB.manaCost);
             currentSpecialBCooldown = specialB.maxCoolDown;
             specialB.OnPress(this.gameObject);
             Debug.Log("SpecB");
