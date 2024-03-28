@@ -17,4 +17,20 @@ public class BasicMonsterData : ScriptableObject
     [Tooltip("background information on monster")]
     public string lore;
     //add battle stats
+    public int level;
+    public float baseHealth;
+    public float baseDamage;
+    public float healthPerLevel;
+    public float damagePerLevel;
+
+    public float CalculateHealth()
+    {
+        return baseHealth + (level - 1) * healthPerLevel;
+    }
+    public float CalculateDamage()
+    {
+        return baseDamage + (level - 1) * damagePerLevel;
+    }
+
+
 }

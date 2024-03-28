@@ -149,7 +149,8 @@ public class BasicEnemy : MonoBehaviour
     {
         gameObject.SetActive(false);
         attackIconPooler.ResetAllObjects();
-        Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
+        //death effects buggy RN, add later -Rob
+      //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
    
     public virtual void Attack()
