@@ -42,8 +42,11 @@ public class HomingAttack : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag!="Player")
-        this.gameObject.SetActive(false);
+        if (other.tag != "Player" && other.tag != "Familiar")
+        {
+            Debug.Log(other.tag);
+            this.gameObject.SetActive(false);
+        }
     }
 
 }
