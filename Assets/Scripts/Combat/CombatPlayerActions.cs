@@ -22,6 +22,7 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] PlayerSpecialAttack specialA;
     float currentSpecialACooldown;
     [SerializeField] PlayerSpecialAttack specialB;
+    [SerializeField] CombatFamiliar myFamiliar;
     public bool isBusy;
     float currentSpecialBCooldown;
     private GameObject tempObj;
@@ -58,6 +59,10 @@ public class CombatPlayerActions : MonoBehaviour
         else if (Input.GetButton("Special2"))
         {
             UseSpecialAttack(false);
+        }
+        else if (Input.GetButton("Special3"))
+        {
+            UseFamiliarUltimate();
         }
 
 
@@ -125,6 +130,13 @@ public class CombatPlayerActions : MonoBehaviour
             Debug.Log("SpecB");
         }
 
+    }
+    private void UseFamiliarUltimate()
+    {
+        if(myFamiliar)
+        {
+            myFamiliar.UltimateAttack();
+        }
     }
     private void SetUpProjectiles()
     {

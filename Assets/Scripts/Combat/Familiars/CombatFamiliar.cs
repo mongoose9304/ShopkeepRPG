@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class CombatFamiliar : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] protected GameObject player;
     public GameObject target;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField]protected  float specialAttackCooldownMax;
@@ -51,7 +51,7 @@ public class CombatFamiliar : MonoBehaviour
 
     public virtual void EnemyDetection()
     {
-
+       
         if(!target)
         {
             if(!hasLookedForNewtarget)
@@ -94,6 +94,8 @@ public class CombatFamiliar : MonoBehaviour
         {
             target = null;
         }
+        if(!target.activeInHierarchy)
+            target = null;
     }
 
 
