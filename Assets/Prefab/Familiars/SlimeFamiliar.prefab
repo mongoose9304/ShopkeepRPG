@@ -927,11 +927,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -1004,10 +1004,19 @@ MonoBehaviour:
   agent: {fileID: 8608462071610935158}
   specialAttackCooldownMax: 5
   ultimateAttackCooldownMax: 5
+  AttackCooldownMax: 0.75
   maxDistanceToPlayer: 7
   maxDistanceToTarget: 15
   respawnTimeMax: 9
+  delayBeforeLookingForAnotherTargetMax: 1
   monsterData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
+  lowestJumpPercentage: 0.25
+  slamAttackDistance: 4
+  AttackDistance: 1
+  jumpHeight: 4
+  jumpSpeed: {x: 0, y: 16, z: 0}
+  slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
+  slamRange: 5
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0
@@ -6301,8 +6310,6 @@ GameObject:
   m_Component:
   - component: {fileID: 318051928260299996}
   - component: {fileID: 3187071630804490603}
-  - component: {fileID: 6946181411175929932}
-  - component: {fileID: 2042066345779608229}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Familiar
@@ -6333,40 +6340,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8349249554637019805}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &6946181411175929932
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8349249554637019805}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2042066345779608229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8349249554637019805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd69ed80932da8f43a143f261aedfccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  combatFamiliar: {fileID: 6937294402763450928}
 --- !u!1 &8634182001094996640
 GameObject:
   m_ObjectHideFlags: 0

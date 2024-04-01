@@ -8,15 +8,20 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] GameObject player;
     public GameObject target;
     [SerializeField] protected NavMeshAgent agent;
-    [SerializeField] float specialAttackCooldownMax;
-    [SerializeField] float ultimateAttackCooldownMax;
-    float specialAttackCooldowncurrent;
-    float ultimateAttackCooldowncurrent;
+    [SerializeField]protected  float specialAttackCooldownMax;
+    [SerializeField]protected float ultimateAttackCooldownMax;
+    [SerializeField]protected float AttackCooldownMax;
+    protected float specialAttackCooldowncurrent;
+    protected float AttackCooldowncurrent;
+    protected float ultimateAttackCooldowncurrent;
+    protected Animator anim;
     [SerializeField] float maxDistanceToPlayer;
     [SerializeField] float maxDistanceToTarget;
     [SerializeField] float respawnTimeMax;
+    [SerializeField] float delayBeforeLookingForAnotherTargetMax;
+    float delayBeforeLookingForAnotherTargetCurrent;
     float respawnTimeCurrent;
-    [SerializeField] BasicMonsterData monsterData;
+   [SerializeField] protected BasicMonsterData monsterData;
     float currentHealth;
     float damage;
     bool hasLookedForNewtarget;
@@ -26,7 +31,8 @@ public class CombatFamiliar : MonoBehaviour
         ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
         currentHealth = monsterData.CalculateHealth();
         damage = monsterData.CalculateDamage();
-        player = GameObject.FindGameObjectWithTag("Player");        
+        player = GameObject.FindGameObjectWithTag("Player");
+        anim = GetComponent<Animator>();
     }
     protected virtual void Update()
     {
@@ -66,6 +72,15 @@ public class CombatFamiliar : MonoBehaviour
                             }
                         }
                     }
+                }
+            }
+            else
+            {
+                delayBeforeLookingForAnotherTargetCurrent -= Time.deltaTime;
+                if(delayBeforeLookingForAnotherTargetCurrent <= 0)
+                {
+                    hasLookedForNewtarget = false;
+                    delayBeforeLookingForAnotherTargetCurrent = delayBeforeLookingForAnotherTargetMax;
                 }
             }
             return;
