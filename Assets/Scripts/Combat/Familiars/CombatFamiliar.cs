@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,11 +14,15 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] protected NavMeshAgent agent;
     public GameObject target;
     protected Animator anim;
+    private CombatPlayerMovement combatPlayerMovement;
+    private CombatPlayerActions combatPlayerActions;
     [SerializeField] protected BasicMonsterData monsterData;
+    Element myWeakness;
     [Header("Stats")]
     [SerializeField]protected  float specialAttackCooldownMax;
     [SerializeField]protected float ultimateAttackCooldownMax;
     [SerializeField]protected float AttackCooldownMax;
+    [SerializeField]public float RespawnTimeMax;
     protected float specialAttackCooldowncurrent;
     protected float AttackCooldowncurrent;
     protected float ultimateAttackCooldowncurrent;
@@ -26,10 +31,13 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] float respawnTimeMax;
     [SerializeField] float delayBeforeLookingForAnotherTargetMax;
     float delayBeforeLookingForAnotherTargetCurrent;
-    float respawnTimeCurrent;
     float currentHealth;
     float damage;
     bool hasLookedForNewtarget;
+    [Header("Feel")]
+    [SerializeField] MMF_Player textSpawner;
+    [SerializeField] MMF_Player hitEffects;
+    public MMF_FloatingText floatingText;
     protected virtual void Start()
     {
         specialAttackCooldowncurrent = specialAttackCooldownMax;
@@ -37,7 +45,17 @@ public class CombatFamiliar : MonoBehaviour
         currentHealth = monsterData.CalculateHealth();
         damage = monsterData.CalculateDamage();
         player = GameObject.FindGameObjectWithTag("Player");
+        if(player)
+        {
+            combatPlayerMovement = player.GetComponent<CombatPlayerMovement>();
+            combatPlayerActions = player.GetComponent<CombatPlayerActions>();
+        }
         anim = GetComponent<Animator>();
+        CalculateWeakness();
+        floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
+        //fix this later, if the enemies have the same channel their damage numbers will appear even if they are not hit =(
+        floatingText.Channel = Random.Range(0, 1000000);
+        textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
     }
     protected virtual void Update()
     {
@@ -107,7 +125,29 @@ public class CombatFamiliar : MonoBehaviour
         if(!target.activeInHierarchy)
             target = null;
     }
-
+    public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    {
+        if (element_ == myWeakness && element_ != Element.Neutral)
+        {
+            damage_ *= 1.5f;
+        }
+        currentHealth -= damage_;
+        if (currentHealth <= 0)
+        {
+            Death();
+            return;
+        }
+        floatingText.Value = damage_.ToString();
+        if (textSpawner)
+            textSpawner.PlayFeedbacks();
+        if (hitEffects)
+            hitEffects.PlayFeedbacks();
+        combatPlayerMovement.UpdateFamiliarHealth(currentHealth/monsterData.CalculateHealth());
+    }
+    private void Death()
+    {
+        combatPlayerActions.FamiliarDeath(respawnTimeMax);
+    }
     /// <summary>
     /// The most basic attack the familar knows
     /// </summary>
@@ -128,5 +168,23 @@ public class CombatFamiliar : MonoBehaviour
     public virtual void UltimateAttack()
     {
 
+    }
+    private void CalculateWeakness()
+    {
+        switch (monsterData.element)
+        {
+            case Element.Fire:
+                myWeakness = Element.Water;
+                break;
+            case Element.Water:
+                myWeakness = Element.Earth;
+                break;
+            case Element.Air:
+                myWeakness = Element.Earth;
+                break;
+            case Element.Earth:
+                myWeakness = Element.Fire;
+                break;
+        }
     }
 }

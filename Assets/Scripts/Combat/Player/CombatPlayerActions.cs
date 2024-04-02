@@ -22,9 +22,11 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] PlayerSpecialAttack specialA;
     float currentSpecialACooldown;
     [SerializeField] PlayerSpecialAttack specialB;
-    [SerializeField] CombatFamiliar myFamiliar;
     public bool isBusy;
     float currentSpecialBCooldown;
+    [Header("Familiar")]
+    [SerializeField] CombatFamiliar myFamiliar;
+    float familarRespawnTimer;
     private GameObject tempObj;
     private void Start()
     {
@@ -79,6 +81,15 @@ public class CombatPlayerActions : MonoBehaviour
         currentFireRate -= Time.deltaTime;
         currentSpecialACooldown -= Time.deltaTime;
         currentSpecialBCooldown -= Time.deltaTime;
+        if(familarRespawnTimer>0)
+        {
+            familarRespawnTimer -= Time.deltaTime;
+            if(familarRespawnTimer <= 0)
+            {
+                RespawnFamiliar();
+            }
+        }
+       
     }
 
     private void BasicMelee()
@@ -135,6 +146,7 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if(myFamiliar)
         {
+            if(familarRespawnTimer<=0)
             myFamiliar.UltimateAttack();
         }
     }
@@ -163,5 +175,13 @@ public class CombatPlayerActions : MonoBehaviour
         }
         return null;
     }
-   
+   public void FamiliarDeath(float respawnTime_)
+    {
+        familarRespawnTimer = respawnTime_;
+    }
+    public void RespawnFamiliar()
+    {
+        myFamiliar.transform.position = this.transform.position + new Vector3(2,0,0);
+        myFamiliar.gameObject.SetActive(true);
+    }
 }

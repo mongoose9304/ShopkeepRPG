@@ -1000,8 +1000,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  target: {fileID: 0}
   agent: {fileID: 8608462071610935158}
+  target: {fileID: 0}
+  monsterData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
   specialAttackCooldownMax: 5
   ultimateAttackCooldownMax: 5
   AttackCooldownMax: 0.75
@@ -1009,13 +1010,14 @@ MonoBehaviour:
   maxDistanceToTarget: 15
   respawnTimeMax: 9
   delayBeforeLookingForAnotherTargetMax: 1
-  monsterData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
+  textSpawner: {fileID: 2334537997967041440}
+  hitEffects: {fileID: 6735126338250919985}
+  slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   lowestJumpPercentage: 0.25
   slamAttackDistance: 4
   AttackDistance: 1
   jumpHeight: 4
   jumpSpeed: {x: 0, y: 16, z: 0}
-  slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   slamRange: 5
 --- !u!1 &5371057260661388563
 GameObject:

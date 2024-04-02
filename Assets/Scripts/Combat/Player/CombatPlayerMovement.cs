@@ -45,6 +45,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [Header("UI")]
     public MMProgressBar healthBar;
     public MMProgressBar manaBar;
+    public MMProgressBar familiarHealthBar;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -280,6 +281,10 @@ public class CombatPlayerMovement : MonoBehaviour
         manaBar.UpdateBar01(currentMana / maxMana);
         currentManaRechargeDelay = maxManaRechargeDelay;
 
+    }
+    public void UpdateFamiliarHealth(float health_)
+    {
+        familiarHealthBar.UpdateBar01(health_);
     }
     private void ChargeMana()
     {
