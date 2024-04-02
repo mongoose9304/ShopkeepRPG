@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using MoreMountains.Feedbacks;
-// this is a mostly virtual class all the enemies should inherit from. Contains all the default things enemies need. 
+/// <summary>
+/// This is a mostly virtual class all the enemies should inherit from. Contains all the default things enemies need. 
+/// </summary>
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
@@ -16,20 +18,20 @@ public class BasicEnemy : MonoBehaviour
     public float attackDistance;
     public float knockBackMax;
     public float damage;
-    //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     [Header("CurrentValues")]
     public bool canMove;
     float currentTimeStunned;
+    //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     protected float currentHitstun;
     float currentAttackCooldown=0.2f;
     float currentHealth;
-    Element myWeakness;
     float currentKnockbackPower;
     float currentKnockbackTime;
     private Vector3 knockbackRefVector;
     Vector3 knockBackDirection;
     bool superArmor;
     [Header("References")]
+    Element myWeakness;
     public GameObject stunIcon;
     public GameObject player;
     [SerializeField]protected NavMeshAgent agent;
@@ -38,7 +40,6 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [SerializeField] GameObject[] deathEffects;
-    float currentDamageTextAlpha;
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
@@ -91,7 +92,9 @@ public class BasicEnemy : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    //Check if the enemy is stunned and activate superarmor if it has been too much time stunned
+    /// <summary>
+    /// Checks if the enemy is stunned and activate superarmor if it has been too much time stunned
+    /// </summary>
     protected void CheckStun()
     {
         stunIcon.SetActive(true);
@@ -114,7 +117,14 @@ public class BasicEnemy : MonoBehaviour
 
     }
 
-    //Application of damage
+    /// <summary>
+    /// Application of damage. (Includes stuns, element weaknesses, knockback and the direction of said knockback)
+    /// </summary>
+    /// <param name="damage_">The damage to take before defence or weakness calculations</param>
+    /// <param name="hitstun_">The time the enemy will be stunned for after this attack</param>
+    /// <param name="element_">The element of the damage</param>
+    /// <param name="knockBack_">The magnitude of the knockback</param>
+    /// <param name="knockBackObject">The object initiating the knockback effect</param>
     public void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null)
     {
        
@@ -145,6 +155,9 @@ public class BasicEnemy : MonoBehaviour
            currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
         */
     }
+    /// <summary>
+    /// This will happen when the enemy runs out of health
+    /// </summary>
     public virtual void Death()
     {
         gameObject.SetActive(false);
@@ -152,18 +165,27 @@ public class BasicEnemy : MonoBehaviour
         //death effects buggy RN, add later -Rob
       //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
-   
+
+    /// <summary>
+    /// The enemy's basic attack
+    /// </summary>
     public virtual void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
             return;
     }
 
+    /// <summary>
+    /// Reset super armor once the enemy has got a a chance to attack
+    /// </summary>
     public void EndAttack()
     {
         superArmor = false;
         attackIconPooler.ResetAllObjects();
     }
+    /// <summary>
+    /// Move towards the player when allowed to
+    /// </summary>
     public virtual void Move()
     {
         if (canMove)
@@ -171,6 +193,9 @@ public class BasicEnemy : MonoBehaviour
         else
             agent.ResetPath();
     }
+    /// <summary>
+    /// Attack cooldowns
+    /// </summary>
     public void WaitingToAttack()
     {
         
@@ -183,7 +208,9 @@ public class BasicEnemy : MonoBehaviour
             Attack();
         }
     }
-   
+    /// <summary>
+    /// Kockbacked behavior 
+    /// </summary>
     private void KnockBack(float knockBackPower,GameObject knockBackObject)
     {
         if (knockBackPower <= 0||!knockBackObject)

@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A jump/slam aoe attack
+/// </summary>
 public class ThunderStorm : PlayerSpecialAttack
 {
+    [Header("Referecnes")]
     public GameObject particleEffect;
-    [SerializeField] float lowestJumpPercentage;
-    [SerializeField] Vector3 jumpSpeed;
-    [SerializeField]float slamRange;
     bool isJumping;
     bool isLanding;
-    public float jumpHeight;
     float jumpEnd;
     float jumpStart;
     float currentJumpPercentage;
+    [Header("Stats")]
+    [SerializeField] float lowestJumpPercentage;
+    [SerializeField] Vector3 jumpSpeed;
+    [SerializeField]float slamRange;
+    public float jumpHeight;
     public override void OnPress(GameObject obj_)
     {
         Player = obj_;

@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class SlimeFamiliar : CombatFamiliar
 {
+    [Header("Referecnes")]
+    public GameObject slamParticleEffect;
     bool isJumping;
     bool canMove;
     bool isSlaming;
     bool isUltimateJumping;
-    float jumpStart;
-    float jumpEnd;
-    float currentJumpPercentage;
+    [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
     public float AttackDistance;
     public float jumpHeight;
     public Vector3 jumpSpeed;
-    public GameObject slamParticleEffect;
     public float slamRange;
+    float currentJumpPercentage;
+    float jumpStart;
+    float jumpEnd;
   
     public override void Attack()
     {
@@ -69,8 +71,7 @@ public class SlimeFamiliar : CombatFamiliar
         {
             FollowPlayer();
             EnemyDetection();
-            WaitToSpecialAttack();
-            WaitToAttack();
+            WaitForAttacks();
            if(agent.velocity != Vector3.zero)
             {
                 anim.SetBool("isWalking", true);
@@ -111,6 +112,9 @@ public class SlimeFamiliar : CombatFamiliar
             }
         }
     }
+    /// <summary>
+    /// The behavior when the slime lands thier jump (damage and particle effects)
+    /// </summary>
     private void LandJump()
     {
         canMove = true;
@@ -146,31 +150,33 @@ public class SlimeFamiliar : CombatFamiliar
             }
         }
     }
+    /// <summary>
+    /// The behavior when the slime hits the apex of thier jump
+    /// </summary>
     private void SlamDown()
     {
         isSlaming = true;
 
     }
+    /// <summary>
+    /// Calculates the damage of the slam
+    /// </summary>
     private float SlamDamage()
     {
         return monsterData.CalculateDamage() * 3;
     }
+    /// <summary>
+    /// Calculates the damage of the ultimate slam
+    /// </summary>
     private float UltimateSlamDamage()
     {
         return monsterData.CalculateDamage() * 9;
     }
-    private void WaitToSpecialAttack()
-    {
-        specialAttackCooldowncurrent -= Time.deltaTime;
 
-        if (specialAttackCooldowncurrent <= 0)
-        {
-
-            specialAttackCooldowncurrent = specialAttackCooldownMax;
-            SpecialAttack();
-        }
-    }
-    private void WaitToAttack()
+    /// <summary>
+    /// Cooldowns for attacks
+    /// </summary>
+    private void WaitForAttacks()
     {
         AttackCooldowncurrent -= Time.deltaTime;
         ultimateAttackCooldowncurrent -= Time.deltaTime;
@@ -179,6 +185,12 @@ public class SlimeFamiliar : CombatFamiliar
 
             AttackCooldowncurrent = AttackCooldownMax;
             Attack();
+        }
+        else if (specialAttackCooldowncurrent <= 0)
+        {
+
+            specialAttackCooldowncurrent = specialAttackCooldownMax;
+            SpecialAttack();
         }
     }
 }

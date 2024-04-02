@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The absolute data of a monster. This does not inlcude any stats that are modified by a player. These are the monsters default data
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/MonsterData", order = 1)]
 public class BasicMonsterData : ScriptableObject
 {
