@@ -178,8 +178,11 @@ public class SlimeFamiliar : CombatFamiliar
     /// </summary>
     private void WaitForAttacks()
     {
+       
         AttackCooldowncurrent -= Time.deltaTime;
         ultimateAttackCooldowncurrent -= Time.deltaTime;
+        if (!target)
+            return;
         if (AttackCooldowncurrent <= 0)
         {
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Tools;
 public class CombatPlayerActions : MonoBehaviour
 {
     [SerializeField] CombatPlayerMovement combatMovement;
@@ -28,6 +28,10 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] CombatFamiliar myFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
+    [Header("Feel")]
+    public MMProgressBar specialCoolDownBarA;
+    public MMProgressBar specialCoolDownBarB;
+    public MMProgressBar ultimateCoolDownBar;
     private void Start()
     {
         SetUpProjectiles();
@@ -79,8 +83,26 @@ public class CombatPlayerActions : MonoBehaviour
     {
         BasicMeleeCooldown -= Time.deltaTime;
         currentFireRate -= Time.deltaTime;
-        currentSpecialACooldown -= Time.deltaTime;
-        currentSpecialBCooldown -= Time.deltaTime;
+        if (currentSpecialACooldown > 0)
+        {
+            currentSpecialACooldown -= Time.deltaTime;
+            //specialCoolDownBarA.UpdateBar01((specialA.maxCoolDown-currentSpecialACooldown)/specialA.maxCoolDown);
+            specialCoolDownBarA.SetBar01((specialA.maxCoolDown-currentSpecialACooldown)/specialA.maxCoolDown);
+        
+           
+           
+        }
+        if (currentSpecialBCooldown > 0)
+        {
+            currentSpecialBCooldown -= Time.deltaTime;
+            //specialCoolDownBarA.UpdateBar01((specialB.maxCoolDown-currentSpecialBCooldown)/specialB.maxCoolDown);
+            specialCoolDownBarB.SetBar01((specialB.maxCoolDown - currentSpecialBCooldown) / specialB.maxCoolDown);
+
+
+
+        }
+        ultimateCoolDownBar.SetBar01(myFamiliar.GetUltimateAttackCooldown());
+     
         if(familarRespawnTimer>0)
         {
             familarRespawnTimer -= Time.deltaTime;
@@ -129,7 +151,7 @@ public class CombatPlayerActions : MonoBehaviour
             combatMovement.UseMana(specialA.manaCost);
             currentSpecialACooldown = specialA.maxCoolDown;
             specialA.OnPress(this.gameObject);
-            Debug.Log("SpecA");
+           
         }
         else
         {
@@ -138,7 +160,7 @@ public class CombatPlayerActions : MonoBehaviour
             combatMovement.UseMana(specialB.manaCost);
             currentSpecialBCooldown = specialB.maxCoolDown;
             specialB.OnPress(this.gameObject);
-            Debug.Log("SpecB");
+          
         }
 
     }

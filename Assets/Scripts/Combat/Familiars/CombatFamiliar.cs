@@ -187,4 +187,8 @@ public class CombatFamiliar : MonoBehaviour
                 break;
         }
     }
+    public float GetUltimateAttackCooldown()
+    {
+        return (ultimateAttackCooldownMax - ultimateAttackCooldowncurrent) / ultimateAttackCooldownMax;
+    }
 }
