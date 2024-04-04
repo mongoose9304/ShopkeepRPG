@@ -17,12 +17,14 @@ public class LootTableItem
 }
 public class LootManager : MonoBehaviour
 {
-    public static LootManager LootManager_;
+    public static LootManager instance;
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
+
+ 
     private void Start()
     {
-        LootManager_ = this;
+        instance = this;
     }
     public void AddLootItem(LootItem item_)
     {

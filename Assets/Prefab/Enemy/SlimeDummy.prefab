@@ -869,6 +869,7 @@ GameObject:
   - component: {fileID: 7555750362501816374}
   - component: {fileID: 6618822763816982608}
   - component: {fileID: 6152224102705101945}
+  - component: {fileID: 7289725986723413572}
   m_Layer: 0
   m_Name: SlimeDummy
   m_TagString: Enemy
@@ -1042,6 +1043,36 @@ MonoBehaviour:
   PoolCanExpand: 1
   MutualizeWaitingPools: 0
   NestWaitingPool: 0
+--- !u!114 &7289725986723413572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658827452453938793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTable:
+  - item:
+      name: Rusty Spoon
+      amount: 1
+    maxAmount: 5
+    chancesToSpawn: 50
+  - item:
+      name: Broken Sword
+      amount: 1
+    maxAmount: 5
+    chancesToSpawn: 40
+  - item:
+      name: Apples
+      amount: 1
+    maxAmount: 10
+    chancesToSpawn: 30
+  itemsToDrop: []
+  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,12 +36,16 @@ public class MagnetPuller : MonoBehaviour
     }
     private void Update()
     {
-        foreach(GameObject obj in objectsToPull)
+        objectsToPull.RemoveAll(x => !x);
+        foreach (GameObject obj in objectsToPull)
         {
+          
+
             Vector3 temp = Vector3.Lerp(obj.transform.position, this.transform.position, pullSpeed * Time.deltaTime);
             obj.transform.position = Vector3.SmoothDamp(obj.transform.position, temp, ref velocity, dampModifier);
         }
        // objectsToPull.Clear();
 
     }
+    
 }
