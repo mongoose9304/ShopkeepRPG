@@ -286,6 +286,10 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         familiarHealthBar.UpdateBar01(health_);
     }
+    public void SetFamiliarHealth(float health_)
+    {
+        familiarHealthBar.SetBar01(health_);
+    }
     private void ChargeMana()
     {
         if (currentManaRechargeDelay > 0)

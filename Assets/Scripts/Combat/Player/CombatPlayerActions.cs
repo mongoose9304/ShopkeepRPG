@@ -105,7 +105,12 @@ public class CombatPlayerActions : MonoBehaviour
      
         if(familarRespawnTimer>0)
         {
+         
             familarRespawnTimer -= Time.deltaTime;
+            float temp = (myFamiliar.RespawnTimeMax - familarRespawnTimer) / myFamiliar.RespawnTimeMax;
+            if (temp < 0)
+                temp = 0;
+            combatMovement.SetFamiliarHealth(temp);
             if(familarRespawnTimer <= 0)
             {
                 RespawnFamiliar();
@@ -205,5 +210,6 @@ public class CombatPlayerActions : MonoBehaviour
     {
         myFamiliar.transform.position = this.transform.position + new Vector3(2,0,0);
         myFamiliar.gameObject.SetActive(true);
+        myFamiliar.Respawn();
     }
 }

@@ -17,6 +17,8 @@ public class CombatFamiliar : MonoBehaviour
     private CombatPlayerMovement combatPlayerMovement;
     private CombatPlayerActions combatPlayerActions;
     [SerializeField] protected BasicMonsterData monsterData;
+    [SerializeField] GameObject deathEffect;
+
     Element myWeakness;
     [Header("Stats")]
     [SerializeField]protected  float specialAttackCooldownMax;
@@ -147,6 +149,15 @@ public class CombatFamiliar : MonoBehaviour
     private void Death()
     {
         combatPlayerActions.FamiliarDeath(respawnTimeMax);
+        gameObject.SetActive(false);
+        Instantiate(deathEffect,transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+    }
+    public void Respawn()
+    {
+        specialAttackCooldowncurrent = specialAttackCooldownMax;
+        ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
+        currentHealth = monsterData.CalculateHealth();
+        combatPlayerMovement.UpdateFamiliarHealth(currentHealth / monsterData.CalculateHealth());
     }
     /// <summary>
     /// The most basic attack the familar knows
