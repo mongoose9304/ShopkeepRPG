@@ -1,3 +1,5 @@
+using MoreMountains.Feedbacks;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +22,8 @@ public class LootManager : MonoBehaviour
     public static LootManager instance;
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
+    public MMMiniObjectPooler pooler;
 
- 
     private void Start()
     {
         instance = this;
@@ -35,6 +37,7 @@ public class LootManager : MonoBehaviour
             {
                 item.amount += item_.amount;
                 hasFoundItem = true;
+                AddUILootObject(item, false);
                 break;
             }
         }
@@ -44,6 +47,11 @@ public class LootManager : MonoBehaviour
             x.amount = item_.amount;
             x.name = item_.name;
             currentLootItems.Add(x);
+            AddUILootObject(x, true);
         }
+    }
+    public void AddUILootObject(LootItem item_,bool isNew=false)
+    {
+        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew);
     }
 }
