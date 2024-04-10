@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using MoreMountains.Tools;
+using MoreMountains.Feedbacks;
 using UnityEngine.UI;
 
 public class LootUIObject : MonoBehaviour
@@ -13,6 +13,7 @@ public class LootUIObject : MonoBehaviour
     public TextMeshProUGUI myText;
     public Sprite[] bgSprites;
     public Image myImage;
+   [SerializeField] MMF_Player myPlayer;
    
     private void OnEnable()
     {
@@ -23,6 +24,8 @@ public class LootUIObject : MonoBehaviour
         myText.text = name_ + " X" + amount.ToString();
         gameObject.SetActive(true);
         myImage.sprite = bgSprites[bgToUse];
+        myPlayer.PlayFeedbacks();
+        gameObject.transform.SetSiblingIndex(0);
     }
 
     private void Update()

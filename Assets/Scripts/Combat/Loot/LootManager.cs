@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 [System.Serializable]
 public class LootItem
 {
@@ -31,6 +32,9 @@ public class LootManager : MonoBehaviour
     public float maxTimeCollectionUIWillBeOut = 6.0f;
     public float currentTimeCollectionUIWillBeOut;
 
+   public MMF_Player[] cashPickUpFeedBacks;
+    public int currentCash;
+    public TextMeshProUGUI currentCashText;
     private void Start()
     {
         instance = this;
@@ -77,7 +81,17 @@ public class LootManager : MonoBehaviour
        // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
         currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
+        AddMoney(5);
         
+    }
+    public void AddMoney(int money_)
+    {
+        currentCash += money_;
+        currentCashText.text = currentCash.ToString("#,#");
+           foreach(MMF_Player player_ in cashPickUpFeedBacks)
+        {
+            player_.PlayFeedbacks();
+        }
     }
     public void BringlootCollectionUIObjectOut()
     {
