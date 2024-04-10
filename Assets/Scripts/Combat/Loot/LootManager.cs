@@ -3,6 +3,7 @@ using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class LootItem
@@ -23,10 +24,16 @@ public class LootManager : MonoBehaviour
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
     public MMMiniObjectPooler pooler;
-
+    public ScrollRect scrollRect;
+    public int maxUIBackgrounds;
+    int currentUIBackground;
     private void Start()
     {
         instance = this;
+    }
+    private void Update()
+    {
+        scrollRect.normalizedPosition = new Vector2(0, 1);
     }
     public void AddLootItem(LootItem item_)
     {
@@ -37,7 +44,7 @@ public class LootManager : MonoBehaviour
             {
                 item.amount += item_.amount;
                 hasFoundItem = true;
-                AddUILootObject(item, false);
+                AddUILootObject(item_, false);
                 break;
             }
         }
@@ -52,6 +59,12 @@ public class LootManager : MonoBehaviour
     }
     public void AddUILootObject(LootItem item_,bool isNew=false)
     {
-        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew);
+        currentUIBackground += 1;
+        if (currentUIBackground > maxUIBackgrounds)
+            currentUIBackground = 0;
+        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew,currentUIBackground);
+        scrollRect.normalizedPosition = new Vector2(0, 1);
+        
     }
+    
 }
