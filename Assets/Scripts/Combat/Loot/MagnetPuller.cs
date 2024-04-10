@@ -48,10 +48,26 @@ public class MagnetPuller : MonoBehaviour
 
 
             rb = obj.GetComponent<Rigidbody>();
-            rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.VelocityChange);
+           // rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
         }
        // objectsToPull.Clear();
 
     }
-    
+    private void Update()
+    {
+
+        objectsToPull.RemoveAll(x => !x);
+        foreach (GameObject obj in objectsToPull)
+        {
+
+
+            rb = obj.GetComponent<Rigidbody>();
+            // rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.smoothDeltaTime, ForceMode.VelocityChange);
+        }
+        // objectsToPull.Clear();
+
+    }
+
 }
