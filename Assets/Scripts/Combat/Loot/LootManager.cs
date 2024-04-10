@@ -37,7 +37,9 @@ public class LootManager : MonoBehaviour
     }
     private void Update()
     {
-        scrollRect.normalizedPosition = new Vector2(0, 1);
+       // scrollRect.normalizedPosition = new Vector2(0, 1);
+        scrollRect.DOVerticalNormalizedPos(1, 1);
+
         currentTimeCollectionUIWillBeOut -= Time.deltaTime;
         if(currentTimeCollectionUIWillBeOut<=0)
         {
@@ -72,7 +74,7 @@ public class LootManager : MonoBehaviour
         if (currentUIBackground > maxUIBackgrounds)
             currentUIBackground = 0;
         pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew,currentUIBackground);
-        scrollRect.normalizedPosition = new Vector2(0, 1);
+       // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
         currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
         
