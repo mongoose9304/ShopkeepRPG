@@ -81,7 +81,7 @@ public class CombatFamiliar : MonoBehaviour
     /// </summary>
     public virtual void EnemyDetection()
     {
-       
+     
         if(!target)
         {
             if(!hasLookedForNewtarget)
@@ -116,16 +116,18 @@ public class CombatFamiliar : MonoBehaviour
             return;
         }
         hasLookedForNewtarget = false;
+       
         if (Vector3.Distance(this.transform.position, target.transform.position) < maxDistanceToTarget)
         {
             agent.SetDestination(target.transform.position);
+            if (!target.activeInHierarchy)
+                target = null;
         }
         else
         {
             target = null;
         }
-        if(!target.activeInHierarchy)
-            target = null;
+       
     }
     public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
     {

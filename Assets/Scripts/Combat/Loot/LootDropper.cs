@@ -46,6 +46,11 @@ public class LootDropper : MonoBehaviour
             }
         }
         if (!hasFoundItem)
-            itemsToDrop.Add(item_);
+        {
+            LootItem x = new LootItem();
+            x.amount = item_.amount;
+            x.name = item_.name;
+            itemsToDrop.Add(x);
+        }
     }
 }

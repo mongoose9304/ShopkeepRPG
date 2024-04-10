@@ -39,6 +39,11 @@ public class LootManager : MonoBehaviour
             }
         }
         if (!hasFoundItem)
-            currentLootItems.Add(item_);
+        {
+             LootItem x=new LootItem();
+            x.amount = item_.amount;
+            x.name = item_.name;
+            currentLootItems.Add(x);
+        }
     }
 }
