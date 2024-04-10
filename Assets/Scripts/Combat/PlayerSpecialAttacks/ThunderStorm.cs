@@ -32,7 +32,7 @@ public class ThunderStorm : PlayerSpecialAttack
     {
         if (isJumping)
         {
-            Debug.Log("Jumping");
+         
             if (currentJumpPercentage > lowestJumpPercentage)
                 currentJumpPercentage -= Time.deltaTime * 0.5f;
             Player.transform.position += jumpSpeed * Time.deltaTime * currentJumpPercentage;

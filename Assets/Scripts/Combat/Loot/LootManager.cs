@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 [System.Serializable]
 public class LootItem
 {
@@ -27,6 +27,10 @@ public class LootManager : MonoBehaviour
     public ScrollRect scrollRect;
     public int maxUIBackgrounds;
     int currentUIBackground;
+    public GameObject lootCollectionUIObject;
+    public float maxTimeCollectionUIWillBeOut = 6.0f;
+    public float currentTimeCollectionUIWillBeOut;
+
     private void Start()
     {
         instance = this;
@@ -34,6 +38,11 @@ public class LootManager : MonoBehaviour
     private void Update()
     {
         scrollRect.normalizedPosition = new Vector2(0, 1);
+        currentTimeCollectionUIWillBeOut -= Time.deltaTime;
+        if(currentTimeCollectionUIWillBeOut<=0)
+        {
+            PutAwaylootCollectionUIObject();
+        }
     }
     public void AddLootItem(LootItem item_)
     {
@@ -64,7 +73,26 @@ public class LootManager : MonoBehaviour
             currentUIBackground = 0;
         pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew,currentUIBackground);
         scrollRect.normalizedPosition = new Vector2(0, 1);
+        BringlootCollectionUIObjectOut();
+        currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
         
     }
-    
+    public void BringlootCollectionUIObjectOut()
+    {
+        //1303.8
+        //1003
+         lootCollectionUIObject.transform.DOLocalMoveX(1003,1);
+      
+       // Debug.Log("Loot Pos "+lootCollectionUIObject.transform.localPosition.x);
+    }
+    public void PutAwaylootCollectionUIObject()
+    {
+        //1303.8
+        //1003
+        lootCollectionUIObject.transform.DOLocalMoveX(1303.8f, 1);
+        
+      
+    }
+
+
 }
