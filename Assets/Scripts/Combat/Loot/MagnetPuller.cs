@@ -50,6 +50,7 @@ public class MagnetPuller : MonoBehaviour
             rb = obj.GetComponent<Rigidbody>();
            // rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.deltaTime, ForceMode.VelocityChange);
             rb.AddForce((transform.position - obj.transform.position).normalized * pullSpeed * Time.fixedDeltaTime, ForceMode.VelocityChange);
+            //rb.velocity= (transform.position - obj.transform.position).normalized* pullSpeed *Time.fixedDeltaTime;
         }
        // objectsToPull.Clear();
 

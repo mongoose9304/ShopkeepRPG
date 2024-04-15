@@ -81,7 +81,7 @@ public class LootManager : MonoBehaviour
        // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
         currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
-        AddMoney(5);
+       
         
     }
     public void AddMoney(int money_)

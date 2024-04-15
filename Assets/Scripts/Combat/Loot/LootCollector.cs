@@ -12,6 +12,11 @@ public class LootCollector : MonoBehaviour
             LootManager.instance.AddLootItem(other.GetComponent<LootWorldObject>().myItem);
             Destroy(other.gameObject);
             }
-        
+        if (other.tag == "DemonCoin")
+        {
+            LootManager.instance.AddMoney(other.GetComponent<DemonCoin>().value);
+            Destroy(other.gameObject);
+        }
+
     }
 }

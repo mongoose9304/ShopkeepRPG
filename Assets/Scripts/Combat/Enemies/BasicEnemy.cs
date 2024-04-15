@@ -19,6 +19,7 @@ public class BasicEnemy : MonoBehaviour
     public float knockBackMax;
     public float damage;
     LootDropper lootDropper;
+
     [Header("CurrentValues")]
     public bool canMove;
     float currentTimeStunned;
@@ -31,6 +32,7 @@ public class BasicEnemy : MonoBehaviour
     private Vector3 knockbackRefVector;
     Vector3 knockBackDirection;
     bool superArmor;
+
     [Header("References")]
     Element myWeakness;
     public GameObject stunIcon;
@@ -41,6 +43,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [SerializeField] GameObject[] deathEffects;
+
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
@@ -164,6 +167,7 @@ public class BasicEnemy : MonoBehaviour
         gameObject.SetActive(false);
         attackIconPooler.ResetAllObjects();
         lootDropper.DropItems();
+        CoinSpawner.instance_.CreateCoins(Random.Range(0,1000),this.transform);
         //death effects buggy RN, add later -Rob
       //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
