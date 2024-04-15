@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LootCollector : MonoBehaviour
 {
+    public ParticleSystem coinCollected;
+    public ParticleSystem itemCollected;
     private void OnTriggerEnter(Collider other)
     {
        
@@ -11,11 +13,13 @@ public class LootCollector : MonoBehaviour
             {
             LootManager.instance.AddLootItem(other.GetComponent<LootWorldObject>().myItem);
             Destroy(other.gameObject);
+            itemCollected.Play();
             }
         if (other.tag == "DemonCoin")
         {
             LootManager.instance.AddMoney(other.GetComponent<DemonCoin>().value);
             Destroy(other.gameObject);
+            coinCollected.Play();
         }
 
     }
