@@ -73,7 +73,7 @@ public class CombatFamiliar : MonoBehaviour
             return;
         if (Vector3.Distance(this.transform.position, player.transform.position) > maxDistanceToPlayer)
         {
-            agent.SetDestination(player.transform.position);
+            agent.SetDestination(player.transform.position+new Vector3(0,0,2));
         }
     }
     /// <summary>
