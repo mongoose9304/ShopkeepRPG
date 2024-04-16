@@ -15,7 +15,9 @@ public class CombatPlayerMovement : MonoBehaviour
     public bool isDashing;
     Vector3 moveInput;
     Vector3 newInput;
+    Vector3 dashStartPos;
     Rigidbody rb;
+    float timeBeforePlayerCanMoveAfterFallingOffPlatform;
     private Vector3 velocity = Vector3.zero;
    [SerializeField] LayerMask wallMask;
     GameObject lockOnTarget;
@@ -70,10 +72,10 @@ public class CombatPlayerMovement : MonoBehaviour
                 dashCoolDown -= Time.deltaTime;
 
 
-            //rb.MovePosition(rb.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
-            // transform.position= (transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier);
-
-            transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
+            if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
+                transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
+            else
+                timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
             if (moveInput != Vector3.zero)
                 transform.forward = moveInput;
             LookAtCurrentTarget();
@@ -82,6 +84,8 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if (dashTime > 0)
             {
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+                transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 dashTime -= Time.deltaTime;
                 if (dashTime <= 0)
                 {
@@ -89,12 +93,10 @@ public class CombatPlayerMovement : MonoBehaviour
                     GroundCheck();
                 }
             }
-            // rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
-            // transform.position += (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
-            Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
-            transform.position = Vector3.SmoothDamp(transform.position,PreventGoingThroughWalls(temp), ref velocity, dampModifier);
+           
+           
          
-            //rb.MovePosition(rb.position + transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+          
         }
     }
     private void OnDash()
@@ -118,12 +120,15 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         if (currentMana < dashCost)
             return;
+        if (Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), transform.TransformDirection(Vector3.down), 10))
+            dashStartPos = transform.position;
         UseMana(dashCost);
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         isDashing = true;
         dashTime = 0.2f;
         Instantiate(dashEffect, transform.position, transform.rotation);
+       
     }
     private Vector3 PreventFalling()
     {
@@ -179,7 +184,10 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
         {
-            transform.position = new Vector3(0, 0.66f, 0);
+            // transform.position = new Vector3.(0, 0.66f, 0);
+            transform.position = dashStartPos;
+            moveInput = Vector3.zero;
+            timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
     }
 

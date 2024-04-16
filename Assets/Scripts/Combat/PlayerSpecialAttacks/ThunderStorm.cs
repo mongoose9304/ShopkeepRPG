@@ -51,6 +51,7 @@ public class ThunderStorm : PlayerSpecialAttack
             {
                 isLanding = false;
                 isBusy = false;
+                Player.transform.position = new Vector3(Player.transform.position.x,jumpStart, Player.transform.position.z);
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, slamRange);
                 foreach (var hitCollider in hitColliders)
                 {
