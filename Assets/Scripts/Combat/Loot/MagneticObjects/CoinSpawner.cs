@@ -8,20 +8,23 @@ public class CoinSpawner : MonoBehaviour
     public GameObject demonCoin;
     public int[] coins;
     public static CoinSpawner instance_;
-
+    int[] temp;
 
     private void Start()
     {
         instance_ = this;
+        temp = coins;
     }
 
     public void CreateCoins(int value_,Transform location_)
     {
-        foreach(int i in MakeChange(value_))
+        temp = MakeChange(value_);
+        for ( int i= 0;i<temp.Length;i++)
         {
-            if (i == 0)
+            Debug.Log("Change i= " + i);
+            if (temp[i] == 0)
                 continue;
-            for(int x=0;x<i;x++)
+            for(int x=0;x<temp[i];x++)
             {
               DemonCoin coin=GameObject.Instantiate(demonCoin, location_.position, location_.rotation).GetComponent<DemonCoin>();
                 coin.transform.position += new Vector3(Random.Range(0,2), Random.Range(0, 2), Random.Range(0, 2));
