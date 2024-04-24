@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         // If we want jumping we may need to find another way to handle player movement, if you jump and dont press any buttons
         // you'll just fall vertical.
         if (input != Vector3.zero){
-            Vector3 movement = input.SkewToIso() * input.normalized.magnitude * speed * Time.deltaTime;
+            Vector3 movement = input.normalized * speed * Time.deltaTime;
             rb.velocity = new Vector3(movement.x, rb.velocity.y, movement.z);
         } else {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         if (input == Vector3.zero) return;
 
         // this logic is specifically for having a model be a child of the gameobject with a rigidbody (rigidbody doesn't rotate)
-        Quaternion rotation = Quaternion.LookRotation(input.SkewToIso(), Vector3.up);
+        Quaternion rotation = Quaternion.LookRotation(input.normalized, Vector3.up);
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, turnSpeed * Time.deltaTime);
         
     }
