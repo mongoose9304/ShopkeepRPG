@@ -52,9 +52,8 @@ public class CombatRoom : BasicRoom
     {
         if (spawnedEnemies >= maxEnemies)
             return;
-        Transform pos = spawnPoints[Random.Range(0, spawnPoints.Count)];
-        GameObject obj = Instantiate(myDungeon.regularEnemies[Random.Range(0, myDungeon.regularEnemies.Count)].gameObject,pos.position,pos.rotation);
-        obj.SetActive(true);
+
+        EnemyManager.instance.SpawnEnemy(myDungeon.regularEnemies[Random.Range(0, myDungeon.regularEnemies.Count)].myBaseData.originalName, spawnPoints[Random.Range(0, spawnPoints.Count)]);
         spawnedEnemies += 1;
     }
 }

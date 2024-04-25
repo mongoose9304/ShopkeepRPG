@@ -10,6 +10,7 @@ using MoreMountains.Feedbacks;
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
+    public BasicMonsterData myBaseData;
     public float maxHealth;
     public float maxHitstun;
     public float maxAttackCooldown;

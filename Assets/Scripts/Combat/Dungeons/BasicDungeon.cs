@@ -18,6 +18,10 @@ public class BasicDungeon : MonoBehaviour
           GameObject obj=  Instantiate(regularRooms[Random.Range(0,regularRooms.Count)].gameObject,transform.position,transform.rotation);
             obj.GetComponent<BasicRoom>().myDungeon = this;
            // transform.gameObject.SetActive(false);
+           foreach(BasicEnemy enemy in regularEnemies)
+            {
+                EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject);
+            }
             
         }
     }

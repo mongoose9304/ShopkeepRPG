@@ -28,7 +28,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] bool hardLockOn;
     [SerializeField] GameObject lockOnIcon;
     [SerializeField] Transform lockOnCheckPosition;
-    [SerializeField] List<GameObject> currentEnemiesList=new List<GameObject>();
+    
     
     [SerializeField] string enemyTag;
     [SerializeField] float minDistanceBetweenRetargets;
@@ -193,13 +193,13 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void CheckForSoftLockOn()
     {
-        if (hardLockOn||currentEnemiesList.Count==0)
+        if (hardLockOn||EnemyManager.instance.currentEnemiesList.Count==0)
             return;
 
         if (!currentTarget)
-            currentTarget = currentEnemiesList[0];
+            currentTarget = EnemyManager.instance.currentEnemiesList[0];
 
-       foreach(GameObject obj in currentEnemiesList)
+       foreach(GameObject obj in EnemyManager.instance.currentEnemiesList)
         {
             if (!obj.activeInHierarchy)
                 continue;
@@ -232,29 +232,8 @@ public class CombatPlayerMovement : MonoBehaviour
         transform.LookAt(currentTarget.transform);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
-    public void SetCurrentEnemyList(List<GameObject> objectsToSet)
-    {
-        currentEnemiesList.Clear();
-        foreach(GameObject obj in objectsToSet)
-        {
-            currentEnemiesList.Add(obj);
-        }
-    }
-    public void AddEnemy(GameObject obj_)
-    {
-
-        currentEnemiesList.Add(obj_);
-    }
-    public List<GameObject> GetCurrentEnemyList()
-    {
-        return currentEnemiesList;
-    }
-    private void CleanCurrentEnemyList()
-    {
-       
-       currentEnemiesList.RemoveAll(null);
-       
-    }
+    
+   
     public GameObject GetCurrentTarget()
     {
         return currentTarget;
