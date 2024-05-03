@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class TabGroup : MonoBehaviour
 {
+    public List<TabButton> tabButtons;
+    
+    public void SubToList(TabButton tabButton)
+    {
+        if (tabButtons == null){
+            tabButtons = new List<TabButton>();
+        }
+
+        tabButtons.Add(tabButton);
+    }
+
+    public void OnTabEnter(TabButton tabButton){
+
+    }
+    
+    public void OnTabExit(TabButton tabButton){
+
+    }
+
+    public void OnTabSelected(TabButton tabButton){
+
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
