@@ -87,6 +87,10 @@ public class CombatPlayerMovement : MonoBehaviour
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
                 transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 dashTime -= Time.deltaTime;
+                if(CheckForWallHit())
+                {
+                    dashTime = 0;
+                }
                 if (dashTime <= 0)
                 {
                     isDashing = false;
@@ -180,6 +184,28 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
     }
+    private bool CheckForWallHit()
+    {
+
+        var dir = transform.TransformDirection(Vector3.down);
+        // Up
+
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15, wallMask))
+            return true;
+        // Down
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+            return true;
+        //Left
+        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+            return true;
+        //Right
+        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
+            return true;
+
+        return false;
+
+
+    }
     private void GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
@@ -214,7 +240,10 @@ public class CombatPlayerMovement : MonoBehaviour
             lockOnIcon.transform.position = currentTarget.transform.position;
             lockOnIcon.SetActive(true);
             if (!currentTarget.activeInHierarchy)
+            {
                 currentTarget = null;
+                lockOnIcon.SetActive(false);
+            }
         }
         else
         {
