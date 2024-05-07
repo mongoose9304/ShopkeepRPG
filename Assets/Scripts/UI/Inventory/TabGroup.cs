@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton> tabButtons;
-    public Color tabIdle;
-    public Color tabHover;
-    public Color tabSelected;
+    public Sprite tabIdle;
+    public Sprite tabHover;
+    public Sprite tabSelected;
 
     public void ResetTabs(){
         foreach (TabButton button in tabButtons){
-            button.background.color = tabIdle;
+            button.background.sprite = tabIdle;
         }
     }
     
@@ -27,7 +27,7 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabEnter(TabButton tabButton){
         ResetTabs();
-        tabButton.background.color = tabHover;
+        tabButton.background.sprite = tabHover;
     }
     
     public void OnTabExit(TabButton tabButton){
@@ -36,7 +36,7 @@ public class TabGroup : MonoBehaviour
 
     public void OnTabSelected(TabButton tabButton){
         ResetTabs();
-        tabButton.background.color = tabSelected;
+        tabButton.background.sprite = tabSelected;
     }
 
 
