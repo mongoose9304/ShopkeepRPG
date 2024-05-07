@@ -9,6 +9,7 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public TabGroup tabGroup;
     public Image background;
+    public Color color;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
