@@ -6,6 +6,8 @@ public class Inventory : MonoBehaviour
 {
 
     public List<Item> items;
+    // Inventory pages for displaying the items in the ui
+    public List<GameObject> inventoryPages;
 
     private void OnTriggerEnter(Collider other)
     {
