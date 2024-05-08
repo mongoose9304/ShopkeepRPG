@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-
+    // actual inventory
     public List<Item> items;
     // Inventory pages for displaying the items in the ui
     public List<GameObject> inventoryPages;
+    // inventory ui
+    public GameObject InventoryParent;
+
+
+    // prefab for an inventory cell
+    public GameObject inventoryCell;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,17 +39,30 @@ public class Inventory : MonoBehaviour
     {
         items.Add(item);
         Debug.Log("Added " + item.name + " to inventory.");
+
+        // add item to the ui, the item cell prefab has an image and two text objects, name and price
+        GameObject cell = Instantiate(inventoryCell, inventoryPages[0].transform.GetChild(0).transform);
     }
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreach(GameObject page in inventoryPages){
+            page.SetActive(false);
+        }
+        inventoryPages[0].SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    // use this function to update the entire ui
+    public void UpdateInventoryUI(){
+        foreach(Item item_ in items){
+            
+        }
     }
 }
