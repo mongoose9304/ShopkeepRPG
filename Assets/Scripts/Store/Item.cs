@@ -16,7 +16,7 @@ public class Item : MonoBehaviour
     }
 
     //TODO: Add more to items, i.e. if there should be damage stat / armor value
-    public string name;
+    public string itemName;
     public string description;
     public int basePrice;
     public ItemType type;

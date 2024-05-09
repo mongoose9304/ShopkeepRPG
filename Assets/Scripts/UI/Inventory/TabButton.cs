@@ -31,10 +31,4 @@ public class TabButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         background = GetComponent<Image>();
         tabGroup.SubToList(this);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

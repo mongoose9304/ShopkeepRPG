@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -28,20 +29,27 @@ public class Inventory : MonoBehaviour
                 AddItem(item);
 
                 // Optionally, deactivate or destroy the collected item
-                other.gameObject.SetActive(false); // Deactivate the GameObject
+                //other.gameObject.SetActive(false); // Deactivate the GameObject
                 // or
-                // Destroy(other.gameObject); // Destroy the GameObject
+                Destroy(other.gameObject); // Destroy the GameObject
             }
         }
     }
 
     public void AddItem(Item item)
-    {
+    {   
         items.Add(item);
         Debug.Log("Added " + item.name + " to inventory.");
 
         // add item to the ui, the item cell prefab has an image and two text objects, name and price
         GameObject cell = Instantiate(inventoryCell, inventoryPages[0].transform.GetChild(0).transform);
+        if (cell != null){
+            cell.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
+            cell.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = item.basePrice.ToString();
+        }
+        else {
+            Debug.Log("Error: could not instantiate inventory cell");
+        }
     }
     
     // Start is called before the first frame update
@@ -61,8 +69,5 @@ public class Inventory : MonoBehaviour
 
     // use this function to update the entire ui
     public void UpdateInventoryUI(){
-        foreach(Item item_ in items){
-            
-        }
     }
 }
