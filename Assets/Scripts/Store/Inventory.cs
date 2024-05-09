@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("Added " + item.name + " to inventory.");
 
         // add item to the ui, the item cell prefab has an image and two text objects, name and price
-        GameObject cell = Instantiate(inventoryCell, inventoryPages[0].transform.GetChild(0).transform);
+        GameObject cell = Instantiate(inventoryCell, inventoryPages[(int)item.type].transform.GetChild(0).transform);
         if (cell != null){
             cell.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
             cell.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = item.basePrice.ToString();
