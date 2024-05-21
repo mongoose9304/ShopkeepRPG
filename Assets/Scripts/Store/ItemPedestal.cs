@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class ItemPedestal : MonoBehaviour
 {
-    // Holds a gameobject
-    public GameObject item;
+    // Holds an item
+    public Item item;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

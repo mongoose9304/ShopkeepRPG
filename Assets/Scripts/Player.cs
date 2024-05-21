@@ -11,9 +11,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform model;
     private Vector3 input;
     public Inventory playerInventory;
+
     void Start()
     {
-
+        
     }
 
     void Update()

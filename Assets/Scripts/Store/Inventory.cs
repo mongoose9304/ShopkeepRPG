@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     // prefab for an inventory cell
     public GameObject inventoryCell;
 
-    private GameObject currentPedestal;
+    public GameObject currentPedestal;
     private bool isInventoryOpen = false;
 
 
@@ -22,21 +22,15 @@ public class Inventory : MonoBehaviour
         return isInventoryOpen;
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Item"))
         {
-            // Get the Item component from the collided GameObject
             Item item = other.GetComponent<Item>();
-            
             if (item != null)
             {
-                // Add the item to the inventory
                 AddItem(item);
-
-                // Optionally, deactivate or destroy the collected item
-                //other.gameObject.SetActive(false); // Deactivate the GameObject
-                // or
-                Destroy(other.gameObject); // Destroy the GameObject
+                Destroy(other.gameObject);
             }
         }
         else if (other.CompareTag("Pedestal"))
@@ -44,7 +38,9 @@ public class Inventory : MonoBehaviour
             currentPedestal = other.gameObject;
         }
     }
-    private void OnTriggerExit(Collider other) {
+
+    private void OnTriggerExit(Collider other)
+    {
         if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal)
         {
             currentPedestal = null;
@@ -52,19 +48,25 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void PlaceItemOnPedestal(Item item) {
+    public bool PlaceItemOnPedestal(Item item) {
         if (currentPedestal != null)
         {
             ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
             if (pedestal != null && pedestal.item == null)
             {
-                pedestal.item = item.gameObject;
+                pedestal.item = item;
                 items.Remove(item);
                 Debug.Log("Placed " + item.itemName + " on pedestal.");
-                // Update the pedestal UI or appearance here if needed
 
                 ToggleInventory();
+                return true;
             }
+            Debug.Log("Error: pedestal already has an item");
+            return false;
+        }
+        else {
+            Debug.Log("Error: no pedestal selected");
+            return false;
         }
     }
 
@@ -77,6 +79,20 @@ public class Inventory : MonoBehaviour
         if (cell != null){
             cell.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
             cell.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = item.basePrice.ToString();
+            cell.transform.GetChild(3).GetComponent<Item>().SetItem(item);
+            Button placeButton = cell.transform.GetChild(3).transform.GetChild(0).GetComponent<Button>();
+            Button removeButton = cell.transform.GetChild(3).transform.GetChild(1).GetComponent<Button>();
+
+             if (placeButton != null && removeButton != null)
+            {
+                // Add event listeners to the buttons
+                placeButton.onClick.AddListener(() => InventoryCellPlace(cell));
+                removeButton.onClick.AddListener(() => InventoryCellRemove(cell));
+            }
+            else
+            {
+                Debug.Log("Error: Cell buttons not found.");
+            }
         }
         else {
             Debug.Log("Error: could not instantiate inventory cell");
@@ -85,6 +101,7 @@ public class Inventory : MonoBehaviour
     
     // Start is called before the first frame update
     void Start() {
+
         foreach(GameObject page in inventoryPages){
             page.SetActive(false);
         }
@@ -97,6 +114,7 @@ public class Inventory : MonoBehaviour
         if (currentPedestal != null && Input.GetKeyDown(KeyCode.E))
         {
             ToggleInventory();
+            Debug.Log(currentPedestal.name);
         }
     }
 
@@ -108,6 +126,20 @@ public class Inventory : MonoBehaviour
         {
             currentPedestal = null;
         }
+    }
+
+    public void InventoryCellPlace(GameObject cell_){
+        Item item_ = cell_.transform.GetChild(3).GetComponent<Item>();
+
+        
+        bool itemPlaced = PlaceItemOnPedestal(item_);
+        if (itemPlaced){
+            Destroy(cell_);
+        }
+    }
+
+    public void InventoryCellRemove(GameObject cell_){
+        Destroy(cell_);
     }
 
     // use this function to update the entire ui

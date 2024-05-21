@@ -21,6 +21,13 @@ public class Item : MonoBehaviour
     public int basePrice;
     public ItemType type;
 
+    public void SetItem(Item item_){
+        itemName = item_.itemName;
+        description = item_.description;
+        basePrice = item_.basePrice;
+        type = item_.type;
+    }
+
     /*
     // thought of more rpg style stats, just placeholders for now.
     public Sprite sprite;
