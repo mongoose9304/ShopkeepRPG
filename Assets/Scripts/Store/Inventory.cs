@@ -54,7 +54,7 @@ public class Inventory : MonoBehaviour
             ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
             if (pedestal != null && pedestal.item == null)
             {
-                pedestal.item = item;
+                pedestal.AddItem(item);
                 items.Remove(item);
                 Debug.Log("Placed " + item.itemName + " on pedestal.");
 
@@ -83,9 +83,9 @@ public class Inventory : MonoBehaviour
             Button placeButton = cell.transform.GetChild(3).transform.GetChild(0).GetComponent<Button>();
             Button removeButton = cell.transform.GetChild(3).transform.GetChild(1).GetComponent<Button>();
 
-             if (placeButton != null && removeButton != null)
-            {
-                // Add event listeners to the buttons
+             if (placeButton != null && removeButton != null) {
+                // Add event listeners to the buttons, this is very important to do IN the script, not in the editor
+                // or else it won't work
                 placeButton.onClick.AddListener(() => InventoryCellPlace(cell));
                 removeButton.onClick.AddListener(() => InventoryCellRemove(cell));
             }
@@ -130,8 +130,6 @@ public class Inventory : MonoBehaviour
 
     public void InventoryCellPlace(GameObject cell_){
         Item item_ = cell_.transform.GetChild(3).GetComponent<Item>();
-
-        
         bool itemPlaced = PlaceItemOnPedestal(item_);
         if (itemPlaced){
             Destroy(cell_);
