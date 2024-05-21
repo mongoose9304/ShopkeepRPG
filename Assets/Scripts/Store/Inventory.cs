@@ -5,19 +5,24 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    // actual inventory
+    // inventory backup
     public List<Item> items;
     // Inventory pages for displaying the items in the ui
     public List<GameObject> inventoryPages;
     // inventory ui
     public GameObject InventoryParent;
-
-
     // prefab for an inventory cell
     public GameObject inventoryCell;
 
-    private void OnTriggerEnter(Collider other)
-    {
+    private GameObject currentPedestal;
+    private bool isInventoryOpen = false;
+
+
+    public bool isOpen(){
+        return isInventoryOpen;
+    }
+
+    private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Item"))
         {
             // Get the Item component from the collided GameObject
@@ -34,10 +39,36 @@ public class Inventory : MonoBehaviour
                 Destroy(other.gameObject); // Destroy the GameObject
             }
         }
+        else if (other.CompareTag("Pedestal"))
+        {
+            currentPedestal = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal)
+        {
+            currentPedestal = null;
+        }
     }
 
-    public void AddItem(Item item)
-    {   
+
+    public void PlaceItemOnPedestal(Item item) {
+        if (currentPedestal != null)
+        {
+            ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
+            if (pedestal != null && pedestal.item == null)
+            {
+                pedestal.item = item.gameObject;
+                items.Remove(item);
+                Debug.Log("Placed " + item.itemName + " on pedestal.");
+                // Update the pedestal UI or appearance here if needed
+
+                ToggleInventory();
+            }
+        }
+    }
+
+    public void AddItem(Item item) {   
         items.Add(item);
         Debug.Log("Added " + item.name + " to inventory.");
 
@@ -53,21 +84,33 @@ public class Inventory : MonoBehaviour
     }
     
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         foreach(GameObject page in inventoryPages){
             page.SetActive(false);
         }
         inventoryPages[0].SetActive(true);
+        InventoryParent.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        if (currentPedestal != null && Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleInventory();
+        }
+    }
 
+    public void ToggleInventory() {
+        isInventoryOpen = !isInventoryOpen;
+        InventoryParent.SetActive(isInventoryOpen);
+
+        if (!isInventoryOpen)
+        {
+            currentPedestal = null;
+        }
     }
 
     // use this function to update the entire ui
-    public void UpdateInventoryUI(){
+    public void UpdateInventoryUI() {
     }
 }

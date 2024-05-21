@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float turnSpeed = 720;
     [SerializeField] private Transform model;
     private Vector3 input;
+    public Inventory playerInventory;
     void Start()
     {
 
@@ -17,7 +18,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        GetPlayerInputs();
+        if (playerInventory.isOpen() == false){
+            GetPlayerInputs();
+        }
         PlayerLook();
     }
 
@@ -33,8 +36,6 @@ public class Player : MonoBehaviour
     }
 
     void Move(){
-        // for now, this is fine enough for movement, the 'SkewToIso' functioon is inside of the IsoGlobals, 
-        // just multiplies it by matrix to align movements to 45 degree angle.
         // If we want jumping we may need to find another way to handle player movement, if you jump and dont press any buttons
         // you'll just fall vertical.
         if (input != Vector3.zero){
