@@ -10,12 +10,15 @@ public class Inventory : MonoBehaviour
     // Inventory pages for displaying the items in the ui
     public List<GameObject> inventoryPages;
     // inventory ui
-    public GameObject InventoryParent;
+    public GameObject inventoryParent;
     // prefab for an inventory cell
     public GameObject inventoryCell;
 
+    public GameObject pedestalParent;
+
     public GameObject currentPedestal;
     private bool isInventoryOpen = false;
+    private bool isPedestalUIOpen = false;
 
 
     public bool isOpen(){
@@ -58,7 +61,7 @@ public class Inventory : MonoBehaviour
                 items.Remove(item);
                 Debug.Log("Placed " + item.itemName + " on pedestal.");
 
-                ToggleInventory();
+                ToggleFullInventory();
                 return true;
             }
             Debug.Log("Error: pedestal already has an item");
@@ -106,7 +109,8 @@ public class Inventory : MonoBehaviour
             page.SetActive(false);
         }
         inventoryPages[0].SetActive(true);
-        InventoryParent.SetActive(false);
+        inventoryParent.SetActive(false);
+        pedestalParent.SetActive(false);
     }
 
     // Update is called once per frame
@@ -114,13 +118,39 @@ public class Inventory : MonoBehaviour
         if (currentPedestal != null && Input.GetKeyDown(KeyCode.E))
         {
             ToggleInventory();
-            Debug.Log(currentPedestal.name);
+            TogglePedestalUI();
         }
     }
 
+    // called from the close button on the inventory panel
+    public void ToggleFullInventory(){
+        ToggleInventory();
+        if (currentPedestal != null){
+            TogglePedestalUI();
+        }
+    }
+
+    // just for the pedestal
+    public void TogglePedestalUI(){
+        isPedestalUIOpen = !isPedestalUIOpen;
+
+        if (currentPedestal != null && currentPedestal.GetComponent<ItemPedestal>().item != null){
+            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = currentPedestal.GetComponent<ItemPedestal>().item.itemName;
+            pedestalParent.SetActive(isPedestalUIOpen);
+        }
+        else{
+            Debug.Log("Error: no item on pedestal");
+        }
+        //TODO: add sprites and the rest of the info
+    }
+
+    // just for your main inventory when placing items
     public void ToggleInventory() {
         isInventoryOpen = !isInventoryOpen;
-        InventoryParent.SetActive(isInventoryOpen);
+        inventoryParent.SetActive(isInventoryOpen);
+
+        //TODO: if the inventory is opened not from the pedstal ui, disable the place button with a foreach loop.
+
 
         if (!isInventoryOpen)
         {
