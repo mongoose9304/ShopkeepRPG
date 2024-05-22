@@ -9,7 +9,7 @@ public class CombatRoom : BasicRoom
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
     [SerializeField] private int maxEnemies;
     [SerializeField] private int instantEnemies;
-    [SerializeField] private int enemiesLeft;
+    [SerializeField] EnemyCounter myCounter;
     [SerializeField] private float spawnDelayMin;
     [SerializeField] private float spawnDelayMax;
     private float currentSpawnDelay;
@@ -18,7 +18,7 @@ public class CombatRoom : BasicRoom
     public override void StartRoomActivity()
     {
         LockRoom(true);
-        enemiesLeft = maxEnemies;
+        myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
         for(int i=0;i<instantEnemies;i++)
         {
@@ -28,18 +28,20 @@ public class CombatRoom : BasicRoom
     private void LockRoom(bool lock_)
     {
         lockObject.SetActive(lock_);
+        isLocked = lock_;
     }
     private void Update()
     {
         if(isLocked)
         {
-            if (enemiesLeft <= 0)
+            if (myCounter.currentEnemies <= 0)
             {
                 LockRoom(false);
+                Debug.Log("UNLOCKEDROB");
                 return;
             }
             currentSpawnDelay -= Time.deltaTime;
-            if (currentSpawnDelay >= 0)
+            if (currentSpawnDelay <= 0)
             {
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
             }
@@ -53,7 +55,7 @@ public class CombatRoom : BasicRoom
         if (spawnedEnemies >= maxEnemies)
             return;
 
-        EnemyManager.instance.SpawnEnemy(myDungeon.regularEnemies[Random.Range(0, myDungeon.regularEnemies.Count)].myBaseData.originalName, spawnPoints[Random.Range(0, spawnPoints.Count)]);
+        EnemyManager.instance.SpawnEnemy(myDungeon.regularEnemies[Random.Range(0, myDungeon.regularEnemies.Count)].myBaseData.originalName, spawnPoints[Random.Range(0, spawnPoints.Count)],myCounter);
         spawnedEnemies += 1;
     }
 }

@@ -21,7 +21,7 @@ public class CoinSpawner : MonoBehaviour
         temp = MakeChange(value_);
         for ( int i= 0;i<temp.Length;i++)
         {
-            Debug.Log("Change i= " + i);
+           
             if (temp[i] == 0)
                 continue;
             for(int x=0;x<temp[i];x++)

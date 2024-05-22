@@ -339,6 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2336095148398576998}
   - component: {fileID: 437246679323632788}
+  - component: {fileID: 8799067936460406242}
   m_Layer: 0
   m_Name: CombatLockedRoom
   m_TagString: Untagged
@@ -397,9 +398,22 @@ MonoBehaviour:
   - {fileID: 2152260560142425124}
   maxEnemies: 10
   instantEnemies: 4
-  enemiesLeft: 0
+  myCounter: {fileID: 8799067936460406242}
   spawnDelayMin: 0
   spawnDelayMax: 1
+--- !u!114 &8799067936460406242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4374803843241484224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d13917eeb913104f9c0e0fc3cb3240c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEnemies: 0
 --- !u!1 &4628489105381361599
 GameObject:
   m_ObjectHideFlags: 0

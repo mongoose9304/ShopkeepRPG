@@ -44,7 +44,7 @@ public class HomingAttack : MonoBehaviour
     {
         if (other.tag != "Player" && other.tag != "Familiar")
         {
-            Debug.Log(other.tag);
+          
             this.gameObject.SetActive(false);
         }
     }

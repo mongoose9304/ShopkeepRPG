@@ -34,19 +34,19 @@ public class EnemyManager : MonoBehaviour
         enemies.Add(obj.GetComponent<EnemyItem>());
     }
 
-    public void SpawnEnemy(string name_,Transform pos_)
+    public void SpawnEnemy(string name_,Transform pos_,EnemyCounter counter_=null)
     {
         foreach(EnemyItem item_ in enemies)
         {
-            Debug.Log("Item_ name " +item_.myname);
-            Debug.Log("IName name " +name_);
+          
             if(item_.myname==name_)
             {
-                Debug.Log("name MAtch");
+             
              GameObject obj=item_.pooler.GetPooledGameObject();
                 obj.transform.position = pos_.position;
                 obj.SetActive(true);
                 currentEnemiesList.Add(obj);
+                if (counter_) obj.GetComponent<BasicEnemy>().myEnemyCounter = counter_;
             }
         }
     }
