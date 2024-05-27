@@ -22,7 +22,7 @@ public class CombatRoom : BasicRoom
         spawnedEnemies = 0;
         for(int i=0;i<instantEnemies;i++)
         {
-            SpawnBasicEnemy();
+          //  SpawnBasicEnemy();
         }
     }
     private void LockRoom(bool lock_)
@@ -43,6 +43,7 @@ public class CombatRoom : BasicRoom
             currentSpawnDelay -= Time.deltaTime;
             if (currentSpawnDelay <= 0)
             {
+                SpawnBasicEnemy();
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
             }
 

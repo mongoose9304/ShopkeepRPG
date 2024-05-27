@@ -47,6 +47,7 @@ public class EnemyManager : MonoBehaviour
                 obj.SetActive(true);
                 currentEnemiesList.Add(obj);
                 if (counter_) obj.GetComponent<BasicEnemy>().myEnemyCounter = counter_;
+                break;
             }
         }
     }
