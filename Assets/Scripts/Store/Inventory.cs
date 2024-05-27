@@ -6,16 +6,19 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     // inventory backup
-    public List<Item> items;
+    public List<ItemData> items;
     // Inventory pages for displaying the items in the ui
     public List<GameObject> inventoryPages;
     // inventory ui
-    public GameObject InventoryParent;
+    public GameObject inventoryParent;
     // prefab for an inventory cell
     public GameObject inventoryCell;
 
+    public GameObject pedestalParent;
+
     public GameObject currentPedestal;
     private bool isInventoryOpen = false;
+    private bool isPedestalUIOpen = false;
 
 
     public bool isOpen(){
@@ -26,7 +29,7 @@ public class Inventory : MonoBehaviour
     {
         if (other.CompareTag("Item"))
         {
-            Item item = other.GetComponent<Item>();
+            ItemData item = other.GetComponent<Item>().itemData;
             if (item != null)
             {
                 AddItem(item);
@@ -48,18 +51,23 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public bool PlaceItemOnPedestal(Item item) {
+    public bool PlaceItemOnPedestal(ItemData item) {
         if (currentPedestal != null)
         {
             ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
-            if (pedestal != null && pedestal.item == null)
+            if (pedestal != null && pedestal.isEmpty)
             {
-                pedestal.AddItem(item);
-                items.Remove(item);
-                Debug.Log("Placed " + item.itemName + " on pedestal.");
-
-                ToggleInventory();
-                return true;
+                // This code is all over the place but from my understanding you need to resave these or they'll end up with 'missing'
+                ItemData itemData = item;
+                if (itemData != null){
+                    pedestal.AddItem(itemData);
+                    items.Remove(itemData);
+                    Debug.Log("Placed " + itemData.itemName + " on pedestal.");
+                    ToggleFullInventory();
+                    return true;
+                }
+                Debug.Log("Error: item is null");
+                return false;
             }
             Debug.Log("Error: pedestal already has an item");
             return false;
@@ -70,32 +78,38 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(Item item) {   
-        items.Add(item);
-        Debug.Log("Added " + item.name + " to inventory.");
+    public void AddItem(ItemData item) {   
+        ItemData itemData = item;
+        if (itemData != null){
+            items.Add(itemData);
+            Debug.Log("Added " + itemData.itemName + " to inventory.");
 
-        // add item to the ui, the item cell prefab has an image and two text objects, name and price
-        GameObject cell = Instantiate(inventoryCell, inventoryPages[(int)item.type].transform.GetChild(0).transform);
-        if (cell != null){
-            cell.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
-            cell.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = item.basePrice.ToString();
-            cell.transform.GetChild(3).GetComponent<Item>().SetItem(item);
-            Button placeButton = cell.transform.GetChild(3).transform.GetChild(0).GetComponent<Button>();
-            Button removeButton = cell.transform.GetChild(3).transform.GetChild(1).GetComponent<Button>();
+            // add item to the ui, the item cell prefab has an image and two text objects, name and price
+            GameObject cell = Instantiate(inventoryCell, inventoryPages[(int)itemData.type].transform.GetChild(0).transform);
+            if (cell != null){
+                cell.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = itemData.itemName;
+                cell.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = itemData.basePrice.ToString();
+                cell.transform.GetChild(3).GetComponent<Item>().SetItem(itemData);
+                Button placeButton = cell.transform.GetChild(3).transform.GetChild(0).GetComponent<Button>();
+                Button removeButton = cell.transform.GetChild(3).transform.GetChild(1).GetComponent<Button>();
 
-             if (placeButton != null && removeButton != null) {
-                // Add event listeners to the buttons, this is very important to do IN the script, not in the editor
-                // or else it won't work
-                placeButton.onClick.AddListener(() => InventoryCellPlace(cell));
-                removeButton.onClick.AddListener(() => InventoryCellRemove(cell));
+                if (placeButton != null && removeButton != null) {
+                    // Add event listeners to the buttons, this is very important to do IN the script, not in the editor
+                    // or else it won't work
+                    placeButton.onClick.AddListener(() => InventoryCellPlace(cell));
+                    removeButton.onClick.AddListener(() => InventoryCellRemove(cell));
+                }
+                else
+                {
+                    Debug.Log("Error: Cell buttons not found.");
+                }
             }
-            else
-            {
-                Debug.Log("Error: Cell buttons not found.");
+            else {
+                Debug.Log("Error: could not instantiate inventory cell");
             }
         }
-        else {
-            Debug.Log("Error: could not instantiate inventory cell");
+        else{
+            Debug.Log("Error: could not find item data");
         }
     }
     
@@ -106,7 +120,8 @@ public class Inventory : MonoBehaviour
             page.SetActive(false);
         }
         inventoryPages[0].SetActive(true);
-        InventoryParent.SetActive(false);
+        inventoryParent.SetActive(false);
+        pedestalParent.SetActive(false);
     }
 
     // Update is called once per frame
@@ -114,13 +129,39 @@ public class Inventory : MonoBehaviour
         if (currentPedestal != null && Input.GetKeyDown(KeyCode.E))
         {
             ToggleInventory();
-            Debug.Log(currentPedestal.name);
+            TogglePedestalUI();
         }
     }
 
+    // called from the close button on the inventory panel
+    public void ToggleFullInventory(){
+        ToggleInventory();
+        if (currentPedestal != null){
+            TogglePedestalUI();
+        }
+    }
+
+    // just for the pedestal
+    public void TogglePedestalUI(){
+        isPedestalUIOpen = !isPedestalUIOpen;
+
+        if (currentPedestal != null && currentPedestal.GetComponent<ItemPedestal>().item != null){
+            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = currentPedestal.GetComponent<ItemPedestal>().item.itemName;
+            pedestalParent.SetActive(isPedestalUIOpen);
+        }
+        else{
+            Debug.Log("Error: no item on pedestal");
+        }
+        //TODO: add sprites and the rest of the info
+    }
+
+    // just for your main inventory when placing items
     public void ToggleInventory() {
         isInventoryOpen = !isInventoryOpen;
-        InventoryParent.SetActive(isInventoryOpen);
+        inventoryParent.SetActive(isInventoryOpen);
+
+        //TODO: if the inventory is opened not from the pedstal ui, disable the place button with a foreach loop.
+
 
         if (!isInventoryOpen)
         {
@@ -129,7 +170,8 @@ public class Inventory : MonoBehaviour
     }
 
     public void InventoryCellPlace(GameObject cell_){
-        Item item_ = cell_.transform.GetChild(3).GetComponent<Item>();
+        ItemData item_ = cell_.transform.GetChild(3).GetComponent<Item>().itemData;
+        //currentPedestal = cell_.transform.parent.gameObject;
         bool itemPlaced = PlaceItemOnPedestal(item_);
         if (itemPlaced){
             Destroy(cell_);

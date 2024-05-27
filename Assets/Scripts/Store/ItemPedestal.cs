@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemPedestal : MonoBehaviour
 {
     // Holds an item
-    public Item item;
+    public ItemData item;
     public bool isEmpty = true;
     public bool isWindow = false;
 
@@ -21,7 +21,7 @@ public class ItemPedestal : MonoBehaviour
         
     }
 
-    public void AddItem (Item item_){
+    public void AddItem (ItemData item_){
         item = item_;
         isEmpty = false;
     }
@@ -31,7 +31,7 @@ public class ItemPedestal : MonoBehaviour
         isEmpty = true;
     }
 
-    public Item GetItem (){
+    public ItemData GetItem (){
         return item;
     }
 }
