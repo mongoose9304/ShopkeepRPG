@@ -136,9 +136,8 @@ public class Inventory : MonoBehaviour
     // called from the close button on the inventory panel
     public void ToggleFullInventory(){
         ToggleInventory();
-        if (currentPedestal != null){
-            TogglePedestalUI();
-        }
+        TogglePedestalUI();
+        
     }
 
     // just for the pedestal
@@ -147,11 +146,11 @@ public class Inventory : MonoBehaviour
 
         if (currentPedestal != null && currentPedestal.GetComponent<ItemPedestal>().item != null){
             pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = currentPedestal.GetComponent<ItemPedestal>().item.itemName;
-            pedestalParent.SetActive(isPedestalUIOpen);
         }
         else{
-            Debug.Log("Error: no item on pedestal");
+            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "No item";
         }
+        pedestalParent.SetActive(isPedestalUIOpen);
         //TODO: add sprites and the rest of the info
     }
 
