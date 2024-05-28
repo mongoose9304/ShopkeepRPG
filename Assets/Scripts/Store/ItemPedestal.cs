@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemPedestal : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class ItemPedestal : MonoBehaviour
     public ItemData item;
     public bool isEmpty = true;
     public bool isWindow = false;
+    public bool isActive = false;
+
+    public GameObject pedestalParent;
 
     // Start is called before the first frame update
     void Start()
@@ -15,10 +19,24 @@ public class ItemPedestal : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    // Update the UI when the item changes
+    void FixedUpdate()
     {
-        
+        if (isActive){
+            if (!isEmpty){
+                pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
+                pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "$"+item.basePrice.ToString();
+                pedestalParent.transform.GetChild(3).gameObject.SetActive(true);
+                if(isWindow){
+                    pedestalParent.transform.GetChild(4).gameObject.SetActive(true);
+                }
+            } else {
+                pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "No item";
+                pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+                pedestalParent.transform.GetChild(3).gameObject.SetActive(false);
+                pedestalParent.transform.GetChild(4).gameObject.SetActive(false);
+            }
+        }
     }
 
     public void AddItem (ItemData item_){

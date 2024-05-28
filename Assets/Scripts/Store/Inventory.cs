@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour
         else if (other.CompareTag("Pedestal"))
         {
             currentPedestal = other.gameObject;
+            currentPedestal.GetComponent<ItemPedestal>().isActive = true;
         }
     }
 
@@ -46,6 +47,7 @@ public class Inventory : MonoBehaviour
     {
         if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal)
         {
+            currentPedestal.GetComponent<ItemPedestal>().isActive = false;
             currentPedestal = null;
         }
     }
@@ -63,7 +65,6 @@ public class Inventory : MonoBehaviour
                     pedestal.AddItem(itemData);
                     items.Remove(itemData);
                     Debug.Log("Placed " + itemData.itemName + " on pedestal.");
-                    ToggleFullInventory();
                     return true;
                 }
                 Debug.Log("Error: item is null");
@@ -75,6 +76,16 @@ public class Inventory : MonoBehaviour
         else {
             Debug.Log("Error: no pedestal selected");
             return false;
+        }
+    }
+
+    // this function is specifically for the button of the ui, when an npc grabs an item it'll be run through a different function
+     public void RemoveItemFromPedestal(){
+        if (currentPedestal != null){
+            ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
+            
+            AddItem(pedestal.item);
+            pedestal.RemoveItem();
         }
     }
 
@@ -143,13 +154,6 @@ public class Inventory : MonoBehaviour
     // just for the pedestal
     public void TogglePedestalUI(){
         isPedestalUIOpen = !isPedestalUIOpen;
-
-        if (currentPedestal != null && currentPedestal.GetComponent<ItemPedestal>().item != null){
-            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = currentPedestal.GetComponent<ItemPedestal>().item.itemName;
-        }
-        else{
-            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "No item";
-        }
         pedestalParent.SetActive(isPedestalUIOpen);
         //TODO: add sprites and the rest of the info
     }
