@@ -39,7 +39,6 @@ public class Inventory : MonoBehaviour
         else if (other.CompareTag("Pedestal"))
         {
             currentPedestal = other.gameObject;
-            currentPedestal.GetComponent<ItemPedestal>().isActive = true;
         }
     }
 
@@ -47,7 +46,6 @@ public class Inventory : MonoBehaviour
     {
         if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal)
         {
-            currentPedestal.GetComponent<ItemPedestal>().isActive = false;
             currentPedestal = null;
         }
     }
@@ -64,6 +62,7 @@ public class Inventory : MonoBehaviour
                 if (itemData != null){
                     pedestal.AddItem(itemData);
                     items.Remove(itemData);
+                    currentPedestal.GetComponent<ItemPedestal>().UpdateUI();
                     Debug.Log("Placed " + itemData.itemName + " on pedestal.");
                     return true;
                 }
@@ -86,6 +85,7 @@ public class Inventory : MonoBehaviour
             
             AddItem(pedestal.item);
             pedestal.RemoveItem();
+            currentPedestal.GetComponent<ItemPedestal>().UpdateUI();
         }
     }
 
@@ -154,6 +154,10 @@ public class Inventory : MonoBehaviour
     // just for the pedestal
     public void TogglePedestalUI(){
         isPedestalUIOpen = !isPedestalUIOpen;
+
+        if (isPedestalUIOpen){
+            currentPedestal.GetComponent<ItemPedestal>().UpdateUI();
+        }
         pedestalParent.SetActive(isPedestalUIOpen);
         //TODO: add sprites and the rest of the info
     }

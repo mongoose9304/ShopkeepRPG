@@ -9,7 +9,6 @@ public class ItemPedestal : MonoBehaviour
     public ItemData item;
     public bool isEmpty = true;
     public bool isWindow = false;
-    public bool isActive = false;
 
     public GameObject pedestalParent;
 
@@ -20,22 +19,24 @@ public class ItemPedestal : MonoBehaviour
     }
 
     // Update the UI when the item changes
-    void FixedUpdate()
+    void Update()
     {
-        if (isActive){
-            if (!isEmpty){
-                pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
-                pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "$"+item.basePrice.ToString();
-                pedestalParent.transform.GetChild(3).gameObject.SetActive(true);
-                if(isWindow){
-                    pedestalParent.transform.GetChild(4).gameObject.SetActive(true);
-                }
-            } else {
-                pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "No item";
-                pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "";
-                pedestalParent.transform.GetChild(3).gameObject.SetActive(false);
-                pedestalParent.transform.GetChild(4).gameObject.SetActive(false);
+    
+    }
+
+    public void UpdateUI(){
+        if (!isEmpty){
+            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
+            pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "$"+item.basePrice.ToString();
+            pedestalParent.transform.GetChild(3).gameObject.SetActive(true);
+            if(isWindow){
+                pedestalParent.transform.GetChild(4).gameObject.SetActive(true);
             }
+        } else {
+            pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "No item";
+            pedestalParent.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            pedestalParent.transform.GetChild(3).gameObject.SetActive(false);
+            pedestalParent.transform.GetChild(4).gameObject.SetActive(false);
         }
     }
 
