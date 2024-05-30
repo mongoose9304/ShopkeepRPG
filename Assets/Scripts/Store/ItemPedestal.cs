@@ -24,6 +24,7 @@ public class ItemPedestal : MonoBehaviour
     
     }
 
+    // manually called when any changes happen to the ui
     public void UpdateUI(){
         if (!isEmpty){
             pedestalParent.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = item.itemName;
