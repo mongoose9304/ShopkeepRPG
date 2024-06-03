@@ -30,8 +30,28 @@ public class StoreManager : MonoBehaviour
         // Show the store UI
         storeUI.SetActive(true);
 
+        List<ItemPedestal> tempArray = new List<ItemPedestal>(); // will hold the non empty pedestals
+
         // pick a random item from the item pedestals array that is not empty
-        
+        for(int i = 0; i < itemPedestals.Length; i++){
+            if(!itemPedestals[i].GetComponent<ItemPedestal>().isEmpty){
+                tempArray.Add(itemPedestals[i].GetComponent<ItemPedestal>());
+            }
+        }
+
+        // if there are no items in the store then return
+        if(tempArray.Count == 0){
+            Debug.Log("No items in store");
+            storeUI.SetActive(false);
+            return;
+        }
+
+        // pick a random item from the tempArray
+        int randomIndex = Random.Range(0, tempArray.Count);
+
+        // set the item pedestal to the random item
+        checkoutPedestal = itemPedestals[randomIndex];
+
         // update the store ui to show the item and the base price
 
         // wait for the player to press the sell button
