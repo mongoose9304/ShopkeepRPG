@@ -63,7 +63,7 @@ public class StoreManager : MonoBehaviour
     }
     
     public void SellItem(){
-         // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * -NpcCoefficient) 
+        // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * 1-NpcCoefficient) 
 
         // if it is then add the price to the player's inventory and remove the item from the pedestal
 
