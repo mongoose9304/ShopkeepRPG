@@ -62,14 +62,14 @@ public class StoreManager : MonoBehaviour
         // wait for the player to press the sell button
     }
     
-    public bool SellItem(){
+    public void SellItem(){
          // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * -NpcCoefficient) 
 
         // if it is then add the price to the player's inventory and remove the item from the pedestal
 
         // if not then npc gets +1 to anger and the player can try again, if the player runs out of tries then the npc leaves and the player keeps the item
 
-        return false;
+        return;
     }
     
 

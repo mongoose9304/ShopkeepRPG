@@ -15,48 +15,55 @@ public class Inventory : MonoBehaviour
     public GameObject inventoryCell;
 
     public GameObject pedestalParent;
+    public GameObject storeManager;
 
     public GameObject currentPedestal;
+    public GameObject checkout;
+
     private bool isInventoryOpen = false;
+    private bool isStoreOpen = false;
     private bool isPedestalUIOpen = false;
 
 
     public bool isOpen(){
-        return isInventoryOpen;
+        if (isInventoryOpen || isStoreOpen){
+            return true;
+        }
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Item"))
-        {
+        if (other.CompareTag("Item")){
             ItemData item = other.GetComponent<Item>().itemData;
-            if (item != null)
-            {
+            if (item != null) {
                 AddItem(item);
                 Destroy(other.gameObject);
             }
-        }
-        else if (other.CompareTag("Pedestal"))
-        {
+        } 
+        else if (other.CompareTag("Pedestal")){
             currentPedestal = other.gameObject;
+        } 
+        else if (other.CompareTag("Checkout")){
+            checkout = other.gameObject;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal)
-        {
+        if (other.CompareTag("Pedestal") && other.gameObject == currentPedestal){
             currentPedestal = null;
+        }
+        else if (other.CompareTag("Checkout") && other.gameObject == checkout){
+            checkout = null;
         }
     }
 
 
-    public bool PlaceItemOnPedestal(ItemData item) {
-        if (currentPedestal != null)
-        {
+    public bool PlaceItemOnPedestal(ItemData item){
+        if (currentPedestal != null){
             ItemPedestal pedestal = currentPedestal.GetComponent<ItemPedestal>();
-            if (pedestal != null && pedestal.isEmpty)
-            {
+            if (pedestal != null && pedestal.isEmpty){
                 // This code is all over the place but from my understanding you need to resave these or they'll end up with 'missing'
                 ItemData itemData = item;
                 if (itemData != null){
@@ -141,6 +148,9 @@ public class Inventory : MonoBehaviour
         {
             ToggleInventory();
             TogglePedestalUI();
+        } 
+        else if (checkout != null && Input.GetKeyDown(KeyCode.E)){
+            storeManager.GetComponent<StoreManager>().StartStore();
         }
     }
 
