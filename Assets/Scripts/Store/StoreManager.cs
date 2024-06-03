@@ -18,6 +18,8 @@ public class StoreManager : MonoBehaviour
 
     public GameObject storeUI;
 
+    private int randomAmount; // determines how many items will sell, maybe later weeks we can up the minimum
+
     public void Start(){
 
     }
@@ -48,21 +50,26 @@ public class StoreManager : MonoBehaviour
 
         // pick a random item from the tempArray
         int randomIndex = Random.Range(0, tempArray.Count);
+        randomAmount = Random.Range(1, tempArray.Count);
 
         // set the item pedestal to the random item
         checkoutPedestal = itemPedestals[randomIndex];
 
         // update the store ui to show the item and the base price
+        storeUI.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.name;
+        storeUI.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.basePrice.ToString();
 
         // wait for the player to press the sell button
-
-        // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * -NpcCoefficient) 
+    }
+    
+    public bool SellItem(){
+         // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * -NpcCoefficient) 
 
         // if it is then add the price to the player's inventory and remove the item from the pedestal
 
         // if not then npc gets +1 to anger and the player can try again, if the player runs out of tries then the npc leaves and the player keeps the item
 
-        // repeat a few times then return control to the player
+        return false;
     }
     
 
