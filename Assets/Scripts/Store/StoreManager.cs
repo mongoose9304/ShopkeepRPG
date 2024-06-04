@@ -21,7 +21,7 @@ public class StoreManager : MonoBehaviour
     private int randomAmount; // determines how many items will sell, maybe later weeks we can up the minimum
 
     public void Start(){
-
+        storeUI.SetActive(false);
     }
     
     public void Update(){
@@ -32,12 +32,12 @@ public class StoreManager : MonoBehaviour
         // Show the store UI
         storeUI.SetActive(true);
 
-        List<ItemPedestal> tempArray = new List<ItemPedestal>(); // will hold the non empty pedestals
+        List<GameObject> tempArray = new List<GameObject>(); // will hold the non empty pedestals
 
         // pick a random item from the item pedestals array that is not empty
         for(int i = 0; i < itemPedestals.Length; i++){
             if(!itemPedestals[i].GetComponent<ItemPedestal>().isEmpty){
-                tempArray.Add(itemPedestals[i].GetComponent<ItemPedestal>());
+                tempArray.Add(itemPedestals[i]);
             }
         }
 
@@ -53,7 +53,7 @@ public class StoreManager : MonoBehaviour
         randomAmount = Random.Range(1, tempArray.Count);
 
         // set the item pedestal to the random item
-        checkoutPedestal = itemPedestals[randomIndex];
+        checkoutPedestal = tempArray[randomIndex];
 
         // update the store ui to show the item and the base price
         storeUI.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.name;
@@ -70,6 +70,11 @@ public class StoreManager : MonoBehaviour
         // if not then npc gets +1 to anger and the player can try again, if the player runs out of tries then the npc leaves and the player keeps the item
 
         return;
+    }
+
+    public void CloseStore(){
+        checkoutPedestal = null;
+        storeUI.SetActive(false);
     }
     
 
