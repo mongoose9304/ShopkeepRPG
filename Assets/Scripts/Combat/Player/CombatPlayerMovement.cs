@@ -28,7 +28,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] bool hardLockOn;
     [SerializeField] GameObject lockOnIcon;
     [SerializeField] Transform lockOnCheckPosition;
-    [SerializeField] List<GameObject> currentEnemiesList=new List<GameObject>();
+    
     
     [SerializeField] string enemyTag;
     [SerializeField] float minDistanceBetweenRetargets;
@@ -87,6 +87,10 @@ public class CombatPlayerMovement : MonoBehaviour
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
                 transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 dashTime -= Time.deltaTime;
+                if(CheckForWallHit())
+                {
+                    dashTime = 0;
+                }
                 if (dashTime <= 0)
                 {
                     isDashing = false;
@@ -180,6 +184,28 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
     }
+    private bool CheckForWallHit()
+    {
+
+        var dir = transform.TransformDirection(Vector3.down);
+        // Up
+
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15, wallMask))
+            return true;
+        // Down
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+            return true;
+        //Left
+        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+            return true;
+        //Right
+        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
+            return true;
+
+        return false;
+
+
+    }
     private void GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
@@ -193,13 +219,13 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void CheckForSoftLockOn()
     {
-        if (hardLockOn||currentEnemiesList.Count==0)
+        if (hardLockOn||EnemyManager.instance.currentEnemiesList.Count==0)
             return;
 
         if (!currentTarget)
-            currentTarget = currentEnemiesList[0];
+            currentTarget = EnemyManager.instance.currentEnemiesList[0];
 
-       foreach(GameObject obj in currentEnemiesList)
+       foreach(GameObject obj in EnemyManager.instance.currentEnemiesList)
         {
             if (!obj.activeInHierarchy)
                 continue;
@@ -214,7 +240,10 @@ public class CombatPlayerMovement : MonoBehaviour
             lockOnIcon.transform.position = currentTarget.transform.position;
             lockOnIcon.SetActive(true);
             if (!currentTarget.activeInHierarchy)
+            {
                 currentTarget = null;
+                lockOnIcon.SetActive(false);
+            }
         }
         else
         {
@@ -232,29 +261,8 @@ public class CombatPlayerMovement : MonoBehaviour
         transform.LookAt(currentTarget.transform);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
-    public void SetCurrentEnemyList(List<GameObject> objectsToSet)
-    {
-        currentEnemiesList.Clear();
-        foreach(GameObject obj in objectsToSet)
-        {
-            currentEnemiesList.Add(obj);
-        }
-    }
-    public void AddEnemy(GameObject obj_)
-    {
-
-        currentEnemiesList.Add(obj_);
-    }
-    public List<GameObject> GetCurrentEnemyList()
-    {
-        return currentEnemiesList;
-    }
-    private void CleanCurrentEnemyList()
-    {
-       
-       currentEnemiesList.RemoveAll(null);
-       
-    }
+    
+   
     public GameObject GetCurrentTarget()
     {
         return currentTarget;

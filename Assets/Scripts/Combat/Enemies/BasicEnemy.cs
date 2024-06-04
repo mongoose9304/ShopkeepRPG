@@ -10,6 +10,7 @@ using MoreMountains.Feedbacks;
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
+    public BasicMonsterData myBaseData;
     public float maxHealth;
     public float maxHitstun;
     public float maxAttackCooldown;
@@ -37,12 +38,14 @@ public class BasicEnemy : MonoBehaviour
     Element myWeakness;
     public GameObject stunIcon;
     public GameObject player;
+    public EnemyCounter myEnemyCounter;
     [SerializeField]protected NavMeshAgent agent;
     [SerializeField] protected TextMeshProUGUI damageText;
     [SerializeField] float maxTimeBeforeDamageTextFades;
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [SerializeField] GameObject[] deathEffects;
+
 
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
@@ -168,6 +171,8 @@ public class BasicEnemy : MonoBehaviour
         attackIconPooler.ResetAllObjects();
         lootDropper.DropItems();
         CoinSpawner.instance_.CreateCoins(Random.Range(0,1000),this.transform);
+        if (myEnemyCounter)
+            myEnemyCounter.currentEnemies -= 1;
         //death effects buggy RN, add later -Rob
       //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }
