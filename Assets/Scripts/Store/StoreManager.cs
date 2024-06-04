@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 // This class is responsible for managing the store UI and functionality. It will hold an array of gameobjects for each item pedistal
 public class StoreManager : MonoBehaviour
@@ -18,10 +18,29 @@ public class StoreManager : MonoBehaviour
 
     public GameObject storeUI;
 
+    public TMP_InputField checkoutInput;
+
     private int randomAmount; // determines how many items will sell, maybe later weeks we can up the minimum
 
     public void Start(){
         storeUI.SetActive(false);
+
+        // assuming we want to use a standard currency
+        checkoutInput.onValueChanged.AddListener(ValidateCurrencyInput);
+    }
+
+    private void ValidateCurrencyInput(string input)
+    {
+        if (float.TryParse(input, out float value))
+        {
+            // Format the input to two decimal places
+            checkoutInput.text = value.ToString("F2");
+        }
+        else
+        {
+            // If input is invalid, reset to last valid value
+            checkoutInput.text = "0.00";
+        }
     }
     
     public void Update(){
@@ -63,6 +82,16 @@ public class StoreManager : MonoBehaviour
     }
     
     public void SellItem(){
+        // save the inputted value
+        string input = checkoutInput.text;
+
+        if (float.TryParse(input, out float currencyValue)){
+            // Save the currency value as a float
+            Debug.Log("Currency Value: $" + currencyValue);}
+        else{
+            Debug.LogError("Invalid currency value entered.");
+        }
+
         // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * 1-NpcCoefficient) 
 
         // if it is then add the price to the player's inventory and remove the item from the pedestal
