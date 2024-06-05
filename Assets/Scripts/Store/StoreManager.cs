@@ -31,6 +31,7 @@ public class StoreManager : MonoBehaviour
 
     private void ValidateCurrencyInput(string input)
     {
+        /*
         if (float.TryParse(input, out float value))
         {
             // Format the input to two decimal places
@@ -41,6 +42,35 @@ public class StoreManager : MonoBehaviour
             // If input is invalid, reset to last valid value
             checkoutInput.text = "0.00";
         }
+
+        */
+        // Allow only numbers and a single decimal point with up to 2 digits after it
+        string validInput = "";
+        bool decimalFound = false;
+        int postDecimalDigits = 0;
+
+        foreach (char c in input){
+            if (char.IsDigit(c)){
+                if (decimalFound){
+                    if (postDecimalDigits < 2){
+                        validInput += c;
+                        postDecimalDigits++;
+                    }
+                }
+                else{
+                    validInput += c;
+                }
+            }
+            else if (c == '.' && !decimalFound){
+                validInput += c;
+                decimalFound = true;
+            }
+        }
+
+        // Update the input field without adding extra zeroes
+        checkoutInput.onValueChanged.RemoveListener(ValidateCurrencyInput);
+        checkoutInput.text = validInput;
+        checkoutInput.onValueChanged.AddListener(ValidateCurrencyInput);
     }
     
     public void Update(){
