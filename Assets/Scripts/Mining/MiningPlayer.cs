@@ -93,6 +93,7 @@ public class MiningPlayer : MonoBehaviour
     void GetInput()
     {
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+      
         if (Input.GetButtonDown("Fire2"))
         {
             OnDash();
@@ -104,13 +105,42 @@ public class MiningPlayer : MonoBehaviour
        
         if (Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), transform.TransformDirection(Vector3.down), 10))
             dashStartPos = transform.position;
-        
+        SnapRotationToGrid(transform);
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         isDashing = true;
         dashTime = 0.2f;
         Instantiate(dashEffect, transform.position, transform.rotation);
 
+    }
+    private void SnapRotationToGrid(Transform transform_)
+    {
+        Debug.Log("Local angle " + transform_.localEulerAngles.y);
+      if(transform_.localEulerAngles.y<45|| transform_.localEulerAngles.y> 315)
+        {
+            //lock to 0
+           // transform_.localEulerAngles.Set(0,0,0);
+            moveInput.Set(0, 0, 1);
+
+        }
+      else  if (transform_.localEulerAngles.y < 135 && transform_.localEulerAngles.y > 45)
+        {
+            //lock to 90
+           // transform_.localEulerAngles.Set(0, 90, 0);
+            moveInput.Set(1, 0, 0);
+        }
+      else if (transform_.localEulerAngles.y < 225 && transform_.localEulerAngles.y >135)
+        {
+            //lock to 180
+            //transform_.localEulerAngles.Set(0, 180, 0);
+            moveInput.Set(0, 0, -1);
+        }
+      else  if (transform_.localEulerAngles.y < 315 && transform_.localEulerAngles.y > 225)
+        {
+            //lock to 270
+            //transform_.localEulerAngles.Set(0, 270, 0);
+            moveInput.Set(-1, 0, 0);
+        }
     }
     private Vector3 PreventFalling()
     {
@@ -143,19 +173,19 @@ public class MiningPlayer : MonoBehaviour
         newInput = temp_;
         // Up
 
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
         // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, .5f), dir, 15, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
-        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
-        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;
         return newInput;
@@ -164,24 +194,30 @@ public class MiningPlayer : MonoBehaviour
     }
     private bool CheckForWallHit()
     {
-
+        /* for directions that will not change when player moves
         var dir = transform.TransformDirection(Vector3.down);
         // Up
 
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
             return true;
         // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 0.5f), dir, 15, wallMask))
             return true;
         //Left
-        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
             return true;
         //Right
-        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
             return true;
 
         return false;
 
+
+        */
+        var dir = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position, dir, 2.5f, wallMask))
+            return true;
+        return false;
 
     }
     private void GroundCheck()
