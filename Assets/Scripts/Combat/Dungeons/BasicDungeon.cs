@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class BasicDungeon : MonoBehaviour
 {
     public List<BasicEnemy> regularEnemies=new List<BasicEnemy>();
@@ -23,6 +25,27 @@ public class BasicDungeon : MonoBehaviour
                 EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject);
             }
             
+        }
+    }
+
+    public void CreateSpecificRoom(int roomSize,Transform roomLocation,RoomType desiredType)
+    {
+        List<BasicRoom> tempRooms = new List<BasicRoom>();
+        foreach(BasicRoom room_ in smallRooms)
+        {
+            if (room_.myType == desiredType)
+                tempRooms.Add(room_);
+        }
+        foreach (BasicRoom room_ in regularRooms)
+        {
+            if (room_.myType == desiredType)
+                tempRooms.Add(room_);
+
+        }
+        foreach (BasicRoom room_ in bigRooms)
+        {
+            if (room_.myType == desiredType)
+                tempRooms.Add(room_);
         }
     }
 }

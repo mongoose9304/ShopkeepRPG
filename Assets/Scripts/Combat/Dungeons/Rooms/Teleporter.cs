@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Teleporter : MonoBehaviour
 {
     [SerializeField] Transform destination;
+    [SerializeField] Image previewImage;
+    [SerializeField] string roomType;
 
 
 
@@ -19,6 +22,11 @@ public class Teleporter : MonoBehaviour
         {
             Teleport(other.gameObject);
         }
+    }
+    public void SetUpTeleporter(Sprite icon_,string roomType_)
+    {
+        previewImage.sprite = icon_;
+        roomType = roomType_;
     }
 
 }
