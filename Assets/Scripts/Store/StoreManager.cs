@@ -123,7 +123,8 @@ public class StoreManager : MonoBehaviour
         storeUI.transform.GetChild(0).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.name;
         storeUI.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.basePrice.ToString();
 
-        // wait for the player to press the sell button
+        // update the npc ui to show the npc's name
+        storeUI.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = randomNPC.name;
     }
     
     public void SellItem(){
