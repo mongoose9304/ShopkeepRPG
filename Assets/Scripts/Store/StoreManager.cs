@@ -10,6 +10,8 @@ public class StoreManager : MonoBehaviour
     // StoreManager holds all the item pedestals, they can be empty or holding an item
     public GameObject[] itemPedestals;
 
+    public List<StoreNPC> npcs;
+
     // Reference for the player shell prefab
     public GameObject player;
 
@@ -77,6 +79,17 @@ public class StoreManager : MonoBehaviour
 
     }
 
+    // we want the npcs to walk into the store in a later version of the game, for now just grab a random one
+    public StoreNPC RandomizeNPC(){
+        // choose a random npc from the npcs list
+        int randomIndex = Random.Range(0, npcs.Count);
+
+        // set the npc to the random npc
+        StoreNPC randomNPC = npcs[randomIndex];
+
+        return randomNPC;
+    }
+
     public void StartStore(){
         // Show the store UI
         storeUI.SetActive(true);
@@ -89,6 +102,8 @@ public class StoreManager : MonoBehaviour
                 tempArray.Add(itemPedestals[i]);
             }
         }
+
+        StoreNPC randomNPC = RandomizeNPC();
 
         // if there are no items in the store then return
         if(tempArray.Count == 0){
