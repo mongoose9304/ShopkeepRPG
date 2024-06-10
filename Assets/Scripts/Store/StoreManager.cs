@@ -24,6 +24,8 @@ public class StoreManager : MonoBehaviour
 
     private int randomAmount; // determines how many items will sell, maybe later weeks we can up the minimum
 
+    private StoreNPC randomNPC_;
+
     public void Start(){
         storeUI.SetActive(false);
 
@@ -90,7 +92,7 @@ public class StoreManager : MonoBehaviour
             }
         }
 
-        StoreNPC randomNPC = RandomizeNPC();
+        randomNPC_ = RandomizeNPC();
 
         // if there are no items in the store then return
         if(tempArray.Count == 0){
@@ -111,7 +113,7 @@ public class StoreManager : MonoBehaviour
         storeUI.transform.GetChild(0).transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = checkoutPedestal.GetComponent<ItemPedestal>().item.basePrice.ToString();
 
         // update the npc ui to show the npc's name
-        storeUI.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = randomNPC.name;
+        storeUI.transform.GetChild(1).transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = randomNPC_.name;
     }
     
     public void SellItem(){
@@ -120,12 +122,23 @@ public class StoreManager : MonoBehaviour
 
         if (float.TryParse(input, out float currencyValue)){
             // Save the currency value as a float
-            Debug.Log("Currency Value: $" + currencyValue);}
+            Debug.Log("Currency Value: $" + currencyValue);
+
+            // decide if the item is in the range that the npc will pay for 
+            float lowerBound = checkoutPedestal.GetComponent<ItemPedestal>().item.basePrice * (1 - randomNPC_.npcCoeffecient);
+            float upperBound = checkoutPedestal.GetComponent<ItemPedestal>().item.basePrice * (1 + randomNPC_.npcCoeffecient);
+
+            // if the currency value is in the range then the item is sold
+            if (currencyValue >= lowerBound && currencyValue <= upperBound){
+                Debug.Log("Sold");
+            } else {
+                Debug.Log("Not sold");
+            }
+        }
         else{
             Debug.LogError("Invalid currency value entered.");
         }
 
-        // decide if the item is in the range that the npc will pay for (basePrice * NpcCofficient) > price > (basePrice * 1-NpcCoefficient) 
 
         // if it is then add the price to the player's inventory and remove the item from the pedestal
 
