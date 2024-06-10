@@ -33,24 +33,11 @@ public class StoreManager : MonoBehaviour
 
     private void ValidateCurrencyInput(string input)
     {
-        /*
-        if (float.TryParse(input, out float value))
-        {
-            // Format the input to two decimal places
-            checkoutInput.text = value.ToString("F2");
-        }
-        else
-        {
-            // If input is invalid, reset to last valid value
-            checkoutInput.text = "0.00";
-        }
-
-        */
-        // Allow only numbers and a single decimal point with up to 2 digits after it
         string validInput = "";
         bool decimalFound = false;
         int postDecimalDigits = 0;
 
+        // format the string
         foreach (char c in input){
             if (char.IsDigit(c)){
                 if (decimalFound){
