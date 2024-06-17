@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
+using MoreMountains.Feedbacks;
+
 public class MiningPlayer : MonoBehaviour
 {
     public float maxdashCoolDown;
@@ -12,6 +14,10 @@ public class MiningPlayer : MonoBehaviour
     public float dashCoolDown;
     public float dashTime;
     public bool isDashing;
+    public int bombCountMax;
+    [SerializeField] private GameObject bombObject;
+    public List<GameObject> activeBombs = new List<GameObject>();
+    [SerializeField] protected MMMiniObjectPooler bombPool;
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
@@ -90,6 +96,7 @@ public class MiningPlayer : MonoBehaviour
             DashAction();
         }
     }
+   
     void GetInput()
     {
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -97,6 +104,10 @@ public class MiningPlayer : MonoBehaviour
         if (Input.GetButtonDown("Fire2"))
         {
             OnDash();
+        }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            BombAction();
         }
 
     }
@@ -112,6 +123,11 @@ public class MiningPlayer : MonoBehaviour
         dashTime = 0.2f;
         Instantiate(dashEffect, transform.position, transform.rotation);
 
+    }
+    private void BombAction()
+    {
+       GameObject obj= bombPool.GetPooledGameObject();
+       // obj.transform
     }
     private void SnapRotationToGrid(Transform transform_)
     {
