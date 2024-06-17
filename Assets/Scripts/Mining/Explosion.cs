@@ -26,5 +26,9 @@ public class Explosion : MonoBehaviour
         {
             other.GetComponent<Bomb>().Explode();
         }
+        if (other.tag == "Rock")
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
