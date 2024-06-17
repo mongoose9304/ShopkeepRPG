@@ -13,9 +13,24 @@ public class Bomb : MonoBehaviour
     public void Explode()
     {
         //right
-        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), transform.right, range * 2, wallMask))
+        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(1, 0f, 0f), range * 2, wallMask))
         {
             Instantiate(explosionEffect, transform.position + new Vector3(2.0f, 0.0f, 0f), transform.rotation);
+        }
+        //left
+        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(-1, 0f, 0f), range * 2, wallMask))
+        {
+            Instantiate(explosionEffect, transform.position + new Vector3(-2.0f, 0.0f, 0f), transform.rotation);
+        }
+        //up
+        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, 1f), range * 2, wallMask))
+        {
+            Instantiate(explosionEffect, transform.position + new Vector3(0.0f, 0.0f, 2.0f), transform.rotation);
+        }
+        //down
+        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, -1f), range * 2, wallMask))
+        {
+            Instantiate(explosionEffect, transform.position + new Vector3(0.0f, 0.0f, -2.0f), transform.rotation);
         }
         gameObject.SetActive(false);
     }
