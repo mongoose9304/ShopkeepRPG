@@ -4,5 +4,34 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public bool IsOccupied;
+   [SerializeField]  bool IsOccupied;
+   [SerializeField] Bomb myBomb;
+
+
+    private void Update()
+    {
+        if (myBomb)
+        {
+            if (!myBomb.gameObject.activeInHierarchy)
+                myBomb = null;
+        }
+    }
+
+    public void SetOccupied(bool isOccupied_)
+    {
+        IsOccupied = isOccupied_;
+    }
+
+    public void SetBomb(Bomb bomb_)
+    {
+        myBomb = bomb_;
+
+    }
+    public bool CanPlaceBomb()
+    {
+        if (!myBomb)
+            return true;
+
+        return false;
+    }
 }

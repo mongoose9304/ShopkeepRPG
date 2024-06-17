@@ -127,7 +127,16 @@ public class MiningPlayer : MonoBehaviour
     private void BombAction()
     {
        GameObject obj= bombPool.GetPooledGameObject();
-       // obj.transform
+       Tile tile= GetCurrentTile();
+        if(obj&&tile)
+        {
+           if(tile.CanPlaceBomb())
+            {
+                obj.SetActive(true);
+                obj.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+                tile.SetBomb(obj.GetComponent<Bomb>());
+            }
+        }
     }
     private void SnapRotationToGrid(Transform transform_)
     {
@@ -245,6 +254,19 @@ public class MiningPlayer : MonoBehaviour
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
+    }
+    private Tile GetCurrentTile()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 10))
+        {
+           
+            if (hit.collider.gameObject.TryGetComponent<Tile>(out Tile tile))
+            {
+                return tile;
+            }
+        }
+        return null;
     }
 
    
