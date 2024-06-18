@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
+
+public enum RoomType
+{
+    Combat, Gambling,Shop,EliteCombat,Navigation,Loot
+};
 public class BasicRoom : MonoBehaviour
 {
     public BasicDungeon myDungeon;
+    public RoomType myType;
     [SerializeField] protected bool willLockOnEnter;
     [SerializeField] public List<BasicEnemy> specialEnemies = new List<BasicEnemy>();
     [SerializeField] protected UnityEvent onEnter;
