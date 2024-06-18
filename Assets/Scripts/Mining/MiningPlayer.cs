@@ -138,6 +138,10 @@ public class MiningPlayer : MonoBehaviour
             }
         }
     }
+    private void PickaxeAction()
+    {
+
+    }
     private void SnapRotationToGrid(Transform transform_)
     {
         Debug.Log("Local angle " + transform_.localEulerAngles.y);
