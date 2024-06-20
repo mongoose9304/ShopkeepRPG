@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static GameManager instance {get; private set;}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    /*
+    [SerializeField]
+    private GaneState startState;
+
+    publc GameState GameState {get; private set;}
+
+    */
+
+    // todo add managers
+    // level manager
+    // player manager
+    // potientially ui manager
+
+    void Awale(){
+        if(instance != null && instance != this){
+            Destroy(gameObject);
+            return;
+        }
+        else{
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+
+
+        // set up the states
     }
 }
