@@ -17,9 +17,10 @@ public class GameManager : MonoBehaviour
     // todo add managers
     // level manager
     // player manager
+    // inventory manager
     // potientially ui manager
 
-    void Awale(){
+    void Awake(){
         if(instance != null && instance != this){
             Destroy(gameObject);
             return;
