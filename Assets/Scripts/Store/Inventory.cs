@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    // TODO: rework inventory.cs into inventory manager which will be kept on its own object and will be stored with the gamemanager.cs
+
+
     // inventory backup
     public List<ItemData> items;
     // Inventory pages for displaying the items in the ui
