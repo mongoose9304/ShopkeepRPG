@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     // level manager
     // player manager
     // inventory manager
+    public InventoryManager inventoryManager;
+    public PlayerManager playerManager;
+    public UIManager uIManager;
     // potientially ui manager
 
     void Awake(){
