@@ -13,15 +13,9 @@ public class GameManager : MonoBehaviour
     publc GameState GameState {get; private set;}
 
     */
-
-    // todo add managers
-    // level manager
-    // player manager
-    // inventory manager
     public InventoryManager inventoryManager;
     public PlayerManager playerManager;
     public UIManager uIManager;
-    // potientially ui manager
 
     void Awake(){
         if(instance != null && instance != this){

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class Transition : MonoBehaviour
 {
+    // this class will be used to go to the next scene
+    // it will be attached to the gameobject with a box collider that will trigger the transition when stepped on by the player
 
-    // inventory is stored as your ui, will need to bring it between scenes
-    // not sure to do it here, or the singleton.
-    public GameObject inventoryUI;
+
     // Start is called before the first frame update
     void Start()
     {
