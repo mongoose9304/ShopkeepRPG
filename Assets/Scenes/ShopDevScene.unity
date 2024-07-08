@@ -2358,6 +2358,7 @@ GameObject:
   - component: {fileID: 654775811}
   - component: {fileID: 654775810}
   - component: {fileID: 654775812}
+  - component: {fileID: 654775813}
   m_Layer: 0
   m_Name: PlayerShell
   m_TagString: Player
@@ -2424,7 +2425,28 @@ MonoBehaviour:
   speed: 150
   turnSpeed: 720
   model: {fileID: 3996011870689483010}
-  playerInventory: {fileID: 9052862287099702207}
+  playerInventory: {fileID: 785609837}
+--- !u!65 &654775813
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654775809}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.91292226, y: 0.46586114, z: 1.0582606}
+  m_Center: {x: 0.015888393, y: 0.13998845, z: -0.029130504}
 --- !u!1 &659457400
 GameObject:
   m_ObjectHideFlags: 0
@@ -2762,6 +2784,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b62ed11307d0f44885956d1d442230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  items: []
+  inventoryPages:
+  - {fileID: 951794835}
+  - {fileID: 96697279}
+  - {fileID: 1804287590}
+  - {fileID: 1372010851}
+  - {fileID: 628196503}
+  - {fileID: 1750126294}
+  inventoryParent: {fileID: 86570789}
+  inventoryCell: {fileID: 2547846349346444229, guid: faabb27b11e29964ba2238cd72522b47, type: 3}
+  pedestalParent: {fileID: 545596278}
+  storeManager: {fileID: 518360124}
+  currentPedestal: {fileID: 0}
+  checkout: {fileID: 0}
 --- !u!4 &785609838
 Transform:
   m_ObjectHideFlags: 0
@@ -4619,7 +4655,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9052862287099702207}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: ToggleFullInventory
         m_Mode: 1
@@ -5868,7 +5904,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9052862287099702207}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
         m_MethodName: RemoveItemFromPedestal
         m_Mode: 1
@@ -9386,7 +9422,9 @@ PrefabInstance:
       propertyPath: inventoryPages.Array.data[5]
       value: 
       objectReference: {fileID: 1750126294}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 814357869832582669, guid: 26c64d0a02d23334c85a40267eee073f, type: 3}
+    - {fileID: 8911999803024212474, guid: 26c64d0a02d23334c85a40267eee073f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -9449,17 +9487,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8865930557885838463, guid: 26c64d0a02d23334c85a40267eee073f, type: 3}
   m_PrefabInstance: {fileID: 5969370107076735345}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9052862287099702207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8911999803024212474, guid: 26c64d0a02d23334c85a40267eee073f, type: 3}
-  m_PrefabInstance: {fileID: 5969370107076735345}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8016111754605197665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e826681a69a0dc44d9d0c37557a6955c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
