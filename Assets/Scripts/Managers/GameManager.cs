@@ -1,6 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum GameState{
+    MainMenu,
+    Cutscene,
+    Pause,
+    Shop,
+    Dungeon,
+    Town,
+    Fishing,
+    Mining,
+    Logging
+}
 
 public class GameManager : MonoBehaviour
 {

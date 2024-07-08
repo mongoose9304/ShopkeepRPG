@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    // TODO: rework inventory.cs into inventory manager which will be kept on its own object and will be stored with the gamemanager.cs
+    //------------ Depricated ----------
 
 
     // inventory backup
