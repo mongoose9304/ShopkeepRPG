@@ -6,6 +6,7 @@ using MoreMountains.Feedbacks;
 
 public class MiningPlayer : MonoBehaviour
 {
+    //movement
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
@@ -14,10 +15,19 @@ public class MiningPlayer : MonoBehaviour
     public float dashCoolDown;
     public float dashTime;
     public bool isDashing;
+    //bombs
     public int bombCountMax;
     [SerializeField] private GameObject bombObject;
     public List<GameObject> activeBombs = new List<GameObject>();
     [SerializeField] protected MMMiniObjectPooler bombPool;
+    //pickaxe
+    [SerializeField] GameObject myPickaxe;
+    bool isSwinging;
+    [SerializeField] float maxSwingtime;
+    float currentSwingTime;
+    [SerializeField] Vector3 startRotation;
+    [SerializeField] float swingSpeed;
+    //references and inputs
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
@@ -63,6 +73,7 @@ public class MiningPlayer : MonoBehaviour
                 timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
             if (moveInput != Vector3.zero)
                 transform.forward = moveInput;
+            PickaxeUpdate();
           
         }
         else
@@ -99,8 +110,13 @@ public class MiningPlayer : MonoBehaviour
    
     void GetInput()
     {
+        if(!isSwinging)
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-      
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            PickaxeAction();
+        }
         if (Input.GetButtonDown("Fire2"))
         {
             OnDash();
@@ -140,7 +156,29 @@ public class MiningPlayer : MonoBehaviour
     }
     private void PickaxeAction()
     {
+        if (currentSwingTime > 0||isDashing)
+            return;
+        currentSwingTime = maxSwingtime;
+        myPickaxe.SetActive(true);
+        myPickaxe.transform.localEulerAngles = startRotation;
+        isSwinging = true;
+    }
+    private void PickaxeUpdate()
+    {
+        if (currentSwingTime <= 0)
+            return;
+          myPickaxe.transform.Rotate(swingSpeed * Time.deltaTime, 0.0f, 0.0f, Space.Self);
+      
 
+   
+        currentSwingTime -= Time.deltaTime;
+        if (currentSwingTime <= 0)
+            EndPickaxeAttack();
+    }
+    private void EndPickaxeAttack()
+    {
+        myPickaxe.SetActive(false);
+        isSwinging = false;
     }
     private void SnapRotationToGrid(Transform transform_)
     {
