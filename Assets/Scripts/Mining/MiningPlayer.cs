@@ -66,13 +66,15 @@ public class MiningPlayer : MonoBehaviour
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
 
-
-            if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
-                transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
-            else
-                timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
-            if (moveInput != Vector3.zero)
-                transform.forward = moveInput;
+            if (!isSwinging)
+            {
+                if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
+                    transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
+                else
+                    timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
+                if (moveInput != Vector3.zero)
+                    transform.forward = moveInput;
+            }
             PickaxeUpdate();
           
         }
@@ -101,7 +103,7 @@ public class MiningPlayer : MonoBehaviour
     }
     private void OnDash()
     {
-        if (dashCoolDown <= 0)
+        if (dashCoolDown <= 0&&!isSwinging)
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
@@ -110,7 +112,7 @@ public class MiningPlayer : MonoBehaviour
    
     void GetInput()
     {
-        if(!isSwinging)
+       
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
         if (Input.GetButtonDown("Fire3"))
@@ -158,6 +160,7 @@ public class MiningPlayer : MonoBehaviour
     {
         if (currentSwingTime > 0||isDashing)
             return;
+        moveInput = Vector3.zero;
         currentSwingTime = maxSwingtime;
         myPickaxe.SetActive(true);
         myPickaxe.transform.localEulerAngles = startRotation;

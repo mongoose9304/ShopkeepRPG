@@ -2718,6 +2718,7 @@ GameObject:
   - component: {fileID: 205998133}
   - component: {fileID: 205998135}
   - component: {fileID: 205998134}
+  - component: {fileID: 205998136}
   m_Layer: 0
   m_Name: PickaxeEnd
   m_TagString: Untagged
@@ -2790,6 +2791,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205998132}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &205998136
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205998132}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.000001, z: 1.0000008}
+  m_Center: {x: 0.000000007450581, y: 0, z: 0}
 --- !u!1 &210016686
 GameObject:
   m_ObjectHideFlags: 0
@@ -31245,9 +31267,9 @@ MonoBehaviour:
   activeBombs: []
   bombPool: {fileID: 1551390776}
   myPickaxe: {fileID: 1566213863}
-  maxSwingtime: 1
+  maxSwingtime: 0.25
   startRotation: {x: -10, y: 0, z: 0}
-  swingSpeed: 45
+  swingSpeed: 360
   wallMask:
     serializedVersion: 2
     m_Bits: 576
@@ -36768,6 +36790,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1635948087 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6011749233885659882, guid: 0381f347c44329a4f9547122c5b32d3c, type: 3}
+  m_PrefabInstance: {fileID: 5064843387979625769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1635948093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635948087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a9e2674ccfd604bbf666a53f455f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGem: 1
+  possibleGems: []
+  myGem: {fileID: 0}
 --- !u!1 &1654458923
 GameObject:
   m_ObjectHideFlags: 0
@@ -42337,7 +42379,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6011749233885659882, guid: 0381f347c44329a4f9547122c5b32d3c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1635948093}
   m_SourcePrefab: {fileID: 100100000, guid: 0381f347c44329a4f9547122c5b32d3c, type: 3}
 --- !u!1001 &5577950633798158754
 PrefabInstance:
