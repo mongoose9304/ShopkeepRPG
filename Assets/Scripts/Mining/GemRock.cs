@@ -16,7 +16,8 @@ public class GemRock : MonoBehaviour
         {
             myGem = possibleGems[Random.Range(0,possibleGems.Length)];
         }
-            GameObject.Instantiate(myGem, transform.position, transform.rotation);
+       GameObject temp = GameObject.Instantiate(myGem, transform.position, transform.rotation);
+       temp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
     }
     private void OnTriggerEnter(Collider other)
     {
