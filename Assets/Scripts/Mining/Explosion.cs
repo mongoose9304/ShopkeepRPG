@@ -6,7 +6,7 @@ public class Explosion : MonoBehaviour
 {
     [SerializeField] float lifetime;
     float currentLifetime;
-
+    [SerializeField] GameObject rockExplosionParticleEffect;
     private void Update()
     {
         currentLifetime -= Time.deltaTime;
@@ -28,6 +28,7 @@ public class Explosion : MonoBehaviour
         }
         if (other.tag == "Rock")
         {
+            GameObject.Instantiate(rockExplosionParticleEffect, other.transform.position,Quaternion.Euler(-90,0,0));
             Destroy(other.gameObject);
         }
     }
