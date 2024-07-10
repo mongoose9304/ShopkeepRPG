@@ -10,12 +10,12 @@ public class BasicMiningEnemy : MonoBehaviour
     public float moveSpeed;
     public float attackDistance;
     public float damage;
-    LootDropper lootDropper;
+   [SerializeField]protected LootDropper lootDropper;
     [Header("References")]
     public GameObject player;
     float currentHealth;
 
-    private void Start()
+    protected void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         lootDropper = GetComponent<LootDropper>();
@@ -38,5 +38,16 @@ public class BasicMiningEnemy : MonoBehaviour
     public virtual void DetectGround()
     {
 
+    }
+    public virtual void TakeDamage(int damage_=1)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+            Death();
+    }
+    public virtual void Death()
+    {
+        lootDropper.DropItems();
+        Destroy(gameObject);
     }
 }

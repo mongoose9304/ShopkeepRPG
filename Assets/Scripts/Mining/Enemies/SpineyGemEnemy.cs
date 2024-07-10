@@ -9,10 +9,7 @@ public class SpineyGemEnemy : BasicMiningEnemy
     [SerializeField] float startRotation;
     bool isGrounded=true;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   
 
     // Update is called once per frame
     void Update()

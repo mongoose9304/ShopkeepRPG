@@ -6,22 +6,13 @@ public class LootDropper : MonoBehaviour
 {
     public List<LootTableItem> myTable=new List<LootTableItem>();
     public List<LootItem> itemsToDrop;
+    public bool DropOnlyOneItem;
     bool hasFoundItem;
     public GameObject lootObject;
     GameObject temp;
     public void DropItems(float rateMultiplier=1.0f)
     {
-        itemsToDrop.Clear();
-        foreach(LootTableItem tableItem in myTable)
-        {
-            for(int i=0;i<tableItem.maxAmount;i++)
-            {
-                if((Random.Range(0,100)*rateMultiplier)<=tableItem.chancesToSpawn)
-                {
-                    AddLootItem(tableItem.item);
-                }
-            }
-        }
+        PopulateLootDrop();
         if (itemsToDrop.Count == 0)
             return;
 
@@ -33,6 +24,29 @@ public class LootDropper : MonoBehaviour
         }
 
 
+    }
+    public void PopulateLootDrop(float rateMultiplier = 1.0f)
+    {
+        if (DropOnlyOneItem)
+        {
+            AddLootItem(myTable[Random.Range(0,myTable.Count)].item);
+        }
+        else
+        {
+
+
+            itemsToDrop.Clear();
+            foreach (LootTableItem tableItem in myTable)
+            {
+                for (int i = 0; i < tableItem.maxAmount; i++)
+                {
+                    if ((Random.Range(0, 100) * rateMultiplier) <= tableItem.chancesToSpawn)
+                    {
+                        AddLootItem(tableItem.item);
+                    }
+                }
+            }
+        }
     }
     public void AddLootItem(LootItem item_)
     {

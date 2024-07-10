@@ -26,10 +26,19 @@ public class Explosion : MonoBehaviour
         {
             other.GetComponent<Bomb>().Explode();
         }
-        if (other.tag == "Rock")
+        else if (other.tag == "Rock")
         {
             GameObject.Instantiate(rockExplosionParticleEffect, other.transform.position,Quaternion.Euler(-90,0,0));
             Destroy(other.gameObject);
+        }
+        else if (other.tag == "Enemy")
+        {
+          
+            if (other.gameObject.TryGetComponent(out BasicMiningEnemy enemy))
+            {
+                Debug.Log("RobHitEnemy");
+                enemy.TakeDamage();
+            }
         }
     }
 }
