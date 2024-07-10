@@ -31,4 +31,12 @@ public class BasicMiningEnemy : MonoBehaviour
     {
 
     }
+    public virtual void DetectNoGround()
+    {
+
+    }
+    public virtual void DetectGround()
+    {
+
+    }
 }

@@ -9,6 +9,7 @@ public class EnemyObstacleDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag!="Player")
         myEnemy.DetectObstacle();
     }
 }

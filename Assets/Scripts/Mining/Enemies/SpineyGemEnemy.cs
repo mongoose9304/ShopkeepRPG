@@ -7,7 +7,7 @@ public class SpineyGemEnemy : BasicMiningEnemy
     bool isRotating;
     public float rotationSpeed;
     [SerializeField] float startRotation;
-
+    bool isGrounded=true;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +17,8 @@ public class SpineyGemEnemy : BasicMiningEnemy
     // Update is called once per frame
     void Update()
     {
+        if (!isGrounded)
+            DetectObstacle();
         Rotate();
         Move();
     }
@@ -33,18 +35,20 @@ public class SpineyGemEnemy : BasicMiningEnemy
             
             if(startRotation==270)
             {
-                if (transform.localEulerAngles.y<100&& transform.localEulerAngles.y>80)
+                if (transform.localEulerAngles.y<92&& transform.localEulerAngles.y>88)
                 {
                     transform.localEulerAngles = new Vector3(0,90,0);
                     isRotating = false;
+                    isGrounded = true;
                 }
             }
             if (startRotation == 90)
             {
-                if (transform.localEulerAngles.y > 260 && transform.localEulerAngles.y < 280)
+                if (transform.localEulerAngles.y > 268 && transform.localEulerAngles.y < 272)
                 {
                     transform.localEulerAngles = new Vector3(0, 270, 0);
                     isRotating = false;
+                    isGrounded = true;
                 }
             }
 
@@ -62,5 +66,15 @@ public class SpineyGemEnemy : BasicMiningEnemy
             startRotation = 90;
         }
         isRotating = true;
+    }
+    public override void DetectNoGround()
+    {
+        if(!isRotating)
+        isGrounded = false;
+    }
+    public override void DetectGround()
+    {
+        if (!isRotating)
+            isGrounded = true;
     }
 }
