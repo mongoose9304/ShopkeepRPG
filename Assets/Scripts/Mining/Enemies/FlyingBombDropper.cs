@@ -5,44 +5,72 @@ using UnityEngine;
 public class FlyingBombDropper : BasicMiningEnemy
 {
     Vector3 moveDirection;
-    Vector3 tileTragetPos;
-    [SerializeField] float maxTimeMovingADirection;
-    [SerializeField] float minTimeMovingADirection;
-    float currentTimeMovingADirection;
+    Vector3 tileTargetPos;
+    Vector3 landingTargetPos;
+    [SerializeField] int maxDistance;
+    [SerializeField] int minDistance;
+    [SerializeField] int tileSize=2;
+    [SerializeField] float maxLandingTime;
+    [SerializeField] float maxFlyingTime;
+    [SerializeField] float landingDistance;
+    [SerializeField] GameObject bombPrefab;
+    [SerializeField] GameObject visualBomb;
+    public float flyingTime;
+   public float landingTime;
+   public float attackTime;
     [SerializeField] LayerMask tileLayer;
-    bool isGrounded=true;
-    bool isMovingToTileCentre;
+    bool isLanding=true;
+    GameObject myBomb;
+
+    protected override void Start()
+    {
+        base.Start();
+        flyingTime = maxFlyingTime;
+        tileTargetPos = transform.position;
+        myBomb = Instantiate(bombPrefab);
+        myBomb.SetActive(false);
+        attackTime = maxAttackCooldown;
+    }
     private void Update()
     {
-        if(isMovingToTileCentre)
+        if(isLanding)
         {
-            Debug.Log("Moving to Tile");
-            transform.position = Vector3.MoveTowards(transform.position,tileTragetPos, moveSpeed*Time.deltaTime*4);
-            if(Vector3.Distance(transform.position,tileTragetPos)<1.0f)
+            if (landingTime > 0)
             {
-                isMovingToTileCentre = false;
-                Debug.Log("I am done Moving to Tile");
+                transform.position = Vector3.MoveTowards(transform.position, landingTargetPos, moveSpeed * Time.deltaTime);
             }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, landingTargetPos+new Vector3(0,landingDistance,0), moveSpeed * Time.deltaTime);
+                if (Vector3.Distance(transform.position, landingTargetPos + new Vector3(0, landingDistance, 0)) < 0.1f)
+                {
+                    isLanding = false;
+                    flyingTime = maxFlyingTime;
+                }
+            }
+            landingTime -= Time.deltaTime;
+            return;
         }
-        if(!isGrounded)
-        {
-            CenterOnTile();
-            Rotate();
-        }
-         currentTimeMovingADirection -= Time.deltaTime;
-         if (currentTimeMovingADirection <= 0)
-             Rotate();
         Move();
     }
     private void Move()
     {
-    
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        flyingTime -= Time.deltaTime;
+        attackTime -= Time.deltaTime;
+        if(attackTime<1)
+        {
+            visualBomb.SetActive(true);
+        }
+       transform.position= Vector3.MoveTowards(transform.position, tileTargetPos, moveSpeed*Time.deltaTime);
+        if(Vector3.Distance(transform.position, tileTargetPos) <0.1f)
+        {
+            Rotate();
+        }
     }
     private void Rotate()
     {
-        CenterOnTile();
-        currentTimeMovingADirection = Random.Range(minTimeMovingADirection, maxTimeMovingADirection);
+       
+        float i = Random.Range(minDistance, maxDistance)*2;
         float x = Random.Range(0, 4);
        if(moveDirection==Vector3.right)
         {
@@ -79,30 +107,24 @@ public class FlyingBombDropper : BasicMiningEnemy
                 moveDirection = Vector3.back;
                 break;
         }
-    }
-    public override void DetectNoGround()
-    {
-        if (isMovingToTileCentre)
-            return;
-        isGrounded = false;
-    }
-    public override void DetectGround()
-    {
-        if (isMovingToTileCentre)
-            return;
-        isGrounded = true;
-    }
-    private void CenterOnTile()
-    {
-        Tile tile = GetCurrentTile();
-        if(tile)
+        tileTargetPos = transform.position + (moveDirection * i);
+        if (!Physics.Raycast(tileTargetPos, Vector3.down, 10, tileLayer))
         {
-            tileTragetPos = tile.transform.position + new Vector3(0, 4.5f, 0);
-            isMovingToTileCentre = true;
+            Rotate();
         }
-
+        else
+        {
+            if(flyingTime<=0)
+            {
+                Land();
+            }
+            else if(attackTime<=0)
+            {
+                DropBomb();
+            }
+        }
     }
-    private Tile GetCurrentTile()
+    private void Land()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 10,tileLayer))
@@ -110,9 +132,21 @@ public class FlyingBombDropper : BasicMiningEnemy
 
             if (hit.collider.gameObject.TryGetComponent<Tile>(out Tile tile))
             {
-                return tile;
+                isLanding = true;
+                landingTargetPos = transform.position -new  Vector3(0, landingDistance, 0);
+                landingTime = maxLandingTime;
             }
         }
-        return null;
     }
+    private void DropBomb()
+    {
+        visualBomb.SetActive(false);
+        myBomb.transform.position = visualBomb.transform.position;
+        myBomb.transform.rotation = visualBomb.transform.rotation;
+        myBomb.GetComponent<MoveTowardsTarget>().target = transform.position - new Vector3(0, landingDistance, 0);
+        myBomb.SetActive(true);
+        attackTime = maxAttackCooldown;
+    }
+   
+
 }

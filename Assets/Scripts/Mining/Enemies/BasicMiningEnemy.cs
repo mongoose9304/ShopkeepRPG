@@ -15,7 +15,7 @@ public class BasicMiningEnemy : MonoBehaviour
     public GameObject player;
     float currentHealth;
 
-    protected void Start()
+    protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         lootDropper = GetComponent<LootDropper>();
