@@ -21,11 +21,7 @@ public class BasicMiningEnemy : MonoBehaviour
         lootDropper = GetComponent<LootDropper>();
         currentHealth = maxHealth;
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public virtual void DetectObstacle()
     {
