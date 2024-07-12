@@ -36,7 +36,7 @@ public class MiningPlayer : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     [SerializeField] LayerMask wallMask;
     [SerializeField] GameObject dashEffect;
-
+    [SerializeField] LayerMask tileLayer;
 
     [SerializeField] string enemyTag;
 
@@ -303,7 +303,7 @@ public class MiningPlayer : MonoBehaviour
     private Tile GetCurrentTile()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 10))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 10,tileLayer))
         {
            
             if (hit.collider.gameObject.TryGetComponent<Tile>(out Tile tile))
