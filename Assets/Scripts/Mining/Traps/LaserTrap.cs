@@ -5,17 +5,21 @@ using UnityEngine;
 public class LaserTrap : BasicMiningTrap
 {
     [SerializeField] GameObject chargeEffect;
+    [SerializeField] GameObject fireBurstEffect;
     [SerializeField] GameObject fireEffect;
     [SerializeField] float maxChargeTime;
     [SerializeField] float currentChargeTime;
     [SerializeField] float maxFireDelayTime;
     [SerializeField] float currentFireDelayTime;
+    [SerializeField] float maxFireLengthTime;
+    [SerializeField] float currentFireLengthTime;
     bool isFiring;
     private void Start()
     {
         isFiring = false;
         currentChargeTime = maxChargeTime;
         currentFireDelayTime = maxFireDelayTime;
+
     }
     private void Update()
     {
@@ -29,11 +33,22 @@ public class LaserTrap : BasicMiningTrap
                 Fire();
             }
         }
+        else
+        {
+           if(currentFireLengthTime > 0)
+            {
+                currentFireLengthTime -= Time.deltaTime;
+                if(currentFireLengthTime<=0)
+                {
+                    fireBurstEffect.SetActive(false);
+                }
+            }
+        }
     }
 
     public override void PlayerInRange()
     {
-        if(!isFiring)
+        if(!isFiring&&currentFireLengthTime<=0)
         {
             chargeEffect.SetActive(true);
             currentChargeTime -= Time.deltaTime;
@@ -51,6 +66,8 @@ public class LaserTrap : BasicMiningTrap
     }
     private void Fire()
     {
-        GameObject.Instantiate(fireEffect, transform.position, transform.rotation);
+        fireBurstEffect.SetActive(true);
+        currentFireLengthTime = maxFireLengthTime;
+      //  GameObject.Instantiate(fireEffect, transform.position, transform.rotation);
     }
 }
