@@ -37,4 +37,8 @@ public class HideEnemy : BasicMiningEnemy
         collider.enabled = true;
 
     }
+    private void Attack()
+    {
+
+    }
 }
