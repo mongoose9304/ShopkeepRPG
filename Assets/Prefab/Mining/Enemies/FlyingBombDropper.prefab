@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5327277944884968427
 Transform:
   m_ObjectHideFlags: 0
@@ -672,6 +672,7 @@ GameObject:
   - component: {fileID: 675275136997842249}
   - component: {fileID: 2056159785456337527}
   - component: {fileID: 4343408076868084470}
+  - component: {fileID: 6119938181126979497}
   m_Layer: 0
   m_Name: FlyingBombDropper
   m_TagString: Enemy
@@ -792,6 +793,7 @@ MonoBehaviour:
   damage: 1
   lootDropper: {fileID: 4343408076868084470}
   player: {fileID: 0}
+  tileTargetPos: {x: 0, y: 0, z: 0}
   maxDistance: 1
   minDistance: 3
   tileSize: 2
@@ -818,12 +820,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTable: []
-  itemsToDrop:
-  - name: Junk
-    amount: 0
+  myTable:
+  - item:
+      name: Junk
+      amount: 1
+    maxAmount: 0
+    chancesToSpawn: 0
+  itemsToDrop: []
   DropOnlyOneItem: 1
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+--- !u!54 &6119938181126979497
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420496568622947120}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8510764652727070892
 GameObject:
   m_ObjectHideFlags: 0

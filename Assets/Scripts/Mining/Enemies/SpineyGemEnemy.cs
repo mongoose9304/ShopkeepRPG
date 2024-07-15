@@ -7,9 +7,24 @@ public class SpineyGemEnemy : BasicMiningEnemy
     bool isRotating;
     public float rotationSpeed;
     [SerializeField] float startRotation;
+    public float DirectionA;
+    public float DirectionB;
     bool isGrounded=true;
     // Start is called before the first frame update
-   
+    protected override void Start()
+    {
+        base.Start();
+        DirectionA = transform.localEulerAngles.y;
+        if(DirectionA==90)
+        {
+            DirectionB = 270;
+        }
+        if (DirectionA == 0)
+        {
+            DirectionB = 180;
+        }
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -30,20 +45,20 @@ public class SpineyGemEnemy : BasicMiningEnemy
         {
             transform.localEulerAngles += new Vector3(0, 1, 0) * Time.deltaTime * rotationSpeed;
             
-            if(startRotation==270)
+            if(startRotation==DirectionB)
             {
-                if (transform.localEulerAngles.y<92&& transform.localEulerAngles.y>88)
+                if (transform.localEulerAngles.y<DirectionA+2&& transform.localEulerAngles.y>DirectionA-2)
                 {
-                    transform.localEulerAngles = new Vector3(0,90,0);
+                    transform.localEulerAngles = new Vector3(0,DirectionA,0);
                     isRotating = false;
                     isGrounded = true;
                 }
             }
-            if (startRotation == 90)
+            if (startRotation == DirectionA)
             {
-                if (transform.localEulerAngles.y > 268 && transform.localEulerAngles.y < 272)
+                if (transform.localEulerAngles.y > DirectionB-2 && transform.localEulerAngles.y < DirectionB+2)
                 {
-                    transform.localEulerAngles = new Vector3(0, 270, 0);
+                    transform.localEulerAngles = new Vector3(0, DirectionB, 0);
                     isRotating = false;
                     isGrounded = true;
                 }
@@ -56,11 +71,11 @@ public class SpineyGemEnemy : BasicMiningEnemy
         if (isRotating)
             return;
         startRotation = transform.localEulerAngles.y;
-        if (startRotation > 260 && startRotation < 280)
-            startRotation = 270;
+        if (startRotation > DirectionB-10 && startRotation < DirectionB+10)
+            startRotation = DirectionB;
         else
         {
-            startRotation = 90;
+            startRotation = DirectionA;
         }
         isRotating = true;
     }

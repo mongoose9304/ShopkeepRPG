@@ -5,7 +5,7 @@ using UnityEngine;
 public class FlyingBombDropper : BasicMiningEnemy
 {
     Vector3 moveDirection;
-    Vector3 tileTargetPos;
+   [SerializeField] Vector3 tileTargetPos;
     Vector3 landingTargetPos;
     [SerializeField] int maxDistance;
     [SerializeField] int minDistance;
@@ -27,9 +27,11 @@ public class FlyingBombDropper : BasicMiningEnemy
         base.Start();
         flyingTime = maxFlyingTime;
         tileTargetPos = transform.position;
+        landingTime = maxLandingTime;
         myBomb = Instantiate(bombPrefab);
         myBomb.SetActive(false);
         attackTime = maxAttackCooldown;
+        isLanding = false;
     }
     private void Update()
     {
@@ -69,7 +71,6 @@ public class FlyingBombDropper : BasicMiningEnemy
     }
     private void Rotate()
     {
-       
         float i = Random.Range(minDistance, maxDistance)*2;
         float x = Random.Range(0, 4);
        if(moveDirection==Vector3.right)
@@ -140,12 +141,21 @@ public class FlyingBombDropper : BasicMiningEnemy
     }
     private void DropBomb()
     {
-        visualBomb.SetActive(false);
-        myBomb.transform.position = visualBomb.transform.position;
-        myBomb.transform.rotation = visualBomb.transform.rotation;
-        myBomb.GetComponent<MoveTowardsTarget>().target = transform.position - new Vector3(0, landingDistance, 0);
-        myBomb.SetActive(true);
-        attackTime = maxAttackCooldown;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 10, tileLayer))
+        {
+
+            if (hit.collider.gameObject.TryGetComponent<Tile>(out Tile tile))
+            {
+                visualBomb.SetActive(false);
+                myBomb.transform.position = visualBomb.transform.position;
+                myBomb.transform.rotation = visualBomb.transform.rotation;
+                myBomb.GetComponent<MoveTowardsTarget>().target = transform.position - new Vector3(0, landingDistance, 0);
+                myBomb.SetActive(true);
+                attackTime = maxAttackCooldown;
+            }
+        }
+       
     }
    
 

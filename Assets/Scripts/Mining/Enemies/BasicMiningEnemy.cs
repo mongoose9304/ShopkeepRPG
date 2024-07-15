@@ -13,7 +13,7 @@ public class BasicMiningEnemy : MonoBehaviour
    [SerializeField]protected LootDropper lootDropper;
     [Header("References")]
     public GameObject player;
-    float currentHealth;
+    protected float currentHealth;
 
     protected virtual void Start()
     {
