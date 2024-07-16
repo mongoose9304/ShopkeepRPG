@@ -103,6 +103,7 @@ public class MiningPlayer : MonoBehaviour
     }
     private void OnDash()
     {
+        return;
         if (dashCoolDown <= 0&&!isSwinging)
         {
             dashCoolDown = maxdashCoolDown;

@@ -60,8 +60,12 @@ public class LaserTrap : BasicMiningTrap
         }
     }
     public override void PlayerLeavesRange()
-    { 
-     chargeEffect.SetActive(false);
+    {
+            chargeEffect.SetActive(false);
+        if (!isFiring)
+        {
+            currentChargeTime = maxChargeTime;
+       }
     }
     private void Fire()
     {
