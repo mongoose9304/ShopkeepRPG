@@ -9,15 +9,15 @@ public class TrapDamage : MonoBehaviour
     public bool canDestroyEverything;
     private void OnTriggerEnter(Collider other)
     {
-        if(gameObject.tag=="Player")
+        if(other.gameObject.tag=="Player")
         {
-            gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
+            other.gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
         }
         if (canHitEnemies)
         {
-            if (gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy")
             {
-                //gameObject.GetComponent<BasicMiningEnemy>().TakeDamage(damage);
+                other.gameObject.GetComponent<BasicMiningEnemy>().TakeDamage();
             }
         }
         if(canDestroyEverything)

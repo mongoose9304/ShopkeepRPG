@@ -5,11 +5,12 @@ using MoreMountains.Feedbacks;
 public class HideEnemyHat : MonoBehaviour
 {
     [SerializeField] MMF_Player AttackEffect;
+    [SerializeField] float damage;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Player")
         {
-            other.GetComponent<MiningPlayer>().TakeDamage(1);
+            other.GetComponent<MiningPlayer>().TakeDamage(damage);
             AttackEffect.PlayFeedbacks();
         }
     }

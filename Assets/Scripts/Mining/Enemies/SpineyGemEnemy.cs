@@ -89,4 +89,11 @@ public class SpineyGemEnemy : BasicMiningEnemy
         if (!isRotating)
             isGrounded = true;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="Player")
+        {
+            other.gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
+        }
+    }
 }

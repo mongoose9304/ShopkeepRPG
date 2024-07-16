@@ -9,6 +9,7 @@ public class TowerPiece : MonoBehaviour
     [SerializeField] bool isHead;
     [SerializeField] Material rockMat;
     [SerializeField] Material gemMat;
+    [SerializeField] float damage;
     private void OnTriggerEnter(Collider other)
     {
         if (!canDrop)
@@ -43,6 +44,10 @@ public class TowerPiece : MonoBehaviour
                 Debug.Log("Drop");
             }
         }  
+        if(other.tag=="Player")
+        {
+            other.gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
+        }
     }
     public void SetTowerPiece(bool canDrop_)
     {

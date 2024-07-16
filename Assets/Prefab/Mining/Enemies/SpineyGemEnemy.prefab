@@ -276,7 +276,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -298,11 +298,14 @@ MonoBehaviour:
   maxAttackCooldown: 0
   moveSpeed: 2
   attackDistance: 0
-  damage: 1
+  damage: 10
   lootDropper: {fileID: 0}
   player: {fileID: 0}
+  currentHealth: 0
   rotationSpeed: 90
   startRotation: 0
+  DirectionA: 0
+  DirectionB: 0
 --- !u!114 &2938593642254097437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +337,7 @@ MonoBehaviour:
   itemsToDrop: []
   DropOnlyOneItem: 1
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!54 &5448771199946426922
 Rigidbody:
   m_ObjectHideFlags: 0

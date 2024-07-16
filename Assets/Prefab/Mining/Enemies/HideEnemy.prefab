@@ -1807,6 +1807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackEffect: {fileID: 4110084623265525342}
+  damage: 5
 --- !u!1 &3626141834177714860
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,6 +2278,7 @@ MonoBehaviour:
   damage: 1
   lootDropper: {fileID: 8240410997702140328}
   player: {fileID: 0}
+  currentHealth: 0
   hideDistance: 7
   hatObject: {fileID: 3159037998462423927}
 --- !u!114 &8240410997702140328
@@ -2300,6 +2302,7 @@ MonoBehaviour:
   itemsToDrop: []
   DropOnlyOneItem: 1
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!136 &4595654832725717138
 CapsuleCollider:
   m_ObjectHideFlags: 0

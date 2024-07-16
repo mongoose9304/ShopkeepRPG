@@ -7,6 +7,7 @@ public class Explosion : MonoBehaviour
     [SerializeField] float lifetime;
     float currentLifetime;
     [SerializeField] GameObject rockExplosionParticleEffect;
+    [SerializeField] float damageToPlayer;
     private void Update()
     {
         currentLifetime -= Time.deltaTime;
@@ -38,6 +39,15 @@ public class Explosion : MonoBehaviour
             {
                 Debug.Log("RobHitEnemy");
                 enemy.TakeDamage();
+            }
+        }
+        else if (other.tag == "Player")
+        {
+
+            if (other.gameObject.TryGetComponent(out MiningPlayer player))
+            {
+                Debug.Log("RobHitEnemy");
+                player.TakeDamage(damageToPlayer);
             }
         }
     }
