@@ -10,10 +10,10 @@ public class BasicMiningEnemy : MonoBehaviour
     public float moveSpeed;
     public float attackDistance;
     public float damage;
-   [SerializeField]protected LootDropper lootDropper;
+   [SerializeField] protected LootDropper lootDropper;
     [Header("References")]
     public GameObject player;
-    protected float currentHealth;
+    [SerializeField] protected float currentHealth;
 
     protected virtual void Start()
     {

@@ -185,7 +185,7 @@ public class MiningPlayer : MonoBehaviour
     }
     private void SnapRotationToGrid(Transform transform_)
     {
-        Debug.Log("Local angle " + transform_.localEulerAngles.y);
+      
       if(transform_.localEulerAngles.y<45|| transform_.localEulerAngles.y> 315)
         {
             //lock to 0

@@ -8,6 +8,7 @@ public class TumbleTowerEnemy : BasicMiningEnemy
     Vector3 moveDirection;
     [SerializeField] float minDistance;
     [SerializeField] float maxDistance;
+    [SerializeField] float chanceForTreasure;
     [SerializeField] LayerMask tileLayer;
     [SerializeField] LayerMask obstacleLayer;
     [SerializeField] Vector3[] towerPositions;
@@ -18,6 +19,7 @@ public class TumbleTowerEnemy : BasicMiningEnemy
         base.Start();
         tileTargetPos = transform.position;
         towerPieces = towerPiecesRef;
+        SetUpTower();
     }
     private void Update()
     {
@@ -36,9 +38,14 @@ public class TumbleTowerEnemy : BasicMiningEnemy
     }
     private void MoveTowerParts()
     {
+        
         for(int i=0;i<towerPieces.Count;i++)
         {
-            towerPieces[i].transform.localPosition = Vector3.MoveTowards(towerPieces[i].transform.localPosition, towerPositions[i],moveSpeed*2*Time.deltaTime);
+            towerPieces[i].transform.localPosition = Vector3.MoveTowards(towerPieces[i].transform.localPosition, towerPositions[i],moveSpeed*8*Time.deltaTime);
+            if (Vector3.Distance(towerPieces[0].transform.localPosition, towerPositions[0]) < 0.1f)
+            towerPieces[0].GetComponent<Collider>().enabled = true;
+            else
+            towerPieces[0].GetComponent<Collider>().enabled = false;
         }
     }
     private void RearangeTower()
@@ -47,6 +54,22 @@ public class TumbleTowerEnemy : BasicMiningEnemy
         {
             if (towerPieces[i].activeInHierarchy == false)
                 towerPieces.Remove(towerPieces[i]);
+        }
+
+    }
+    private void SetUpTower()
+    {
+        for (int i = 0; i < towerPieces.Count; i++)
+        {
+            if (towerPieces[i].TryGetComponent<TowerPiece>(out TowerPiece p))
+            {
+                if(Random.Range(0,100)<chanceForTreasure)
+                    p.SetTowerPiece(true);
+                else
+                    p.SetTowerPiece(false);
+
+            }
+      
         }
     }
     private void Rotate()
