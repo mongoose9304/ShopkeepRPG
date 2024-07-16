@@ -10,8 +10,19 @@ public class TowerPiece : MonoBehaviour
     [SerializeField] Material rockMat;
     [SerializeField] Material gemMat;
     [SerializeField] float damage;
+    [SerializeField] bool isBoss;
     private void OnTriggerEnter(Collider other)
     {
+        if(isBoss)
+        {
+            if (other.tag == "Explosion")
+            {
+                gameObject.SetActive(false);
+                GetComponentInParent<TumbleSection>().CheckObjects();
+
+            }
+            return;
+        }
         if (!canDrop)
         {
             if (other.tag == "Explosion")
@@ -21,9 +32,9 @@ public class TowerPiece : MonoBehaviour
                 {
                     TumbleTowerEnemy enemy = GetComponentInParent<TumbleTowerEnemy>();
                     enemy.Death();
-                    Debug.Log("IsHead");
+                  
                 }
-                Debug.Log("NoDrop");
+             
             }
         }
         else
@@ -35,13 +46,13 @@ public class TowerPiece : MonoBehaviour
                 {
                     GetComponentInParent<TumbleTowerEnemy>().TakeDamage(1);
                 }
-                Debug.Log("NoDropYourFault");
+              
             }
             if (other.tag == "Pickaxe")
             {
                 dropper.DropItems();
                 gameObject.SetActive(false);
-                Debug.Log("Drop");
+             
             }
         }  
         if(other.tag=="Player")
