@@ -7,10 +7,12 @@ public class LaserTrap : BasicMiningTrap
     [SerializeField] GameObject chargeEffect;
     [SerializeField] ParticleSystem[] fireBurstEffect;
     [SerializeField] GameObject fireEffect;
+    [SerializeField] GameObject damageCollider;
     [SerializeField] float maxChargeTime;
     [SerializeField] float currentChargeTime;
     [SerializeField] float maxFireDelayTime;
     [SerializeField] float currentFireDelayTime;
+    float activeDamageTimer;
     bool isFiring;
     private void Start()
     {
@@ -29,6 +31,15 @@ public class LaserTrap : BasicMiningTrap
                 currentFireDelayTime = maxFireDelayTime;
                 isFiring = false;
                 Fire();
+            }
+        }
+        if(activeDamageTimer>0)
+        {
+            activeDamageTimer -= Time.deltaTime;
+            if(activeDamageTimer<=0)
+            {
+                damageCollider.SetActive(false);
+
             }
         }
        
@@ -54,10 +65,12 @@ public class LaserTrap : BasicMiningTrap
     }
     private void Fire()
     {
+        damageCollider.SetActive(true);
         foreach (ParticleSystem par in fireBurstEffect)
         {
             par.Play();
         }
+        activeDamageTimer = 0.5f;
       //  GameObject.Instantiate(fireEffect, transform.position, transform.rotation);
     }
 }

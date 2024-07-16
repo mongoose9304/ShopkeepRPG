@@ -10,8 +10,11 @@ public class LootDropper : MonoBehaviour
     bool hasFoundItem;
     public GameObject lootObject;
     GameObject temp;
+    public bool dropNothing;
     public void DropItems(float rateMultiplier=1.0f)
     {
+        if (dropNothing)
+            return;
         PopulateLootDrop();
         if (itemsToDrop.Count == 0)
             return;
