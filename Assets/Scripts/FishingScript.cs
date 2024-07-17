@@ -4,13 +4,34 @@ using UnityEngine;
 
 public class FishingScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public bool IsEquipped;
+    public bool IsFishingReady;
+    public bool IsCasted;
+    public bool IsPullingLine;
+
+    Animator animator;
+
+    public GameObject TheBaitPrefab;
+    public GameObject End_Of_Rope;
+    public GameObject Start_Of_Rope;
+    public GameObject Start_Of_Rod;
+
+    Transform baitPosition;
+
+
+
+    
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+
+        IsEquipped = true;
+
+
+
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         
