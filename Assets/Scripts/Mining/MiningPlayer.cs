@@ -28,6 +28,7 @@ public class MiningPlayer : MonoBehaviour
     [SerializeField] Vector3 startRotation;
     [SerializeField] float swingSpeed;
     //references and inputs
+    [SerializeField] InteractableObject myInteractableObject;
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
@@ -124,6 +125,10 @@ public class MiningPlayer : MonoBehaviour
         {
             OnDash();
         }
+        if (Input.GetButtonDown("Fire4"))
+        {
+            InteractAction();
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             BombAction();
@@ -155,6 +160,13 @@ public class MiningPlayer : MonoBehaviour
                 obj.transform.position = tile.transform.position + new Vector3(0, 1, 0);
                 tile.SetBomb(obj.GetComponent<Bomb>());
             }
+        }
+    }
+    private void InteractAction()
+    {
+        if(myInteractableObject)
+        {
+            myInteractableObject.Interact();
         }
     }
     private void PickaxeAction()
@@ -319,7 +331,10 @@ public class MiningPlayer : MonoBehaviour
     
 
 
-   
+   public void SetInteractableObject(InteractableObject obj_)
+    {
+        myInteractableObject = obj_;
+    }
     public void TakeDamage(float damage_)
     {
         currentHealth -= damage_;

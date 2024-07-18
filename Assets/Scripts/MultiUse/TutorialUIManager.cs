@@ -6,11 +6,13 @@ using TMPro;
 
 public class TutorialUIManager : MonoBehaviour
 {
-    TextMeshProUGUI tutorialText;
-    GameObject joyStickButton;
-    GameObject wasdButton;
-    GameObject gamepadButton;
+    [SerializeField] TextMeshProUGUI tutorialText;
+    [SerializeField] GameObject joyStickButton;
+    [SerializeField] GameObject wasdButton;
+    [SerializeField] GameObject gamepadButton;
+    //Left,Right
    [SerializeField] Sprite[] joyStickTypes;
+    //A,B,X,Y,LB,RB,LT,RT
    [SerializeField] Sprite[] gamePadButtons;
 
     public void ResetTutorialMessage()
@@ -30,7 +32,7 @@ public class TutorialUIManager : MonoBehaviour
         }
         tutorialText.text = text;
     }
-    public void SetJoystickMessage(string text = "", bool useWASD = false)
+    public void SetJoystickMessage(string text = "",int joystickType=0 ,bool useWASD = false)
     {
         ResetTutorialMessage();
         if (useWASD)
@@ -39,6 +41,7 @@ public class TutorialUIManager : MonoBehaviour
         }
         else
         {
+            joyStickButton.GetComponent<Image>().sprite = gamePadButtons[joystickType];
             joyStickButton.SetActive(true);
         }
         tutorialText.text = text;

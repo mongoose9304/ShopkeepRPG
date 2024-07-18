@@ -67,12 +67,12 @@ public class TumbleTowerOverlord : MonoBehaviour
     }                                                                                                   
     private void SpecialSlamAttack()
     {
-        Debug.Log(transform.localEulerAngles.x);
+       
         if(!isMoving)
         {
             if (!isSlaming)
             {
-                Debug.Log(transform.localRotation.x);
+               
                 transform.Rotate(new Vector3(-1,0,0)*Time.deltaTime * slamSpeed * slamSpeedModifier, Space.Self);
                 slamSpeedModifier += slamSpeedModifierMaxIncrease * Time.deltaTime;
                 if (slamSpeedModifier > slamSpeedModifierMax)
