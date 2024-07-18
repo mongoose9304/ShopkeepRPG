@@ -11,6 +11,9 @@ public class TumbleTowerOverlord : MonoBehaviour
     [SerializeField] float towerArrangeSpeed;
     [SerializeField] float moveSpeed;
     [SerializeField] float slamSpeed;
+    [SerializeField] float slamSpeedModifier;
+    [SerializeField] float slamSpeedModifierMax;
+    [SerializeField] float slamSpeedModifierMaxIncrease;
     [SerializeField] int maxX;
     [SerializeField] int minX;
     [SerializeField] bool isMoving;
@@ -61,7 +64,7 @@ public class TumbleTowerOverlord : MonoBehaviour
         {
             isMoving = false;
         }
-    }
+    }                                                                                                   
     private void SpecialSlamAttack()
     {
         Debug.Log(transform.localEulerAngles.x);
@@ -69,15 +72,22 @@ public class TumbleTowerOverlord : MonoBehaviour
         {
             if (!isSlaming)
             {
-                transform.localEulerAngles -= new Vector3(1, 0, 0) * Time.deltaTime * slamSpeed;
-                if(transform.localEulerAngles.x<=270)
+                Debug.Log(transform.localRotation.x);
+                transform.Rotate(new Vector3(-1,0,0)*Time.deltaTime * slamSpeed * slamSpeedModifier, Space.Self);
+                slamSpeedModifier += slamSpeedModifierMaxIncrease * Time.deltaTime;
+                if (slamSpeedModifier > slamSpeedModifierMax)
+                    slamSpeedModifier = slamSpeedModifierMax;
+                if (transform.rotation.x>=90)
                 {
+                    slamSpeedModifier = 1;
                     isSlaming = true;
                 }
+              
+              
             }
             else
             {
-                transform.localEulerAngles += new Vector3(1, 0, 0) * Time.deltaTime * slamSpeed;
+                transform.eulerAngles += new Vector3(1, 0, 0) * Time.deltaTime * slamSpeed*4;
                 if (transform.localEulerAngles.x <= 2&& transform.localEulerAngles.x>=-2)
                 {
                     isSlaming = false;
