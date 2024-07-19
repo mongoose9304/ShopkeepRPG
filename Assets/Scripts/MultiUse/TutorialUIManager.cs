@@ -47,6 +47,7 @@ public class TutorialUIManager : MonoBehaviour
         {
             joyStickButton.GetComponent<Image>().sprite = joyStickTypes[joystickType];
             joyStickButton.SetActive(true);
+            gamepadButtonBackground.SetActive(true);
         }
         tutorialText.text = text;
     }

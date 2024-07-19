@@ -30,7 +30,7 @@ public class Explosion : MonoBehaviour
         else if (other.tag == "Rock")
         {
             GameObject.Instantiate(rockExplosionParticleEffect, other.transform.position,Quaternion.Euler(-90,0,0));
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
         }
         else if (other.tag == "Enemy")
         {

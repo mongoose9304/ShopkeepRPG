@@ -33,8 +33,16 @@ public class TutorialManager : MonoBehaviour
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 break;
             case 5:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
+                break;
+            case 6:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
+                break;
+            case 7:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 break;
+
         }
     }
 }

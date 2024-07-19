@@ -23,6 +23,6 @@ public class GemRock : MineableObject
     public override void MineInteraction()
     {
         SpawnGem();
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 }

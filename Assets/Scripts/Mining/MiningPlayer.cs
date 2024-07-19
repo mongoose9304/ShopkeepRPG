@@ -217,7 +217,8 @@ public class MiningPlayer : MonoBehaviour
             pickaxeLockOnObject.SetActive(false);
             return;
         }
-        for(int i=0;i<myMineableObjects.Count;i++)
+        
+        for (int i=0;i<myMineableObjects.Count;i++)
         {
             if(!myMineableObjects[i].activeInHierarchy)
             {
@@ -272,6 +273,8 @@ public class MiningPlayer : MonoBehaviour
     public void RemoveObjectFromMineableObjects(GameObject obj_)
     {
         myMineableObjects.Remove(obj_);
+        if (pickaxeLockOnTarget = obj_)
+            pickaxeLockOnTarget = null;
         pickaxeLockOnObject.SetActive(false);
     }
     private void PickaxeUpdate()
