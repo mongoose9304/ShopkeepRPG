@@ -22,11 +22,14 @@ public class MiningPlayer : MonoBehaviour
     [SerializeField] protected MMMiniObjectPooler bombPool;
     //pickaxe
     [SerializeField] GameObject myPickaxe;
+    public List<GameObject> myMineableObjects=new List<GameObject>();
     bool isSwinging;
     [SerializeField] float maxSwingtime;
     float currentSwingTime;
     [SerializeField] Vector3 startRotation;
     [SerializeField] float swingSpeed;
+    [SerializeField] GameObject pickaxeLockOnObject;
+    [SerializeField] GameObject pickaxeLockOnTarget;
     //references and inputs
     [SerializeField] InteractableObject myInteractableObject;
     Vector3 moveInput;
@@ -59,6 +62,7 @@ public class MiningPlayer : MonoBehaviour
         
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
+        GetClosestMineableObject();
       
         if (!isDashing)
         {
@@ -173,11 +177,58 @@ public class MiningPlayer : MonoBehaviour
     {
         if (currentSwingTime > 0||isDashing)
             return;
+        if(myMineableObjects.Count>0)
+        {
+            transform.LookAt(pickaxeLockOnTarget.transform);
+            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+            moveInput = Vector3.zero;
+            currentSwingTime = maxSwingtime;
+            myPickaxe.SetActive(true);
+            myPickaxe.transform.localEulerAngles = startRotation;
+            isSwinging = true;
+            pickaxeLockOnTarget.GetComponent<MineableObject>().MineInteraction();
+            return;
+        }
         moveInput = Vector3.zero;
         currentSwingTime = maxSwingtime;
         myPickaxe.SetActive(true);
         myPickaxe.transform.localEulerAngles = startRotation;
         isSwinging = true;
+    }
+    private void GetClosestMineableObject()
+    {
+        if(myMineableObjects.Count==0)
+        {
+            pickaxeLockOnTarget = null;
+            pickaxeLockOnObject.SetActive(false);
+            return;
+        }
+        for(int i=0;i<myMineableObjects.Count;i++)
+        {
+            if(!myMineableObjects[i].activeInHierarchy)
+            {
+                myMineableObjects.RemoveAt(i);
+                continue;
+            }
+            if(!pickaxeLockOnTarget)
+            {
+                pickaxeLockOnTarget = myMineableObjects[i];
+            }
+            if (Vector3.Distance(transform.position, myMineableObjects[i].transform.position) < Vector3.Distance(transform.position, pickaxeLockOnTarget.transform.position))
+                pickaxeLockOnTarget = myMineableObjects[i];
+            pickaxeLockOnObject.SetActive(true);
+            pickaxeLockOnObject.transform.position = pickaxeLockOnTarget.transform.position;
+        }
+        foreach(GameObject obj in myMineableObjects)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, pickaxeLockOnTarget.transform.position))
+                pickaxeLockOnTarget = obj;
+        }
+    }
+    public void RemoveObjectFromMineableObjects(GameObject obj_)
+    {
+        myMineableObjects.Remove(obj_);
+        pickaxeLockOnObject.SetActive(false);
     }
     private void PickaxeUpdate()
     {

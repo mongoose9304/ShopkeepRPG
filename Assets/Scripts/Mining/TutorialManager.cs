@@ -14,7 +14,8 @@ public class TutorialManager : MonoBehaviour
     }
     public void SetTutorialState(int tutorialState_)
     {
-        switch(tutorialState_)
+        tutorialState = tutorialState_;
+        switch (tutorialState_)
         {
             case 0:
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);

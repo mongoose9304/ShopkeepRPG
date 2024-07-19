@@ -10,6 +10,7 @@ public class TutorialUIManager : MonoBehaviour
     [SerializeField] GameObject joyStickButton;
     [SerializeField] GameObject wasdButton;
     [SerializeField] GameObject gamepadButton;
+    [SerializeField] GameObject gamepadButtonBackground;
     //Left,Right
    [SerializeField] Sprite[] joyStickTypes;
     //A,B,X,Y,LB,RB,LT,RT
@@ -21,6 +22,7 @@ public class TutorialUIManager : MonoBehaviour
         wasdButton.SetActive(false);
         gamepadButton.SetActive(false);
         joyStickButton.SetActive(false);
+        gamepadButtonBackground.SetActive(false);
 
     }
     public void SetMessage(string text = "", int gamePadButton_ = 0,bool useButton=false)
@@ -29,6 +31,8 @@ public class TutorialUIManager : MonoBehaviour
         if(useButton)
         {
             gamepadButton.GetComponent<Image>().sprite = gamePadButtons[gamePadButton_];
+            gamepadButton.SetActive(true);
+            gamepadButtonBackground.SetActive(true);
         }
         tutorialText.text = text;
     }
@@ -41,7 +45,7 @@ public class TutorialUIManager : MonoBehaviour
         }
         else
         {
-            joyStickButton.GetComponent<Image>().sprite = gamePadButtons[joystickType];
+            joyStickButton.GetComponent<Image>().sprite = joyStickTypes[joystickType];
             joyStickButton.SetActive(true);
         }
         tutorialText.text = text;

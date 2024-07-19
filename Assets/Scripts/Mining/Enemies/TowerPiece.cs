@@ -70,10 +70,12 @@ public class TowerPiece : MonoBehaviour
         if(canDrop)
         {
         GetComponent<MeshRenderer>().material = gemMat;
+        gameObject.tag = "Mineable";
         }
         else
         {
         GetComponent<MeshRenderer>().material = rockMat;
+        gameObject.tag = "Untagged";
         }
     }
 }

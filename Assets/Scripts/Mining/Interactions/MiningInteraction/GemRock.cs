@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class GemRock : MonoBehaviour
+public class GemRock : MineableObject
 {
     [SerializeField] bool randomGem;
     [SerializeField] GameObject[] possibleGems;
@@ -19,12 +19,10 @@ public class GemRock : MonoBehaviour
        GameObject temp = GameObject.Instantiate(myGem, transform.position, transform.rotation);
        temp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
     }
-    private void OnTriggerEnter(Collider other)
+   
+    public override void MineInteraction()
     {
-        if(other.gameObject.tag=="Pickaxe")
-        {
-            SpawnGem();
-            Destroy(this.gameObject);
-        }
+        SpawnGem();
+        gameObject.SetActive(false);
     }
 }
