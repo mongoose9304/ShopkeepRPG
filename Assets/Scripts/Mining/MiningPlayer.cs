@@ -87,18 +87,22 @@ public class MiningPlayer : MonoBehaviour
         {
             if (dashTime > 0)
             {
-                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
-                transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 dashTime -= Time.deltaTime;
                 if (CheckForWallHit())
                 {
                     dashTime = 0;
+                    
                 }
                 if (dashTime <= 0)
                 {
                     isDashing = false;
                     GroundCheck();
+                    return;
                 }
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+                transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
+               
+                
             }
 
 
@@ -108,7 +112,7 @@ public class MiningPlayer : MonoBehaviour
     }
     private void OnDash()
     {
-        return;
+        
         if (dashCoolDown <= 0&&!isSwinging)
         {
             dashCoolDown = maxdashCoolDown;
@@ -177,7 +181,7 @@ public class MiningPlayer : MonoBehaviour
     {
         if (currentSwingTime > 0||isDashing)
             return;
-        if(myMineableObjects.Count>0)
+        if(pickaxeLockOnTarget)
         {
             transform.LookAt(pickaxeLockOnTarget.transform);
             transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
@@ -186,7 +190,10 @@ public class MiningPlayer : MonoBehaviour
             myPickaxe.SetActive(true);
             myPickaxe.transform.localEulerAngles = startRotation;
             isSwinging = true;
-            pickaxeLockOnTarget.GetComponent<MineableObject>().MineInteraction();
+            if(pickaxeLockOnTarget.TryGetComponent<MineableObject>(out MineableObject obj))
+            {
+                obj.MineInteraction();
+            }
             return;
         }
         moveInput = Vector3.zero;
