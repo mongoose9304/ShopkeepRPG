@@ -31,7 +31,9 @@ public class MiningPlayer : MonoBehaviour
     [SerializeField] GameObject pickaxeLockOnObject;
     [SerializeField] GameObject pickaxeLockOnTarget;
     //references and inputs
-    [SerializeField] InteractableObject myInteractableObject;
+    [SerializeField] GameObject interactableObjectTarget;
+    [SerializeField] GameObject interactableObjectLockOnObject;
+    public List<GameObject> myInteractableObjects = new List<GameObject>();
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
@@ -63,7 +65,9 @@ public class MiningPlayer : MonoBehaviour
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
         GetClosestMineableObject();
-      
+        GetClosestInteractableObject();
+
+
         if (!isDashing)
         {
 
@@ -172,9 +176,12 @@ public class MiningPlayer : MonoBehaviour
     }
     private void InteractAction()
     {
-        if(myInteractableObject)
+        if(interactableObjectTarget)
         {
-            myInteractableObject.Interact();
+           if(interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj ))
+            {
+                obj.Interact();
+            }
         }
     }
     private void PickaxeAction()
@@ -230,6 +237,36 @@ public class MiningPlayer : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, pickaxeLockOnTarget.transform.position))
                 pickaxeLockOnTarget = obj;
+        }
+    }
+    private void GetClosestInteractableObject()
+    {
+        if (myInteractableObjects.Count == 0)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+            return;
+        }
+        for (int i = 0; i < myInteractableObjects.Count; i++)
+        {
+            if (!myInteractableObjects[i].activeInHierarchy)
+            {
+                myInteractableObjects.RemoveAt(i);
+                continue;
+            }
+            if (!interactableObjectTarget)
+            {
+                interactableObjectTarget = myInteractableObjects[i];
+            }
+            if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = myInteractableObjects[i];
+            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
+        }
+        foreach (GameObject obj in myInteractableObjects)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = obj;
         }
     }
     public void RemoveObjectFromMineableObjects(GameObject obj_)
@@ -389,10 +426,7 @@ public class MiningPlayer : MonoBehaviour
     
 
 
-   public void SetInteractableObject(InteractableObject obj_)
-    {
-        myInteractableObject = obj_;
-    }
+   
     public void TakeDamage(float damage_)
     {
         currentHealth -= damage_;

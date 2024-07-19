@@ -21,7 +21,7 @@ public class PlayerMineableObjectDetector : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        
+        if (other.tag == "Mineable")
         {
             Debug.Log("lost Object");
             if (miningPlayer.myMineableObjects.Contains(other.gameObject))
