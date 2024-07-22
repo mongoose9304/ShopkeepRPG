@@ -45,4 +45,8 @@ public class TutorialManager : MonoBehaviour
 
         }
     }
+    private void OnDisable()
+    {
+        tutUIManager.gameObject.SetActive(false);
+    }
 }

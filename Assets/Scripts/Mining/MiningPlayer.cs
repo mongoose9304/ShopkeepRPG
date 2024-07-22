@@ -137,7 +137,7 @@ public class MiningPlayer : MonoBehaviour
         {
             OnDash();
         }
-        if (Input.GetButtonDown("Fire4"))
+        if (Input.GetButton("Fire4"))
         {
             InteractAction();
         }

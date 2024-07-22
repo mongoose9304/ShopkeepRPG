@@ -28,6 +28,8 @@ public class MiningLevel : MonoBehaviour
         nextLevelTunnel.SetActive(true);
         if(nextLocation)
         nextLevelTunnel.GetComponent<Tunnel>().teleportLocation = nextLocation.startLocation;
+        nextLevelTunnel.GetComponent<Tunnel>().objectToSetActive = nextLocation.gameObject;
+        nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive = gameObject;
         tunnelHolder = null;
     }
     public void DecideTunnelHolder()
