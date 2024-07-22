@@ -396,7 +396,13 @@ public class MiningPlayer : MonoBehaviour
 
         */
         var dir = transform.TransformDirection(Vector3.forward);
-        if (Physics.Raycast(transform.position, dir, 2.5f, wallMask))
+        if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
+            return true;
+        dir = transform.TransformDirection(Vector3.right);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
+            return true;
+        dir = transform.TransformDirection(Vector3.left);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
             return true;
         return false;
 
