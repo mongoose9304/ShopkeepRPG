@@ -222,6 +222,8 @@ public class MiningPlayer : MonoBehaviour
         {
             if(!myMineableObjects[i].activeInHierarchy)
             {
+                if (pickaxeLockOnTarget == myMineableObjects[i])
+                    pickaxeLockOnTarget = null;
                 myMineableObjects.RemoveAt(i);
                 continue;
             }
@@ -234,6 +236,8 @@ public class MiningPlayer : MonoBehaviour
             pickaxeLockOnObject.SetActive(true);
             pickaxeLockOnObject.transform.position = pickaxeLockOnTarget.transform.position;
         }
+        if (!pickaxeLockOnTarget)
+            return;
         foreach(GameObject obj in myMineableObjects)
         {
             if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, pickaxeLockOnTarget.transform.position))
@@ -252,6 +256,8 @@ public class MiningPlayer : MonoBehaviour
         {
             if (!myInteractableObjects[i].activeInHierarchy)
             {
+                if (interactableObjectTarget == myInteractableObjects[i])
+                    interactableObjectTarget = null;
                 myInteractableObjects.RemoveAt(i);
                 continue;
             }

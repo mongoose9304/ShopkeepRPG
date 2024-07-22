@@ -26,10 +26,13 @@ public class MiningLevel : MonoBehaviour
     {
         nextLevelTunnel.transform.position = location_.position - new Vector3(0, 0.5f, 0);
         nextLevelTunnel.SetActive(true);
-        if(nextLocation)
-        nextLevelTunnel.GetComponent<Tunnel>().teleportLocation = nextLocation.startLocation;
-        nextLevelTunnel.GetComponent<Tunnel>().objectToSetActive = nextLocation.gameObject;
-        nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive = gameObject;
+        if (nextLocation)
+        {
+            nextLevelTunnel.GetComponent<Tunnel>().teleportLocation = nextLocation.startLocation;
+            nextLevelTunnel.GetComponent<Tunnel>().objectToSetActive = nextLocation.gameObject;
+        }
+        if(!nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive)
+            nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive = gameObject;
         tunnelHolder = null;
     }
     public void DecideTunnelHolder()
