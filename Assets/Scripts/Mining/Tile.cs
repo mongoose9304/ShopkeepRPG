@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 {
    [SerializeField]  bool IsOccupied;
    [SerializeField] Bomb myBomb;
+   public bool typeBFloor;
 
 
     private void Update()
