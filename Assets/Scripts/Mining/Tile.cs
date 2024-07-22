@@ -5,15 +5,15 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
    [SerializeField]  bool IsOccupied;
-   [SerializeField] Bomb myBomb;
+   [SerializeField]protected Bomb myBomb;
    public bool typeBFloor;
 
 
-    private void Update()
+    protected void Update()
     {
         if (myBomb)
         {
-            if (!myBomb.gameObject.activeInHierarchy)
+            if (!myBomb.gameObject.activeInHierarchy || Vector3.Distance(transform.position, myBomb.transform.position) > 1)
                 myBomb = null;
         }
     }

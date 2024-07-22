@@ -78,7 +78,7 @@ public class MiningPlayer : MonoBehaviour
             if (!isSwinging)
             {
                 if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
-                    transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
+                    transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.deltaTime * moveSpeedModifier, ref velocity, dampModifier);
                 else
                     timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
                 if (moveInput != Vector3.zero)
@@ -103,7 +103,7 @@ public class MiningPlayer : MonoBehaviour
                     GroundCheck();
                     return;
                 }
-                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
                 transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                
                 
