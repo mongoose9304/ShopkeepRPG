@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float turnSpeed = 720;
     [SerializeField] private Transform model;
     private Vector3 input;
-    public Inventory playerInventory;
+    public InventoryManager playerInventory;
 
     void Start()
     {
@@ -56,4 +56,34 @@ public class Player : MonoBehaviour
         model.rotation = Quaternion.RotateTowards(model.rotation, rotation, turnSpeed * Time.deltaTime);
         
     }
+
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Item")){
+            ItemData item = other.GetComponent<Item>().itemData;
+            if (item != null) {
+                playerInventory.AddItem(item);
+                Destroy(other.gameObject);
+            }
+        } 
+        else if (other.CompareTag("Pedestal")){
+            playerInventory.currentPedestal = other.gameObject;
+        } 
+        else if (other.CompareTag("Checkout")){
+            playerInventory.checkout = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Pedestal") && other.gameObject == playerInventory.currentPedestal){
+            playerInventory.currentPedestal = null;
+        }
+        else if (other.CompareTag("Checkout") && other.gameObject == playerInventory.checkout){
+            playerInventory.checkout = null;
+        }
+    }
+    
+
 }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-    //------------ Depricated ----------
 
-
+    // inventory is stored as your ui, will need to bring it between scenes
     // inventory backup
     public List<ItemData> items;
     // Inventory pages for displaying the items in the ui
@@ -35,6 +34,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Item")){
@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour
             checkout = null;
         }
     }
-
+ */
 
     public bool PlaceItemOnPedestal(ItemData item){
         if (currentPedestal != null){
