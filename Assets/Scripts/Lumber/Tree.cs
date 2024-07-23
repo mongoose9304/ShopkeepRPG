@@ -13,14 +13,16 @@ public class Tree : MonoBehaviour
     [SerializeField] GameObject fallDirectionIndicator;
     [SerializeField] Transform[] fallDirectionIndicatorPositions;
     [SerializeField] Transform[] fallDirectionPivotPositions;
+    public List<GameObject> myTreeSections=new List<GameObject>();
     public int treeMaxHealth;
     [SerializeField] int treeCurrentHealth;
-    bool isFalling;
-
+    public bool isFalling;
+    bool hasBeenHit;
     private void Start()
     {
         treeCurrentHealth = treeMaxHealth;
         isFalling = false;
+        hasBeenHit = false;
     }
     private void Update()
     {
@@ -38,6 +40,7 @@ public class Tree : MonoBehaviour
     {
         if (isFalling)
             return;
+        hasBeenHit = true;
         if (treeCurrentHealth <= 0)
         {
             Fall();
@@ -77,9 +80,46 @@ public class Tree : MonoBehaviour
     }
     public void Fall()
     {
+        if (isFalling)
+            return;
         isFalling = true;
         fallSpeed = fallSpeedMin;
         fallDirectionIndicator.gameObject.SetActive(false);
+        if(!hasBeenHit)
+        {
+            int x = Random.Range(0, 4);
+            switch (x)
+            {
+                case 0:
+                    fallDirection = new Vector3(1, 0, 0);
+                    fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[x].position;
+                    fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[x].localRotation;
+                    fallPivot = fallDirectionPivotPositions[x].position;
+                    break;
+                case 1:
+                    fallDirection = new Vector3(0, 0, -1);
+                    fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[x].position;
+                    fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[x].localRotation;
+                    fallPivot = fallDirectionPivotPositions[x].position;
+                    break;
+                case 2:
+                    fallDirection = new Vector3(-1, 0, 0);
+                    fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[x].position;
+                    fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[x].localRotation;
+                    fallPivot = fallDirectionPivotPositions[x].position;
+                    break;
+                case 3:
+                    fallDirection = new Vector3(0, 0, 1);
+                    fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[x].position;
+                    fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[x].localRotation;
+                    fallPivot = fallDirectionPivotPositions[x].position;
+                    break;
+            }
+        }
+    }
+    public void BreakTree()
+    {
+        gameObject.SetActive(false);
     }
 
 }
