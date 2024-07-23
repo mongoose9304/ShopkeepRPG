@@ -172,9 +172,9 @@ public class LumberPlayer : MonoBehaviour
             myAxe.SetActive(true);
             myAxe.transform.localEulerAngles = startRotation;
             isSwinging = true;
-            if (axeLockOnTarget.TryGetComponent<MineableObject>(out MineableObject obj))
+            if (axeLockOnTarget.TryGetComponent<ChopableObject>(out ChopableObject obj))
             {
-                obj.MineInteraction();
+                obj.ChopInteraction();
             }
             return;
         }
@@ -251,7 +251,7 @@ public class LumberPlayer : MonoBehaviour
                 interactableObjectTarget = obj;
         }
     }
-    public void RemoveObjectFromMineableObjects(GameObject obj_)
+    public void RemoveObjectFromChopableObjects(GameObject obj_)
     {
         myChopableObjects.Remove(obj_);
         if (axeLockOnTarget = obj_)
