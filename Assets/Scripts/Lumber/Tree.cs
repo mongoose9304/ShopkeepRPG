@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour
 {
-    [SerializeField] Vector3 fallDirection;
+    public int treeHeight=1;
+    [SerializeField] GameObject treeTrunkPrefab;
+    [SerializeField] GameObject treeTrunkHolder;
+    [SerializeField] LineRenderer fallDirectionLineRenderer;
+    [SerializeField] LayerMask wallMask;
+    [SerializeField] Vector3 fallDirection=Vector3.zero;
+    [SerializeField] Vector3 lineDirection=Vector3.zero;
     [SerializeField] Vector3 fallPivot;
     [SerializeField] float fallSpeed;
     [SerializeField] float fallSpeedIncrease;
@@ -23,12 +29,19 @@ public class Tree : MonoBehaviour
         treeCurrentHealth = treeMaxHealth;
         isFalling = false;
         hasBeenHit = false;
+        for(int i=0;i<treeHeight;i++)
+        {
+           GameObject x= GameObject.Instantiate(treeTrunkPrefab, treeTrunkHolder.transform);
+            x.transform.position += new Vector3(0, i+1, 0);
+            myTreeSections.Add(x);
+            x.GetComponent<TreeSection>().myTree = this;
+        }
     }
     private void Update()
     {
         if(isFalling)
         {
-            transform.RotateAround(fallPivot, fallDirection, fallSpeed * Time.deltaTime);
+            transform.RotateAround(fallPivot, -fallDirection, fallSpeed * Time.deltaTime);
             //transform.Rotate(fallDirection,fallSpeed*Time.deltaTime,Space.Self);
             fallSpeed += fallSpeedIncrease * Time.deltaTime;
             if (fallSpeed >= fallSpeedMax)
@@ -50,33 +63,40 @@ public class Tree : MonoBehaviour
         switch (direction_)
         {
             case 0:
-                fallDirection = new Vector3(1, 0, 0);
-                fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[direction_].position;
-                fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
-                fallPivot = fallDirectionPivotPositions[direction_].position;
+                fallDirection = new Vector3(-1, 0, 0);
+                lineDirection = new Vector3(0, 0, 1);
                 break;
             case 1:
-                fallDirection = new Vector3(0, 0, -1);
-                fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[direction_].position;
-                fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
-                fallPivot = fallDirectionPivotPositions[direction_].position;
+                fallDirection = new Vector3(0, 0, 1);
+                lineDirection = new Vector3(1, 0, 0);
                 break;
             case 2:
-                fallDirection = new Vector3(-1, 0, 0);
-                fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[direction_].position;
-                fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
-                fallPivot = fallDirectionPivotPositions[direction_].position;
+                fallDirection = new Vector3(1, 0, 0);
+                lineDirection = new Vector3(0, 0, -1);
                 break;
             case 3:
-                fallDirection = new Vector3(0, 0, 1);
-                fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[direction_].position;
-                fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
-                fallPivot = fallDirectionPivotPositions[direction_].position;
+                fallDirection = new Vector3(0, 0, -1);
+                lineDirection = new Vector3(-1, 0, 0);
                 break;
+
         }
+        fallDirectionIndicator.transform.position = fallDirectionIndicatorPositions[direction_].position;
+        fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
+        fallPivot = fallDirectionPivotPositions[direction_].position;
         treeCurrentHealth -= damage_;
-        
-        
+        RaycastHit hit;
+       
+        if (Physics.Raycast(transform.position, lineDirection, out hit ,treeHeight, wallMask))
+        {
+            fallDirectionLineRenderer.SetPosition(0, transform.position);
+            fallDirectionLineRenderer.SetPosition(1, hit.transform.position);
+            fallDirectionLineRenderer.gameObject.SetActive(true);
+        }
+       
+
+
+
+
     }
     public void Fall()
     {
