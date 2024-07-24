@@ -21,6 +21,8 @@ public class TreeSection : MonoBehaviour
         {
             if (other.gameObject.TryGetComponent<TreeSection>(out TreeSection tree_))
             {
+                if (tree_.myTree.isFalling)
+                    return;
                 tree_.myTree.Fall();
                 myTree.BreakTree();
             }
