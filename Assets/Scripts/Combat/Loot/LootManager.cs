@@ -35,6 +35,9 @@ public class LootManager : MonoBehaviour
    public MMF_Player[] cashPickUpFeedBacks;
     public int currentCash;
     public TextMeshProUGUI currentCashText;
+    public MMF_Player[] lumberPickUpFeedBacks;
+    public int currentLumber;
+    public TextMeshProUGUI currentLumberText;
     private void Start()
     {
         instance = this;
@@ -89,6 +92,15 @@ public class LootManager : MonoBehaviour
         currentCash += money_;
         currentCashText.text = currentCash.ToString("#,#");
            foreach(MMF_Player player_ in cashPickUpFeedBacks)
+        {
+            player_.PlayFeedbacks();
+        }
+    }
+    public void AddLumber(int lumber_)
+    {
+        currentLumber += lumber_;
+        currentLumberText.text = currentLumber.ToString("#,#");
+        foreach (MMF_Player player_ in lumberPickUpFeedBacks)
         {
             player_.PlayFeedbacks();
         }

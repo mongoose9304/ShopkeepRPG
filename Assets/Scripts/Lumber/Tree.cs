@@ -6,6 +6,7 @@ public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
     [SerializeField] GameObject treeTrunkPrefab;
+    [SerializeField] GameObject woodPrefab;
     [SerializeField] GameObject treeTrunkHolder;
     [SerializeField] LineRenderer fallDirectionLineRenderer;
     [SerializeField] LayerMask wallMask;
@@ -137,8 +138,16 @@ public class Tree : MonoBehaviour
             }
         }
     }
+    private void SpawnWood()
+    {
+        foreach(GameObject obj in myTreeSections)
+        {
+            GameObject.Instantiate(woodPrefab, obj.transform.position, obj.transform.rotation);
+        }
+    }
     public void BreakTree()
     {
+        SpawnWood();
         gameObject.SetActive(false);
     }
 

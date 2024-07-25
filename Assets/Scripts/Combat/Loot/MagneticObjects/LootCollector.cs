@@ -21,6 +21,12 @@ public class LootCollector : MonoBehaviour
             Destroy(other.gameObject);
             coinCollected.Play();
         }
+        if (other.tag == "Lumber")
+        {
+            LootManager.instance.AddLumber(1);
+            Destroy(other.gameObject);
+            coinCollected.Play();
+        }
 
     }
 }
