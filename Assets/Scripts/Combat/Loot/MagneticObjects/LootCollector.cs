@@ -23,7 +23,7 @@ public class LootCollector : MonoBehaviour
         }
         if (other.tag == "Lumber")
         {
-            LootManager.instance.AddLumber(1);
+            LootManager.instance.AddLumber(other.GetComponent<LumberPickUp>().lumberAmount);
             Destroy(other.gameObject);
             coinCollected.Play();
         }

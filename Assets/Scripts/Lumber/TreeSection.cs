@@ -15,6 +15,7 @@ public class TreeSection : MonoBehaviour
             {
                 tree_.Fall();
                 myTree.BreakTree();
+                TreeManager.instance.AddToCombo();
             }
         }
         if (other.tag == "TreeTrunk" && !myTree.myTreeSections.Contains(other.gameObject))
@@ -25,12 +26,14 @@ public class TreeSection : MonoBehaviour
                     return;
                 tree_.myTree.Fall();
                 myTree.BreakTree();
+                TreeManager.instance.AddToCombo();
             }
         }
       
         if (other.tag == "Ground")
         {
             myTree.GetComponent<Tree>().BreakTree();
+            TreeManager.instance.ResetCombo();
         }
     }
 }
