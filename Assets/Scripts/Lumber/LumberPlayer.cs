@@ -12,6 +12,9 @@ public class LumberPlayer : MonoBehaviour
     public float dashCoolDown;
     public float dashTime;
     public bool isDashing;
+    //Stealth
+    public bool isHiding;
+    public Transform hideLocation;
     //Axe
     [SerializeField] GameObject myAxe;
     public List<GameObject> myChopableObjects = new List<GameObject>();
@@ -53,7 +56,12 @@ public class LumberPlayer : MonoBehaviour
         moveInput = PreventGoingThroughWalls(moveInput);
         GetClosestMineableObject();
         GetClosestInteractableObject();
-
+        if(isHiding)
+        {
+            if(hideLocation)
+            transform.position = hideLocation.position;
+            return;
+        }
 
         if (!isDashing)
         {
@@ -155,7 +163,7 @@ public class LumberPlayer : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact();
+                obj.Interact(gameObject);
             }
         }
     }
@@ -412,12 +420,16 @@ public class LumberPlayer : MonoBehaviour
         return null;
     }
 
+    public void Hide(Transform hideLocation_,bool isHiding_ = true)
+    {
+        isHiding = isHiding_;
+        hideLocation = hideLocation_;
+    }
 
 
 
 
 
-   
     public void Death()
     {
 

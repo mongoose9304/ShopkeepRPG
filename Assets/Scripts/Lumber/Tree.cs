@@ -94,6 +94,10 @@ public class Tree : MonoBehaviour
             fallDirectionLineRenderer.SetPosition(1, hit.transform.position);
             fallDirectionLineRenderer.gameObject.SetActive(true);
         }
+        else
+        {
+            fallDirectionLineRenderer.gameObject.SetActive(false);
+        }
        
 
 
