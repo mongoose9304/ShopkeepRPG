@@ -9,6 +9,8 @@ public class GuardDetection : MonoBehaviour
     {
         if(other.tag=="Player")
         {
+            if (other.gameObject.GetComponent<LumberPlayer>().isHiding)
+                return;
             myGuard.PlayerEnterVision(other.gameObject);
         }
     }

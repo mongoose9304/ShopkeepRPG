@@ -424,6 +424,10 @@ public class LumberPlayer : MonoBehaviour
     {
         isHiding = isHiding_;
         hideLocation = hideLocation_;
+        if(isHiding)
+        {
+            GuardManager.instance.PlayerAttemptingHide(gameObject);
+        }
     }
 
 

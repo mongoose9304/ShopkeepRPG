@@ -96,13 +96,15 @@ public class BasicGuard : MonoBehaviour
         searchLocation = loc_;
         ChangeGuardState(GuardStates.Searching);
     }
-    public void AttemptHide(Transform hidingPosition)
+    public void AttemptHide(GameObject playerObject)
     {
         if(myCurrentState==GuardStates.Chase)
         {
-            if(Vector3.Distance(transform.position,hidingPosition.position)>minDistanceForAcceptableHiding)
+            if (playerObject != chaseObject)
+                return;
+            if(Vector3.Distance(transform.position, playerObject.transform.position)>minDistanceForAcceptableHiding)
             {
-                searchLocation = hidingPosition;
+                searchLocation = playerObject.transform;
                 ChangeGuardState(GuardStates.Searching);
                 GuardManager.instance.LoudestNoiseInvestigated();
             }

@@ -39,6 +39,13 @@ public class GuardManager : MonoBehaviour
     {
         loudestNoise.levelOfNoise = -1;
     }
+    public void PlayerAttemptingHide(GameObject player)
+    {
+        foreach (BasicGuard guard in myGuards)
+        {
+            guard.AttemptHide(player);
+        }
+    }
 
 
 }
