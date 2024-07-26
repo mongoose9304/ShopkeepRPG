@@ -163,6 +163,7 @@ public class Tree : MonoBehaviour
     {
         SpawnWood();
         gameObject.SetActive(false);
+        GuardManager.instance.CreateNoise(transform, 2);
     }
 
 }
