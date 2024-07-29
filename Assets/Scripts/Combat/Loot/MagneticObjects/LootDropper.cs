@@ -71,4 +71,14 @@ public class LootDropper : MonoBehaviour
             itemsToDrop.Add(x);
         }
     }
+    //for setting up a loot table from another srcipt
+    public void SetLootTable(LootTableItem[] lootTable)
+    {
+        myTable.Clear();
+        foreach (LootTableItem tableItem in lootTable)
+        {
+            myTable.Add(tableItem);
+        }
+       
+    }
 }
