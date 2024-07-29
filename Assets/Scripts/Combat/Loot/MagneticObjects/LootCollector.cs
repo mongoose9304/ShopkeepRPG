@@ -17,13 +17,19 @@ public class LootCollector : MonoBehaviour
             }
         if (other.tag == "DemonCoin")
         {
-            LootManager.instance.AddMoney(other.GetComponent<DemonCoin>().value);
+            LootManager.instance.AddDemonMoney(other.GetComponent<DemonCoin>().value);
             Destroy(other.gameObject);
             coinCollected.Play();
         }
         if (other.tag == "Lumber")
         {
             LootManager.instance.AddLumber(other.GetComponent<LumberPickUp>().lumberAmount);
+            Destroy(other.gameObject);
+            coinCollected.Play();
+        }
+        if (other.tag == "RegularCoin")
+        {
+            LootManager.instance.AddRegularMoney(other.GetComponent<DemonCoin>().value);
             Destroy(other.gameObject);
             coinCollected.Play();
         }

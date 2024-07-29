@@ -5,27 +5,27 @@ using UnityEngine;
 public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
-    [SerializeField] GameObject treeTrunkPrefab;
-    [SerializeField] GameObject woodPrefab;
-    [SerializeField] GameObject multiWoodPrefab;
-    [SerializeField] GameObject treeTrunkHolder;
-    [SerializeField] LineRenderer fallDirectionLineRenderer;
-    [SerializeField] LayerMask wallMask;
-    [SerializeField] Vector3 fallDirection=Vector3.zero;
-    [SerializeField] Vector3 lineDirection=Vector3.zero;
-    [SerializeField] Vector3 fallPivot;
-    [SerializeField] float fallSpeed;
-    [SerializeField] float fallSpeedIncrease;
-    [SerializeField] float fallSpeedMax;
-    [SerializeField] float fallSpeedMin;
-    [SerializeField] GameObject fallDirectionIndicator;
-    [SerializeField] Transform[] fallDirectionIndicatorPositions;
-    [SerializeField] Transform[] fallDirectionPivotPositions;
+    [SerializeField] protected GameObject treeTrunkPrefab;
+    [SerializeField] protected GameObject woodPrefab;
+    [SerializeField] protected GameObject multiWoodPrefab;
+    [SerializeField] protected GameObject treeTrunkHolder;
+    [SerializeField] protected LineRenderer fallDirectionLineRenderer;
+    [SerializeField] protected LayerMask wallMask;
+    [SerializeField] protected Vector3 fallDirection=Vector3.zero;
+    [SerializeField] protected Vector3 lineDirection=Vector3.zero;
+    [SerializeField] protected Vector3 fallPivot;
+    [SerializeField] protected float fallSpeed;
+    [SerializeField] protected float fallSpeedIncrease;
+    [SerializeField] protected float fallSpeedMax;
+    [SerializeField] protected float fallSpeedMin;
+    [SerializeField] protected GameObject fallDirectionIndicator;
+    [SerializeField]protected Transform[] fallDirectionIndicatorPositions;
+    [SerializeField]protected Transform[] fallDirectionPivotPositions;
     public List<GameObject> myTreeSections=new List<GameObject>();
     public int treeMaxHealth;
-    [SerializeField] int treeCurrentHealth;
+    [SerializeField]protected int treeCurrentHealth;
     public bool isFalling;
-    bool hasBeenHit;
+    protected bool hasBeenHit;
     private void Start()
     {
         treeCurrentHealth = treeMaxHealth;
@@ -143,7 +143,7 @@ public class Tree : MonoBehaviour
             }
         }
     }
-    private void SpawnWood()
+    protected virtual  void SpawnWood()
     {
         foreach(GameObject obj in myTreeSections)
         {

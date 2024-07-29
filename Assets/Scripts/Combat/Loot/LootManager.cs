@@ -32,9 +32,12 @@ public class LootManager : MonoBehaviour
     public float maxTimeCollectionUIWillBeOut = 6.0f;
     public float currentTimeCollectionUIWillBeOut;
 
-   public MMF_Player[] cashPickUpFeedBacks;
-    public int currentCash;
-    public TextMeshProUGUI currentCashText;
+   public MMF_Player[] demonCashPickUpFeedBacks;
+    public int demonCurrentCash;
+    public TextMeshProUGUI demonCurrentCashText;
+    public MMF_Player[] regularCashPickUpFeedBacks;
+    public int regularCurrentCash;
+    public TextMeshProUGUI regularCurrentCashText;
     public MMF_Player[] lumberPickUpFeedBacks;
     public int currentLumber;
     public TextMeshProUGUI currentLumberText;
@@ -87,11 +90,11 @@ public class LootManager : MonoBehaviour
        
         
     }
-    public void AddMoney(int money_)
+    public void AddDemonMoney(int money_)
     {
-        currentCash += money_;
-        currentCashText.text = currentCash.ToString("#,#");
-           foreach(MMF_Player player_ in cashPickUpFeedBacks)
+        demonCurrentCash += money_;
+        demonCurrentCashText.text = demonCurrentCash.ToString("#,#");
+           foreach(MMF_Player player_ in demonCashPickUpFeedBacks)
         {
             player_.PlayFeedbacks();
         }
@@ -101,6 +104,15 @@ public class LootManager : MonoBehaviour
         currentLumber += lumber_;
         currentLumberText.text = currentLumber.ToString("#,#");
         foreach (MMF_Player player_ in lumberPickUpFeedBacks)
+        {
+            player_.PlayFeedbacks();
+        }
+    }
+    public void AddRegularMoney(int money_)
+    {
+        regularCurrentCash += money_;
+        regularCurrentCashText.text = regularCurrentCash.ToString("#,#");
+        foreach (MMF_Player player_ in regularCashPickUpFeedBacks)
         {
             player_.PlayFeedbacks();
         }

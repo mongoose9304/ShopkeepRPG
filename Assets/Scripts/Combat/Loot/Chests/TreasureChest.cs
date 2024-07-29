@@ -29,7 +29,7 @@ public class TreasureChest : MonoBehaviour
     {
         if (isOpening)
             return;
-        CoinSpawner.instance_.CreateCoins(value,spawnLocation);
+        CoinSpawner.instance_.CreateDemonCoins(value,spawnLocation);
         OpenEffect.Play();
         myText.SetActive(false);
         playerInRange = false;

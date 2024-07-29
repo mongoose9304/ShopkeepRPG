@@ -6,19 +6,22 @@ using UnityEngine;
 public class CoinSpawner : MonoBehaviour
 {
     public GameObject demonCoin;
-    public int[] coins;
+    public GameObject regularCoin;
+    public int[] demonCoins;
+    public int[] regularCoins;
     public static CoinSpawner instance_;
     int[] temp;
+    int[] tempB;
 
     private void Start()
     {
         instance_ = this;
-        temp = coins;
+        temp = demonCoins;
     }
 
-    public void CreateCoins(int value_,Transform location_)
+    public void CreateDemonCoins(int value_,Transform location_)
     {
-        temp = MakeChange(value_);
+        temp = MakeDemonChange(value_);
         for ( int i= 0;i<temp.Length;i++)
         {
            
@@ -29,12 +32,30 @@ public class CoinSpawner : MonoBehaviour
               DemonCoin coin=GameObject.Instantiate(demonCoin, location_.position, location_.rotation).GetComponent<DemonCoin>();
                 coin.transform.position += new Vector3(Random.Range(0,2), Random.Range(0, 2), Random.Range(0, 2));
                 coin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
-                coin.SetUpCoin(coins[i]);
+                coin.SetUpCoin(demonCoins[i]);
             }
             
         }
     }
-    private int[] MakeChange(int amount_)
+    public void CreateRegularCoins(int value_, Transform location_)
+    {
+        temp = MakeRegularChange(value_);
+        for (int i = 0; i < temp.Length; i++)
+        {
+
+            if (temp[i] == 0)
+                continue;
+            for (int x = 0; x < temp[i]; x++)
+            {
+                DemonCoin coin = GameObject.Instantiate(regularCoin, location_.position, location_.rotation).GetComponent<DemonCoin>();
+                coin.transform.position += new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2));
+                coin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
+                coin.SetUpCoin(regularCoins[i]);
+            }
+
+        }
+    }
+    private int[] MakeDemonChange(int amount_)
     {
         int[] dp = new int[amount_ + 1];
         int[] usedCoins = new int[amount_ + 1];
@@ -42,7 +63,7 @@ public class CoinSpawner : MonoBehaviour
         for (int i = 1; i <= amount_; i++)
         {
             dp[i] = int.MaxValue; // Initialize with a large value
-            foreach (int coin in coins)
+            foreach (int coin in demonCoins)
             {
                 if (i - coin >= 0 && dp[i - coin] + 1 < dp[i])
                 {
@@ -53,14 +74,51 @@ public class CoinSpawner : MonoBehaviour
         }
 
         // Reconstruct the coin combination
-        int[] result = new int[coins.Length];
+        int[] result = new int[demonCoins.Length];
         int remaining = amount_;
         while (remaining > 0)
         {
             int coin = usedCoins[remaining];
-            for (int i = 0; i < coins.Length; i++)
+            for (int i = 0; i < demonCoins.Length; i++)
             {
-                if (coins[i] == coin)
+                if (demonCoins[i] == coin)
+                {
+                    result[i]++;
+                    break;
+                }
+            }
+            remaining -= coin;
+        }
+
+        return result;
+    }
+    private int[] MakeRegularChange(int amount_)
+    {
+        int[] dp = new int[amount_ + 1];
+        int[] usedCoins = new int[amount_ + 1];
+
+        for (int i = 1; i <= amount_; i++)
+        {
+            dp[i] = int.MaxValue; // Initialize with a large value
+            foreach (int coin in regularCoins)
+            {
+                if (i - coin >= 0 && dp[i - coin] + 1 < dp[i])
+                {
+                    dp[i] = dp[i - coin] + 1;
+                    usedCoins[i] = coin;
+                }
+            }
+        }
+
+        // Reconstruct the coin combination
+        int[] result = new int[regularCoins.Length];
+        int remaining = amount_;
+        while (remaining > 0)
+        {
+            int coin = usedCoins[remaining];
+            for (int i = 0; i < regularCoins.Length; i++)
+            {
+                if (regularCoins[i] == coin)
                 {
                     result[i]++;
                     break;
