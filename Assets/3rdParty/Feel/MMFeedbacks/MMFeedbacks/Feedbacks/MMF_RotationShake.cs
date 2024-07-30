@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MoreMountains.Feedbacks
 {
@@ -172,5 +173,10 @@ namespace MoreMountains.Feedbacks
 					DirectionalNoiseStrengthMin,  DirectionalNoiseStrengthMax,  RandomnessSeed,  RandomizeSeedOnShake,  UseAttenuation,  AttenuationCurve, channelData: TargetShaker.ChannelData, restore:true);
 			}
 		}
-	}
+
+        public static implicit operator MMF_RotationShake(MMFeedback v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
