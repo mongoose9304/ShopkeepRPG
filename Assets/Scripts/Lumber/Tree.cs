@@ -5,6 +5,7 @@ using UnityEngine;
 public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
+    public int woodMultiplier=1;
     [SerializeField] protected GameObject treeTrunkPrefab;
     [SerializeField] protected GameObject woodPrefab;
     [SerializeField] protected GameObject multiWoodPrefab;
@@ -88,7 +89,7 @@ public class Tree : MonoBehaviour
         treeCurrentHealth -= damage_;
         RaycastHit hit;
        
-        if (Physics.Raycast(transform.position, lineDirection, out hit ,treeHeight, wallMask))
+        if (Physics.Raycast(transform.position, lineDirection, out hit ,treeHeight+2f, wallMask))
         {
             fallDirectionLineRenderer.SetPosition(0, transform.position);
             fallDirectionLineRenderer.SetPosition(1, hit.transform.position);
@@ -147,16 +148,16 @@ public class Tree : MonoBehaviour
     {
         foreach(GameObject obj in myTreeSections)
         {
-            GameObject.Instantiate(woodPrefab, obj.transform.position, obj.transform.rotation);
+            GameObject.Instantiate(woodPrefab, obj.transform.position, obj.transform.rotation).GetComponent<LumberPickUp>().lumberAmount = woodMultiplier;
         }
         if(TreeManager.instance.GetCurrentCombo()==1)
         {
-            GameObject.Instantiate(woodPrefab, transform.position, transform.rotation);
+          GameObject.Instantiate(woodPrefab, transform.position, transform.rotation).GetComponent<LumberPickUp>().lumberAmount =woodMultiplier;
         }
         else if( TreeManager.instance.GetCurrentCombo() > 1)
         {
           GameObject x=  GameObject.Instantiate(multiWoodPrefab, transform.position, transform.rotation);
-            x.GetComponent<LumberPickUp>().lumberAmount = TreeManager.instance.GetCurrentCombo();
+            x.GetComponent<LumberPickUp>().lumberAmount = TreeManager.instance.GetCurrentCombo()*woodMultiplier;
         }
     }
     public void BreakTree()
