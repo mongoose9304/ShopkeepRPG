@@ -17,6 +17,7 @@ public class MiningPlayer : MonoBehaviour
     public bool isDashing;
     //bombs
     public int bombCountMax;
+    public int bombRange;
     [SerializeField] private GameObject bombObject;
     public List<GameObject> activeBombs = new List<GameObject>();
     [SerializeField] protected MMMiniObjectPooler bombPool;
@@ -174,6 +175,7 @@ public class MiningPlayer : MonoBehaviour
             {
                 obj.SetActive(true);
                 obj.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+                obj.GetComponent<Bomb>().range = bombRange;
                 tile.SetBomb(obj.GetComponent<Bomb>());
             }
         }

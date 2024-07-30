@@ -13,24 +13,80 @@ public class Bomb : MonoBehaviour
     public void Explode()
     {
         //right
-        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(1, 0f, 0f), range * 2, wallMask))
+        RaycastHit hit;
+        Instantiate(explosionEffect, transform.position, transform.rotation);
+        
+        if (Physics.Raycast(transform.position, new Vector3(1, 0f, 0f), out hit, range*2 , wallMask))
         {
-            Instantiate(explosionEffect, transform.position + new Vector3(2.0f, 0.0f, 0f), transform.rotation);
+            Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position)/2));
+            int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            for (int i = 0; i <x-1; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(2 + (2.0f * i), 0.0f, 0f), transform.rotation);
+            }
         }
-        //left
-        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(-1, 0f, 0f), range * 2, wallMask))
+        else
         {
-            Instantiate(explosionEffect, transform.position + new Vector3(-2.0f, 0.0f, 0f), transform.rotation);
+            for(int i=0;i<range;i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(2+(2.0f*i), 0.0f, 0f), transform.rotation);
+            }
+        }
+
+
+
+
+
+        //left
+        if (Physics.Raycast(transform.position, new Vector3(-1, 0f, 0f), out hit, range * 2, wallMask))
+        {
+            Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
+            int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            for (int i = 0; i < x - 1; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(-2 + (-2.0f * i), 0.0f, 0f), transform.rotation);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < range; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(-2 + (-2.0f * i), 0.0f, 0f), transform.rotation);
+            }
         }
         //up
-        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, 1f), range * 2, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, 1f), out hit, range * 2, wallMask))
         {
-            Instantiate(explosionEffect, transform.position + new Vector3(0.0f, 0.0f, 2.0f), transform.rotation);
+            Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
+            int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            for (int i = 0; i < x - 1; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, 2 + (2.0f * i)), transform.rotation);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < range; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, 2 + (2.0f * i)), transform.rotation);
+            }
         }
         //down
-        if (!Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, -1f), range * 2, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, -1f), out hit, range * 2, wallMask))
         {
-            Instantiate(explosionEffect, transform.position + new Vector3(0.0f, 0.0f, -2.0f), transform.rotation);
+            Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
+            int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            for (int i = 0; i < x - 1; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, -2 + (-2.0f * i)), transform.rotation);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < range; i++)
+            {
+                Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, -2 + (-2.0f * i)), transform.rotation);
+            }
         }
         gameObject.SetActive(false);
     }
