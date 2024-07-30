@@ -8,6 +8,8 @@ public class LootBush : InteractableObject
     public float chanceForHigherLoot;
     [SerializeField] bool useSpecificItemDrop;
     LootDropper myDropper;
+    public GameObject lootableIndicator;
+    public ParticleSystem lootEffect;
 
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class LootBush : InteractableObject
     {
         myDropper.DropItems();
         gameObject.SetActive(false);
+        lootableIndicator.SetActive(false);
+        lootEffect.Play();
     }
     public void SetUpLootDrop()
     {
@@ -31,6 +35,6 @@ public class LootBush : InteractableObject
             x += 1;
         }
         myDropper.SetLootTable(LumberLevelManager.instance.currentLevel.GetItemTier(x));
-      
+        lootableIndicator.SetActive(true);
     }
 }

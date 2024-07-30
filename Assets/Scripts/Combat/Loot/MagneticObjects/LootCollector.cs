@@ -11,6 +11,7 @@ public class LootCollector : MonoBehaviour
        
             if (other.tag == "Item")
             {
+            Debug.Log("Item found " + other.GetComponent<LootWorldObject>().myItem.name);
             LootManager.instance.AddLootItem(other.GetComponent<LootWorldObject>().myItem);
             Destroy(other.gameObject);
             itemCollected.Play();
