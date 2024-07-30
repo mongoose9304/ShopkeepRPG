@@ -25,6 +25,7 @@ public class LootBush : InteractableObject
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);
+        if(lootEffect)
         lootEffect.Play();
     }
     public void SetUpLootDrop()

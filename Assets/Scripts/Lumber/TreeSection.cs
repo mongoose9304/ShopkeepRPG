@@ -35,5 +35,14 @@ public class TreeSection : MonoBehaviour
             myTree.GetComponent<Tree>().BreakTree();
             TreeManager.instance.ResetCombo();
         }
+        if (other.tag == "Breakable")
+        {
+            if (other.gameObject.TryGetComponent<Breakable>(out Breakable breakObject_))
+            {
+                breakObject_.Break(this.gameObject);
+                myTree.GetComponent<Tree>().BreakTree();
+                TreeManager.instance.ResetCombo();
+            }
+        }
     }
 }

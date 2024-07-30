@@ -253,9 +253,12 @@ public class LumberPlayer : MonoBehaviour
             interactableObjectLockOnObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
+        if (myInteractableObjects.Count <= 1)
+            return;
         foreach (GameObject obj in myInteractableObjects)
         {
-            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+            if (Vector3.Distance(transform.position, obj.transform.position) 
+                < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = obj;
         }
     }
