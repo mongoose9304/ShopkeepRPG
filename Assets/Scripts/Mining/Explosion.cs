@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The logic for the explosion spawned by bombs
+/// </summary>
 public class Explosion : MonoBehaviour
 {
+    [Tooltip("Length of time before the object disappears")]
     [SerializeField] float lifetime;
     float currentLifetime;
-    [SerializeField] GameObject rockExplosionParticleEffect;
+    [Tooltip("The damage this will deal to players who touch it")]
     [SerializeField] float damageToPlayer;
+    [Tooltip("REFERENCE to the effect when destroying rocks")]
+    [SerializeField] GameObject rockExplosionParticleEffect;
     private void Update()
     {
         currentLifetime -= Time.deltaTime;
@@ -20,7 +26,9 @@ public class Explosion : MonoBehaviour
     {
         currentLifetime = lifetime;
     }
-
+    /// <summary>
+    /// The explosion will destroy rocks, explode other bombs and hurt players or enemies 
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Bomb")

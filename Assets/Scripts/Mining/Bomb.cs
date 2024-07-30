@@ -2,14 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The bombs players and enemies drop that explode after a short duration
+/// </summary>
 public class Bomb : MonoBehaviour
 {
+    [Tooltip("Length of time before bomb explodes")]
     public float maxDetonationTime;
     float currentDetonationTime;
+    [Tooltip("how many squares the explosion will cover")]
     public int range = 1;
+    [Tooltip("What will stop or limit an explosion's path")]
     [SerializeField] LayerMask wallMask;
+    [Tooltip("REFERENCE to the explsion prefab")]
     [SerializeField] GameObject explosionEffect;
 
+    /// <summary>
+    /// The logic for spawning all explosions. Using several raycasts the bomb will look for any walls in its way and limit its explosion accordingly
+    /// </summary>
     public void Explode()
     {
         //right
