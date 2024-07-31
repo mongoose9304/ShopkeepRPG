@@ -4,54 +4,83 @@ using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 
+/// <summary>
+/// The controls and behavior for the player during the mining activity
+/// </summary>
 public class MiningPlayer : MonoBehaviour
 {
-    //movement
+    [Header("Movement")]
+    [Tooltip("The time before a player can dash again")]
     public float maxdashCoolDown;
+    [Tooltip("The base speed a player can move")]
     public float moveSpeed;
+    [Tooltip("A temproary modifier to increase or decrease a players speed 1=100%")]
     public float moveSpeedModifier;
-    public float dampModifier;
+    [Tooltip("The distance a player can dash")]
     public float dashDistance;
-    public float dashCoolDown;
-    public float dashTime;
+    [Tooltip("If the Player is currently dashing")]
     public bool isDashing;
-    //bombs
+    float dashTime;
+    float dashCoolDown;
+
+    [Header("Bombs")]
+    [Tooltip("How many bombs the player can place at once")]
     public int bombCountMax;
+    [Tooltip("How many squares in any direction a bomb will reach")]
     public int bombRange;
+    [Tooltip("REFERENCE to the bomb gameobject")]
     [SerializeField] private GameObject bombObject;
-    public List<GameObject> activeBombs = new List<GameObject>();
+    [Tooltip("REFERENCE to the pool of bombs the player has")]
     [SerializeField] protected MMMiniObjectPooler bombPool;
-    //pickaxe
-    [SerializeField] GameObject myPickaxe;
+
+    [Header("Pickaxe")]
+    [Tooltip("All the objects the player is currently in range to mine")]
     public List<GameObject> myMineableObjects=new List<GameObject>();
     bool isSwinging;
+    [Tooltip("The length of time a pickaxe will swing for")]
     [SerializeField] float maxSwingtime;
     float currentSwingTime;
+    [Tooltip("The rotation the pickaxe will start swinging from")]
     [SerializeField] Vector3 startRotation;
+    [Tooltip("The speed the player will swing their axe")]
     [SerializeField] float swingSpeed;
-    [SerializeField] GameObject pickaxeLockOnObject;
+    [Tooltip("The object the player is currently locked onto")]
     [SerializeField] GameObject pickaxeLockOnTarget;
-    //references and inputs
-    [SerializeField] GameObject interactableObjectTarget;
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject pickaxeLockOnObject;
+    [Tooltip("REFERENCE to the pickaxe the player swings")]
+    [SerializeField] GameObject myPickaxe;
+
+    [Header("Interactions")]
+    [Tooltip("All the objects the player is currently in range to interact with")]
     public List<GameObject> myInteractableObjects = new List<GameObject>();
+    [Tooltip("The object the player is currently locked onto")]
+    [SerializeField] GameObject interactableObjectTarget;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject interactableObjectLockOnObject;
+
+    [Header("REFERNCES and Inputs")]
+    //used for movement calculations
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
-    Rigidbody rb;
-    float timeBeforePlayerCanMoveAfterFallingOffPlatform;
-    private Vector3 velocity = Vector3.zero;
-    [SerializeField] LayerMask wallMask;
-    [SerializeField] GameObject dashEffect;
-    [SerializeField] LayerMask tileLayer;
 
-    [SerializeField] string enemyTag;
+    Rigidbody rb;
+    //slight delay before player regains control after falling off the map
+    float timeBeforePlayerCanMoveAfterFallingOffPlatform;
+    [Tooltip("The layermask for the walls")]
+    [SerializeField] LayerMask wallMask;
+    [Tooltip("REFERENCE to gameobject used for dashing")]
+    [SerializeField] GameObject dashEffect;
+    [Tooltip("The layermask for tiles and the floor")]
+    [SerializeField] LayerMask tileLayer;
 
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     float currentHealth;
     [Header("UI")]
     public MMProgressBar healthBar;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -119,6 +148,9 @@ public class MiningPlayer : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
     private void OnDash()
     {
         
@@ -128,7 +160,10 @@ public class MiningPlayer : MonoBehaviour
             DashAction();
         }
     }
-   
+
+    /// <summary>
+    /// Gets all the butons or movement inputs the player makes each frame
+    /// </summary>
     void GetInput()
     {
        
@@ -152,6 +187,9 @@ public class MiningPlayer : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// The funcionality of a players dash. The player snaps to the nearest 90 degree and moves forwards constantly unless there is a wall
+    /// </summary>
     private void DashAction()
     {
        
@@ -165,6 +203,9 @@ public class MiningPlayer : MonoBehaviour
         Instantiate(dashEffect, transform.position, transform.rotation);
 
     }
+    /// <summary>
+    /// The actions taken when the player presses the bomb button
+    /// </summary>
     private void BombAction()
     {
        GameObject obj= bombPool.GetPooledGameObject();
@@ -176,10 +217,14 @@ public class MiningPlayer : MonoBehaviour
                 obj.SetActive(true);
                 obj.transform.position = tile.transform.position + new Vector3(0, 1, 0);
                 obj.GetComponent<Bomb>().range = bombRange;
+
                 tile.SetBomb(obj.GetComponent<Bomb>());
             }
         }
     }
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
     private void InteractAction()
     {
         if(interactableObjectTarget)
@@ -190,6 +235,9 @@ public class MiningPlayer : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// The actions taken when the player presses the pickaxe button
+    /// </summary>
     private void PickaxeAction()
     {
         if (currentSwingTime > 0||isDashing)
@@ -215,6 +263,9 @@ public class MiningPlayer : MonoBehaviour
         myPickaxe.transform.localEulerAngles = startRotation;
         isSwinging = true;
     }
+    /// <summary>
+    /// Calculates the nearest mining object and sets that as the minable target that will be used for lock ons
+    /// </summary>
     private void GetClosestMineableObject()
     {
         if(myMineableObjects.Count==0)
@@ -250,6 +301,9 @@ public class MiningPlayer : MonoBehaviour
                 pickaxeLockOnTarget = obj;
         }
     }
+    /// <summary>
+    /// Calculates the nearest interactable object and sets that as the interactable target that will be used for lock ons
+    /// </summary>
     private void GetClosestInteractableObject()
     {
         if (myInteractableObjects.Count == 0)
@@ -282,6 +336,10 @@ public class MiningPlayer : MonoBehaviour
                 interactableObjectTarget = obj;
         }
     }
+    /// <summary>
+    /// Removes an object from the mineable object list and resets the lockon target
+    /// </summary>
+    /// <param name="obj_">Object to remove</param>
     public void RemoveObjectFromMineableObjects(GameObject obj_)
     {
         myMineableObjects.Remove(obj_);
@@ -289,6 +347,10 @@ public class MiningPlayer : MonoBehaviour
             pickaxeLockOnTarget = null;
         pickaxeLockOnObject.SetActive(false);
     }
+    /// <summary>
+    /// The swinging of the pickaxe that happens during the update
+    /// </summary>
+    
     private void PickaxeUpdate()
     {
         if (currentSwingTime <= 0)
@@ -301,11 +363,18 @@ public class MiningPlayer : MonoBehaviour
         if (currentSwingTime <= 0)
             EndPickaxeAttack();
     }
+    /// <summary>
+    /// Set the pickaxe inactive once done
+    /// </summary>
     private void EndPickaxeAttack()
     {
         myPickaxe.SetActive(false);
         isSwinging = false;
     }
+    /// <summary>
+    /// Snaps the player to the nearest 90 degree angle
+    /// </summary>
+    /// <param name="transform_">Transform to snap</param>
     private void SnapRotationToGrid(Transform transform_)
     {
       
@@ -335,6 +404,9 @@ public class MiningPlayer : MonoBehaviour
             moveInput.Set(-1, 0, 0);
         }
     }
+    /// <summary>
+    /// Adjusts the players movement to stop them from walikng off ledges
+    /// </summary>
     private Vector3 PreventFalling()
     {
         // Stop walking
@@ -359,6 +431,10 @@ public class MiningPlayer : MonoBehaviour
                 newInput.x = 0;
         return newInput;
     }
+    /// <summary>
+    /// Adjusts the players movement to stop them from walikng into walls
+    /// </summary>
+    /// <param name="temp_">current movement input</param>
     private Vector3 PreventGoingThroughWalls(Vector3 temp_)
     {
 
@@ -385,6 +461,10 @@ public class MiningPlayer : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Check if the player is hitting a wall
+    /// </summary>
+    /// <returns></returns>
     private bool CheckForWallHit()
     {
         /* for directions that will not change when player moves
@@ -419,6 +499,9 @@ public class MiningPlayer : MonoBehaviour
         return false;
 
     }
+    /// <summary>
+    /// Check if the player is grounded and if not put them back on ground
+    /// </summary>
     private void GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
@@ -429,6 +512,10 @@ public class MiningPlayer : MonoBehaviour
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
     }
+    /// <summary>
+    /// Returns the tile you are standing on if any
+    /// </summary>
+    /// <returns></returns>
     private Tile GetCurrentTile()
     {
         RaycastHit hit;
@@ -443,11 +530,14 @@ public class MiningPlayer : MonoBehaviour
         return null;
     }
 
-   
-    
 
 
-   
+
+
+    /// <summary>
+    /// The player will take damage, and if they run out of health they will die
+    /// </summary>
+    /// <param name="damage_">the damage to take</param>
     public void TakeDamage(float damage_)
     {
         currentHealth -= damage_;
@@ -459,6 +549,9 @@ public class MiningPlayer : MonoBehaviour
         healthBar.UpdateBar01(currentHealth / maxHealth);
 
     }
+    /// <summary>
+    /// Functionality for running out of life
+    /// </summary>
     public void Death()
     {
 
