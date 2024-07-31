@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Sets the tutorial to the next state when entered 
+/// </summary>
 public class PlayerInteractableObjectDetector : MonoBehaviour
 {
     MiningPlayer miningPlayer;

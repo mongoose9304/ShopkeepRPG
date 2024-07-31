@@ -2,16 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the tutorial and its possible states 
+/// </summary>
 public class TutorialManager : MonoBehaviour
 {
+    [Tooltip("The singleton instance")]
     public static TutorialManager instance_;
     int tutorialState;
+    [Tooltip("All the messages for the tutorial in order of appearance")]
     [SerializeField] string[] tutorialMessages;
+    [Tooltip("REFERNCE to the controller of the UI for the tutorial")]
     [SerializeField] TutorialUIManager tutUIManager;
     private void Awake()
     {
         instance_ = this;
     }
+    /// <summary>
+    /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
+    /// </summary>
     public void SetTutorialState(int tutorialState_)
     {
         tutorialState = tutorialState_;
