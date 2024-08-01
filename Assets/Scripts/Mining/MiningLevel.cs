@@ -119,4 +119,11 @@ public class MiningLevel : MonoBehaviour
                 allTiles[i].gameObject.GetComponent<MeshRenderer>().material = tileMatA;
         }
     }
+    /// <summary>
+    /// Any functionality to be called when the level begins
+    /// </summary>
+    public void StartLevel()
+    {
+        MiningManager.instance.currentLevel = this;
+    }
 }

@@ -10,6 +10,8 @@ public class Tunnel : InteractableObject
 {
     [Tooltip("The location to send the player")]
     public Transform teleportLocation;
+    [Tooltip("Start the game if this is the end of the tutorial")]
+    public bool tutEndTunnel;
     [Tooltip("The object to activate on teleporting, usually the next level")]
     public GameObject objectToSetActive;
     [Tooltip("The object to deactivate on teleporting, usually the previous level")]
@@ -49,9 +51,32 @@ public class Tunnel : InteractableObject
     /// </summary>
     public void Use()
     {
+        if(tutEndTunnel)
+        {
+            teleportLocation = MiningManager.instance.currentLevel.startLocation;
+            Teleport(GameObject.FindGameObjectWithTag("Player"));
+            objectToSetActive = MiningManager.instance.currentLevel.gameObject;
+            if (objectToSetActive)
+            {
+                objectToSetActive.SetActive(true);
+                if (objectToSetActive.TryGetComponent<MiningLevel>(out MiningLevel lv))
+                {
+                    lv.StartLevel();
+                }
+            }
+            if (objectToSetInactive)
+                objectToSetInactive.SetActive(false);
+            return;
+        }
         Teleport(GameObject.FindGameObjectWithTag("Player"));
         if (objectToSetActive)
+        {
             objectToSetActive.SetActive(true);
+            if(objectToSetActive.TryGetComponent<MiningLevel>(out MiningLevel lv))
+            {
+                lv.StartLevel();
+            }
+        }
         if (objectToSetInactive)
             objectToSetInactive.SetActive(false);
         Debug.Log("Interact");

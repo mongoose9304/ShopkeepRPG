@@ -8,6 +8,7 @@ using UnityEngine;
 public class Rock : MonoBehaviour
 {
     private bool holdingTunel=false;
+    public int stoneAmount = 1;
     MiningLevel myLevel;
     /// <summary>
     /// Set this rock as the rock that holds the tunnel to the next level
@@ -26,4 +27,5 @@ public class Rock : MonoBehaviour
             holdingTunel = false;
         }
     }
+
 }
