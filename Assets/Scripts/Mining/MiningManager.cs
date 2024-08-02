@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.Feedbacks;
 /// <summary>
 /// The singleton class that will handle loading the mining levels and managing thier order
 /// </summary>
@@ -17,6 +18,8 @@ public class MiningManager : MonoBehaviour
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
+    [Tooltip("REFERNCE to the pool of stone world objects")]
+    [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;
     private void Awake()
     {
         instance = this;
@@ -41,5 +44,20 @@ public class MiningManager : MonoBehaviour
             levels[i].nextLocation = levels[i + 1];
         }
         currentLevel = levels[0];
+    }
+    public void SpawnStone(Transform location_,int value_=1,bool useMiningLevelStoneAmount=true)
+    {
+        GameObject obj = stoneWorldObjectPooler.GetPooledGameObject();
+        if (useMiningLevelStoneAmount)
+        {
+            obj.GetComponent<StonePickUp>().stoneAmount = Random.Range(currentLevel.minStoneValue, currentLevel.maxStoneValue);
+        }
+        else
+        {
+            obj.GetComponent<StonePickUp>().stoneAmount = value_;
+        }
+        obj.transform.position = location_.position;
+        obj.transform.rotation = location_.rotation;
+        obj.SetActive(true);
     }
 }

@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class MiningLevel : MonoBehaviour
 {
+    [Tooltip("Min amount of stone that can be dropped")]
+    public int minStoneValue=1;
+    [Tooltip("Max amount of stone that can be dropped")]
+    public int maxStoneValue = 1;
     [Tooltip("The location the player will start")]
     public Transform startLocation;
     [Tooltip("The next level a player will go to")]

@@ -26,6 +26,10 @@ public class Rock : MonoBehaviour
             myLevel.CreateTunnel(transform);
             holdingTunel = false;
         }
+        if(MiningManager.instance)
+        {
+            MiningManager.instance.SpawnStone(transform);
+        }
     }
 
 }
