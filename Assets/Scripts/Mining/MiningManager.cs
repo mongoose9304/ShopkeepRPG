@@ -45,6 +45,9 @@ public class MiningManager : MonoBehaviour
         }
         currentLevel = levels[0];
     }
+    /// <summary>
+    /// Using pools spawn a stone object at target location with a set value or the current levels default value
+    /// </summary>
     public void SpawnStone(Transform location_,int value_=1,bool useMiningLevelStoneAmount=true)
     {
         GameObject obj = stoneWorldObjectPooler.GetPooledGameObject();
