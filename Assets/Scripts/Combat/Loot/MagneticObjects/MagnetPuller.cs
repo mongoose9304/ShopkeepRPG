@@ -8,7 +8,7 @@ public class MagnetPuller : MonoBehaviour
     public float pullSpeed;
     private Vector3 velocity = Vector3.zero;
     public float dampModifier;
-    private List<GameObject>objectsToPull =new List<GameObject>();
+    [SerializeField] private List<GameObject>objectsToPull =new List<GameObject>();
     private Rigidbody rb;
     private void OnTriggerEnter(Collider other)
     {
@@ -69,6 +69,15 @@ public class MagnetPuller : MonoBehaviour
         }
         // objectsToPull.Clear();
 
+
+
+        for (int i = 0; i < objectsToPull.Count; i++)
+        {
+            if (!objectsToPull[i].activeInHierarchy)
+            {
+                objectsToPull.RemoveAt(i);
+            }
+        }
     }
 
 }

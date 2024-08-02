@@ -148,16 +148,15 @@ public class Tree : MonoBehaviour
     {
         foreach(GameObject obj in myTreeSections)
         {
-            GameObject.Instantiate(woodPrefab, obj.transform.position, obj.transform.rotation).GetComponent<LumberPickUp>().lumberAmount = woodMultiplier;
+            LumberLevelManager.instance.SpawnLumber(obj.transform, woodMultiplier);
         }
         if(TreeManager.instance.GetCurrentCombo()==1)
         {
-          GameObject.Instantiate(woodPrefab, transform.position, transform.rotation).GetComponent<LumberPickUp>().lumberAmount =woodMultiplier;
+            LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier);
         }
         else if( TreeManager.instance.GetCurrentCombo() > 1)
         {
-          GameObject x=  GameObject.Instantiate(multiWoodPrefab, transform.position, transform.rotation);
-            x.GetComponent<LumberPickUp>().lumberAmount = TreeManager.instance.GetCurrentCombo()*woodMultiplier;
+            LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier*TreeManager.instance.GetCurrentCombo());
         }
     }
     public void BreakTree()
