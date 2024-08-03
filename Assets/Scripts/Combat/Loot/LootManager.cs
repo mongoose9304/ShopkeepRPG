@@ -41,6 +41,7 @@ public class LootManager : MonoBehaviour
     public MMF_Player[] resourcePickUpFeedBacks;
     public int currentResource;
     public TextMeshProUGUI currentResourceText;
+    public List<LootItem> AquiredLootItems =new List<LootItem>();
     private void Start()
     {
         instance = this;
@@ -77,6 +78,7 @@ public class LootManager : MonoBehaviour
             currentLootItems.Add(x);
             AddUILootObject(x, true);
         }
+        AquiredLootItems.Add(item_);
     }
     public void AddUILootObject(LootItem item_,bool isNew=false)
     {

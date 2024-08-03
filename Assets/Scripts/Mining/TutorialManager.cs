@@ -14,6 +14,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] string[] tutorialMessages;
     [Tooltip("REFERNCE to the controller of the UI for the tutorial")]
     [SerializeField] TutorialUIManager tutUIManager;
+    bool isQuitting;
     private void Awake()
     {
         instance_ = this;
@@ -56,6 +57,12 @@ public class TutorialManager : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (isQuitting)
+            return;
         tutUIManager.gameObject.SetActive(false);
+    }
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
 }
