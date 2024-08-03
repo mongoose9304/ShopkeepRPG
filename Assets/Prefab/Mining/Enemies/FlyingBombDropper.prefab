@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 2056159785456337527}
   - component: {fileID: 4343408076868084470}
   - component: {fileID: 6119938181126979497}
+  - component: {fileID: 4556334469890901700}
   m_Layer: 0
   m_Name: FlyingBombDropper
   m_TagString: Enemy
@@ -793,6 +794,7 @@ MonoBehaviour:
   damage: 1
   lootDropper: {fileID: 4343408076868084470}
   player: {fileID: 0}
+  currentHealth: 0
   tileTargetPos: {x: 0, y: 0, z: 0}
   maxDistance: 1
   minDistance: 3
@@ -829,6 +831,7 @@ MonoBehaviour:
   itemsToDrop: []
   DropOnlyOneItem: 1
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!54 &6119938181126979497
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -856,6 +859,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4556334469890901700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8420496568622947120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 2356620106261250145, guid: 1fa33d76a407d6d418e57d3ac9667bd1, type: 3}
+  PoolSize: 2
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
 --- !u!1 &8510764652727070892
 GameObject:
   m_ObjectHideFlags: 0
