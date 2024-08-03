@@ -12,6 +12,8 @@ public class Tunnel : InteractableObject
     public Transform teleportLocation;
     [Tooltip("Start the game if this is the end of the tutorial")]
     public bool tutEndTunnel;
+    [Tooltip("Use this for telports between mining levels that you want to keep the previous level's data. Used for tutorials and odd situations")]
+    public bool doNotChangeMiningLevels;
     [Tooltip("The object to activate on teleporting, usually the next level")]
     public GameObject objectToSetActive;
     [Tooltip("The object to deactivate on teleporting, usually the previous level")]
@@ -71,10 +73,13 @@ public class Tunnel : InteractableObject
         Teleport(GameObject.FindGameObjectWithTag("Player"));
         if (objectToSetActive)
         {
-            objectToSetActive.SetActive(true);
-            if(objectToSetActive.TryGetComponent<MiningLevel>(out MiningLevel lv))
+            if (!doNotChangeMiningLevels)
             {
-                lv.StartLevel();
+                objectToSetActive.SetActive(true);
+                if (objectToSetActive.TryGetComponent<MiningLevel>(out MiningLevel lv))
+                {
+                    lv.StartLevel();
+                }
             }
         }
         if (objectToSetInactive)

@@ -8,6 +8,7 @@ using UnityEngine;
 public class Rock : MonoBehaviour
 {
     private bool holdingTunel=false;
+    private bool isQuitting;
     public int stoneAmount = 1;
     MiningLevel myLevel;
     /// <summary>
@@ -21,6 +22,8 @@ public class Rock : MonoBehaviour
 
     private void OnDisable()
     {
+        if (isQuitting)
+            return;
         if (holdingTunel)
         {
             myLevel.CreateTunnel(transform);
@@ -31,5 +34,8 @@ public class Rock : MonoBehaviour
             MiningManager.instance.SpawnStone(transform);
         }
     }
-
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
 }
