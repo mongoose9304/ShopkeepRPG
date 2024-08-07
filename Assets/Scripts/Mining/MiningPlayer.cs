@@ -215,7 +215,7 @@ public class MiningPlayer : MonoBehaviour
            if(tile.CanPlaceBomb())
             {
                 obj.SetActive(true);
-                obj.transform.position = tile.transform.position + new Vector3(0, 1, 0);
+                obj.transform.position = tile.transform.position + new Vector3(0, 1.25f, 0);
                 obj.GetComponent<Bomb>().range = bombRange;
 
                 tile.SetBomb(obj.GetComponent<Bomb>());

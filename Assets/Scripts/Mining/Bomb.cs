@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 /// <summary>
 /// The bombs players and enemies drop that explode after a short duration
 /// </summary>
@@ -14,9 +14,10 @@ public class Bomb : MonoBehaviour
     public int range = 1;
     [Tooltip("What will stop or limit an explosion's path")]
     [SerializeField] LayerMask wallMask;
+    [Tooltip("What will stop or limit an explosion's path")]
+    [SerializeField] string rockTag;
     [Tooltip("REFERENCE to the explsion prefab")]
     [SerializeField] GameObject explosionEffect;
-
     /// <summary>
     /// The logic for spawning all explosions. Using several raycasts the bomb will look for any walls in its way and limit its explosion accordingly
     /// </summary>
@@ -30,6 +31,10 @@ public class Bomb : MonoBehaviour
         {
             Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position)/2));
             int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            if(hit.transform.gameObject.tag==rockTag)
+            {
+                x += 1;
+            }
             for (int i = 0; i <x-1; i++)
             {
                 Instantiate(explosionEffect, transform.position + new Vector3(2 + (2.0f * i), 0.0f, 0f), transform.rotation);
@@ -52,6 +57,10 @@ public class Bomb : MonoBehaviour
         {
             Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
             int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            if (hit.transform.gameObject.tag == rockTag)
+            {
+                x += 1;
+            }
             for (int i = 0; i < x - 1; i++)
             {
                 Instantiate(explosionEffect, transform.position + new Vector3(-2 + (-2.0f * i), 0.0f, 0f), transform.rotation);
@@ -69,6 +78,10 @@ public class Bomb : MonoBehaviour
         {
             Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
             int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            if (hit.transform.gameObject.tag == rockTag)
+            {
+                x += 1;
+            }
             for (int i = 0; i < x - 1; i++)
             {
                 Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, 2 + (2.0f * i)), transform.rotation);
@@ -86,6 +99,10 @@ public class Bomb : MonoBehaviour
         {
             Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
             int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
+            if (hit.transform.gameObject.tag == rockTag)
+            {
+                x += 1;
+            }
             for (int i = 0; i < x - 1; i++)
             {
                 Instantiate(explosionEffect, transform.position + new Vector3(0, 0.0f, -2 + (-2.0f * i)), transform.rotation);
