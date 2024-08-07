@@ -2,25 +2,47 @@ using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class LootDisplayManager : MonoBehaviour
 {
+    public static LootDisplayManager instance;
    [SerializeField] List<LootItem> itemsToDisplay = new List<LootItem>();
     private bool allItemsDisplayed;
    [SerializeField] private int currentItem;
     public int maxUIBackgrounds;
     int currentUIBackground;
     public float maxTimeBetweenAdds;
-    public float currentTimeBetweenAdds;
+    float currentTimeBetweenAdds;
+    public float maxResourceDisplayTime;
+    float currentResourceDisplayTime;
     public MMMiniObjectPooler pooler;
     public List<AcquiredLootDisplay> resourceLootList = new List<AcquiredLootDisplay>();
     [SerializeField] List<int> resourcesAcquired = new List<int>();
     [SerializeField] List<int> resourcesInventory = new List<int>();
     [SerializeField] List<Sprite> resourcesSprites = new List<Sprite>();
+    [SerializeField] private GameObject playerFireworkObject;
+    [SerializeField] private GameObject playerFamiliarHolderObject;
+    [SerializeField] UnityEvent startVictoryEvent;
+    [SerializeField] UnityEvent endVictoryEvent;
+    private bool isPlaying;
+    private void Awake()
+    {
+       // StartVictoryScreen();
+        instance = this;
+    }
     private void Update()
     {
+        if (!isPlaying)
+            return;
         if (allItemsDisplayed)
         {
+            currentResourceDisplayTime -= Time.deltaTime;
+            if(currentResourceDisplayTime<=0)
+            {
+                playerFireworkObject.SetActive(true);
+                endVictoryEvent.Invoke();
+                isPlaying = false;
+            }
             return;
         }
         currentTimeBetweenAdds -= Time.deltaTime;
@@ -37,6 +59,7 @@ public class LootDisplayManager : MonoBehaviour
         if(currentItem>=itemsToDisplay.Count)
         {
             allItemsDisplayed = true;
+            currentResourceDisplayTime = maxResourceDisplayTime;
             DisplayLootedResouces();
         }
     }
@@ -57,10 +80,11 @@ public class LootDisplayManager : MonoBehaviour
             itemsToDisplay.Add(item);
         }
     }
-    public void AddResources(List<int> resourcesAcquired_, List<int> resourcesInventory_)
+    public void AddResources(List<int> resourcesAcquired_, List<int> resourcesInventory_,List<Sprite> resourceSprites_)
     {
         resourcesAcquired.Clear();
         resourcesInventory.Clear();
+        resourcesSprites.Clear();
         foreach (int item in resourcesAcquired_)
         {
             resourcesAcquired.Add(item);
@@ -69,13 +93,27 @@ public class LootDisplayManager : MonoBehaviour
         {
             resourcesInventory.Add(item);
         }
+        foreach (Sprite item in resourceSprites_)
+        {
+            resourcesSprites.Add(item);
+        }
     }
     public void DisplayLootedResouces()
     {
+        foreach(AcquiredLootDisplay loot in resourceLootList)
+        {
+            loot.gameObject.SetActive(false);
+        }
         for(int i=0;i< resourcesAcquired.Count;i++)
         {
             resourceLootList[i].gameObject.SetActive(true);
             resourceLootList[i].StartCountEffect(resourcesInventory[i], resourcesAcquired[i], resourcesSprites[i]);
         }
+    }
+    public void StartVictoryScreen()
+    {
+        isPlaying = true;
+        playerFamiliarHolderObject.SetActive(true);
+        startVictoryEvent.Invoke();
     }
 }

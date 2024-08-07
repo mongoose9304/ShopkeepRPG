@@ -12,7 +12,7 @@ public class AcquiredLootDisplay : MonoBehaviour
     [SerializeField] MMF_Player inventoryFeedback;
     [SerializeField] MMF_Player acquiredFeedback;
     [SerializeField] Image resourceImage;
-    private void Start()
+    private void Awake()
     {
         inventoryCounter = inventoryFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
         acquiredCounter = acquiredFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
@@ -21,10 +21,7 @@ public class AcquiredLootDisplay : MonoBehaviour
 
     public void StartCountEffect(int inventoryStart,int acquiredStart,Sprite resourceSprite)
     {
-        gameObject.SetActive(true);
-        gameObject.SetActive(true);
         resourceImage.sprite = resourceSprite;
-
         inventoryCounter.CountFrom = inventoryStart;
         inventoryCounter.CountTo = inventoryStart+ acquiredStart;
         inventoryFeedback.GetComponent<TextMeshProUGUI>().text = inventoryCounter.CountFrom.ToString();

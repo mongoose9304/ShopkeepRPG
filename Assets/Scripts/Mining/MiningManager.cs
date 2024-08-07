@@ -18,8 +18,16 @@ public class MiningManager : MonoBehaviour
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
+    [Tooltip("Transforms we can spawn levels at")]
+    public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
     [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;
+    [Tooltip("REFERNCE to the decorative end level")]
+    [SerializeField] GameObject victoryLevel;
+    [Tooltip("REFERNCE to the location to put the player when the game is over for the victroy screen")]
+    [SerializeField] GameObject victoryPlayerPos;
+    [Tooltip("REFERNCE to the miningPlayer")]
+    [SerializeField] MiningPlayer player;
     private void Awake()
     {
         instance = this;
@@ -27,6 +35,7 @@ public class MiningManager : MonoBehaviour
     private void Start()
     {
         InitLevels();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
     }
     /// <summary>
     /// Set up all the levels and spawn them in
@@ -62,5 +71,21 @@ public class MiningManager : MonoBehaviour
         obj.transform.position = location_.position;
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
+    }
+    public void WinLevel()
+    {
+        player.enabled = false;
+        victoryLevel.SetActive(true);
+        player.gameObject.transform.position = victoryPlayerPos.transform.position;
+        player.gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+        LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
+        List<int> x = new List<int>();
+        //here is where you would load the inventorys count of how many resources *stone* you have.
+        List<int> y = new List<int>();
+        y.Add(1000);
+        x.Add(LootManager.instance.currentResource);
+        LootDisplayManager.instance.AddResources(x,y,resourceSprites);
+        LootDisplayManager.instance.StartVictoryScreen();
+
     }
 }
