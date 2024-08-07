@@ -24,6 +24,10 @@ public class MiningManager : MonoBehaviour
     [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;
     [Tooltip("REFERNCE to the decorative end level")]
     [SerializeField] GameObject victoryLevel;
+    [Tooltip("REFERNCE to the checkpoint level where players can return or continue mining")]
+    public GameObject checkPointLevel;
+    [Tooltip("REFERNCE to the checkpoint level spawn")]
+    public GameObject checkPointPlayerPos;
     [Tooltip("REFERNCE to the location to put the player when the game is over for the victroy screen")]
     [SerializeField] GameObject victoryPlayerPos;
     [Tooltip("REFERNCE to the miningPlayer")]

@@ -52,6 +52,11 @@ public class MiningLevel : MonoBehaviour
             nextLevelTunnel.GetComponent<Tunnel>().teleportLocation = nextLocation.startLocation;
             nextLevelTunnel.GetComponent<Tunnel>().objectToSetActive = nextLocation.gameObject;
         }
+        else
+        {
+            nextLevelTunnel.GetComponent<Tunnel>().teleportLocation = MiningManager.instance.checkPointPlayerPos.transform;
+            nextLevelTunnel.GetComponent<Tunnel>().objectToSetActive = MiningManager.instance.checkPointLevel;
+        }
         if(!nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive)
             nextLevelTunnel.GetComponent<Tunnel>().objectToSetInactive = gameObject;
         tunnelHolder = null;

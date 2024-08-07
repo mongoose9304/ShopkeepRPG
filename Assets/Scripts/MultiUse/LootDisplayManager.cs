@@ -54,6 +54,12 @@ public class LootDisplayManager : MonoBehaviour
     }
     private void DisplayItem()
     {
+        if(itemsToDisplay.Count==0)
+        {
+            allItemsDisplayed = true;
+            return;
+        }
+
         AddUILootObject(itemsToDisplay[currentItem], false);
         currentItem += 1;
         if(currentItem>=itemsToDisplay.Count)
@@ -75,7 +81,8 @@ public class LootDisplayManager : MonoBehaviour
     }
     public void AddItems(List<LootItem> items_)
     {
-        foreach(LootItem item in items_)
+        itemsToDisplay.Clear();
+        foreach (LootItem item in items_)
         {
             itemsToDisplay.Add(item);
         }
