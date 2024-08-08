@@ -81,6 +81,10 @@ public class Tunnel : InteractableObject
                     lv.StartLevel();
                 }
             }
+            else
+            {
+                objectToSetActive.SetActive(true);
+            }
         }
         if (objectToSetInactive)
             objectToSetInactive.SetActive(false);
