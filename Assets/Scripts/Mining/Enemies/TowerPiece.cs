@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TowerPiece : MonoBehaviour
 {
-    LootDropper dropper;
     bool canDrop;
     [SerializeField] bool isHead;
     [SerializeField] Material rockMat;
     [SerializeField] Material gemMat;
     [SerializeField] float damage;
     [SerializeField] bool isBoss;
+    [SerializeField] GameObject mineableObject;
     private void OnTriggerEnter(Collider other)
     {
         if(isBoss)
@@ -50,7 +50,6 @@ public class TowerPiece : MonoBehaviour
             }
             if (other.tag == "Pickaxe")
             {
-                dropper.DropItems();
                 gameObject.SetActive(false);
              
             }
@@ -64,18 +63,19 @@ public class TowerPiece : MonoBehaviour
     {
         if (isHead)
             return;
-        canDrop = canDrop_;
-        dropper = GetComponent<LootDropper>();
-        dropper.dropNothing = !canDrop;
+        canDrop = canDrop_;;
         if(canDrop)
         {
         GetComponent<MeshRenderer>().material = gemMat;
-        gameObject.tag = "Mineable";
+            if(mineableObject)
+            mineableObject.SetActive(true);
         }
         else
         {
         GetComponent<MeshRenderer>().material = rockMat;
         gameObject.tag = "Untagged";
+            if (mineableObject)
+                mineableObject.SetActive(false);
         }
     }
 }

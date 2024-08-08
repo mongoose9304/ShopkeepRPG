@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 1866976648136437713}
   - component: {fileID: 679196618686828484}
   - component: {fileID: 4243785100322420026}
-  - component: {fileID: 125973575463154704}
   m_Layer: 0
   m_Name: TowerBaseD
   m_TagString: Untagged
@@ -34,7 +33,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 4.2, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1112143517704354800}
   m_Father: {fileID: 7058583394544664857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &127742518314853273
@@ -151,38 +151,8 @@ MonoBehaviour:
   rockMat: {fileID: 2100000, guid: ab4a1a83cf052d04f84fad7337f1846a, type: 2}
   gemMat: {fileID: 2100000, guid: 1a9efcd159fb1404499a259333c06e99, type: 2}
   damage: 5
---- !u!114 &125973575463154704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543352160431089403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTable:
-  - item:
-      name: Emerald
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Sapphire
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Ruby
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  itemsToDrop: []
-  DropOnlyOneItem: 1
-  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
-  dropNothing: 0
+  isBoss: 0
+  mineableObject: {fileID: 1382417251915439108}
 --- !u!1 &657383543019971168
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +167,6 @@ GameObject:
   - component: {fileID: 7729163548973188807}
   - component: {fileID: 1353279143587744167}
   - component: {fileID: 8953332418917045972}
-  - component: {fileID: 6728429192421582729}
   m_Layer: 0
   m_Name: TowerBaseB
   m_TagString: Untagged
@@ -217,7 +186,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.4, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2035757689934175925}
   m_Father: {fileID: 7058583394544664857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6034198181424498931
@@ -334,38 +304,8 @@ MonoBehaviour:
   rockMat: {fileID: 2100000, guid: ab4a1a83cf052d04f84fad7337f1846a, type: 2}
   gemMat: {fileID: 2100000, guid: 1a9efcd159fb1404499a259333c06e99, type: 2}
   damage: 5
---- !u!114 &6728429192421582729
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 657383543019971168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTable:
-  - item:
-      name: Emerald
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Sapphire
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Ruby
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  itemsToDrop: []
-  DropOnlyOneItem: 1
-  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
-  dropNothing: 0
+  isBoss: 0
+  mineableObject: {fileID: 4695513815199564479}
 --- !u!1 &757762828756433725
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +461,80 @@ MonoBehaviour:
   rockMat: {fileID: 0}
   gemMat: {fileID: 0}
   damage: 5
+  isBoss: 0
+  mineableObject: {fileID: 0}
+--- !u!1 &1382417251915439108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1112143517704354800}
+  - component: {fileID: 8749081062385873738}
+  - component: {fileID: 6054849468323733001}
+  m_Layer: 10
+  m_Name: MineableObject
+  m_TagString: Mineable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1112143517704354800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382417251915439108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6857386346468977990}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8749081062385873738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382417251915439108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a9e2674ccfd604bbf666a53f455f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGem: 1
+  possibleGems:
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  - {fileID: 1653438609950917053, guid: 06b0d1163e8ce5c42bbceda8718955db, type: 3}
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  myGem: {fileID: 0}
+--- !u!65 &6054849468323733001
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382417251915439108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2178217679964916201
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +737,78 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4695513815199564479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035757689934175925}
+  - component: {fileID: 5362327397413752467}
+  - component: {fileID: 8311440524070223286}
+  m_Layer: 10
+  m_Name: MineableObject
+  m_TagString: Mineable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2035757689934175925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695513815199564479}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2304454839832579085}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5362327397413752467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695513815199564479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a9e2674ccfd604bbf666a53f455f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGem: 1
+  possibleGems:
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  - {fileID: 1653438609950917053, guid: 06b0d1163e8ce5c42bbceda8718955db, type: 3}
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  myGem: {fileID: 0}
+--- !u!65 &8311440524070223286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695513815199564479}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4833880844037391162
 GameObject:
@@ -1053,7 +1139,6 @@ GameObject:
   - component: {fileID: 927546061280166214}
   - component: {fileID: 8664294011478198927}
   - component: {fileID: 714935298234676567}
-  - component: {fileID: 4506536441711177192}
   m_Layer: 0
   m_Name: TowerBaseA
   m_TagString: Untagged
@@ -1073,7 +1158,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3102692350216911799}
   m_Father: {fileID: 7058583394544664857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7199951135372441767
@@ -1190,38 +1276,8 @@ MonoBehaviour:
   rockMat: {fileID: 2100000, guid: ab4a1a83cf052d04f84fad7337f1846a, type: 2}
   gemMat: {fileID: 2100000, guid: 1a9efcd159fb1404499a259333c06e99, type: 2}
   damage: 5
---- !u!114 &4506536441711177192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5800109080365650601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTable:
-  - item:
-      name: Emerald
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Sapphire
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Ruby
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  itemsToDrop: []
-  DropOnlyOneItem: 1
-  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
-  dropNothing: 0
+  isBoss: 0
+  mineableObject: {fileID: 8130653502777656242}
 --- !u!1 &6886840221410748705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,7 +1292,6 @@ GameObject:
   - component: {fileID: 3260967035990425895}
   - component: {fileID: 6155357067138381409}
   - component: {fileID: 8889698242379519430}
-  - component: {fileID: 2121065042315083417}
   m_Layer: 0
   m_Name: TowerBaseC
   m_TagString: Untagged
@@ -1256,7 +1311,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.8, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2457299287010008342}
   m_Father: {fileID: 7058583394544664857}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &948576360340206537
@@ -1373,38 +1429,8 @@ MonoBehaviour:
   rockMat: {fileID: 2100000, guid: ab4a1a83cf052d04f84fad7337f1846a, type: 2}
   gemMat: {fileID: 2100000, guid: 1a9efcd159fb1404499a259333c06e99, type: 2}
   damage: 5
---- !u!114 &2121065042315083417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6886840221410748705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTable:
-  - item:
-      name: Emerald
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Sapphire
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  - item:
-      name: Ruby
-      amount: 1
-    maxAmount: 0
-    chancesToSpawn: 0
-  itemsToDrop: []
-  DropOnlyOneItem: 1
-  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
-  dropNothing: 0
+  isBoss: 0
+  mineableObject: {fileID: 8397244056369421678}
 --- !u!1 &7306969189789985245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,4 +1570,148 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8130653502777656242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3102692350216911799}
+  - component: {fileID: 2961187800222012063}
+  - component: {fileID: 6770075770227155329}
+  m_Layer: 10
+  m_Name: MineableObject
+  m_TagString: Mineable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3102692350216911799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130653502777656242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4146144088300177589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2961187800222012063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130653502777656242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a9e2674ccfd604bbf666a53f455f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGem: 1
+  possibleGems:
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  - {fileID: 1653438609950917053, guid: 06b0d1163e8ce5c42bbceda8718955db, type: 3}
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  myGem: {fileID: 0}
+--- !u!65 &6770075770227155329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8130653502777656242}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8397244056369421678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2457299287010008342}
+  - component: {fileID: 1855227535913806441}
+  - component: {fileID: 4424707842486679297}
+  m_Layer: 10
+  m_Name: MineableObject
+  m_TagString: Mineable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2457299287010008342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397244056369421678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2469879036306078283}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855227535913806441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397244056369421678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a9e2674ccfd604bbf666a53f455f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomGem: 1
+  possibleGems:
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  - {fileID: 1653438609950917053, guid: 06b0d1163e8ce5c42bbceda8718955db, type: 3}
+  - {fileID: 1653438609950917053, guid: a7fbf4a43d05ecf48aaed053f0a7d3cc, type: 3}
+  myGem: {fileID: 0}
+--- !u!65 &4424707842486679297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8397244056369421678}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
