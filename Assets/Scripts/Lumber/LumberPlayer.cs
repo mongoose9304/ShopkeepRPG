@@ -433,7 +433,17 @@ public class LumberPlayer : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Removes an object from the mineable object list and resets the lockon target
+    /// </summary>
+    /// <param name="obj_">Object to remove</param>
+    public void RemoveObjectFromInteractableObjects(GameObject obj_)
+    {
+        myInteractableObjects.Remove(obj_);
+        if (interactableObjectTarget = obj_)
+            interactableObjectTarget = null;
+        interactableObjectLockOnObject.SetActive(false);
+    }
 
 
 

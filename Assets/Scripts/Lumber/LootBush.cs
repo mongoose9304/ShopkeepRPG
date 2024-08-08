@@ -27,6 +27,10 @@ public class LootBush : InteractableObject
         lootableIndicator.SetActive(false);
         if(lootEffect)
         lootEffect.Play();
+       if( interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer player_))
+        {
+            player_.RemoveObjectFromInteractableObjects(this.gameObject);
+        }
     }
     public void SetUpLootDrop()
     {
