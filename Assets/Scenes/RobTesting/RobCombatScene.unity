@@ -13098,7 +13098,6 @@ MonoBehaviour:
   maxdashCoolDown: 0.25
   moveSpeed: 50
   moveSpeedModifier: 1
-  dampModifier: 0.2
   dashDistance: 4
   dashCoolDown: 0
   dashTime: 0
@@ -16512,6 +16511,7 @@ MonoBehaviour:
   - DemonCoin
   pullSpeed: 5
   dampModifier: 0.2
+  objectsToPull: []
 --- !u!1 &827942205
 GameObject:
   m_ObjectHideFlags: 0
@@ -27873,7 +27873,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1174301849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32041,6 +32041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLootItems: []
   pooler: {fileID: 1617043374}
+  worldObjectPool: {fileID: 0}
   scrollRect: {fileID: 537434691}
   maxUIBackgrounds: 2
   lootCollectionUIObject: {fileID: 537434689}
@@ -32052,9 +32053,10 @@ MonoBehaviour:
   regularCashPickUpFeedBacks: []
   regularCurrentCash: 0
   regularCurrentCashText: {fileID: 0}
-  lumberPickUpFeedBacks: []
-  currentLumber: 0
-  currentLumberText: {fileID: 0}
+  resourcePickUpFeedBacks: []
+  currentResource: 0
+  currentResourceText: {fileID: 0}
+  AquiredLootItems: []
 --- !u!4 &1916948854
 Transform:
   m_ObjectHideFlags: 0
@@ -32082,8 +32084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19acb81add73d642a10c67d68d14ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demonCoin: {fileID: 6540898062573925195, guid: 914825dc32557c94185e432dd1708f78, type: 3}
-  regularCoin: {fileID: 5180752463271632814, guid: ea36bac6af5dcd145add2792efd80c69, type: 3}
+  demonCoinPool: {fileID: 0}
+  regularCoinPool: {fileID: 0}
   demonCoins: 01000000050000000a0000003200000064000000c8000000f4010000e8030000
   regularCoins: 01000000050000000a0000003200000064000000c8000000f4010000e8030000
 --- !u!1 &1923691007
