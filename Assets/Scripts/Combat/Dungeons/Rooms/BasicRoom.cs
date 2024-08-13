@@ -16,7 +16,7 @@ public class BasicRoom : MonoBehaviour
     [SerializeField] public List<BasicEnemy> specialEnemies = new List<BasicEnemy>();
     [SerializeField] protected UnityEvent onEnter;
     [SerializeField] protected UnityEvent onExit;
-    [SerializeField] protected GameObject lockObject;
+    [SerializeField] protected GameObject[] lockObjects;
     public int size; //0=small,1=medium,2=large
 
 

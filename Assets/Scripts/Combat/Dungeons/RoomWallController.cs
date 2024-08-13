@@ -39,10 +39,11 @@ public class RoomWallController : MonoBehaviour
              List<bool> x= new List<bool>();
         foreach(GameObject obj in connectors)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(obj.transform.position, 2,connectorLayer);
-            if(hitColliders.Length==1)
+            Collider[] hitColliders = Physics.OverlapSphere(obj.transform.position, 4.0F,connectorLayer);
+            if(hitColliders.Length == 1)
             {
                 x.Add(false);
+                
                 continue;
             }
             foreach (var hitCollider in hitColliders)

@@ -84,23 +84,28 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if (dashTime > 0)
             {
-                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-                transform.position = PreventGoingThroughWalls(temp);
                 dashTime -= Time.deltaTime;
-                if(CheckForWallHit())
+                if (CheckForWallHit())
                 {
                     dashTime = 0;
+
                 }
                 if (dashTime <= 0)
                 {
                     isDashing = false;
                     GroundCheck();
+                    return;
                 }
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
+                // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
+                transform.position = PreventGoingThroughWalls(temp);
+
+
             }
-           
-           
-         
-          
+
+
+
+
         }
     }
     private void OnDash()
@@ -165,19 +170,19 @@ public class CombatPlayerMovement : MonoBehaviour
         newInput = temp_;
         // Up
 
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15,wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
         // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, .5f), dir, 15, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
-        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
-        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;
         return newInput;
@@ -187,21 +192,15 @@ public class CombatPlayerMovement : MonoBehaviour
     private bool CheckForWallHit()
     {
 
-        var dir = transform.TransformDirection(Vector3.down);
-        // Up
-
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -1), dir, 15, wallMask))
+        var dir = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
-        // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 1), dir, 15, wallMask))
+        dir = transform.TransformDirection(Vector3.right);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
             return true;
-        //Left
-        if (Physics.Raycast(transform.position + new Vector3(1, 5.0f, 0f), dir, 15, wallMask))
+        dir = transform.TransformDirection(Vector3.left);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
             return true;
-        //Right
-        if (Physics.Raycast(transform.position + new Vector3(-1, 5.0f, 0f), dir, 15, wallMask))
-            return true;
-
         return false;
 
 

@@ -28,7 +28,10 @@ public class CombatRoom : BasicRoom
     }
     private void LockRoom(bool lock_)
     {
-        lockObject.SetActive(lock_);
+        foreach (GameObject obj in lockObjects)
+        {
+            obj.SetActive(lock_);
+        }
         isLocked = lock_;
     }
     private void Update()
