@@ -13,13 +13,13 @@ public class LootCollector : MonoBehaviour
             {
             Debug.Log("Item found " + other.GetComponent<LootWorldObject>().myItem.name);
             LootManager.instance.AddLootItem(other.GetComponent<LootWorldObject>().myItem);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             itemCollected.Play();
             }
         if (other.tag == "DemonCoin")
         {
             LootManager.instance.AddDemonMoney(other.GetComponent<DemonCoin>().value);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             coinCollected.Play();
         }
         if (other.tag == "Lumber")
@@ -37,7 +37,7 @@ public class LootCollector : MonoBehaviour
         if (other.tag == "RegularCoin")
         {
             LootManager.instance.AddRegularMoney(other.GetComponent<DemonCoin>().value);
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             coinCollected.Play();
         }
 

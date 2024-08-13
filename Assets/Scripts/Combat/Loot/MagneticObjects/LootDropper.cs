@@ -21,7 +21,9 @@ public class LootDropper : MonoBehaviour
 
         foreach(LootItem item_ in itemsToDrop)
         {
-           temp= Instantiate(lootObject, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+            temp = LootManager.instance.GetWorldLootObject();
+            temp.transform.position = transform.position;
+            temp.transform.rotation = new Quaternion(0, 0, 0, 0);
             temp.GetComponent<LootWorldObject>().myItem = item_;
             temp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0,0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
         }

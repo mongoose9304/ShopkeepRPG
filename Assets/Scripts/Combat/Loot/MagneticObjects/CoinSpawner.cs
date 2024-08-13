@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 
 public class CoinSpawner : MonoBehaviour
 {
-    public GameObject demonCoin;
-    public GameObject regularCoin;
+    public MMMiniObjectPooler demonCoinPool;
+    public MMMiniObjectPooler regularCoinPool;
     public int[] demonCoins;
     public int[] regularCoins;
     public static CoinSpawner instance_;
@@ -21,19 +21,23 @@ public class CoinSpawner : MonoBehaviour
 
     public void CreateDemonCoins(int value_,Transform location_)
     {
-        temp = MakeDemonChange(value_);
+         temp = MakeDemonChange(value_);
+        Debug.Log("T length: " + temp.Length);
         for ( int i= 0;i<temp.Length;i++)
         {
            
             if (temp[i] == 0)
                 continue;
-            for(int x=0;x<temp[i];x++)
-            {
-              DemonCoin coin=GameObject.Instantiate(demonCoin, location_.position, location_.rotation).GetComponent<DemonCoin>();
-                coin.transform.position += new Vector3(Random.Range(0,2), Random.Range(0, 2), Random.Range(0, 2));
-                coin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
-                coin.SetUpCoin(demonCoins[i]);
-            }
+            //for(int x=0;x<temp[i];x++)
+           // {
+                GameObject coinObject = demonCoinPool.GetPooledGameObject();
+                coinObject.transform.position = location_.position;
+                coinObject.transform.rotation = location_.rotation;
+                coinObject.transform.position += new Vector3(Random.Range(0,2), Random.Range(0, 2), Random.Range(0, 2));
+                coinObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
+                coinObject.GetComponent<DemonCoin>().SetUpCoin(demonCoins[i]);
+                coinObject.SetActive(true);
+           // }
             
         }
     }
@@ -47,7 +51,9 @@ public class CoinSpawner : MonoBehaviour
                 continue;
             for (int x = 0; x < temp[i]; x++)
             {
-                DemonCoin coin = GameObject.Instantiate(regularCoin, location_.position, location_.rotation).GetComponent<DemonCoin>();
+                DemonCoin coin = regularCoinPool.GetPooledGameObject().GetComponent<DemonCoin>();
+                coin.transform.position = location_.position;
+                coin.transform.rotation = location_.rotation;
                 coin.transform.position += new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2));
                 coin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
                 coin.SetUpCoin(regularCoins[i]);

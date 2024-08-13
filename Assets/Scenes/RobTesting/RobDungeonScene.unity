@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44672304, g: 0.49658138, b: 0.5749065, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12645,6 +12644,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 489688586}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &496261833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 496261834}
+  - component: {fileID: 496261835}
+  m_Layer: 0
+  m_Name: DemonCoinPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &496261834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496261833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1916948854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &496261835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496261833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 6540898062573925195, guid: 914825dc32557c94185e432dd1708f78, type: 3}
+  PoolSize: 60
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
 --- !u!1 &507975533
 GameObject:
   m_ObjectHideFlags: 0
@@ -14818,9 +14866,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -125}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &609650958
@@ -14941,6 +14989,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7507570425594163204, guid: 3efe7db7b1744b24aabab2eaf707edfc, type: 3}
   m_PrefabInstance: {fileID: 2110713364}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &630935276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630935277}
+  - component: {fileID: 630935278}
+  m_Layer: 0
+  m_Name: LootWorldObjectsPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &630935277
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630935276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1916948854}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &630935278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630935276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  PoolSize: 50
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
 --- !u!1 &650242789
 GameObject:
   m_ObjectHideFlags: 0
@@ -16214,6 +16311,7 @@ MonoBehaviour:
   - DemonCoin
   pullSpeed: 5
   dampModifier: 0.2
+  objectsToPull: []
 --- !u!1 &827942205
 GameObject:
   m_ObjectHideFlags: 0
@@ -22089,9 +22187,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -325}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &969456503
@@ -24162,9 +24260,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1430944842
@@ -25573,9 +25671,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488556671
@@ -25648,9 +25746,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -275}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501677301
@@ -27071,16 +27169,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLootItems: []
   pooler: {fileID: 1617043374}
+  worldObjectPool: {fileID: 630935278}
   scrollRect: {fileID: 537434691}
   maxUIBackgrounds: 2
   lootCollectionUIObject: {fileID: 537434689}
   maxTimeCollectionUIWillBeOut: 6
   currentTimeCollectionUIWillBeOut: 0
-  cashPickUpFeedBacks:
-  - {fileID: 528617032}
-  - {fileID: 1449426056}
-  currentCash: 0
-  currentCashText: {fileID: 1449426053}
+  demonCashPickUpFeedBacks: []
+  demonCurrentCash: 0
+  demonCurrentCashText: {fileID: 0}
+  regularCashPickUpFeedBacks: []
+  regularCurrentCash: 0
+  regularCurrentCashText: {fileID: 0}
+  resourcePickUpFeedBacks: []
+  currentResource: 0
+  currentResourceText: {fileID: 0}
+  AquiredLootItems: []
 --- !u!4 &1916948854
 Transform:
   m_ObjectHideFlags: 0
@@ -27093,7 +27197,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 496261834}
+  - {fileID: 630935277}
   m_Father: {fileID: 1932757578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1916948855
@@ -27108,8 +27214,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19acb81add73d642a10c67d68d14ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  demonCoin: {fileID: 6540898062573925195, guid: 914825dc32557c94185e432dd1708f78, type: 3}
-  coins: 01000000050000000a0000003200000064000000c8000000f4010000e8030000
+  demonCoinPool: {fileID: 496261835}
+  regularCoinPool: {fileID: 0}
+  demonCoins: 01000000050000000a0000003200000064000000c8000000f4010000e8030000
+  regularCoins: 01000000050000000a0000003200000064000000c8000000f4010000e8030000
 --- !u!1 &1923691007
 GameObject:
   m_ObjectHideFlags: 0
@@ -27206,9 +27314,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933010221
@@ -27623,9 +27731,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -375}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2016324104
@@ -28597,9 +28705,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!199 &1276827746227130848

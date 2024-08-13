@@ -25,6 +25,7 @@ public class LootManager : MonoBehaviour
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
     public MMMiniObjectPooler pooler;
+    [SerializeField] MMMiniObjectPooler worldObjectPool;
     public ScrollRect scrollRect;
     public int maxUIBackgrounds;
     int currentUIBackground;
@@ -134,6 +135,10 @@ public class LootManager : MonoBehaviour
         lootCollectionUIObject.transform.DOLocalMoveX(1303.8f, 1);
         
       
+    }
+    public GameObject GetWorldLootObject()
+    {
+        return worldObjectPool.GetPooledGameObject();
     }
 
 
