@@ -7,7 +7,6 @@ public class CombatPlayerMovement : MonoBehaviour
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
-    public float dampModifier;
     public float dashDistance;
     public float dashCoolDown;
     public float dashTime;
@@ -18,7 +17,6 @@ public class CombatPlayerMovement : MonoBehaviour
     Vector3 dashStartPos;
     Rigidbody rb;
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
-    private Vector3 velocity = Vector3.zero;
    [SerializeField] LayerMask wallMask;
     GameObject lockOnTarget;
     [SerializeField] GameObject dashEffect;
@@ -73,7 +71,9 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
-                transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.fixedDeltaTime * moveSpeedModifier, ref velocity, dampModifier);
+            {
+              transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+            }
             else
                 timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
             if (moveInput != Vector3.zero)
@@ -84,8 +84,8 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if (dashTime > 0)
             {
-                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.fixedDeltaTime * dashDistance);
-                transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
+                transform.position = PreventGoingThroughWalls(temp);
                 dashTime -= Time.deltaTime;
                 if(CheckForWallHit())
                 {

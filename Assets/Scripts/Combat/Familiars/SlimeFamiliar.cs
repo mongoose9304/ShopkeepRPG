@@ -180,20 +180,22 @@ public class SlimeFamiliar : CombatFamiliar
     {
        
         AttackCooldowncurrent -= Time.deltaTime;
+        specialAttackCooldowncurrent -= Time.deltaTime;
         ultimateAttackCooldowncurrent -= Time.deltaTime;
         if (!target)
             return;
-        if (AttackCooldowncurrent <= 0)
-        {
-
-            AttackCooldowncurrent = AttackCooldownMax;
-            Attack();
-        }
-        else if (specialAttackCooldowncurrent <= 0)
+        
+        if (specialAttackCooldowncurrent <= 0)
         {
 
             specialAttackCooldowncurrent = specialAttackCooldownMax;
             SpecialAttack();
+        }
+        else if (AttackCooldowncurrent <= 0)
+        {
+
+            AttackCooldowncurrent = AttackCooldownMax;
+            Attack();
         }
     }
 }

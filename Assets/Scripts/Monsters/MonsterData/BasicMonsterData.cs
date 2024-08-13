@@ -25,14 +25,24 @@ public class BasicMonsterData : ScriptableObject
     public float baseDamage;
     public float healthPerLevel;
     public float damagePerLevel;
+    public float familiarHealthMultiplier;
+    public float familiarDamageMultiplier;
 
-    public float CalculateHealth()
+    public float CalculateHealth(bool isFamiliar = false)
     {
+        if(!isFamiliar)
         return baseHealth + (level - 1) * healthPerLevel;
+        else
+        {
+        return (baseHealth + (level - 1) * healthPerLevel)*familiarHealthMultiplier;
+        }
     }
-    public float CalculateDamage()
+    public float CalculateDamage(bool isFamiliar=false)
     {
-        return baseDamage + (level - 1) * damagePerLevel;
+        if(!isFamiliar)
+        return (baseDamage + (level - 1) * damagePerLevel);
+        else
+        return (baseDamage + (level - 1) * damagePerLevel)*familiarDamageMultiplier;
     }
 
 

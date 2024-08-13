@@ -212,4 +212,8 @@ public class CombatPlayerActions : MonoBehaviour
         myFamiliar.gameObject.SetActive(true);
         myFamiliar.Respawn();
     }
+    public void ReturnFamiliar()
+    {
+        myFamiliar.transform.position = this.transform.position + new Vector3(2, 0, 0);
+    }
 }

@@ -17,6 +17,7 @@ public class CombatRoom : BasicRoom
 
     public override void StartRoomActivity()
     {
+        CombatPlayerManager.instance.ReturnFamiliars();
         LockRoom(true);
         myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
