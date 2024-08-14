@@ -5,12 +5,15 @@ using UnityEngine;
 public class TreasureChest : MonoBehaviour
 {
     public int value;
+    public int curseSeverity;
+    public bool isCursed;
     bool playerInRange;
     bool isOpening;
     [SerializeField]
     Transform spawnLocation;
     [SerializeField] GameObject myText;
     [SerializeField] ParticleSystem OpenEffect;
+    [SerializeField] ParticleSystem OpenCursedEffect;
 
     virtual protected void Update()
     {
@@ -34,6 +37,11 @@ public class TreasureChest : MonoBehaviour
         myText.SetActive(false);
         playerInRange = false;
         isOpening = true;
+        if(isCursed)
+        {
+            DungeonManager.instance.AddRandomCurse(curseSeverity);
+            OpenCursedEffect.Play();
+        }
     }
 
     virtual public void InteractWithChest()

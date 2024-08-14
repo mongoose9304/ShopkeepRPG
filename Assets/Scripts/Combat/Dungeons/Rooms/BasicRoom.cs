@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public enum RoomType
 {
-    Combat, Gambling,Shop,EliteCombat,Navigation,Loot
+    Combat, Gambling,Shop,EliteCombat,Navigation,Loot,CursedLoot
 };
 public class BasicRoom : MonoBehaviour
 {
