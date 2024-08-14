@@ -67,6 +67,7 @@ public class DungeonManager : MonoBehaviour
         curseImages[currentCurses.Count - 1].sprite = currentCurses[currentCurses.Count - 1].icon;
         curseImages[currentCurses.Count - 1].gameObject.SetActive(true);
         CurseEffect(curse_.name);
+        TextPopUpManager.instance.AddText(curse_.description, curse_.name);
     }
 
 
