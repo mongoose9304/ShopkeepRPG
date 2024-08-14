@@ -10,15 +10,16 @@ using MoreMountains.Feedbacks;
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
+    public int Level;
     public BasicMonsterData myBaseData;
-    public float maxHealth;
-    public float maxHitstun;
-    public float maxAttackCooldown;
-    public Element myElement;
-    public float moveSpeed;
-    public float attackDistance;
-    public float knockBackMax;
-    public float damage;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float maxHitstun;
+    [SerializeField] protected float maxAttackCooldown;
+    [SerializeField] protected Element myElement;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float attackDistance;
+    [SerializeField] protected float knockBackMax;
+    [SerializeField] protected float damage;
     LootDropper lootDropper;
 
     [Header("CurrentValues")]
@@ -57,6 +58,7 @@ public class BasicEnemy : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        LoadMonsterData();
         lootDropper = GetComponent<LootDropper>();
         currentHealth = maxHealth;
         //determine my weakness
@@ -96,6 +98,7 @@ public class BasicEnemy : MonoBehaviour
     }
     private void OnEnable()
     {
+        LoadMonsterData();
         currentHealth = maxHealth;
     }
 
@@ -233,6 +236,11 @@ public class BasicEnemy : MonoBehaviour
         knockBackDirection = (transform.position - knockBackObject.transform.position).normalized;
         knockBackDirection.y = 0;
 
+    }
+    private void LoadMonsterData()
+    {
+        maxHealth = myBaseData.CalculateHealth(false,Level);
+        damage = myBaseData.CalculateDamage(false, Level);
     }
 
 }

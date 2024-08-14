@@ -9,6 +9,7 @@ public class CombatRoom : BasicRoom
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
     [SerializeField] private int maxEnemies;
     [SerializeField] private int instantEnemies;
+    [SerializeField] private bool useEliteEnemies;
     [SerializeField] EnemyCounter myCounter;
     [SerializeField] private float spawnDelayMin;
     [SerializeField] private float spawnDelayMax;
@@ -28,9 +29,12 @@ public class CombatRoom : BasicRoom
     }
     private void LockRoom(bool lock_)
     {
-        foreach (GameObject obj in lockObjects)
+        if (willLockOnEnter)
         {
-            obj.SetActive(lock_);
+            foreach (GameObject obj in lockObjects)
+            {
+                obj.SetActive(lock_);
+            }
         }
         isLocked = lock_;
     }
@@ -47,7 +51,10 @@ public class CombatRoom : BasicRoom
             currentSpawnDelay -= Time.deltaTime;
             if (currentSpawnDelay <= 0)
             {
-                SpawnBasicEnemy();
+                if (!useEliteEnemies)
+                    SpawnBasicEnemy();
+                else
+                    SpawnEliteEnemy();
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
             }
 
@@ -59,8 +66,15 @@ public class CombatRoom : BasicRoom
     {
         if (spawnedEnemies >= maxEnemies)
             return;
-
-        EnemyManager.instance.SpawnEnemy(myDungeon.regularEnemies[Random.Range(0, myDungeon.regularEnemies.Count)].myBaseData.originalName, spawnPoints[Random.Range(0, spawnPoints.Count)],myCounter);
+        Debug.Log("Spawn");
+        EnemyManager.instance.SpawnRandomEnemy(false, spawnPoints[Random.Range(0, spawnPoints.Count)], myCounter, DungeonManager.instance.GetEnemyLevel());
         spawnedEnemies += 1;
+    }
+    private void SpawnEliteEnemy()
+    {
+        if (spawnedEnemies >= maxEnemies)
+            return;
+
+        EnemyManager.instance.SpawnRandomEnemy(true, spawnPoints[Random.Range(0, spawnPoints.Count)], myCounter, DungeonManager.instance.GetEnemyLevel()); spawnedEnemies += 1;
     }
 }

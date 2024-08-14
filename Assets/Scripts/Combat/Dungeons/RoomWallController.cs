@@ -57,7 +57,7 @@ public class RoomWallController : MonoBehaviour
            
            
         }
-        Debug.Log(x.Count);
+        
             ToggleWallsWithDoors(x);
        for(int i=0;i<x.Count; i++)
         {

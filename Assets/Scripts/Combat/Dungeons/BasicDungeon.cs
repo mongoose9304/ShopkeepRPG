@@ -24,46 +24,20 @@ public class BasicDungeon : MonoBehaviour
     public List<BasicRoom> smallRooms = new List<BasicRoom>();
     public List<BasicRoom> bigRooms = new List<BasicRoom>();
     public SinType mySin;
+    public int enemyLevel;
+    public int eliteEnemyLevel;
     public List<Transform> regularRoomSpots = new List<Transform>();
-    public void Start()
+    
+
+   public void SetUpEnemies()
     {
         foreach (BasicEnemy enemy in regularEnemies)
         {
             EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject);
         }
-        /* foreach(Transform transform in regularRoomSpots)
-         {
-           GameObject obj=  Instantiate(regularRooms[Random.Range(0,regularRooms.Count)].gameObject,transform.position,transform.rotation);
-             obj.GetComponent<BasicRoom>().myDungeon = this;
-            // transform.gameObject.SetActive(false);
-            foreach(BasicEnemy enemy in regularEnemies)
-             {
-                 EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject);
-             }
-
-         }
-        */
-    }
-
-    public void CreateSpecificRoom(int roomSize,Transform roomLocation,RoomType desiredType)
-    {
-     /*   List<BasicRoom> tempRooms = new List<BasicRoom>();
-        foreach(BasicRoom room_ in smallRooms)
+        foreach (BasicEnemy enemy in eliteEnemies)
         {
-            if (room_.myType == desiredType)
-                tempRooms.Add(room_);
+            EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject,true);
         }
-        foreach (BasicRoom room_ in regularRooms)
-        {
-            if (room_.myType == desiredType)
-                tempRooms.Add(room_);
-
-        }
-        foreach (BasicRoom room_ in bigRooms)
-        {
-            if (room_.myType == desiredType)
-                tempRooms.Add(room_);
-        }
-     */
     }
 }
