@@ -8,7 +8,7 @@ public class ConstantBob : MonoBehaviour
     public Vector3 down;
     public float speed;
     bool movingUp;
-
+    public bool changeSpeedBasedOnDistance;
     private void Start()
     {
         up += transform.position;
@@ -19,7 +19,10 @@ public class ConstantBob : MonoBehaviour
     {
         if(movingUp)
         {
-            transform.position = Vector3.MoveTowards(transform.position, up, speed*Time.deltaTime* Vector3.Distance(transform.position, up));
+            float x = speed * Time.deltaTime;
+            if (changeSpeedBasedOnDistance)
+                x *= Vector3.Distance(transform.position, up);
+            transform.position = Vector3.MoveTowards(transform.position, up,x);
             if(Vector3.Distance(transform.position,up)<.1f)
             {
                 movingUp = false;
@@ -27,7 +30,10 @@ public class ConstantBob : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, down, speed*Time.deltaTime* Vector3.Distance(transform.position, down));
+            float x = speed * Time.deltaTime;
+            if (changeSpeedBasedOnDistance)
+                x *= Vector3.Distance(transform.position, down);
+            transform.position = Vector3.MoveTowards(transform.position, down,x);
             if (Vector3.Distance(transform.position, down) < .1f)
             {
                 movingUp = true;

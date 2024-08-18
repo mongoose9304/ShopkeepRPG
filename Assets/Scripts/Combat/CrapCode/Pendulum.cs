@@ -28,7 +28,7 @@ public class Pendulum : MonoBehaviour
         }
         else
         {
-            rotateSpeedModifier -= Time.deltaTime * rotateSpeedModifierIncrease*2.0f;
+            rotateSpeedModifier -= Time.deltaTime * rotateSpeedModifierIncrease*2.5f;
         }
         Debug.Log("Rx:" + transform.rotation.z);
         if (goingRight)
