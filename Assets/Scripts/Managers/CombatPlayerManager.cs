@@ -18,4 +18,18 @@ public class CombatPlayerManager : MonoBehaviour
             player_.ReturnFamiliar();
         }
     }
+    public void EnableFamiliars(bool enable_)
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            player_.DisableFamiliar(enable_);
+        }
+    }
+    public CombatPlayerActions GetPlayer(int slot_)
+    {
+        if (slot_ > players.Length)
+            slot_ = 0;
+
+        return players[slot_];
+    }
 }

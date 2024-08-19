@@ -216,4 +216,8 @@ public class CombatPlayerActions : MonoBehaviour
     {
         myFamiliar.transform.position = this.transform.position + new Vector3(0.5F, 0, 0);
     }
+    public void DisableFamiliar(bool enable_)
+    {
+        myFamiliar.gameObject.SetActive(enable_);
+    }
 }

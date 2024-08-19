@@ -18,7 +18,7 @@ public class MiningManager : MonoBehaviour
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
-    [Tooltip("Transforms we can spawn levels at")]
+    [Tooltip("Sprites for the resources we collect")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
     [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;

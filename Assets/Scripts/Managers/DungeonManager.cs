@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class DungeonManager : MonoBehaviour
 {
     public BasicDungeon currentDungeon;
-
+    public GameObject victoryLevel;
+    public GameObject victoryPlayerPos;
+    [Tooltip("Sprites for collected resources ")]
+    public List<Sprite> resourceSprites = new List<Sprite>();
     public static DungeonManager instance;
     public Image[] curseImages;
     public List<BasicCurse> currentCurses;
@@ -99,5 +102,24 @@ public class DungeonManager : MonoBehaviour
 
             }
         }
+    }
+    public void WinLevel(bool hasLost_=false)
+    {
+        CombatPlayerManager.instance.GetPlayer(0).gameObject.GetComponent<CombatPlayerMovement>().enabled = false;
+        CombatPlayerManager.instance.GetPlayer(0).enabled = false;
+        victoryLevel.SetActive(true);
+        CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.position = victoryPlayerPos.transform.position;
+        CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+        if(LootManager.instance.AquiredLootItems.Count>=1)
+        LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
+        List<int> x = new List<int>();
+        //here is where you would load the inventorys count of how many resources *demon cash* you have.
+        List<int> y = new List<int>();
+        y.Add(1000);
+        x.Add(LootManager.instance.demonCurrentCash);
+        LootDisplayManager.instance.AddResources(x, y, resourceSprites);
+        LootDisplayManager.instance.StartVictoryScreen(hasLost_);
+        CombatPlayerManager.instance.EnableFamiliars(false);
+
     }
 }

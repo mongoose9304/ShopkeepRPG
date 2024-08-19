@@ -19,15 +19,18 @@ public class AcquiredLootDisplay : MonoBehaviour
         
     }
 
-    public void StartCountEffect(int inventoryStart,int acquiredStart,Sprite resourceSprite)
+    public void StartCountEffect(int inventoryStart,int acquiredStart,Sprite resourceSprite,float duration_,bool lost_=false)
     {
         resourceImage.sprite = resourceSprite;
+        inventoryCounter.Duration = duration_;
         inventoryCounter.CountFrom = inventoryStart;
         inventoryCounter.CountTo = inventoryStart+ acquiredStart;
         inventoryFeedback.GetComponent<TextMeshProUGUI>().text = inventoryCounter.CountFrom.ToString();
         acquiredCounter.CountFrom = acquiredStart;
         acquiredCounter.CountTo = 0;
-        inventoryFeedback.GetComponent<TextMeshProUGUI>().text = inventoryCounter.CountTo.ToString();
+        acquiredFeedback.GetComponent<TextMeshProUGUI>().text = inventoryCounter.CountFrom.ToString();
+        acquiredCounter.Duration = duration_;
+        if (!lost_)
         inventoryFeedback.PlayFeedbacks();
         acquiredFeedback.PlayFeedbacks();
     }
