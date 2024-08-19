@@ -30,7 +30,7 @@ public class Pendulum : MonoBehaviour
         {
             rotateSpeedModifier -= Time.deltaTime * rotateSpeedModifierIncrease*2.5f;
         }
-        Debug.Log("Rx:" + transform.rotation.z);
+        
         if (goingRight)
         {
             transform.Rotate(rotateDirection * rotateSpeed*Time.deltaTime* rotateSpeedModifier, Space.Self);

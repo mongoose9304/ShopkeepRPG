@@ -26,6 +26,7 @@ public class BasicDungeon : MonoBehaviour
     public SinType mySin;
     public int enemyLevel;
     public int eliteEnemyLevel;
+    [SerializeField] int trapLevel;
     public List<Transform> regularRoomSpots = new List<Transform>();
     
 
@@ -39,5 +40,10 @@ public class BasicDungeon : MonoBehaviour
         {
             EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject,true);
         }
+    }
+
+    public int GetTrapLevel()
+    {
+        return trapLevel;
     }
 }

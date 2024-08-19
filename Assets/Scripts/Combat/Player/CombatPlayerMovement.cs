@@ -28,7 +28,6 @@ public class CombatPlayerMovement : MonoBehaviour
     Rigidbody rb;
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
    [SerializeField] LayerMask wallMask;
-    GameObject lockOnTarget;
     [SerializeField] GameObject dashEffect;
     [SerializeField] CombatPlayerActions combatActions;
     //targeting and lock on
@@ -66,6 +65,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (isDying)
+            return;
         if(isInSaveYourSoulMode)
         {
             SaveYourSoulUpdate();
@@ -310,7 +311,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         isDying = true;
         saveYourSoulUI.SetActive(false);
-        //gameover
+        DungeonManager.instance.WinLevel(true);
     }
     private void ExitSaveYourSoul()
     {
