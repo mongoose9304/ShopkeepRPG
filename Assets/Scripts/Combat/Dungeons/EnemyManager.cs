@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
 {
 
     public GameObject EnemyItemPrefab;
+    public CombatPlayerMovement playerMovement;
     public List<EnemyItem> enemies = new List<EnemyItem>();
     public List<EnemyItem> eliteEnemies = new List<EnemyItem>();
     public static EnemyManager instance;
@@ -110,6 +111,10 @@ public class EnemyManager : MonoBehaviour
        // if(currentEnemiesList.Count>0)
        // currentEnemiesList.RemoveAll(null);
 
+    }
+    public void EnemyDeath()
+    {
+        playerMovement.GetAKill();
     }
 
 }

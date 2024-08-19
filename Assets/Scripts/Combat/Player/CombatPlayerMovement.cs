@@ -2,8 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
+using MoreMountains.Feedbacks;
 public class CombatPlayerMovement : MonoBehaviour
 {
+    //FFYL stats
+    [SerializeField] bool isInSaveYourSoulMode;
+    [SerializeField] bool isDying;
+    [SerializeField]float maxSaveYourSoulTime;
+    [SerializeField]float currentSaveYourSoulTime;
+    [SerializeField] GameObject saveYourSoulUI;
+
+
+
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
@@ -56,6 +66,10 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(isInSaveYourSoulMode)
+        {
+            SaveYourSoulUpdate();
+        }
         ChargeMana();
         if (combatActions.isBusy)
             return;
@@ -268,7 +282,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
     {
-        
+        if(isInSaveYourSoulMode){ return; }
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
             damage_ *= 1.5f;
@@ -284,7 +298,50 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void Death()
     {
+        if(!isInSaveYourSoulMode)
+        {
+            isInSaveYourSoulMode = true;
+            currentSaveYourSoulTime = maxSaveYourSoulTime;
+            currentMana = maxMana;
+            saveYourSoulUI.SetActive(true);
+        }
+    }
+    public void TrueDeath()
+    {
+        isDying = true;
+        saveYourSoulUI.SetActive(false);
+        //gameover
+    }
+    private void ExitSaveYourSoul()
+    {
+        if (isDying)
+            return;
+        isInSaveYourSoulMode = false;
+        float x = currentSaveYourSoulTime / maxSaveYourSoulTime;
+        if (x <= .5)
+            x = .5f;
 
+        currentHealth = maxHealth * x;
+        currentMana = maxMana * x;
+        healthBar.SetBar01(currentHealth / maxHealth);
+        manaBar.SetBar01(currentMana / maxMana);
+        saveYourSoulUI.SetActive(false);
+    }
+    private void SaveYourSoulUpdate()
+    {
+        currentSaveYourSoulTime -= Time.deltaTime;
+        healthBar.SetBar01(currentSaveYourSoulTime / maxSaveYourSoulTime);
+        if(currentSaveYourSoulTime<=0)
+        {
+            TrueDeath();
+        }
+    }
+    public void GetAKill()
+    {
+        if(isInSaveYourSoulMode)
+        {
+            ExitSaveYourSoul();
+        }
     }
     public float GetCurrentMana()
     {
