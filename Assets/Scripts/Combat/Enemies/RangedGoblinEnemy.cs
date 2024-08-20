@@ -15,13 +15,21 @@ public class RangedGoblinEnemy : BasicEnemy
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance||isPreparingShot)
             return;
+        
         isPreparingShot = true;
         canMove = false;
-        GameObject obj = attackIconPooler.GetPooledGameObject();
-        obj.transform.position = transform.position;
-        obj.SetActive(true);
+        //GameObject obj = attackIconPooler.GetPooledGameObject();
+       // obj.transform.position = transform.position;
+       // obj.SetActive(true);
         shotPrepTimecurrent = shotPrepTimeMax;
+        //transform.rotation = new Quaternion(0, transform.rotation.y, 0, 0);
         
+    }
+    protected override void OnEnable()
+    {
+        LoadMonsterData();
+        currentHealth = maxHealth;
+        shotPrepTimecurrent = shotPrepTimeMax;
     }
     protected override void Update()
     {
@@ -30,22 +38,35 @@ public class RangedGoblinEnemy : BasicEnemy
             CheckStun();
             return;
         }
-        Move();
-        WaitingToAttack();
-        PrepShot();
+        transform.LookAt(player.transform, Vector3.up);
+        if (isPreparingShot)
+        {
+            PrepShot();
+        }
+        else
+        {
+            Move();
+            WaitingToAttack();
+        }
 
     }
     private void PrepShot()
     {
-        if (!isPreparingShot) return;
+       
         shotPrepTimecurrent -= Time.deltaTime;
-
-        if(shotPrepTimecurrent<=0)
+       
+        if (shotPrepTimecurrent<=0)
         {
             GameObject obj = attackProjectilesPool.GetPooledGameObject();
             obj.transform.position = attackSpawn.position;
             obj.transform.rotation = attackSpawn.rotation;
+            obj.GetComponent<EnemyProjectile>().myElement = myElement;
+            obj.GetComponent<EnemyProjectile>().damage = damage;
+            obj.SetActive(true);
             Debug.Log("Shoot");
+            isPreparingShot = false;
+            currentAttackCooldown = maxAttackCooldown;
+            EndAttack();
         }
       
     }
@@ -56,12 +77,9 @@ public class RangedGoblinEnemy : BasicEnemy
     {
         if (canMove)
         {
-            if(Vector3.Distance(transform.position,player.transform.position)>=optimalDistanceToPlayer)
+            
             agent.SetDestination(player.transform.position);
-            else
-            {
-                agent.ResetPath();
-            }
+         
         }
         else
             agent.ResetPath();

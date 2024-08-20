@@ -27,8 +27,8 @@ public class BasicEnemy : MonoBehaviour
     float currentTimeStunned;
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     protected float currentHitstun;
-    float currentAttackCooldown=0.2f;
-    float currentHealth;
+    protected float currentAttackCooldown=0.2f;
+    protected float currentHealth;
     float currentKnockbackPower;
     float currentKnockbackTime;
     private Vector3 knockbackRefVector;
@@ -53,6 +53,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
     [SerializeField] protected MMMiniObjectPooler attackIconPooler;
+    public bool useFlicker;
 
 
     private void Start()
@@ -96,10 +97,11 @@ public class BasicEnemy : MonoBehaviour
         WaitingToAttack();
         
     }
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         LoadMonsterData();
         currentHealth = maxHealth;
+        if(useFlicker)
         hitEffects.GetFeedbackOfType<MMF_Flicker>().ForceInitialValue(hitEffects.transform.position);
     }
 
@@ -239,7 +241,7 @@ public class BasicEnemy : MonoBehaviour
         knockBackDirection.y = 0;
 
     }
-    private void LoadMonsterData()
+    protected void LoadMonsterData()
     {
         maxHealth = myBaseData.CalculateHealth(false,Level);
         damage = myBaseData.CalculateDamage(false, Level);

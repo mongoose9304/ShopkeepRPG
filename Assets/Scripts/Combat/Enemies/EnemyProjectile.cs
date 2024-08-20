@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float damage;
+    public Element myElement;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(other.tag=="Wall")
+        {
+            gameObject.SetActive(false);
+        }
+        else if (other.tag == "Player")
+        {
+            other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            gameObject.SetActive(false);
+        }
+        else if (other.tag == "Familiar")
+        {
+            other.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            gameObject.SetActive(false);
+        }
     }
 }
