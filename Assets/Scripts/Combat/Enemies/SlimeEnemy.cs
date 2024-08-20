@@ -99,6 +99,8 @@ public class SlimeEnemy : BasicEnemy
     }
     public override void Move()
     {
+        if (!agent.isActiveAndEnabled)
+            return;
         if (canMove)
         {
             agent.SetDestination(player.transform.position);

@@ -130,6 +130,17 @@ public class BasicEnemy : MonoBehaviour
 
 
     }
+    public void AffectMovement(Vector3 newPos)
+    {
+        agent.enabled = false;
+        newPos.y = transform.position.y;
+        transform.position = newPos;
+        
+        if (currentTimeStunned >= maxHitstun || currentHitstun <= 0)
+        {
+            agent.enabled = false;
+        }
+    }
 
     /// <summary>
     /// Application of damage. (Includes stuns, element weaknesses, knockback and the direction of said knockback)
@@ -210,6 +221,8 @@ public class BasicEnemy : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
+        if (!agent.isActiveAndEnabled)
+            return;
         if (canMove)
             agent.SetDestination(player.transform.position);
         else

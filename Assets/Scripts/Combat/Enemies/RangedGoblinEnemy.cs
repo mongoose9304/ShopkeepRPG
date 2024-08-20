@@ -72,18 +72,5 @@ public class RangedGoblinEnemy : BasicEnemy
         }
       
     }
-    /// <summary>
-    /// Move towards the player when allowed to
-    /// </summary>
-    public override void Move()
-    {
-        if (canMove)
-        {
-            
-            agent.SetDestination(player.transform.position);
-         
-        }
-        else
-            agent.ResetPath();
-    }
+  
 }
