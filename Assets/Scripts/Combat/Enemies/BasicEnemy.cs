@@ -100,6 +100,7 @@ public class BasicEnemy : MonoBehaviour
     {
         LoadMonsterData();
         currentHealth = maxHealth;
+        hitEffects.GetFeedbackOfType<MMF_Flicker>().ForceInitialValue(hitEffects.transform.position);
     }
 
     /// <summary>

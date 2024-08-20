@@ -1000,6 +1000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121e3756a1b870b458cbb5cdeb5e1ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Level: 0
   myBaseData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
   maxHealth: 50
   maxHitstun: 5
@@ -1012,6 +1013,7 @@ MonoBehaviour:
   canMove: 1
   stunIcon: {fileID: 6611630499809330876}
   player: {fileID: 0}
+  myEnemyCounter: {fileID: 0}
   agent: {fileID: 8608462071610935158}
   damageText: {fileID: 0}
   maxTimeBeforeDamageTextFades: 2
@@ -1073,7 +1075,9 @@ MonoBehaviour:
     maxAmount: 10
     chancesToSpawn: 30
   itemsToDrop: []
+  DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,7 +1303,7 @@ MonoBehaviour:
   - rid: 6620153202209980416
   KeepPlayModeChanges: 0
   PerformanceMode: 0
-  StopFeedbacksOnDisable: 0
+  StopFeedbacksOnDisable: 1
   PlayCount: 0
   references:
     version: 2
@@ -1321,7 +1325,7 @@ MonoBehaviour:
           ContributeToTotalDuration: 1
           InitialDelay: 0
           CooldownDuration: 0
-          InterruptsOnStop: 1
+          InterruptsOnStop: 0
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
