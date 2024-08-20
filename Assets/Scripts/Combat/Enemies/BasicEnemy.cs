@@ -10,6 +10,7 @@ using MoreMountains.Feedbacks;
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
+    public bool isElite;
     public int Level;
     public BasicMonsterData myBaseData;
     [SerializeField] protected float maxHealth;
@@ -143,8 +144,11 @@ public class BasicEnemy : MonoBehaviour
        
         if (!superArmor)
         {
-            currentHitstun += hitstun_;
-            KnockBack(knockBack_,knockBackObject);
+            if (!isElite)
+            {
+                currentHitstun += hitstun_;
+                KnockBack(knockBack_, knockBackObject);
+            }
         }
         if(element_==myWeakness&&element_!=Element.Neutral)
         {

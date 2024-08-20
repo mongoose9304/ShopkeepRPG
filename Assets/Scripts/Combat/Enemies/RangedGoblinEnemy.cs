@@ -11,6 +11,7 @@ public class RangedGoblinEnemy : BasicEnemy
     [SerializeField] float optimalDistanceToPlayer;
     [SerializeField] protected MMMiniObjectPooler attackProjectilesPool;
     [SerializeField] Transform attackSpawn;
+    Vector3 lookAt;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, player.transform.position) > attackDistance||isPreparingShot)
@@ -38,7 +39,8 @@ public class RangedGoblinEnemy : BasicEnemy
             CheckStun();
             return;
         }
-        transform.LookAt(player.transform, Vector3.up);
+        transform.LookAt(lookAt, Vector3.up);
+        lookAt = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
         if (isPreparingShot)
         {
             PrepShot();

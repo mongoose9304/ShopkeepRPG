@@ -808,7 +808,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -880,14 +880,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121e3756a1b870b458cbb5cdeb5e1ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isElite: 1
   Level: 0
   myBaseData: {fileID: 11400000, guid: b4780f6ce13dd6644a9064026a0de165, type: 2}
   maxHealth: 50
   maxHitstun: 5
-  maxAttackCooldown: 3
+  maxAttackCooldown: 2
   myElement: 0
-  moveSpeed: 10
-  attackDistance: 5
+  moveSpeed: 12
+  attackDistance: 6
   knockBackMax: 0.2
   damage: 5
   canMove: 1
@@ -904,10 +905,10 @@ MonoBehaviour:
   hitEffects: {fileID: 6645059372470791588}
   attackIconPooler: {fileID: 0}
   useFlicker: 1
-  jumpSpeed: {x: 0, y: 6, z: 0}
-  jumpHeight: 4
+  jumpSpeed: {x: 0, y: 12, z: 0}
+  jumpHeight: 6
   lowestJumpPercentage: 0.25
-  slamRange: 2.5
+  slamRange: 8
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   JumpEffect: {fileID: 5320956429681983243}
 --- !u!114 &3167825987927063511
