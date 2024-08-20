@@ -173,7 +173,7 @@ public class BasicEnemy : MonoBehaviour
         gameObject.SetActive(false);
         attackIconPooler.ResetAllObjects();
         lootDropper.DropItems();
-        CoinSpawner.instance_.CreateDemonCoins(Random.Range(0,1000),this.transform);
+        CoinSpawner.instance_.CreateDemonCoins(DungeonManager.instance.currentDungeon.GetBasicEnemyValue(),this.transform);
         if (myEnemyCounter)
             myEnemyCounter.currentEnemies -= 1;
         EnemyManager.instance.EnemyDeath();

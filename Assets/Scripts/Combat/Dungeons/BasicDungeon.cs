@@ -27,6 +27,9 @@ public class BasicDungeon : MonoBehaviour
     public int enemyLevel;
     public int eliteEnemyLevel;
     [SerializeField] int trapLevel;
+    [SerializeField] int treasureChestAmount;
+    [SerializeField] int basicEnemyValueMin;
+    [SerializeField] int basicEnemyValueMax;
     public List<Transform> regularRoomSpots = new List<Transform>();
     
 
@@ -45,5 +48,13 @@ public class BasicDungeon : MonoBehaviour
     public int GetTrapLevel()
     {
         return trapLevel;
+    }
+    public int GetTreasureChestAmount()
+    {
+        return trapLevel;
+    }
+    public int GetBasicEnemyValue()
+    {
+        return Random.Range(basicEnemyValueMin, basicEnemyValueMax);
     }
 }

@@ -20,10 +20,6 @@ public class RandomWheel : MonoBehaviour
     
     public UnityEvent endSpinEvent;
 
-    private void Start()
-    {
-        StartSpin();
-    }
     private void Update()
     {
         if(isSpinning)
@@ -43,7 +39,7 @@ public class RandomWheel : MonoBehaviour
             }
         }
     }
-    void StartSpin()
+    public void StartSpin()
     {
         rotater.speedLossOverTime = 0;
         rotater.rotationSpeed = speed;
