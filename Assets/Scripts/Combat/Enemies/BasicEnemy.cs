@@ -104,6 +104,12 @@ public class BasicEnemy : MonoBehaviour
         currentHealth = maxHealth;
         if(useFlicker)
         hitEffects.GetFeedbackOfType<MMF_Flicker>().ForceInitialValue(hitEffects.transform.position);
+        agent.enabled = true;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+        }
     }
 
     /// <summary>
@@ -135,11 +141,7 @@ public class BasicEnemy : MonoBehaviour
         agent.enabled = false;
         newPos.y = transform.position.y;
         transform.position = newPos;
-        
-        if (currentTimeStunned >= maxHitstun || currentHitstun <= 0)
-        {
-            agent.enabled = false;
-        }
+
     }
 
     /// <summary>
@@ -195,6 +197,7 @@ public class BasicEnemy : MonoBehaviour
         if (myEnemyCounter)
             myEnemyCounter.currentEnemies -= 1;
         EnemyManager.instance.EnemyDeath();
+        agent.enabled = false;
         //death effects buggy RN, add later -Rob
       //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));
     }

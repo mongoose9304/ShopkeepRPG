@@ -28,6 +28,7 @@ public class RangedGoblinEnemy : BasicEnemy
     }
     protected override void OnEnable()
     {
+        agent.enabled = true;
         LoadMonsterData();
         currentHealth = maxHealth;
         shotPrepTimecurrent = shotPrepTimeMax;

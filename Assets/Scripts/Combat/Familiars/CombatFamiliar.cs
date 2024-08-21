@@ -75,11 +75,7 @@ public class CombatFamiliar : MonoBehaviour
         {
             agent.SetDestination(player.transform.position+new Vector3(0,0,2));
         }
-        if(Vector3.Distance(this.transform.position, player.transform.position) > maxDistanceToPlayer*3)
-        {
-            transform.position = player.transform.position + new Vector3(0, 0, 2);
-            
-        }
+       
     }
     /// <summary>
     /// Will cause the familiar to find the nearest enemy
