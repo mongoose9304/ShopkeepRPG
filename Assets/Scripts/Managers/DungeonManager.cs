@@ -17,6 +17,7 @@ public class DungeonManager : MonoBehaviour
     public List<Sprite> resourceSprites = new List<Sprite>();
     public static DungeonManager instance;
     public Image[] curseImages;
+    public Sprite[] SinSprites;
     public List<BasicCurse> currentCurses;
     [SerializeField] List<BasicCurse> availableCurses;
     private void Awake()
@@ -49,6 +50,7 @@ public class DungeonManager : MonoBehaviour
             return;
         }
         currentSin = sin_;
+        if(currentDungeon)
         Destroy(currentDungeon.gameObject);
       BasicDungeon d=  GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
         ChangeLevel(d);
