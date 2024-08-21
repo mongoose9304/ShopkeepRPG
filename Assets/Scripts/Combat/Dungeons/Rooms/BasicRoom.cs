@@ -24,5 +24,9 @@ public class BasicRoom : MonoBehaviour
     {
 
     }
+    public virtual void ChangeSinType(SinType sin_)
+    {
+
+    }
 
 }

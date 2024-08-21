@@ -32,4 +32,12 @@ public class CombatPlayerManager : MonoBehaviour
 
         return players[slot_];
     }
+    public void MovePlayers(Transform newLocation_)
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            player_.transform.position = newLocation_.position;
+            player_.transform.rotation = newLocation_.rotation;
+        }
+    }
 }

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.AI.Navigation;
 
 public class DungeonManager : MonoBehaviour
 {
+    public NavMeshSurface surface;
     public BasicDungeon currentDungeon;
+    [SerializeField] int dungeonsCleared;
+    public List<BasicDungeon> dungeonList = new List<BasicDungeon>();
+    public SinType currentSin;
     public GameObject victoryLevel;
     public GameObject victoryPlayerPos;
     [Tooltip("Sprites for collected resources ")]
@@ -21,7 +26,7 @@ public class DungeonManager : MonoBehaviour
     }
     private void Start()
     {
-        ChangeLevel(currentDungeon);
+        NextLevel(SinType.Greed);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -32,7 +37,24 @@ public class DungeonManager : MonoBehaviour
     {
         currentDungeon = dungeon_;
         currentDungeon.SetUpEnemies();
+        currentDungeon.ChangeSin(currentSin);
         ClearCurses();
+    }
+    public void NextLevel(SinType sin_)
+    {
+        dungeonsCleared += 1;
+        if(dungeonsCleared>dungeonList.Count)
+        {
+            WinLevel();
+            return;
+        }
+        currentSin = sin_;
+        Destroy(currentDungeon.gameObject);
+      BasicDungeon d=  GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
+        ChangeLevel(d);
+        CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
+        surface.BuildNavMesh();
+
     }
     public void ClearCurses()
     {

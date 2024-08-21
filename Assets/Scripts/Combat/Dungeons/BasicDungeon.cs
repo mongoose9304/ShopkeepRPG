@@ -21,9 +21,8 @@ public class BasicDungeon : MonoBehaviour
     public List<BasicEnemy> regularEnemies=new List<BasicEnemy>();
     public List<BasicEnemy> eliteEnemies = new List<BasicEnemy>();
     public List<BasicRoom> regularRooms = new List<BasicRoom>();
-    public List<BasicRoom> smallRooms = new List<BasicRoom>();
-    public List<BasicRoom> bigRooms = new List<BasicRoom>();
     public SinType mySin;
+    public Transform playerStart;
     public int enemyLevel;
     public int eliteEnemyLevel;
     [SerializeField] int trapLevel;
@@ -56,5 +55,12 @@ public class BasicDungeon : MonoBehaviour
     public int GetBasicEnemyValue()
     {
         return Random.Range(basicEnemyValueMin, basicEnemyValueMax);
+    }
+    public void ChangeSin(SinType sin_)
+    {
+        foreach(BasicRoom room in regularRooms)
+        {
+            room.ChangeSinType(sin_);
+        }
     }
 }
