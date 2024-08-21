@@ -50,7 +50,7 @@ public class BasicDungeon : MonoBehaviour
     }
     public int GetTreasureChestAmount()
     {
-        return trapLevel;
+        return treasureChestAmount;
     }
     public int GetBasicEnemyValue()
     {

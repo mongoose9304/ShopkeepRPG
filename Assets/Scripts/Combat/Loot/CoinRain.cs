@@ -34,10 +34,14 @@ public class CoinRain : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        originalPosition = transform.position;
+    }
     public void StartCoinRain(int value_)
     {
         isRaining = true;
         dropValue = value_ / rainDrops;
-        originalPosition = transform.position;
+        dropCount = 0;
     }
 }

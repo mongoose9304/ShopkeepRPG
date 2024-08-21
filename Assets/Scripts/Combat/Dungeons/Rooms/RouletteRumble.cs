@@ -16,6 +16,7 @@ public class RouletteRumble : BasicRoom
 
     public void RouletteEnd()
     {
+       
         switch (Wheel.winSlot)
         {
             case 0:
@@ -73,7 +74,7 @@ public class RouletteRumble : BasicRoom
     }
     private void ActivateJackpot()
     {
-        Debug.Log("Jackpot");
+        Debug.Log("Jackpot "+ myDungeon.GetTreasureChestAmount() * 3);
         coinRain.StartCoinRain(myDungeon.GetTreasureChestAmount()*3);
         winImage.sprite = slotSprites[2];
     }

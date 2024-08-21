@@ -132,8 +132,8 @@ public class DungeonManager : MonoBehaviour
         CombatPlayerManager.instance.GetPlayer(0).gameObject.GetComponent<CombatPlayerMovement>().enabled = false;
         CombatPlayerManager.instance.GetPlayer(0).enabled = false;
         victoryLevel.SetActive(true);
-        CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.position = victoryPlayerPos.transform.position;
-        CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+        //CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.position = victoryPlayerPos.transform.position;
+        //CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
         if(LootManager.instance.AquiredLootItems.Count>=1)
         LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
         List<int> x = new List<int>();
