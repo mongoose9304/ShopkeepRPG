@@ -11,7 +11,8 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField]float maxSaveYourSoulTime;
     [SerializeField]float currentSaveYourSoulTime;
     [SerializeField] GameObject saveYourSoulUI;
-
+    [SerializeField] int timesYouHaveDied;
+    [SerializeField] float sosDecreasePerDeath;
 
 
     public float maxdashCoolDown;
@@ -302,9 +303,12 @@ public class CombatPlayerMovement : MonoBehaviour
         if(!isInSaveYourSoulMode)
         {
             isInSaveYourSoulMode = true;
-            currentSaveYourSoulTime = maxSaveYourSoulTime;
+            currentSaveYourSoulTime = maxSaveYourSoulTime-timesYouHaveDied*sosDecreasePerDeath;
+            if (currentSaveYourSoulTime <= maxSaveYourSoulTime / 4)
+                currentSaveYourSoulTime = maxSaveYourSoulTime / 4;
             currentMana = maxMana;
             saveYourSoulUI.SetActive(true);
+            timesYouHaveDied += 1;
         }
     }
     public void TrueDeath()

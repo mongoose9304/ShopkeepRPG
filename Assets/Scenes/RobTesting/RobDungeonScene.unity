@@ -13283,19 +13283,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 403365723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c11265b855408d42af33d62691f5194, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ApplyAfter: 3
   m_ChannelMask: 32
   m_Gain: 1
   m_Use2DDistance: 0
-  m_UseLocalSpace: 1
+  m_UseCameraSpace: 1
   m_ReactionSettings:
     m_SecondaryNoise: {fileID: 0}
     m_AmplitudeGain: 1
     m_FrequencyGain: 1
     m_Duration: 1
-    m_NoiseOffsets: {x: 0, y: 0, z: 0}
+    m_NoiseOffsets: {x: 78.868286, y: 796.6018, z: -282.1263}
 --- !u!1 &408062804
 GameObject:
   m_ObjectHideFlags: 0
@@ -14234,6 +14235,8 @@ MonoBehaviour:
   maxSaveYourSoulTime: 10
   currentSaveYourSoulTime: 10
   saveYourSoulUI: {fileID: 1380335343}
+  timesYouHaveDied: 0
+  sosDecreasePerDeath: 0
   maxdashCoolDown: 0.25
   moveSpeed: 5
   moveSpeedModifier: 1
@@ -29555,7 +29558,7 @@ MonoBehaviour:
   - rid: 6781613340456124420
   - rid: 6781613340456124421
   - rid: 6781613340456124423
-  - rid: 6781613391468036098
+  - rid: 6781613391468036100
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -30027,11 +30030,11 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-    - rid: 6781613391468036098
+    - rid: 6781613391468036100
       type: {class: MMF_CinemachineImpulse, ns: MoreMountains.FeedbacksForThirdParty, asm: MoreMountains.Feedbacks.Cinemachine}
       data:
         Active: 1
-        UniqueID: -1422230861
+        UniqueID: -527591663
         Label: Cinemachine Impulse
         ChannelMode: 0
         Channel: 0
@@ -30046,8 +30049,8 @@ MonoBehaviour:
           CooldownDuration: 0
           InterruptsOnStop: 1
           NumberOfRepeats: 0
-          RepeatForever: 0
-          DelayBetweenRepeats: 1
+          RepeatForever: 1
+          DelayBetweenRepeats: 0
           MMFeedbacksDirectionCondition: 0
           PlayDirection: 0
           ConstantIntensity: 0
@@ -30097,15 +30100,15 @@ MonoBehaviour:
         DebugActive: 0
         m_ImpulseDefinition:
           m_ImpulseChannel: 32
-          m_ImpulseShape: 0
+          m_ImpulseShape: 4
           m_CustomImpulseShape:
             serializedVersion: 2
             m_Curve: []
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
-          m_ImpulseDuration: 0.2
-          m_ImpulseType: 3
+          m_ImpulseDuration: 1
+          m_ImpulseType: 0
           m_DissipationRate: 0
           m_RawSignal: {fileID: 0}
           m_AmplitudeGain: 1
@@ -30135,7 +30138,7 @@ MonoBehaviour:
           m_DissipationMode: 2
           m_DissipationDistance: 100
           m_PropagationSpeed: 343
-        Velocity: {x: 0, y: 0, z: 0}
+        Velocity: {x: 0.2, y: 0, z: 0}
         ClearImpulseOnStop: 0
 --- !u!114 &1380335346
 MonoBehaviour:
@@ -34005,7 +34008,7 @@ Transform:
   m_GameObject: {fileID: 1758224323}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 51.08, y: 8.160003, z: -61.700382}
+  m_LocalPosition: {x: 69.55, y: 8.160002, z: 208.66963}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
