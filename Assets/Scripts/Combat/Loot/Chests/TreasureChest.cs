@@ -21,7 +21,7 @@ public class TreasureChest : MonoBehaviour
             return;
 
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire3"))
         {
             OpenChest();
         }

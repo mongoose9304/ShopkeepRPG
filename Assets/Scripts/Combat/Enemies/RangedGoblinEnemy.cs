@@ -32,6 +32,8 @@ public class RangedGoblinEnemy : BasicEnemy
         LoadMonsterData();
         currentHealth = maxHealth;
         shotPrepTimecurrent = shotPrepTimeMax;
+        currentHitstun = 0;
+        canMove = true;
     }
     protected override void Update()
     {

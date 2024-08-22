@@ -110,6 +110,8 @@ public class BasicEnemy : MonoBehaviour
         {
             transform.position = hit.position;
         }
+        currentHitstun = 0;
+        canMove = true;
     }
 
     /// <summary>

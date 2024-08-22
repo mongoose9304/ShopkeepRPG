@@ -48,13 +48,13 @@ public class CombatPlayerActions : MonoBehaviour
             isBusy = false;
         }
 
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButton("Fire3"))
         {
            
             BasicMelee();
           
         }
-        else if(Input.GetButton("Fire3"))
+        else if(Input.GetButton("Fire1"))
         {
             BasicRanged();
         }
