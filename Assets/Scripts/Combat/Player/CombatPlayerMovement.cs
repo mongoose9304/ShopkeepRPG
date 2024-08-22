@@ -298,6 +298,29 @@ public class CombatPlayerMovement : MonoBehaviour
         healthBar.UpdateBar01(currentHealth/maxHealth);
        
     }
+    public void HealthPickup(float amount_)
+    {
+        
+       
+            currentHealth += (amount_*maxHealth);
+            if (currentHealth >= maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            healthBar.UpdateBar01(currentHealth / maxHealth);
+        
+    }
+    public void ManaPickup(float amount_)
+    {
+
+            currentMana += (amount_ * maxMana);
+            if (currentMana >= maxMana)
+            {
+            currentMana = maxMana;
+            }
+        manaBar.UpdateBar01(currentMana / maxMana);
+
+    }
     public void Death()
     {
         if(!isInSaveYourSoulMode)
@@ -343,7 +366,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void GetAKill()
     {
-        if(isInSaveYourSoulMode)
+        if (isInSaveYourSoulMode)
         {
             ExitSaveYourSoul();
         }

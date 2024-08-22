@@ -68,7 +68,6 @@ public class RangedGoblinEnemy : BasicEnemy
             obj.GetComponent<EnemyProjectile>().myElement = myElement;
             obj.GetComponent<EnemyProjectile>().damage = damage;
             obj.SetActive(true);
-            Debug.Log("Shoot");
             isPreparingShot = false;
             currentAttackCooldown = maxAttackCooldown;
             EndAttack();

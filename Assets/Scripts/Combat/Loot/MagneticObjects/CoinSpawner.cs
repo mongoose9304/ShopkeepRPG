@@ -22,7 +22,6 @@ public class CoinSpawner : MonoBehaviour
     public void CreateDemonCoins(int value_,Transform location_)
     {
          temp = MakeDemonChange(value_);
-        Debug.Log("T length: " + temp.Length);
         for ( int i= 0;i<temp.Length;i++)
         {
            
