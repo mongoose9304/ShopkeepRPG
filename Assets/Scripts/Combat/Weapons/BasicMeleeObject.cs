@@ -56,6 +56,11 @@ public class BasicMeleeObject : MonoBehaviour
         else
         weaponObject.SetActive(false);
     }
+    public void ForceEndAttack()
+    {
+        attackDurationCurrent = 0;
+        weaponObject.SetActive(false);
+    }
     public bool TryToAttack()
     {
         if(weaponObject.gameObject.activeInHierarchy)

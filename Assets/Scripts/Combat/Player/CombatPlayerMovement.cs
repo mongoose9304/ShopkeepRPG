@@ -10,7 +10,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] bool isDying;
     [SerializeField]float maxSaveYourSoulTime;
     [SerializeField]float currentSaveYourSoulTime;
-    [SerializeField] GameObject saveYourSoulUI;
+    [SerializeField] List<GameObject> saveYourSoulObjects=new List<GameObject>();
     public int timesYouHaveDied;
     [SerializeField] float sosDecreasePerDeath;
 
@@ -330,14 +330,20 @@ public class CombatPlayerMovement : MonoBehaviour
             if (currentSaveYourSoulTime <= maxSaveYourSoulTime / 4)
                 currentSaveYourSoulTime = maxSaveYourSoulTime / 4;
             currentMana = maxMana;
-            saveYourSoulUI.SetActive(true);
+            foreach(GameObject obj in saveYourSoulObjects)
+            {
+                obj.SetActive(true);
+            }
             timesYouHaveDied += 1;
         }
     }
     public void TrueDeath()
     {
         isDying = true;
-        saveYourSoulUI.SetActive(false);
+        foreach (GameObject obj in saveYourSoulObjects)
+        {
+            obj.SetActive(false);
+        }
         DungeonManager.instance.WinLevel(true);
     }
     private void ExitSaveYourSoul()
@@ -353,7 +359,10 @@ public class CombatPlayerMovement : MonoBehaviour
         currentMana = maxMana * x;
         healthBar.SetBar01(currentHealth / maxHealth);
         manaBar.SetBar01(currentMana / maxMana);
-        saveYourSoulUI.SetActive(false);
+        foreach (GameObject obj in saveYourSoulObjects)
+        {
+            obj.SetActive(false);
+        }
     }
     private void SaveYourSoulUpdate()
     {

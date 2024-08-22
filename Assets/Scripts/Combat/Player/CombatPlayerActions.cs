@@ -41,6 +41,7 @@ public class CombatPlayerActions : MonoBehaviour
         if(specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
         {
             isBusy = true;
+            meleeObject.ForceEndAttack();
             return;
         }
         else
@@ -57,6 +58,7 @@ public class CombatPlayerActions : MonoBehaviour
         else if(Input.GetButton("Fire1"))
         {
             BasicRanged();
+            meleeObject.ForceEndAttack();
         }
         else if(Input.GetButton("Special1"))
         {
