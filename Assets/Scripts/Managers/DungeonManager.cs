@@ -52,11 +52,16 @@ public class DungeonManager : MonoBehaviour
         currentSin = sin_;
         if(currentDungeon)
         Destroy(currentDungeon.gameObject);
-      BasicDungeon d=  GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
+        StartCoroutine(WaitAFrameBeforeMoving());
+
+    }
+    IEnumerator WaitAFrameBeforeMoving()
+    {
+        yield return new WaitForSeconds(0.001f);
+        BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
         ChangeLevel(d);
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
         surface.BuildNavMesh();
-
     }
     public void ClearCurses()
     {

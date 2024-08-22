@@ -9,10 +9,8 @@ public class RoomWallController : MonoBehaviour
     [SerializeField] List<GameObject> wallsNoDoors = new List<GameObject>();
     [SerializeField] List<GameObject> wallsWDoors = new List<GameObject>();
     [SerializeField] bool manualSetUp;
-    [SerializeField] List<bool> manualActiveWallsWithDoors = new List<bool>();
-    [SerializeField] List<bool> manualActiveWallsWithoutDoors = new List<bool>();
     [SerializeField] LayerMask connectorLayer;
-    private void Start()
+    private void OnEnable()
     {
         SetUpRoom();
     }
@@ -22,14 +20,18 @@ public class RoomWallController : MonoBehaviour
         ResetRoom();
         if(manualSetUp)
         {
-            ToggleWallsWithDoors(manualActiveWallsWithDoors);
-            ToggleWallsWithoutDoors(manualActiveWallsWithoutDoors);
+
         }
         else
         {
-            CheckConnections();
+            StartCoroutine(WaitAFrame());
         }
 
+    }
+    IEnumerator WaitAFrame()
+    {
+        yield return new WaitForSeconds(0.1f);
+        CheckConnections();
     }
     private void CheckConnections()
     {
