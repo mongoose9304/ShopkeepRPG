@@ -40,4 +40,11 @@ public class CombatPlayerManager : MonoBehaviour
             player_.transform.rotation = newLocation_.rotation;
         }
     }
+    public void ResetPlayerSosChances()
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            player_.combatMovement.timesYouHaveDied = 0;
+        }
+    }
 }

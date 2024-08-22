@@ -13,6 +13,7 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] protected GameObject player;
     [SerializeField] protected NavMeshAgent agent;
     public GameObject target;
+    public bool isBusy;
     protected Animator anim;
     private CombatPlayerMovement combatPlayerMovement;
     private CombatPlayerActions combatPlayerActions;

@@ -11,7 +11,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField]float maxSaveYourSoulTime;
     [SerializeField]float currentSaveYourSoulTime;
     [SerializeField] GameObject saveYourSoulUI;
-    [SerializeField] int timesYouHaveDied;
+    public int timesYouHaveDied;
     [SerializeField] float sosDecreasePerDeath;
 
 

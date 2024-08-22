@@ -4,7 +4,7 @@ using UnityEngine;
 using MoreMountains.Tools;
 public class CombatPlayerActions : MonoBehaviour
 {
-    [SerializeField] CombatPlayerMovement combatMovement;
+    public CombatPlayerMovement combatMovement;
     [Header("BasicMelee")]
     [SerializeField] private float BasicMeleeCooldownMax;
     private float BasicMeleeCooldown = 0.0f;
@@ -38,7 +38,7 @@ public class CombatPlayerActions : MonoBehaviour
     }
     private void Update()
     {
-        if(specialA.isBusy||specialB.isBusy)
+        if(specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
         {
             isBusy = true;
             return;
@@ -67,6 +67,10 @@ public class CombatPlayerActions : MonoBehaviour
             UseSpecialAttack(false);
         }
         else if (Input.GetButton("Special3"))
+        {
+            UseFamiliarUltimate();
+        }
+        else if (Input.GetAxis("Special3")==1)
         {
             UseFamiliarUltimate();
         }

@@ -51,8 +51,10 @@ public class SlimeFamiliar : CombatFamiliar
     {
         if (player.GetComponent<CombatPlayerActions>().isBusy||ultimateAttackCooldowncurrent>0)
             return;
+        isBusy = true;
         transform.position = player.transform.position+new Vector3(1,0,0);
         isUltimateJumping = true;
+        player.GetComponent<CombatPlayerActions>().isBusy = true;
         canMove = false;
         isJumping = true;
         isSlaming = false;
@@ -61,7 +63,6 @@ public class SlimeFamiliar : CombatFamiliar
         jumpEnd = jumpStart + (jumpHeight*1.25f);
         currentJumpPercentage = 1.0f;
         ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
-        player.GetComponent<CombatPlayerActions>().isBusy = true;
     }
     protected override void Update()
     {
@@ -137,6 +138,7 @@ public class SlimeFamiliar : CombatFamiliar
                     hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, monsterData.element, 0, this.gameObject);
                 }
             }
+            isBusy = false;
             return;
         }
 
