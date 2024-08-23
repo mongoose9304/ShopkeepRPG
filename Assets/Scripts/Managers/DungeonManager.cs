@@ -40,11 +40,16 @@ public class DungeonManager : MonoBehaviour
         currentDungeon.SetUpEnemies();
         currentDungeon.ChangeSin(currentSin);
         ClearCurses();
+        if(CombatPickupManager.instance)
+        {
+            CombatPickupManager.instance.ClearPickups();
+        }
+        CombatPlayerManager.instance.ReturnFamiliars();
     }
     public void NextLevel(SinType sin_)
     {
         dungeonsCleared += 1;
-        if(dungeonsCleared>dungeonList.Count)
+        if(dungeonsCleared>=dungeonList.Count)
         {
             WinLevel();
             return;

@@ -163,6 +163,15 @@ public class CombatFamiliar : MonoBehaviour
         currentHealth = monsterData.CalculateHealth();
         combatPlayerMovement.UpdateFamiliarHealth(currentHealth / monsterData.CalculateHealth());
     }
+    public void TeleportToLocation(Transform location_)
+    {
+        transform.position = location_.position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+        }
+    }
     /// <summary>
     /// The most basic attack the familar knows
     /// </summary>

@@ -220,7 +220,7 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void ReturnFamiliar()
     {
-        myFamiliar.transform.position = this.transform.position + new Vector3(0.5F, 0, 0);
+        myFamiliar.TeleportToLocation(transform);
     }
     public void DisableFamiliar(bool enable_)
     {

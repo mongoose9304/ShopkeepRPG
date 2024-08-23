@@ -14,7 +14,7 @@ public class NavigationRoom : BasicRoom
     {
         if(sin_ == SinType.Lust)
         {
-            ActivateExtraTraps();
+           // ActivateExtraTraps();
         }
     }
     private void ActivateExtraTraps()

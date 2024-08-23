@@ -18,6 +18,11 @@ public class CombatPickupManager : MonoBehaviour
     {
         instance = this;
     }
+    public void ClearPickups()
+    {
+        healthPool.ResetAllObjects();
+        manaPool.ResetAllObjects();
+    }
     public void TryForHealthPickup(Transform transform_)
     {
         if(Random.Range(0,100)<healSpawnChance)
