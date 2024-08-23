@@ -22,6 +22,7 @@ public class LootTableItem
 public class LootManager : MonoBehaviour
 {
     public static LootManager instance;
+    public LootItem testItem;
     private float cashMultiplier = 1;
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
@@ -144,6 +145,10 @@ public class LootManager : MonoBehaviour
     public void AddToCashMultiplier(float amount_)
     {
         cashMultiplier += amount_;
+    }
+    public void AddDebugUIItem()
+    {
+        AddUILootObject(testItem);
     }
 
 }
