@@ -11,6 +11,7 @@ public class LootItem
 {
     public string name;
     public int amount;
+    public bool isNew;
 }
 [System.Serializable]
 public class LootTableItem
@@ -45,6 +46,9 @@ public class LootManager : MonoBehaviour
     public int currentResource;
     public TextMeshProUGUI currentResourceText;
     public List<LootItem> AquiredLootItems =new List<LootItem>();
+    public List<LootItem> WaitingLootItemPool =new List<LootItem>();
+    public float maxDelayBetweenPopUps;
+    float currentDelayBetweenPopUps;
     private void Start()
     {
         instance = this;
@@ -58,6 +62,18 @@ public class LootManager : MonoBehaviour
         if(currentTimeCollectionUIWillBeOut<=0)
         {
             PutAwaylootCollectionUIObject();
+        }
+        if(WaitingLootItemPool.Count>0)
+        {
+            currentDelayBetweenPopUps -= Time.deltaTime;
+            if(currentDelayBetweenPopUps<=0)
+            {
+                currentTimeCollectionUIWillBeOut=maxTimeCollectionUIWillBeOut;
+                currentDelayBetweenPopUps = maxDelayBetweenPopUps;
+                DisplayUILootObject(WaitingLootItemPool[0]);
+                WaitingLootItemPool.RemoveAt(0);
+               
+            }
         }
     }
     public void AddLootItem(LootItem item_)
@@ -85,15 +101,20 @@ public class LootManager : MonoBehaviour
     }
     public void AddUILootObject(LootItem item_,bool isNew=false)
     {
-        currentUIBackground += 1;
-        if (currentUIBackground > maxUIBackgrounds)
-            currentUIBackground = 0;
-        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, isNew,currentUIBackground);
+        item_.isNew = isNew;
+        WaitingLootItemPool.Add(item_);
        // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
         currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
        
         
+    }
+    private void DisplayUILootObject(LootItem item_)
+    {
+        currentUIBackground += 1;
+        if (currentUIBackground > maxUIBackgrounds)
+            currentUIBackground = 0;
+        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, item_.isNew, currentUIBackground);
     }
     public void AddDemonMoney(int money_)
     {
@@ -135,8 +156,9 @@ public class LootManager : MonoBehaviour
         //1303.8
         //1003
         lootCollectionUIObject.transform.DOLocalMoveX(1303.8f, 1);
-        
-      
+        pooler.ResetAllObjects();
+
+
     }
     public GameObject GetWorldLootObject()
     {
