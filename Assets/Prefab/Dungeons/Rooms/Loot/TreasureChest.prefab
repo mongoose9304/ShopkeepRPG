@@ -125,6 +125,7 @@ MonoBehaviour:
   myText: {fileID: 0}
   OpenEffect: {fileID: 0}
   OpenCursedEffect: {fileID: 0}
+  curseIcon: {fileID: 0}
 --- !u!1 &1543522859955887304
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3948115898543211813
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5132,7 +5133,7 @@ GameObject:
   - component: {fileID: 4636486475784234700}
   - component: {fileID: 2027866403863767950}
   m_Layer: 0
-  m_Name: TreasureChestCurse
+  m_Name: TreasureChest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5173,11 +5174,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   value: 250
   curseSeverity: 1
-  isCursed: 1
+  isCursed: 0
   spawnLocation: {fileID: 5172938784923959431}
   myText: {fileID: 8447679010708937669}
   OpenEffect: {fileID: 7388481658343691650}
   OpenCursedEffect: {fileID: 7365134559404005113}
+  curseIcon: {fileID: 1543522859955887304}
 --- !u!65 &2027866403863767950
 BoxCollider:
   m_ObjectHideFlags: 0

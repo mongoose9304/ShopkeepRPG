@@ -100,18 +100,24 @@ public class BasicEnemy : MonoBehaviour
     }
     protected virtual void OnEnable()
     {
-        LoadMonsterData();
-        currentHealth = maxHealth;
-        if(useFlicker)
-        hitEffects.GetFeedbackOfType<MMF_Flicker>().ForceInitialValue(hitEffects.transform.position);
-        agent.enabled = true;
+        ResetEnemy();
         NavMeshHit hit;
         if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
         {
             transform.position = hit.position;
         }
+        
+    }
+    protected virtual void ResetEnemy()
+    {
+        LoadMonsterData();
+        currentHealth = maxHealth;
+        if (useFlicker)
+            hitEffects.GetFeedbackOfType<MMF_Flicker>().ForceInitialValue(hitEffects.transform.position);
+        agent.enabled = true;
         currentHitstun = 0;
         canMove = true;
+        stunIcon.SetActive(false);
     }
 
     /// <summary>

@@ -14,6 +14,7 @@ public class TreasureChest : MonoBehaviour
     [SerializeField] GameObject myText;
     [SerializeField] ParticleSystem OpenEffect;
     [SerializeField] ParticleSystem OpenCursedEffect;
+    [SerializeField] GameObject curseIcon;
 
     virtual protected void Update()
     {
@@ -42,6 +43,12 @@ public class TreasureChest : MonoBehaviour
             DungeonManager.instance.AddRandomCurse(curseSeverity);
             OpenCursedEffect.Play();
         }
+    }
+    virtual public void SetIsCursed(bool isCursed_,int severity_)
+    {
+        isCursed = isCursed_;
+        curseSeverity = severity_;
+        curseIcon.SetActive(isCursed);
     }
 
     virtual public void InteractWithChest()

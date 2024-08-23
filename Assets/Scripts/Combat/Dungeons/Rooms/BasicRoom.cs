@@ -28,5 +28,9 @@ public class BasicRoom : MonoBehaviour
     {
 
     }
+    public void SetDungeon(BasicDungeon d_)
+    {
+        myDungeon = d_;
+    }
 
 }

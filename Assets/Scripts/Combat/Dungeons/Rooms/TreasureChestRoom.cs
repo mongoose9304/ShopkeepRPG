@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class TreasureChestRoom : BasicRoom
 {
-    public override void StartRoomActivity()
+    [SerializeField] GameObject moneyChest;
+    [SerializeField] GameObject itemChest;
+    [SerializeField] GameObject slotsChest;
+    [SerializeField] TreasureChest myChest;
+    [SerializeField] int curseSeverity = 1;
+   
+    private void OnEnable()
     {
-        if(myType==RoomType.CursedLoot)
+        if (myType == RoomType.CursedLoot)
         {
-            //curse player, should be from list of curses in dungeon
+            myChest.SetIsCursed(true, curseSeverity);
+        }
+        else
+        {
+            myChest.SetIsCursed(false, curseSeverity);
         }
     }
+
+
 }

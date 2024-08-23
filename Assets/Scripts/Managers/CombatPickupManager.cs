@@ -13,6 +13,7 @@ public class CombatPickupManager : MonoBehaviour
     public float manaAmount;
     public float healSpawnChance;
     public float manaSpawnChance;
+    public float PlayerHeight;
     private void Start()
     {
         instance = this;
@@ -34,13 +35,13 @@ public class CombatPickupManager : MonoBehaviour
     public void CreateHealthPickup(Transform transform_)
     {
         GameObject obj = healthPool.GetPooledGameObject();
-        obj.transform.position = transform_.position;
+        obj.transform.position = new Vector3(transform_.position.x, PlayerHeight, transform_.position.z);
         obj.GetComponent<HealthPickup>().EnablePickUp(healAmount);
     }
     public void CreateManaPickup(Transform transform_)
     {
         GameObject obj = manaPool.GetPooledGameObject();
-        obj.transform.position = transform_.position;
+        obj.transform.position = new Vector3(transform_.position.x, PlayerHeight, transform_.position.z);
         obj.GetComponent<ManaPickup>().EnablePickUp(manaAmount);
     }
 }

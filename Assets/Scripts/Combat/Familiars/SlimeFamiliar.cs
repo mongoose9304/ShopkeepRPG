@@ -174,6 +174,12 @@ public class SlimeFamiliar : CombatFamiliar
     {
         return monsterData.CalculateDamage() * 9;
     }
+    public override void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    {
+        if (isUltimateJumping)
+            return;
+        base.TakeDamage(damage_, hitstun_, element_, knockBack_, knockBackObject);
+    }
 
     /// <summary>
     /// Cooldowns for attacks

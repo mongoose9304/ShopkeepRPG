@@ -78,7 +78,7 @@ public class CombatPlayerActions : MonoBehaviour
         }
 
 
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Fire3"))
         {
             meleeObject.ReleaseMeleeButton();
         }

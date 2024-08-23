@@ -20,7 +20,7 @@ public class BasicDungeon : MonoBehaviour
 {
     public List<BasicEnemy> regularEnemies=new List<BasicEnemy>();
     public List<BasicEnemy> eliteEnemies = new List<BasicEnemy>();
-    public List<BasicRoom> regularRooms = new List<BasicRoom>();
+    public BasicRoom[] regularRooms;
     public SinType mySin;
     public Transform playerStart;
     public int enemyLevel;
@@ -30,9 +30,16 @@ public class BasicDungeon : MonoBehaviour
     [SerializeField] int basicEnemyValueMin;
     [SerializeField] int basicEnemyValueMax;
     public List<Transform> regularRoomSpots = new List<Transform>();
-    
 
-   public void SetUpEnemies()
+    private void OnEnable()
+    {
+        regularRooms = GetComponentsInChildren<BasicRoom>(true);
+        foreach(BasicRoom room in regularRooms)
+        {
+            room.SetDungeon(this);
+        }
+    }
+    public void SetUpEnemies()
     {
         foreach (BasicEnemy enemy in regularEnemies)
         {

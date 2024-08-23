@@ -97,6 +97,12 @@ public class SlimeEnemy : BasicEnemy
             }
         }
     }
+    protected override void OnEnable()
+    {
+        ResetEnemy();
+        isJumping = false;
+        isSlaming = false;
+    }
     public override void Move()
     {
         if (!agent.isActiveAndEnabled)
