@@ -44,7 +44,9 @@ public class DungeonManager : MonoBehaviour
         {
             CombatPickupManager.instance.ClearPickups();
         }
-        CombatPlayerManager.instance.ReturnFamiliars();
+        EnemyManager.instance.DisableAllEnemies();
+
+
     }
     public void NextLevel(SinType sin_)
     {
@@ -65,8 +67,10 @@ public class DungeonManager : MonoBehaviour
         yield return new WaitForSeconds(0.001f);
         BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
         ChangeLevel(d);
-        CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
+        yield return new WaitForSeconds(0.201f);
         surface.BuildNavMesh();
+        CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
+        CombatPlayerManager.instance.ReturnFamiliars();
     }
     public void ClearCurses()
     {

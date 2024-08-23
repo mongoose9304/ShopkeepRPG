@@ -13,13 +13,21 @@ public class EnemyManager : MonoBehaviour
     public List<EnemyItem> eliteEnemies = new List<EnemyItem>();
     public static EnemyManager instance;
     public List<GameObject> currentEnemiesList = new List<GameObject>();
+    public float timeBetweenEnemyListCleans;
+    float currentTimeBetweenEnemyListCleans;
+    
     private void Awake()
     {
         instance = this;
     }
     private void Update()
     {
-        CleanCurrentEnemyList();
+        currentTimeBetweenEnemyListCleans -= Time.deltaTime;
+        if (currentTimeBetweenEnemyListCleans <= 0)
+        {
+            currentTimeBetweenEnemyListCleans = timeBetweenEnemyListCleans;
+            CleanCurrentEnemyList();
+        }
     }
     public void CreateEnemyItem(string name_,GameObject object_,bool isElite=false)
     {
@@ -108,9 +116,20 @@ public class EnemyManager : MonoBehaviour
     }
     private void CleanCurrentEnemyList()
     {
-       // if(currentEnemiesList.Count>0)
-       // currentEnemiesList.RemoveAll(null);
+        for(int i=0;i<currentEnemiesList.Count;i++)
+        {
+            if (!currentEnemiesList[i].activeInHierarchy)
+                currentEnemiesList.RemoveAt(i);
+        }
+       
 
+    }
+    public void DisableAllEnemies()
+    {
+        for (int i = 0; i < currentEnemiesList.Count; i++)
+        {
+            currentEnemiesList[i].SetActive(false);
+        }
     }
     public void EnemyDeath()
     {

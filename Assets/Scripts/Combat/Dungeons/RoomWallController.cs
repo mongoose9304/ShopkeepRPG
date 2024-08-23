@@ -56,7 +56,7 @@ public class RoomWallController : MonoBehaviour
                 else
                 {
                     x.Add(true);
-                    continue;
+                    break;
                 }
             }
            

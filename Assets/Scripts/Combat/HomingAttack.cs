@@ -42,7 +42,7 @@ public class HomingAttack : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Player" && other.tag != "Familiar")
+        if (other.tag =="Wall")
         {
           
             this.gameObject.SetActive(false);

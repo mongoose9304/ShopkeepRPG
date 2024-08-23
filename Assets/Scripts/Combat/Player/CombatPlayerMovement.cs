@@ -411,6 +411,6 @@ public class CombatPlayerMovement : MonoBehaviour
 
         if (currentMana >= maxMana)
             currentMana = maxMana;
-        manaBar.UpdateBar01(currentMana / maxMana);
+        manaBar.SetBar01(currentMana / maxMana);
     }
 }

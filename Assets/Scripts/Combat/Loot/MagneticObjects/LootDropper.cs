@@ -26,6 +26,7 @@ public class LootDropper : MonoBehaviour
             temp.transform.rotation = new Quaternion(0, 0, 0, 0);
             temp.GetComponent<LootWorldObject>().myItem = item_;
             temp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0,0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
+            temp.gameObject.SetActive(true);
         }
 
 
