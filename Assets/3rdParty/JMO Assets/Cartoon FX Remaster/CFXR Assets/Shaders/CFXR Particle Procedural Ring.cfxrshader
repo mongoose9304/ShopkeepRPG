@@ -27,7 +27,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 	//#
 
 		_MainTex ("Texture", 2D) = "white" {}
-		[Toggle(_CFXR_SINGLE_CHANNEL)] _SingleChannel ("Single Channel Texture", Float) = 0
+		[Toggle] _SingleChannel ("Single Channel Texture", Float) = 0
 
 	//# --------------------------------------------------------
 
@@ -40,10 +40,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 
 	//# --------------------------------------------------------
 
-		[Toggle(_CFXR_HDR_BOOST)] _HdrBoost ("Enable HDR Multiplier", Float) = 0
-	//# IF_KEYWORD _CFXR_HDR_BOOST
 		_HdrMultiply ("HDR Multiplier", Float) = 2
-	//# END_IF
 
 	//# --------------------------------------------------------
 	
@@ -99,16 +96,14 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_RADIAL_UV
 				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define CFXR_PROCEDURAL_RING_SHADER
@@ -133,16 +128,14 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_RADIAL_UV
 				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define DISABLE_SOFT_PARTICLES
@@ -169,13 +162,12 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_RADIAL_UV
 				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE
@@ -216,16 +208,14 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				// #pragma multi_compile_instancing
 				#pragma multi_compile_fog
 				
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_RADIAL_UV
 				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
 				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_PROCEDURAL_RING_SHADER
 				#include "CFXR_PASSES.cginc"
@@ -250,13 +240,12 @@ Shader "Cartoon FX/Remaster/Particle Procedural Ring"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_RADIAL_UV
 				#pragma shader_feature_local _ _CFXR_WORLD_SPACE_RING
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE

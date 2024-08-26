@@ -81,7 +81,7 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _DEBUG_VISUALIZE_DISTORTION
 
 				#define CFXR_URP
@@ -113,7 +113,7 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _DEBUG_VISUALIZE_DISTORTION
 
 				#define _CameraOpaqueTexture _CameraSortingLayerTexture
@@ -162,7 +162,7 @@ Shader "Cartoon FX/Remaster/Particle Screen Distortion"
 				
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _DEBUG_VISUALIZE_DISTORTION
 
 				#include "UnityStandardParticleInstancing.cginc"

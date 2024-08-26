@@ -304,7 +304,7 @@
 		return color;
 	}
 
-	void GetParticleTexcoords(out float2 outputTexcoord, out float2 outputTexcoord2, out float outputBlend, in float4 inputTexcoords, in float inputBlend)
+	void GetParticleTexcoords(out float2 outputTexcoord, out float2 outputTexcoord2, inout float outputBlend, in float4 inputTexcoords, in float inputBlend)
 	{
 		#if defined(UNITY_PARTICLE_INSTANCING_ENABLED)
 			if (unity_ParticleUVShiftData.x != 0.0)
@@ -348,7 +348,7 @@
 
 		#ifndef _FLIPBOOKBLENDING_ON
 			outputTexcoord2.xy = inputTexcoords.xy;
-			outputBlend = 0.5;
+			//outputBlend = 0.5;
 		#endif
 	}
 

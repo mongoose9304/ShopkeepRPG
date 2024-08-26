@@ -35,8 +35,17 @@ namespace CartoonFX
         [ScriptedImporter(0, FILE_EXTENSION)]
         public class CFXR_ShaderImporter : ScriptedImporter
         {
+            public enum RenderPipeline
+            {
+                Auto,
+                ForceBuiltInRenderPipeline,
+                ForceUniversalRenderPipeline
+            }
+
             public const string FILE_EXTENSION = "cfxrshader";
 
+            [Tooltip("In case of errors when building the project or with addressables, you can try forcing a specific render pipeline")]
+            public RenderPipeline renderPipelineDetection = RenderPipeline.Auto;
             public string detectedRenderPipeline = "Built-In Render Pipeline";
             public int strippedLinesCount = 0;
             public string shaderSourceCode;
@@ -104,8 +113,29 @@ namespace CartoonFX
 
             public override void OnImportAsset(AssetImportContext context)
             {
-                bool isUsingURP = Utils.IsUsingURP();
-                detectedRenderPipeline = isUsingURP ? "Universal Render Pipeline" : "Built-In Render Pipeline";
+                bool isUsingURP;
+                switch (renderPipelineDetection)
+                {
+                    default:
+                    case RenderPipeline.Auto:
+                    {
+                        isUsingURP = Utils.IsUsingURP();
+                        detectedRenderPipeline = isUsingURP ? "Universal Render Pipeline" : "Built-In Render Pipeline";
+                        break;
+                    }
+                    case RenderPipeline.ForceBuiltInRenderPipeline:
+                    {
+                        detectedRenderPipeline = "Built-In Render Pipeline";
+                        isUsingURP = false;
+                        break;
+                    }
+                    case RenderPipeline.ForceUniversalRenderPipeline:
+                    {
+                        detectedRenderPipeline = "Universal Render Pipeline";
+                        isUsingURP = true;
+                        break;
+                    }
+                }
 
                 StringWriter shaderSource = new StringWriter();
                 string[] sourceLines = File.ReadAllLines(context.assetPath);
@@ -277,6 +307,9 @@ namespace CartoonFX
 
                 public override void OnInspectorGUI()
                 {
+                    bool multipleValues = serializedObject.isEditingMultipleObjects;
+
+                    CFXR_ShaderImporter.RenderPipeline detection = ((CFXR_ShaderImporter)target).renderPipelineDetection;
                     bool isUsingURP = Utils.IsUsingURP();
                     serializedObject.Update();
 
@@ -284,9 +317,24 @@ namespace CartoonFX
                     string variantsText = "";
                     if (Importer.variantCount > 0 && Importer.variantCountUsed > 0)
                     {
-                        variantsText = string.Format("\nVariants (currently used): <b>{0}</b>\nVariants (including unused): <b>{1}</b>", FormatCount(Importer.variantCountUsed), FormatCount(Importer.variantCount));
+                        string variantsCount = multipleValues ? "-" : FormatCount(Importer.variantCount);
+                        string variantsCountUsed = multipleValues ? "-" : FormatCount(Importer.variantCountUsed);
+                        variantsText = $"\nVariants (currently used): <b>{variantsCountUsed}</b>\nVariants (including unused): <b>{variantsCount}</b>";
                     }
-                    GUILayout.Label($"Detected render pipeline: <b>{Importer.detectedRenderPipeline}</b>\nStripped lines: <b>{Importer.strippedLinesCount}</b>{variantsText}", HelpBoxRichTextStyle);
+                    string strippedLinesCount = multipleValues ? "-" : Importer.strippedLinesCount.ToString();
+                    string renderPipeline = Importer.detectedRenderPipeline;
+                    if (targets is { Length: > 1 })
+                    {
+                        foreach (CFXR_ShaderImporter importer in targets)
+                        {
+                            if (importer.detectedRenderPipeline != renderPipeline)
+                            {
+                                renderPipeline = "-";
+                                break;
+                            }
+                        }
+                    }
+                    GUILayout.Label($"{(detection == CFXR_ShaderImporter.RenderPipeline.Auto ? "Detected" : "Forced")} render pipeline: <b>{renderPipeline}</b>\nStripped lines: <b>{strippedLinesCount}</b>{variantsText}", HelpBoxRichTextStyle);
 
                     if (Importer.shaderErrors != null && Importer.shaderErrors.Length > 0)
                     {
@@ -297,8 +345,10 @@ namespace CartoonFX
                         GUI.color = color;
                     }
 
+                    bool shouldReimportShader = false;
                     bool compiledForURP = Importer.detectedRenderPipeline.Contains("Universal");
-                    if ((isUsingURP && !compiledForURP) || (!isUsingURP && compiledForURP))
+                    if (detection == CFXR_ShaderImporter.RenderPipeline.Auto
+                        && ((isUsingURP && !compiledForURP) || (!isUsingURP && compiledForURP)))
                     {
                         GUILayout.Space(4);
                         Color guiColor = GUI.color;
@@ -306,12 +356,20 @@ namespace CartoonFX
                         EditorGUILayout.HelpBox("The detected render pipeline doesn't match the pipeline this shader was compiled for!\nPlease reimport the shaders for them to work in the current render pipeline.", MessageType.Warning);
                         if (GUILayout.Button("Reimport Shader"))
                         {
-                            ReimportShader();
+                            shouldReimportShader = true;
                         }
                         GUI.color = guiColor;
                     }
 
                     GUILayout.Space(4);
+
+
+                    EditorGUI.BeginChangeCheck();
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(CFXR_ShaderImporter.renderPipelineDetection)));
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        shouldReimportShader = true;
+                    }
 
                     if (GUILayout.Button("View Source", GUILayout.ExpandWidth(false)))
                     {
@@ -344,6 +402,11 @@ namespace CartoonFX
 #endif
 
                     serializedObject.ApplyModifiedProperties();
+
+                    if (shouldReimportShader)
+                    {
+                        ReimportShader();
+                    }
                 }
 
                 void ReimportShader()

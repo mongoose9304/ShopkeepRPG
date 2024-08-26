@@ -35,10 +35,7 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 
 	//# --------------------------------------------------------
 
-		[Toggle(_CFXR_HDR_BOOST)] _HdrBoost ("Enable HDR Multiplier", Float) = 0
-	//# IF_KEYWORD _CFXR_HDR_BOOST
 		_HdrMultiply ("HDR Multiplier", Float) = 2
-	//# END_IF
 
 	//# --------------------------------------------------------
 	
@@ -97,12 +94,11 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma multi_compile_fog
 
 				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define CFXR_GLOW_SHADER
@@ -129,12 +125,11 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma multi_compile_fog
 
 				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define DISABLE_SOFT_PARTICLES
@@ -165,7 +160,8 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE
@@ -211,12 +207,11 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma multi_compile_fog
 				
 				#pragma shader_feature_local _ _CFXR_GLOW_POW_P2 _CFXR_GLOW_POW_P4 _CFXR_GLOW_POW_P8
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#include "UnityStandardParticleInstancing.cginc"
 
@@ -253,7 +248,8 @@ Shader "Cartoon FX/Remaster/Particle Procedural Glow"
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
 
 				#pragma shader_feature_local _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE

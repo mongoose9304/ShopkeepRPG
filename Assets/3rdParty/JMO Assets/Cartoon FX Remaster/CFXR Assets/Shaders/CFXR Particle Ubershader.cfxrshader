@@ -48,8 +48,8 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 		_DissolveSmooth ("Dissolve Smoothing", Range(0.0001,0.5)) = 0.1
 		[ToggleNoKeyword] _InvertDissolveTex ("Invert Dissolve Texture", Float) = 0
 		[ToggleNoKeyword] _DoubleDissolve ("Double Dissolve", Float) = 0
-		[Toggle(_CFXR_DISSOLVE_ALONG_UV_X)] _UseDissolveOffsetUV ("Dissolve offset along X", Float) = 0
-	//# IF_KEYWORD _CFXR_DISSOLVE_ALONG_UV_X
+		[Toggle] _UseDissolveOffsetUV ("Dissolve offset along X", Float) = 0
+	//# IF_PROPERTY _UseDissolveOffsetUV > 0
 		_DissolveScroll ("UV Scrolling", Vector) = (0,0,0,0)
 	//# END_IF
 	//# END_IF
@@ -61,10 +61,10 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 		
 		[NoScaleOffset] _DistortTex ("Distortion Texture", 2D) = "gray" {}
 		_DistortScrolling ("Scroll (XY) Tile (ZW)", Vector) = (0,0,1,1)
-		[Toggle(_CFXR_UV2_DISTORTION)] _UseUV2Distortion ("Use UV2", Float) = 0
+		[Toggle] _UseUV2Distortion ("Use UV2", Float) = 0
 		_Distort ("Distortion Strength", Range(0,2.0)) = 0.1
 		[ToggleNoKeyword] _FadeAlongU ("Fade along Y", Float) = 0
-		[Toggle(_CFXR_UV_DISTORTION_ADD)] _UVDistortionAdd ("Add to base UV", Float) = 0
+		[Toggle] _UVDistortionAdd ("Add to base UV", Float) = 0
 	//# END_IF
 
 	//# ========================================================
@@ -73,13 +73,13 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 	//#
 
 		[NoScaleOffset] _MainTex ("Texture", 2D) = "white" {}
-		[Toggle(_CFXR_SINGLE_CHANNEL)] _SingleChannel ("Single Channel Texture", Float) = 0
+		[Toggle] _SingleChannel ("Single Channel Texture", Float) = 0
 
 	//# --------------------------------------------------------
 
 		[KeywordEnum(Off,1x,2x)] _CFXR_OVERLAYTEX ("Enable Overlay Texture", Float) = 0
 	//# IF_KEYWORD _CFXR_OVERLAYTEX_1X || _CFXR_OVERLAYTEX_2X
-		[KeywordEnum(RGBA,RGB,A)] _CFXR_OVERLAYBLEND ("Overlay Blend Channels", Float) = 0
+		[Enum(RGBA,0,RGB,1,A,2)] _CFXR_OVERLAYBLEND ("Overlay Blend Channels", Float) = 0
 		[NoScaleOffset] _OverlayTex ("Overlay Texture", 2D) = "white" {}
 		_OverlayTex_Scroll ("Overlay Scrolling / Scale", Vector) = (0.1,0.1,1,1)
 	//# END_IF
@@ -109,10 +109,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 	//# --------------------------------------------------------
 
-		[Toggle(_CFXR_HDR_BOOST)] _HdrBoost ("Enable HDR Multiplier", Float) = 0
-	//# IF_KEYWORD _CFXR_HDR_BOOST
-		 _HdrMultiply ("HDR Multiplier", Float) = 2
-	//# END_IF
+		 _HdrMultiply ("HDR Multiplier", Float) = 1
 
 	//# --------------------------------------------------------
 	
@@ -205,17 +202,11 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
+				#pragma shader_feature_local_fragment _ _CFXR_UV_DISTORTION
 				// #pragma shader_feature_local _ _CFXR_GRADIENTMAP
 				#pragma shader_feature_local _ _CFXR_SECONDCOLOR_LERP _CFXR_FONT_COLORS
-				#pragma shader_feature_local _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
-				#pragma shader_feature_local _ _CFXR_OVERLAYBLEND_A _CFXR_OVERLAYBLEND_RGB
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local_fragment _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
 				#pragma shader_feature_local _ _CFXR_EDGE_FADING
 				#pragma shader_feature_local _ _CFXR_LIGHTING_DIRECT _CFXR_LIGHTING_INDIRECT _CFXR_LIGHTING_ALL
 				#pragma shader_feature_local _ _CFXR_LIGHTING_WPOS_OFFSET
@@ -224,10 +215,10 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _NORMALMAP
 				#pragma shader_feature_local _ _EMISSION
-				#pragma shader_feature_local _ _FLIPBOOK_BLENDING
+				#pragma shader_feature_local_fragment _ _FLIPBOOK_BLENDING
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_URP
 				#define CFXR_UBERSHADER
@@ -256,17 +247,11 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
+				#pragma shader_feature_local_fragment _ _CFXR_UV_DISTORTION
 				// #pragma shader_feature_local _ _CFXR_GRADIENTMAP
 				#pragma shader_feature_local _ _CFXR_SECONDCOLOR_LERP _CFXR_FONT_COLORS
-				#pragma shader_feature_local _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
-				#pragma shader_feature_local _ _CFXR_OVERLAYBLEND_A _CFXR_OVERLAYBLEND_RGB
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local_fragment _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
 				#pragma shader_feature_local _ _CFXR_EDGE_FADING
 				#pragma shader_feature_local _ _CFXR_LIGHTING_DIRECT _CFXR_LIGHTING_INDIRECT _CFXR_LIGHTING_ALL
 				#pragma shader_feature_local _ _CFXR_LIGHTING_WPOS_OFFSET
@@ -275,10 +260,10 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _NORMALMAP
 				#pragma shader_feature_local _ _EMISSION
-				#pragma shader_feature_local _ _FLIPBOOK_BLENDING
+				#pragma shader_feature_local_fragment _ _FLIPBOOK_BLENDING
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#define CFXR_UPR
 				#define DISABLE_SOFT_PARTICLES
@@ -305,18 +290,13 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
-				#pragma shader_feature_local _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
-				#pragma shader_feature_local _ _CFXR_OVERLAYBLEND_A _CFXR_OVERLAYBLEND_RGB
-				#pragma shader_feature_local _ _FLIPBOOK_BLENDING
+				#pragma shader_feature_local_fragment _ _CFXR_UV_DISTORTION
+				#pragma shader_feature_local_fragment _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
+				#pragma shader_feature_local_fragment _ _FLIPBOOK_BLENDING
 
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE
@@ -362,17 +342,11 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
+				#pragma shader_feature_local_fragment _ _CFXR_UV_DISTORTION
 				// #pragma shader_feature_local _ _CFXR_GRADIENTMAP
 				#pragma shader_feature_local _ _CFXR_SECONDCOLOR_LERP _CFXR_FONT_COLORS
-				#pragma shader_feature_local _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
-				#pragma shader_feature_local _ _CFXR_OVERLAYBLEND_A _CFXR_OVERLAYBLEND_RGB
-				#pragma shader_feature_local _ _CFXR_HDR_BOOST
+				#pragma shader_feature_local_fragment _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
 				#pragma shader_feature_local _ _CFXR_EDGE_FADING
 				#pragma shader_feature_local _ _CFXR_LIGHTING_DIRECT _CFXR_LIGHTING_INDIRECT _CFXR_LIGHTING_ALL
 				#pragma shader_feature_local _ _CFXR_LIGHTING_WPOS_OFFSET
@@ -381,10 +355,10 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				// Using the same keywords as Unity's Standard Particle shader to minimize project-wide keyword usage
 				#pragma shader_feature_local _ _NORMALMAP
 				#pragma shader_feature_local _ _EMISSION
-				#pragma shader_feature_local _ _FLIPBOOK_BLENDING
+				#pragma shader_feature_local_fragment _ _FLIPBOOK_BLENDING
 				#pragma shader_feature_local _ _FADING_ON
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#include "UnityStandardParticleInstancing.cginc"
 				#define CFXR_UBERSHADER
@@ -416,18 +390,13 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				// #pragma multi_compile_instancing
 				// #pragma instancing_options procedural:vertInstancingSetup
 
-				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
-				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
-				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
-				#pragma shader_feature_local _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
-				#pragma shader_feature_local _ _CFXR_OVERLAYBLEND_A _CFXR_OVERLAYBLEND_RGB
-				#pragma shader_feature_local _ _FLIPBOOK_BLENDING
+				#pragma shader_feature_local_fragment _ _CFXR_UV_DISTORTION
+				#pragma shader_feature_local_fragment _ _CFXR_OVERLAYTEX_1X _CFXR_OVERLAYTEX_2X
+				#pragma shader_feature_local_fragment _ _FLIPBOOK_BLENDING
 
-				#pragma shader_feature_local _ _ALPHATEST_ON
-				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
+				#pragma shader_feature_local_fragment _ _ALPHATEST_ON
+				#pragma shader_feature_local_fragment _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
 				#pragma multi_compile_shadowcaster
 				#pragma shader_feature_local _ _CFXR_DITHERED_SHADOWS_ON _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE

@@ -21,6 +21,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] protected MMMiniObjectPooler airHitEffects;
     [SerializeField] protected MMMiniObjectPooler fireHitEffects;
     [SerializeField] protected MMMiniObjectPooler waterHitEffects;
+    [SerializeField] protected MMMiniObjectPooler earthHitEffects;
 
     private void Awake()
     {
@@ -157,6 +158,9 @@ public class EnemyManager : MonoBehaviour
                 break;
             case Element.Water:
                 obj = waterHitEffects.GetPooledGameObject();
+                break;
+            case Element.Earth:
+                obj = earthHitEffects.GetPooledGameObject();
                 break;
             default:
                 return;
