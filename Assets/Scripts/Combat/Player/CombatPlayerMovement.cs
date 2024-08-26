@@ -51,8 +51,12 @@ public class CombatPlayerMovement : MonoBehaviour
     public float PhysicalDef;
     public float MysticalDef;
     public float LevelModifier;
+    public List<EquipModifier> modifiers = new List<EquipModifier>();
     //Equipment
     public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
+    public EquipmentStatBlock MeleeWeapon;
+    public EquipmentStatBlock RangedWeapon;
+    public EquipmentStatBlock Armor;
 
 
 
@@ -69,7 +73,8 @@ public class CombatPlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        CalculateStats();
+        AddAllEquipmentMods();
+        CalculateAllModifiers();
         combatActions.SetStats(PhysicalAtk, MysticalAtk);
         currentHealth = maxHealth;
         currentMana = maxMana;
@@ -436,7 +441,7 @@ public class CombatPlayerMovement : MonoBehaviour
             currentMana = maxMana;
         manaBar.SetBar01(currentMana / maxMana);
     }
-    public void CalculateStats()
+    private void CalculateStats()
     {
         maxHealth = (myStats.Vitality * 10) * (myStats.Level * LevelModifier);
         maxMana = (myStats.Soul * 10) * (myStats.Level * LevelModifier);
@@ -444,5 +449,76 @@ public class CombatPlayerMovement : MonoBehaviour
         MysticalAtk = (myStats.MysticalProwess) * (myStats.Level * LevelModifier);
         PhysicalDef = (myStats.PhysicalDefense) * (myStats.Level * LevelModifier);
         MysticalDef = (myStats.MysticalDefense) * (myStats.Level * LevelModifier);
+    }
+    public void CalculateAllModifiers()
+    {
+        CalculateStats();
+        List<EquipModifier> mods_ = new List<EquipModifier>();
+        for(int i=0;i<modifiers.Count;i++)
+        {
+            if(!modifiers[i].isMultiplicative)
+            {
+                mods_.Insert(0, modifiers[i]);
+            }
+            else
+            {
+                mods_.Add(modifiers[i]);
+            }
+        }
+        for (int i = 0; i < mods_.Count; i++)
+        {
+            ApplyModifier(mods_[i]);
+        }
+
+    }
+    //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
+    //public EquipmentStatBlock MeleeWeapon;
+   // public EquipmentStatBlock RangedWeapon;
+    //public EquipmentStatBlock Armor;
+    private void AddAllEquipmentMods()
+    {
+        modifiers.Clear();
+        modifiers.AddRange(MeleeWeapon.myModifiers);
+        modifiers.AddRange(RangedWeapon.myModifiers);
+        modifiers.AddRange(Armor.myModifiers);
+        foreach(EquipmentStatBlock block in Rings)
+        {
+            modifiers.AddRange(block.myModifiers);
+        }
+    }
+    private void ApplyModifier(EquipModifier mod_)
+    {
+        switch(mod_.affectedStat)
+        {
+            case Stat.HP:
+                maxHealth= AddOrMultiply(mod_.isMultiplicative, maxHealth, mod_.amount);
+                break;
+            case Stat.SP:
+                maxMana= AddOrMultiply(mod_.isMultiplicative, maxMana, mod_.amount);
+                break;
+            case Stat.PATK:
+                PhysicalAtk= AddOrMultiply(mod_.isMultiplicative, PhysicalAtk, mod_.amount);
+                break;
+            case Stat.MATK:
+                MysticalAtk= AddOrMultiply(mod_.isMultiplicative, MysticalAtk, mod_.amount);
+                break;
+            case Stat.PDEF:
+                PhysicalDef= AddOrMultiply(mod_.isMultiplicative, PhysicalDef, mod_.amount);
+                break;
+            case Stat.MDEF:
+                MysticalDef= AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+                break;
+        }
+    }
+    private float AddOrMultiply(bool multiply_,float A,float B)
+    {
+        if(multiply_)
+        {
+            return A * B;
+        }
+        else
+        {
+            return A + B;
+        }
     }
 }

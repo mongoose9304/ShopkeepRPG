@@ -8,7 +8,7 @@ public enum EquipType
 };
 public enum Stat
 {
-    HP,SP,PATK,PDEF,MATK,SDEF
+    HP,SP,PATK,PDEF,MATK,MDEF
 };
 public enum UniqueEquipEffect
 {
