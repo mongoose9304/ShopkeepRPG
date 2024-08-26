@@ -1064,18 +1064,21 @@ MonoBehaviour:
   - item:
       name: Rusty Spoon
       amount: 1
+      isNew: 0
     maxAmount: 5
-    chancesToSpawn: 50
+    chancesToSpawn: 5
   - item:
       name: Broken Sword
       amount: 1
+      isNew: 0
     maxAmount: 5
-    chancesToSpawn: 40
+    chancesToSpawn: 4
   - item:
       name: Apples
       amount: 1
+      isNew: 0
     maxAmount: 10
-    chancesToSpawn: 30
+    chancesToSpawn: 3
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
@@ -1381,7 +1384,7 @@ MonoBehaviour:
         BoundRenderer: {fileID: 2435166057637512102}
         Mode: 0
         PropertyName: _Tint
-        FlickerDuration: 0.2
+        FlickerDuration: 0.1
         FlickerPeriod: 0.04
         FlickerColor: {r: 0, g: 1, b: 0.8273995, a: 1}
         MaterialIndexes: 
@@ -1402,7 +1405,7 @@ MonoBehaviour:
   ChannelMode: 0
   Channel: 0
   MMChannelDefinition: {fileID: 0}
-  ShakeDuration: 0.5
+  ShakeDuration: 0.1
   PlayOnAwake: 0
   PermanentShake: 0
   Interruptible: 1
@@ -6544,7 +6547,7 @@ MonoBehaviour:
           InterruptsOnStop: 1
           NumberOfRepeats: 0
           RepeatForever: 0
-          DelayBetweenRepeats: 1
+          DelayBetweenRepeats: 0
           MMFeedbacksDirectionCondition: 0
           PlayDirection: 0
           ConstantIntensity: 0
@@ -6670,14 +6673,14 @@ MonoBehaviour:
         Owner: {fileID: 6735126338250919985}
         DebugActive: 0
         TargetShaker: {fileID: 3655942249840751984}
-        Duration: 0.5
+        Duration: 0.2
         ResetShakerValuesAfterShake: 1
         ResetTargetValuesAfterShake: 1
         ShakeSpeed: 20
-        ShakeRange: 50
+        ShakeRange: 75
         ShakeMainDirection: {x: 0, y: 1, z: 0}
-        RandomizeDirection: 0
-        ShakeAltDirection: {x: 0, y: 1, z: 0}
+        RandomizeDirection: 1
+        ShakeAltDirection: {x: 0, y: -1, z: 0}
         RandomizeDirectionOnPlay: 0
         AddDirectionalNoise: 1
         DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}

@@ -26,6 +26,10 @@ public class HomingAttack : MonoBehaviour
             rotation = Quaternion.LookRotation(direction);
             // slerp to the desired rotation over time
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, lookSpeed * Time.deltaTime);
+            if(!target.gameObject.activeInHierarchy)
+            {
+                target = null;
+            }
         }
        
 
