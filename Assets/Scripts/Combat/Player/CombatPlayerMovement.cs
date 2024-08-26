@@ -75,7 +75,8 @@ public class CombatPlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         AddAllEquipmentMods();
         CalculateAllModifiers();
-        combatActions.SetStats(PhysicalAtk, MysticalAtk);
+        SetArmorElements();
+        combatActions.SetStats(PhysicalAtk, MysticalAtk,RangedWeapon.myElement,MeleeWeapon.myElement);
         currentHealth = maxHealth;
         currentMana = maxMana;
     }
@@ -507,6 +508,24 @@ public class CombatPlayerMovement : MonoBehaviour
                 break;
             case Stat.MDEF:
                 MysticalDef= AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+                break;
+        }
+    }
+    private void SetArmorElements()
+    {
+        switch (Armor.myElement)
+        {
+            case Element.Fire:
+                myWeakness = Element.Water;
+                break;
+            case Element.Water:
+                myWeakness = Element.Earth;
+                break;
+            case Element.Air:
+                myWeakness = Element.Earth;
+                break;
+            case Element.Earth:
+                myWeakness = Element.Fire;
                 break;
         }
     }

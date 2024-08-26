@@ -13240,7 +13240,7 @@ MonoBehaviour:
   damage: 10
   hitStun: 1
   knockBack: 50
-  element: 4
+  element: 0
 --- !u!1 &398888725
 GameObject:
   m_ObjectHideFlags: 0
@@ -27428,6 +27428,7 @@ GameObject:
   - component: {fileID: 1219365492}
   - component: {fileID: 1219365493}
   - component: {fileID: 1219365494}
+  - component: {fileID: 1219365495}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -27469,6 +27470,7 @@ MonoBehaviour:
   currentEnemiesList: []
   timeBetweenEnemyListCleans: 2
   physicalHitEffects: {fileID: 1219365494}
+  airHitEffects: {fileID: 1219365495}
 --- !u!114 &1219365494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27482,6 +27484,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObjectToPool: {fileID: 4021103657954561961, guid: 79dd0aeecc7070b489edb699fde9ae63, type: 3}
+  PoolSize: 20
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
+--- !u!114 &1219365495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219365491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 9027514048236820045, guid: 5e1930b55d6fc1e4881923c6bcaa3067, type: 3}
   PoolSize: 20
   PoolCanExpand: 1
   MutualizeWaitingPools: 0

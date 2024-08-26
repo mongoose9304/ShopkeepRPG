@@ -18,6 +18,7 @@ public class EnemyManager : MonoBehaviour
 
     //hitParticles
     [SerializeField] protected MMMiniObjectPooler physicalHitEffects;
+    [SerializeField] protected MMMiniObjectPooler airHitEffects;
 
     private void Awake()
     {
@@ -145,6 +146,9 @@ public class EnemyManager : MonoBehaviour
         {
             case Element.Neutral:
                 obj = physicalHitEffects.GetPooledGameObject();
+                break;
+            case Element.Air:
+                obj = airHitEffects.GetPooledGameObject();
                 break;
             default:
                 return;

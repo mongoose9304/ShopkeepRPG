@@ -9,7 +9,7 @@ public class BasicMeleeObject : MonoBehaviour
     [SerializeField] private Quaternion startRotatonB;
     [SerializeField] private float attackDurationMax;
     private float attackDurationCurrent;
-    [SerializeField] PlayerDamageCollider damageCollider;
+    public PlayerDamageCollider damageCollider;
     [SerializeField] private float hitStun;
     [SerializeField] private GameObject weaponObject;
     

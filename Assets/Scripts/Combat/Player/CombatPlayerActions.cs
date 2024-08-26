@@ -9,10 +9,10 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private float BasicMeleeCooldownMax;
     private float BasicMeleeCooldown = 0.0f;
     [SerializeField] private GameObject BasicMeleePivotObject;
-    [SerializeField] BasicMeleeObject meleeObject;
+    public BasicMeleeObject meleeObject;
     [Header("BasicRanged")]
     [SerializeField] float basicRangedDamage;
-    [SerializeField] Element basicRangedElement;
+    public Element basicRangedElement;
     [SerializeField] private float fireRate;
     [SerializeField] private float fireCost;
     private float currentFireRate = 0.0f;
@@ -230,10 +230,10 @@ public class CombatPlayerActions : MonoBehaviour
     {
         myFamiliar.gameObject.SetActive(enable_);
     }
-    public void SetStats(float basicMeleeDamage,float basicRangedDamage_)
+    public void SetStats(float basicMeleeDamage,float basicRangedDamage_,Element rangedE_,Element meleeE_)
     {
-        meleeObject.SetDamage(basicMeleeDamage, Element.Neutral);
+        meleeObject.SetDamage(basicMeleeDamage, meleeE_);
         basicRangedDamage = basicRangedDamage_;
-        basicRangedElement = Element.Neutral;
+        basicRangedElement = rangedE_;
     }
 }
