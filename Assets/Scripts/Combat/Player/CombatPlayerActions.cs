@@ -11,6 +11,8 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private GameObject BasicMeleePivotObject;
     [SerializeField] BasicMeleeObject meleeObject;
     [Header("BasicRanged")]
+    [SerializeField] float basicRangedDamage;
+    [SerializeField] Element basicRangedElement;
     [SerializeField] private float fireRate;
     [SerializeField] private float fireCost;
     private float currentFireRate = 0.0f;
@@ -147,6 +149,8 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = combatMovement.GetCurrentTarget().transform;
             else
                 tempObj.GetComponent<HomingAttack>().target = null;
+            tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
+            tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
             currentFireRate = fireRate;
         }
     }
@@ -225,5 +229,11 @@ public class CombatPlayerActions : MonoBehaviour
     public void DisableFamiliar(bool enable_)
     {
         myFamiliar.gameObject.SetActive(enable_);
+    }
+    public void SetStats(float basicMeleeDamage,float basicRangedDamage_)
+    {
+        meleeObject.SetDamage(basicMeleeDamage, Element.Neutral);
+        basicRangedDamage = basicRangedDamage_;
+        basicRangedElement = Element.Neutral;
     }
 }

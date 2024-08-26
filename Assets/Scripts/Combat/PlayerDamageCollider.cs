@@ -9,7 +9,6 @@ public class PlayerDamageCollider : MonoBehaviour
     public float hitStun;
     public float knockBack;
     public Element element;
-    public BasicMeleeObject meleeObject;
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Enemy")

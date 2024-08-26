@@ -13241,7 +13241,6 @@ MonoBehaviour:
   hitStun: 1
   knockBack: 50
   element: 4
-  meleeObject: {fileID: 1462204833}
 --- !u!1 &398888725
 GameObject:
   m_ObjectHideFlags: 0
@@ -14374,6 +14373,7 @@ MonoBehaviour:
   - {fileID: 3451345897431577424}
   timesYouHaveDied: 0
   sosDecreasePerDeath: 2
+  myStats: {fileID: 11400000, guid: 10e493cbffebd844691b21bdd2c5daba, type: 2}
   maxdashCoolDown: 0.25
   moveSpeed: 5
   moveSpeedModifier: 1
@@ -14395,8 +14395,13 @@ MonoBehaviour:
   minDistanceBetweenRetargets: 0.25
   MaxLockOnDistance: 10
   maxHealth: 100
-  myWeakness: 0
   maxMana: 100
+  myWeakness: 0
+  PhysicalAtk: 0
+  MysticalAtk: 0
+  PhysicalDef: 0
+  MysticalDef: 0
+  LevelModifier: 1.05
   maxManaRechargeDelay: 2
   manaRechargeRate: 25
   healthBar: {fileID: 332624534}
@@ -32127,8 +32132,7 @@ MonoBehaviour:
   startRotaton: {x: 0, y: -120, z: 0, w: 0}
   startRotatonB: {x: 0, y: 0, z: 0, w: 0}
   attackDurationMax: 0.5
-  damage: 10
-  damageType: 0
+  damageCollider: {fileID: 377811247}
   hitStun: 0
   weaponObject: {fileID: 377811242}
 --- !u!1 &1462254742

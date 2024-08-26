@@ -9,8 +9,7 @@ public class BasicMeleeObject : MonoBehaviour
     [SerializeField] private Quaternion startRotatonB;
     [SerializeField] private float attackDurationMax;
     private float attackDurationCurrent;
-    [SerializeField] private float damage;
-    [SerializeField] private Element damageType;
+    [SerializeField] PlayerDamageCollider damageCollider;
     [SerializeField] private float hitStun;
     [SerializeField] private GameObject weaponObject;
     
@@ -78,6 +77,11 @@ public class BasicMeleeObject : MonoBehaviour
     public void ReleaseMeleeButton()
     {
         queuedAttack = false;
+    }
+    public void SetDamage(float damage_,Element damageType_)
+    {
+        damageCollider.damage = damage_;
+        damageCollider.element = damageType_;
     }
   
    

@@ -14,7 +14,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public int timesYouHaveDied;
     [SerializeField] float sosDecreasePerDeath;
 
-
+    public StatBlock myStats;
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
@@ -42,10 +42,16 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] float minDistanceBetweenRetargets;
     [SerializeField] float MaxLockOnDistance;
    
-    //put stats in a script where all player stats can be held later. Only here for temp testing
+    //Stats Calculated based on Stat block
     public float maxHealth;
-    public Element myWeakness;
     public float maxMana;
+    public Element myWeakness;
+    public float PhysicalAtk;
+    public float MysticalAtk;
+    public float PhysicalDef;
+    public float MysticalDef;
+    public float LevelModifier;
+
     public float maxManaRechargeDelay;
     public float manaRechargeRate;
     float currentHealth;
@@ -59,6 +65,8 @@ public class CombatPlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        CalculateStats();
+        combatActions.SetStats(PhysicalAtk, MysticalAtk);
         currentHealth = maxHealth;
         currentMana = maxMana;
     }
@@ -282,14 +290,25 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         return currentTarget;
     }
-    public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
         if(isInSaveYourSoulMode){ return; }
+        float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
-            damage_ *= 1.5f;
+            newDamage *= 1.5f;
         }
-        currentHealth -= damage_;
+        if(isMystical)
+        {
+            newDamage -= MysticalDef;
+        }
+        else
+        {
+            newDamage -= PhysicalDef;
+        }
+        if (newDamage < damage_ * 0.05f)
+            newDamage = damage_ * 0.05f;
+        currentHealth -= newDamage;
         if (currentHealth <= 0)
         {
             Death();
@@ -412,5 +431,14 @@ public class CombatPlayerMovement : MonoBehaviour
         if (currentMana >= maxMana)
             currentMana = maxMana;
         manaBar.SetBar01(currentMana / maxMana);
+    }
+    public void CalculateStats()
+    {
+        maxHealth = (myStats.Vitality * 10) * (myStats.Level * LevelModifier);
+        maxMana = (myStats.Soul * 10) * (myStats.Level * LevelModifier);
+        PhysicalAtk = (myStats.PhysicalProwess) * (myStats.Level * LevelModifier);
+        MysticalAtk = (myStats.MysticalProwess) * (myStats.Level * LevelModifier);
+        PhysicalDef = (myStats.PhysicalDefense) * (myStats.Level * LevelModifier);
+        MysticalDef = (myStats.MysticalDefense) * (myStats.Level * LevelModifier);
     }
 }
