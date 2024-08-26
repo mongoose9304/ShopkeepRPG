@@ -19,6 +19,8 @@ public class EnemyManager : MonoBehaviour
     //hitParticles
     [SerializeField] protected MMMiniObjectPooler physicalHitEffects;
     [SerializeField] protected MMMiniObjectPooler airHitEffects;
+    [SerializeField] protected MMMiniObjectPooler fireHitEffects;
+    [SerializeField] protected MMMiniObjectPooler waterHitEffects;
 
     private void Awake()
     {
@@ -149,6 +151,12 @@ public class EnemyManager : MonoBehaviour
                 break;
             case Element.Air:
                 obj = airHitEffects.GetPooledGameObject();
+                break;
+            case Element.Fire:
+                obj = fireHitEffects.GetPooledGameObject();
+                break;
+            case Element.Water:
+                obj = waterHitEffects.GetPooledGameObject();
                 break;
             default:
                 return;
