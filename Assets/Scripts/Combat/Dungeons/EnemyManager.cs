@@ -15,7 +15,10 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> currentEnemiesList = new List<GameObject>();
     public float timeBetweenEnemyListCleans;
     float currentTimeBetweenEnemyListCleans;
-    
+
+    //hitParticles
+    [SerializeField] protected MMMiniObjectPooler physicalHitEffects;
+
     private void Awake()
     {
         instance = this;
@@ -134,6 +137,22 @@ public class EnemyManager : MonoBehaviour
     public void EnemyDeath()
     {
         playerMovement.GetAKill();
+    }
+    public void ApplyHitEffect(Element element_, Transform location_)
+    {
+        GameObject obj;
+        switch(element_)
+        {
+            case Element.Neutral:
+                obj = physicalHitEffects.GetPooledGameObject();
+                break;
+            default:
+                return;
+                
+        }
+        obj.transform.position = location_.position;
+        obj.transform.rotation = location_.rotation;
+        obj.SetActive(true);
     }
 
 }

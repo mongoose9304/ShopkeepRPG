@@ -175,7 +175,8 @@ public class BasicEnemy : MonoBehaviour
         {
             damage_ *= 1.5f;
         }
-        damage_=Mathf.Round(damage_);
+        EnemyManager.instance.ApplyHitEffect(element_,transform);
+        damage_ =Mathf.Round(damage_);
         currentHealth -= damage_;
         if(currentHealth<=0)
         {
