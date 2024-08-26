@@ -51,6 +51,10 @@ public class CombatPlayerMovement : MonoBehaviour
     public float PhysicalDef;
     public float MysticalDef;
     public float LevelModifier;
+    //Equipment
+    public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
+
+
 
     public float maxManaRechargeDelay;
     public float manaRechargeRate;
