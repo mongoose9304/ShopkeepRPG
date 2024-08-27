@@ -31,7 +31,7 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
-        NextLevel(SinType.Lust);
+        NextLevel(SinType.Wrath);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -194,6 +194,12 @@ public class DungeonManager : MonoBehaviour
                 case "Lust":
                     CombatExtrenalModManager.instance.AddModToAllPlayers("Lust");
                     break;
+                case "Envy":
+                    LootManager.instance.lootDropRateMultiplier += 0.2f;
+                    break;
+                case "Wrath":
+                    //Recruit monsters easier 
+                    break;
 
             }
         }
@@ -229,6 +235,12 @@ public class DungeonManager : MonoBehaviour
                     break;
                 case "Lust":
                     CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Lust");
+                    break;
+                case "Envy":
+                    LootManager.instance.lootDropRateMultiplier -= 0.2f;
+                    break;
+                case "Wrath":
+                    //recruit monsters easier 
                     break;
 
             }

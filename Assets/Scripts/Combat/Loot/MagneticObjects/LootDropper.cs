@@ -11,7 +11,7 @@ public class LootDropper : MonoBehaviour
     public GameObject lootObject;
     GameObject temp;
     public bool dropNothing;
-    public void DropItems(float rateMultiplier=1.0f)
+    public void DropItems()
     {
         if (dropNothing)
             return;
@@ -31,7 +31,7 @@ public class LootDropper : MonoBehaviour
 
 
     }
-    public void PopulateLootDrop(float rateMultiplier = 1.0f)
+    public void PopulateLootDrop()
     {
         if (DropOnlyOneItem)
         {
@@ -46,7 +46,7 @@ public class LootDropper : MonoBehaviour
             {
                 for (int i = 0; i < tableItem.maxAmount; i++)
                 {
-                    if ((Random.Range(0, 100) * rateMultiplier) <= tableItem.chancesToSpawn)
+                    if ((Random.Range(0, 100) * LootManager.instance.lootDropRateMultiplier) <= tableItem.chancesToSpawn)
                     {
                         AddLootItem(tableItem.item);
                     }
