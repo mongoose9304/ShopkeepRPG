@@ -24,7 +24,7 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager instance;
     public LootItem testItem;
-    private float cashMultiplier = 1;
+    [SerializeField] private float cashMultiplier = 1;
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
     public MMMiniObjectPooler pooler;
@@ -118,7 +118,7 @@ public class LootManager : MonoBehaviour
     }
     public void AddDemonMoney(int money_)
     {
-        demonCurrentCash+= Mathf.RoundToInt(money_ * cashMultiplier);
+        demonCurrentCash += Mathf.RoundToInt(money_ * cashMultiplier);
         demonCurrentCashText.text = demonCurrentCash.ToString("#,#");
            foreach(MMF_Player player_ in demonCashPickUpFeedBacks)
         {
@@ -136,6 +136,7 @@ public class LootManager : MonoBehaviour
     }
     public void AddRegularMoney(int money_)
     {
+       
         regularCurrentCash+=Mathf.RoundToInt(money_ * cashMultiplier);
         regularCurrentCashText.text = regularCurrentCash.ToString("#,#");
         foreach (MMF_Player player_ in regularCashPickUpFeedBacks)

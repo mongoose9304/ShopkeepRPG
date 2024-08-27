@@ -17,9 +17,12 @@ public class DungeonManager : MonoBehaviour
     public List<Sprite> resourceSprites = new List<Sprite>();
     public static DungeonManager instance;
     public Image[] curseImages;
+    public Image[] blessingImages;
     public Sprite[] SinSprites;
     public List<BasicCurse> currentCurses;
+    public List<BasicCurse> currentBlessings;
     [SerializeField] List<BasicCurse> availableCurses;
+    [SerializeField] List<BasicCurse> availableSinBlessings;
     private void Awake()
     {
         instance = this;
@@ -27,6 +30,7 @@ public class DungeonManager : MonoBehaviour
     }
     private void Start()
     {
+        ClearBlessings();
         NextLevel(SinType.Greed);
     }
 
@@ -69,6 +73,8 @@ public class DungeonManager : MonoBehaviour
         ChangeLevel(d);
         yield return new WaitForSeconds(0.201f);
         surface.BuildNavMesh();
+        yield return new WaitForSeconds(0.01f);
+        AddSinBlessing(currentSin);
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
         CombatPlayerManager.instance.ReturnFamiliars();
     }
@@ -83,6 +89,18 @@ public class DungeonManager : MonoBehaviour
             CurseEffect(currentCurses[i].name,true);
         }
         currentCurses.Clear();
+    }
+    public void ClearBlessings()
+    {
+        for (int i = 0; i < blessingImages.Length; i++)
+        {
+            blessingImages[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < currentCurses.Count; i++)
+        {
+            CurseEffect(blessingImages[i].name, true);
+        }
+        currentBlessings.Clear();
     }
     public void AddRandomCurse(int severity_)
     {
@@ -104,6 +122,11 @@ public class DungeonManager : MonoBehaviour
     }
     public void AddCurse(BasicCurse curse_)
     {
+        foreach (BasicCurse c_ in currentCurses)
+        {
+            if (c_.name == curse_.name)
+                return;
+        }
         currentCurses.Add(curse_);
         curseImages[currentCurses.Count - 1].sprite = currentCurses[currentCurses.Count - 1].icon;
         curseImages[currentCurses.Count - 1].gameObject.SetActive(true);
@@ -111,13 +134,37 @@ public class DungeonManager : MonoBehaviour
         TextPopUpManager.instance.AddText(curse_.description, curse_.name);
     }
 
+    public void AddBlessing(BasicCurse curse_)
+    {
+        foreach(BasicCurse c_ in currentBlessings)
+        {
+            if (c_.name == curse_.name)
+                return;
+        }
+        currentBlessings.Add(curse_);
+        blessingImages[currentBlessings.Count - 1].sprite = currentBlessings[currentBlessings.Count - 1].icon;
+        blessingImages[currentBlessings.Count - 1].gameObject.SetActive(true);
+        CurseEffect(curse_.name);
+        TextPopUpManager.instance.AddText(curse_.description, curse_.name);
+    }
+    public void AddSinBlessing(SinType sin_)
+    {
+        foreach(BasicCurse c_ in availableSinBlessings)
+        {
+            if(c_.name==sin_.ToString())
+            {
+                AddBlessing(c_);
+            }
+        }
+    }
 
     private void CurseEffect(string name_,bool removeCurse=false)
     {
-        if (removeCurse)
+        if (!removeCurse)
         {
-            switch (name)
+            switch (name_)
             {
+                //curses
                 case "Poverty":
                     LootManager.instance.AddToCashMultiplier(-0.2f);
                     break;
@@ -125,17 +172,33 @@ public class DungeonManager : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.2f;
                     break;
 
+                    //blessings
+                case "Greed":
+                    LootManager.instance.AddToCashMultiplier(0.25f);
+                    break;
+                case "Sloth":
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier += 0.25f;
+                    break;
+
             }
         }
         else
         {
-            switch (name)
+            switch (name_)
             {
+                //curses
                 case "Poverty":
                     LootManager.instance.AddToCashMultiplier(0.2f);
                     break;
                 case "Slow":
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier += 0.2f;
+                    break;
+                    //blessings  
+                case "Greed":
+                    LootManager.instance.AddToCashMultiplier(-0.25f);
+                    break;
+                case "Sloth":
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.25f;
                     break;
 
             }

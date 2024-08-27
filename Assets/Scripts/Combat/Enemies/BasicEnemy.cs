@@ -213,7 +213,6 @@ public class BasicEnemy : MonoBehaviour
             if (isElite)
             {
                 CombatPickupManager.instance.CreateHealthPickup(transform);
-                CombatPickupManager.instance.CreateManaPickup(transform);
             }
             else
             {
