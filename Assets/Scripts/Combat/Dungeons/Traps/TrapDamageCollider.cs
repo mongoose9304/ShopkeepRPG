@@ -7,11 +7,12 @@ public class TrapDamageCollider : MonoBehaviour
     public float damage;
     public bool canDamageEnemies;
     public Element element;
+    public bool isMysicalDamage;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Player")
         {
-            other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, element, 0, this.gameObject);
+            other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, element, 0, this.gameObject,isMysicalDamage);
         }
         else if(other.tag == "Familiar")
         {

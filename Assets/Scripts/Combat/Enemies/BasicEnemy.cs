@@ -21,6 +21,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] protected float attackDistance;
     [SerializeField] protected float knockBackMax;
     [SerializeField] protected float damage;
+    [SerializeField] protected bool isMysticalDamage;
     LootDropper lootDropper;
 
     [Header("CurrentValues")]

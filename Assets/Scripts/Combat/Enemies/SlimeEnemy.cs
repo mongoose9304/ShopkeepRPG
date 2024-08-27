@@ -47,7 +47,7 @@ public class SlimeEnemy : BasicEnemy
         {
             if (hitCollider.tag == "Player")
             {
-                hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage,0,myElement,0,this.gameObject);
+                hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage,0,myElement,0,this.gameObject,isMysticalDamage);
             }
             if (hitCollider.tag == "Familiar")
             {

@@ -31,7 +31,7 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
-        NextLevel(SinType.Gluttony);
+        NextLevel(SinType.Vainglory);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -182,6 +182,12 @@ public class DungeonManager : MonoBehaviour
                 case "Gluttony":
                     CombatExtrenalModManager.instance.AddModToAllPlayers("Gluttony");
                     break;
+                case "Pride":
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Pride");
+                    break;
+                case "Vainglory":
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Vainglory");
+                    break;
 
             }
         }
@@ -205,6 +211,12 @@ public class DungeonManager : MonoBehaviour
                     break;
                 case "Gluttony":
                     CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Gluttony");
+                    break;
+                case "Pride":
+                    CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Pride");
+                    break;
+                case "Vainglory":
+                    CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Vainglory");
                     break;
 
             }

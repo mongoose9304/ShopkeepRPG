@@ -6,6 +6,7 @@ public class EnemyProjectile : MonoBehaviour
 {
     public float damage;
     public Element myElement;
+    public bool isMysticalDamage;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Wall")
@@ -14,7 +15,7 @@ public class EnemyProjectile : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
             gameObject.SetActive(false);
         }
         else if (other.tag == "Familiar")
