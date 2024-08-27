@@ -12,11 +12,12 @@ public enum Stat
 };
 public enum UniqueEquipEffect
 {
-    None, LifeSteal,SoulSteal,Thorns
+    None, LifeSteal,SoulSteal,Thorns,HealthRegen
 };
 [System.Serializable]
 public struct EquipModifier
 {
+    public string modName;
     public bool isMultiplicative;
     public Stat affectedStat;
     public float amount;

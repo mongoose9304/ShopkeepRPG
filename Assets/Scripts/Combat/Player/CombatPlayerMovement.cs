@@ -51,7 +51,9 @@ public class CombatPlayerMovement : MonoBehaviour
     public float PhysicalDef;
     public float MysticalDef;
     public float LevelModifier;
-    public List<EquipModifier> modifiers = new List<EquipModifier>();
+    public float HealthRegenPercent;
+    public List<EquipModifier> equipModifiers = new List<EquipModifier>();
+    public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     //Equipment
     public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
     public EquipmentStatBlock MeleeWeapon;
@@ -91,6 +93,7 @@ public class CombatPlayerMovement : MonoBehaviour
             SaveYourSoulUpdate();
         }
         ChargeMana();
+        RegenHealth();
         if (combatActions.isBusy)
             return;
         GetInput();
@@ -442,6 +445,17 @@ public class CombatPlayerMovement : MonoBehaviour
             currentMana = maxMana;
         manaBar.SetBar01(currentMana / maxMana);
     }
+    private void RegenHealth()
+    {
+        if (HealthRegenPercent == 0)
+            return;
+        currentHealth += HealthRegenPercent*maxHealth * Time.deltaTime;
+
+        if (currentHealth >= maxHealth)
+            currentHealth = maxHealth;
+        healthBar.SetBar01(currentHealth / maxHealth);
+
+    }
     private void CalculateStats()
     {
         maxHealth = (myStats.Vitality * 10) * (myStats.Level * LevelModifier);
@@ -450,26 +464,42 @@ public class CombatPlayerMovement : MonoBehaviour
         MysticalAtk = (myStats.MysticalProwess) * (myStats.Level * LevelModifier);
         PhysicalDef = (myStats.PhysicalDefense) * (myStats.Level * LevelModifier);
         MysticalDef = (myStats.MysticalDefense) * (myStats.Level * LevelModifier);
+        HealthRegenPercent = 0;
     }
     public void CalculateAllModifiers()
     {
         CalculateStats();
         List<EquipModifier> mods_ = new List<EquipModifier>();
-        for(int i=0;i<modifiers.Count;i++)
+        for(int i=0;i< equipModifiers.Count;i++)
         {
-            if(!modifiers[i].isMultiplicative)
+            if(!equipModifiers[i].isMultiplicative)
             {
-                mods_.Insert(0, modifiers[i]);
+                mods_.Insert(0, equipModifiers[i]);
             }
             else
             {
-                mods_.Add(modifiers[i]);
+                mods_.Add(equipModifiers[i]);
             }
         }
+        for (int i = 0; i < externalModifiers.Count; i++)
+        {
+            if (!externalModifiers[i].isMultiplicative)
+            {
+                mods_.Insert(0, externalModifiers[i]);
+            }
+            else
+            {
+                mods_.Add(externalModifiers[i]);
+            }
+        }
+
+
         for (int i = 0; i < mods_.Count; i++)
         {
             ApplyModifier(mods_[i]);
         }
+        healthBar.SetBar01(currentHealth / maxHealth);
+        manaBar.SetBar01(currentMana / maxMana);
 
     }
     //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
@@ -478,36 +508,77 @@ public class CombatPlayerMovement : MonoBehaviour
     //public EquipmentStatBlock Armor;
     private void AddAllEquipmentMods()
     {
-        modifiers.Clear();
-        modifiers.AddRange(MeleeWeapon.myModifiers);
-        modifiers.AddRange(RangedWeapon.myModifiers);
-        modifiers.AddRange(Armor.myModifiers);
+        equipModifiers.Clear();
+        equipModifiers.AddRange(MeleeWeapon.myModifiers);
+        equipModifiers.AddRange(RangedWeapon.myModifiers);
+        equipModifiers.AddRange(Armor.myModifiers);
         foreach(EquipmentStatBlock block in Rings)
         {
-            modifiers.AddRange(block.myModifiers);
+            equipModifiers.AddRange(block.myModifiers);
+        }
+    }
+    public void ClearExternalMods(bool recalculate_)
+    {
+        externalModifiers.Clear();
+        if(recalculate_)
+        {
+            CalculateAllModifiers();
+        }
+    }
+    public void AddExternalMod(EquipModifier mod_)
+    {
+       foreach(EquipModifier modX in externalModifiers)
+        {
+            if (modX.modName == mod_.modName)
+                return;
+        }
+        externalModifiers.Add(mod_);
+        CalculateAllModifiers();
+    }
+    public void RemoveExternalMod(EquipModifier mod_)
+    {
+        for(int i=0;i<externalModifiers.Count;i++)
+        {
+            if (externalModifiers[i].modName == mod_.modName)
+            {
+                externalModifiers.Remove(externalModifiers[i]);
+                CalculateAllModifiers();
+                return;
+            }
         }
     }
     private void ApplyModifier(EquipModifier mod_)
     {
-        switch(mod_.affectedStat)
+        if (mod_.uniqueEffect == UniqueEquipEffect.None)
         {
-            case Stat.HP:
-                maxHealth= AddOrMultiply(mod_.isMultiplicative, maxHealth, mod_.amount);
-                break;
-            case Stat.SP:
-                maxMana= AddOrMultiply(mod_.isMultiplicative, maxMana, mod_.amount);
-                break;
-            case Stat.PATK:
-                PhysicalAtk= AddOrMultiply(mod_.isMultiplicative, PhysicalAtk, mod_.amount);
-                break;
-            case Stat.MATK:
-                MysticalAtk= AddOrMultiply(mod_.isMultiplicative, MysticalAtk, mod_.amount);
-                break;
-            case Stat.PDEF:
-                PhysicalDef= AddOrMultiply(mod_.isMultiplicative, PhysicalDef, mod_.amount);
-                break;
-            case Stat.MDEF:
-                MysticalDef= AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+            switch (mod_.affectedStat)
+            {
+                case Stat.HP:
+                    maxHealth = AddOrMultiply(mod_.isMultiplicative, maxHealth, mod_.amount);
+                    break;
+                case Stat.SP:
+                    maxMana = AddOrMultiply(mod_.isMultiplicative, maxMana, mod_.amount);
+                    break;
+                case Stat.PATK:
+                    PhysicalAtk = AddOrMultiply(mod_.isMultiplicative, PhysicalAtk, mod_.amount);
+                    break;
+                case Stat.MATK:
+                    MysticalAtk = AddOrMultiply(mod_.isMultiplicative, MysticalAtk, mod_.amount);
+                    break;
+                case Stat.PDEF:
+                    PhysicalDef = AddOrMultiply(mod_.isMultiplicative, PhysicalDef, mod_.amount);
+                    break;
+                case Stat.MDEF:
+                    MysticalDef = AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+                    break;
+            }
+        }
+        switch (mod_.uniqueEffect)
+        {
+            case UniqueEquipEffect.None:
+                return;
+            case UniqueEquipEffect.HealthRegen:
+                HealthRegenPercent += mod_.amount;
                 break;
         }
     }

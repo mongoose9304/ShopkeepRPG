@@ -47,4 +47,20 @@ public class CombatPlayerManager : MonoBehaviour
             player_.combatMovement.timesYouHaveDied = 0;
         }
     }
+    public void AddModiferToAllPlayers(ExternalModifier mod_)
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            foreach (EquipModifier modx in mod_.myModifiers)
+                player_.combatMovement.AddExternalMod(modx);
+        }
+    }
+    public void RemoveModiferFromAllPlayers(ExternalModifier mod_)
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            foreach (EquipModifier modx in mod_.myModifiers)
+                player_.combatMovement.RemoveExternalMod(modx);
+        }
+    }
 }

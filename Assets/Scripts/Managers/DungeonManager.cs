@@ -31,7 +31,7 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
-        NextLevel(SinType.Greed);
+        NextLevel(SinType.Gluttony);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -179,6 +179,9 @@ public class DungeonManager : MonoBehaviour
                 case "Sloth":
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier += 0.25f;
                     break;
+                case "Gluttony":
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Gluttony");
+                    break;
 
             }
         }
@@ -199,6 +202,9 @@ public class DungeonManager : MonoBehaviour
                     break;
                 case "Sloth":
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.25f;
+                    break;
+                case "Gluttony":
+                    CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Gluttony");
                     break;
 
             }
