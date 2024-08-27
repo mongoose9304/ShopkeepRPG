@@ -52,6 +52,8 @@ public class CombatPlayerMovement : MonoBehaviour
     public float MysticalDef;
     public float LevelModifier;
     public float HealthRegenPercent;
+    public float ManaRegenPercent;
+    public float playerLuck;
     public List<EquipModifier> equipModifiers = new List<EquipModifier>();
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     //Equipment
@@ -440,7 +442,10 @@ public class CombatPlayerMovement : MonoBehaviour
         }
       
         currentMana += manaRechargeRate * Time.deltaTime;
-
+        if(ManaRegenPercent!=0)
+        {
+            currentMana += ManaRegenPercent*maxMana * Time.deltaTime;
+        }
         if (currentMana >= maxMana)
             currentMana = maxMana;
         manaBar.SetBar01(currentMana / maxMana);
@@ -464,7 +469,9 @@ public class CombatPlayerMovement : MonoBehaviour
         MysticalAtk = (myStats.MysticalProwess) * (myStats.Level * LevelModifier);
         PhysicalDef = (myStats.PhysicalDefense) * (myStats.Level * LevelModifier);
         MysticalDef = (myStats.MysticalDefense) * (myStats.Level * LevelModifier);
+        playerLuck = (myStats.Luck) * (myStats.Level * LevelModifier);
         HealthRegenPercent = 0;
+        ManaRegenPercent = 0;
     }
     public void CalculateAllModifiers()
     {
@@ -498,6 +505,8 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             ApplyModifier(mods_[i]);
         }
+        currentHealth = maxHealth;
+        currentMana = maxMana;
         healthBar.SetBar01(currentHealth / maxHealth);
         manaBar.SetBar01(currentMana / maxMana);
 
@@ -571,6 +580,9 @@ public class CombatPlayerMovement : MonoBehaviour
                 case Stat.MDEF:
                     MysticalDef = AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
                     break;
+                case Stat.LUCK:
+                    playerLuck = AddOrMultiply(mod_.isMultiplicative, playerLuck, mod_.amount);
+                    break;
             }
         }
         switch (mod_.uniqueEffect)
@@ -579,6 +591,9 @@ public class CombatPlayerMovement : MonoBehaviour
                 return;
             case UniqueEquipEffect.HealthRegen:
                 HealthRegenPercent += mod_.amount;
+                break;
+            case UniqueEquipEffect.ManaRegen:
+                ManaRegenPercent += mod_.amount;
                 break;
         }
     }

@@ -31,7 +31,7 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
-        NextLevel(SinType.Vainglory);
+        NextLevel(SinType.Lust);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -188,6 +188,12 @@ public class DungeonManager : MonoBehaviour
                 case "Vainglory":
                     CombatExtrenalModManager.instance.AddModToAllPlayers("Vainglory");
                     break;
+                case "Capriciousness":
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Capriciousness");
+                    break;
+                case "Lust":
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Lust");
+                    break;
 
             }
         }
@@ -217,6 +223,12 @@ public class DungeonManager : MonoBehaviour
                     break;
                 case "Vainglory":
                     CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Vainglory");
+                    break;
+                case "Capriciousness":
+                    CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Capriciousness");
+                    break;
+                case "Lust":
+                    CombatExtrenalModManager.instance.RemoveModFromAllPlayers("Lust");
                     break;
 
             }

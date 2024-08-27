@@ -8,11 +8,11 @@ public enum EquipType
 };
 public enum Stat
 {
-    HP,SP,PATK,PDEF,MATK,MDEF
+    HP,SP,PATK,PDEF,MATK,MDEF,LUCK
 };
 public enum UniqueEquipEffect
 {
-    None, LifeSteal,SoulSteal,Thorns,HealthRegen
+    None, LifeSteal,SoulSteal,Thorns,HealthRegen,ManaRegen
 };
 [System.Serializable]
 public struct EquipModifier
