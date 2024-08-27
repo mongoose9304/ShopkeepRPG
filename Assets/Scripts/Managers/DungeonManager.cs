@@ -4,25 +4,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.AI.Navigation;
 
+/// <summary>
+/// The singleton class that will handle loading the dungeon levels, winning and losing the game and Player buffs/Debuffs
+/// </summary>
 public class DungeonManager : MonoBehaviour
 {
+    [Tooltip("The singleton instance")]
+    public static DungeonManager instance;
+    [Tooltip("The navmesh must be stored like this so we can rebuild it when loading new levels")]
     public NavMeshSurface surface;
+    [Tooltip("The dungeon that is currently being played")]
     public BasicDungeon currentDungeon;
+    [Tooltip("How many dungeons you have cleared this session")]
     [SerializeField] int dungeonsCleared;
+    [Tooltip("The dungeons to load in order ")]
     public List<BasicDungeon> dungeonList = new List<BasicDungeon>();
+    [Tooltip("The current Sin, used for dynamically changing elements of the dungeon")]
     public SinType currentSin;
-    public GameObject victoryLevel;
-    public GameObject victoryPlayerPos;
     [Tooltip("Sprites for collected resources ")]
     public List<Sprite> resourceSprites = new List<Sprite>();
-    public static DungeonManager instance;
-    public Image[] curseImages;
-    public Image[] blessingImages;
-    public Sprite[] SinSprites;
+    [Tooltip("Current Curses on Player, Reset when changing levels")]
     public List<BasicCurse> currentCurses;
+    [Tooltip("Current Buffs on Player")]
     public List<BasicCurse> currentBlessings;
     [SerializeField] List<BasicCurse> availableCurses;
+    [Tooltip("REFERENCE to BLESSINGS PROVIDED BY THE Sins UI")]
     [SerializeField] List<BasicCurse> availableSinBlessings;
+    [Tooltip("REFERENCE to the location for displaying the win/loss cutscene")]
+    public GameObject victoryLevel;
+    [Tooltip("REFERENCE to the location the player stands during the win/loss cutscene")]
+    public GameObject victoryPlayerPos;
+    [Tooltip("REFERENCE to slots for curses on the UI")]
+    public Image[] curseImages;
+    [Tooltip("REFERENCE to slots for blessings on the UI")]
+    public Image[] blessingImages;
+    [Tooltip("REFERENCE to sprites used to represent the sins")]
+    public Sprite[] SinSprites;
     private void Awake()
     {
         instance = this;
@@ -37,7 +54,9 @@ public class DungeonManager : MonoBehaviour
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
     public int GetEliteEnemyLevel() { return currentDungeon.eliteEnemyLevel; }
 
-
+    /// <summary>
+    /// Change the level and clean up old one
+    /// </summary>
     public void ChangeLevel(BasicDungeon dungeon_)
     {
         currentDungeon = dungeon_;
@@ -52,6 +71,9 @@ public class DungeonManager : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Advance to the next level and apply its Sin changes
+    /// </summary>
     public void NextLevel(SinType sin_)
     {
         dungeonsCleared += 1;
@@ -66,6 +88,9 @@ public class DungeonManager : MonoBehaviour
         StartCoroutine(WaitAFrameBeforeMoving());
 
     }
+    /// <summary>
+    /// Used to wait a few frame to ensure everything loads correctly 
+    /// </summary>
     IEnumerator WaitAFrameBeforeMoving()
     {
         yield return new WaitForSeconds(0.001f);
@@ -78,6 +103,9 @@ public class DungeonManager : MonoBehaviour
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
         CombatPlayerManager.instance.ReturnFamiliars();
     }
+    /// <summary>
+    /// Remove all curses from the player
+    /// </summary>
     public void ClearCurses()
     {
         for(int i=0;i <curseImages.Length;i++)
@@ -90,6 +118,9 @@ public class DungeonManager : MonoBehaviour
         }
         currentCurses.Clear();
     }
+    /// <summary>
+    /// Remove all blessings from the player
+    /// </summary>
     public void ClearBlessings()
     {
         for (int i = 0; i < blessingImages.Length; i++)
@@ -102,6 +133,9 @@ public class DungeonManager : MonoBehaviour
         }
         currentBlessings.Clear();
     }
+    /// <summary>
+    /// Add a random curse to the player. The curse will be of a level of severity supplied 
+    /// </summary>
     public void AddRandomCurse(int severity_)
     {
         if (currentCurses.Count == availableCurses.Count)
@@ -120,6 +154,9 @@ public class DungeonManager : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Add a specific curse to the player 
+    /// </summary>
     public void AddCurse(BasicCurse curse_)
     {
         foreach (BasicCurse c_ in currentCurses)
@@ -133,7 +170,9 @@ public class DungeonManager : MonoBehaviour
         CurseEffect(curse_.name);
         TextPopUpManager.instance.AddText(curse_.description, curse_.name);
     }
-
+    /// <summary>
+    /// Add a specific blessing to the player 
+    /// </summary>
     public void AddBlessing(BasicCurse curse_)
     {
         foreach(BasicCurse c_ in currentBlessings)
@@ -147,6 +186,9 @@ public class DungeonManager : MonoBehaviour
         CurseEffect(curse_.name);
         TextPopUpManager.instance.AddText(curse_.description, curse_.name);
     }
+    /// <summary>
+    /// Add the blessing for entering a specific Sin domain
+    /// </summary>
     public void AddSinBlessing(SinType sin_)
     {
         foreach(BasicCurse c_ in availableSinBlessings)
@@ -157,7 +199,9 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Apply or remove a curses effect, also does blessings 
+    /// </summary>
     private void CurseEffect(string name_,bool removeCurse=false)
     {
         if (!removeCurse)
@@ -246,6 +290,9 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Stop playing combat, display your score then return to the overworld
+    /// </summary>
     public void WinLevel(bool hasLost_=false)
     {
         CombatPlayerManager.instance.GetPlayer(0).gameObject.GetComponent<CombatPlayerMovement>().enabled = false;
