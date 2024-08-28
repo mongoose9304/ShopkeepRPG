@@ -10,7 +10,7 @@ public class TreasureChest : MonoBehaviour
     bool playerInRange;
     protected bool isOpening;
     [SerializeField]
-    Transform spawnLocation;
+    protected Transform spawnLocation;
     [SerializeField] GameObject myText;
     [SerializeField] ParticleSystem OpenEffect;
     [SerializeField] ParticleSystem OpenCursedEffect;
