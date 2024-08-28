@@ -12,12 +12,13 @@ public class SlotsChest : TreasureChest
     {
         if (slotMachine.isSpinning)
             return;
+        if(LootManager.instance.AttemptDemonPayment(cost))
         slotMachine.Spin();
     }
     public void Jackpot()
     {
         value = DungeonManager.instance.currentDungeon.GetTreasureChestAmount();
-        CoinSpawner.instance_.CreateDemonCoins(value*2, spawnLocation);
+        CoinSpawner.instance_.CreateDemonCoins(value*3, spawnLocation);
         base.OpenChest();
     }
     public void Loss()
@@ -27,6 +28,7 @@ public class SlotsChest : TreasureChest
     public void Win()
     {
         value = DungeonManager.instance.currentDungeon.GetTreasureChestAmount();
+        CoinSpawner.instance_.CreateDemonCoins(value, spawnLocation);
         base.OpenChest();
     }
     protected override void ToggleInteractablity(bool inRange_)

@@ -187,5 +187,15 @@ public class LootManager : MonoBehaviour
             t_ = currentItemDropList.myTable.Count;
         return currentItemDropList.myTable[t_].myTable[Random.Range(0, currentItemDropList.myTable[t_].myTable.Count)].item;
     }
+    public bool AttemptDemonPayment(int cost_)
+    {
+        if(demonCurrentCash>=cost_)
+        {
+            demonCurrentCash -=cost_;
+            demonCurrentCashText.text = demonCurrentCash.ToString("#,#");
+            return true;
+        }
+        return false;
+    }
 
 }

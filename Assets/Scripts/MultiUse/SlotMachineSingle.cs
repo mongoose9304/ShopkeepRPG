@@ -34,9 +34,9 @@ public class SlotMachineSingle : MonoBehaviour
                 if (!isStopping)
                 {
                     stoptarget = Mathf.Round(slotSpinner.localPosition.y+1);
-                    if (stoptarget > maxYValue)
+                    if (stoptarget >= maxYValue)
                     {
-                        stoptarget = maxYValue;
+                        return;
                     }
                     isStopping = true;
                 }
@@ -57,7 +57,7 @@ public class SlotMachineSingle : MonoBehaviour
     {
         isSpinning = true;
         isStopping = false;
-        SpinSpeedCurrent = SpinSpeedStart * Random.Range(0.5f, 1.5f); ;
+        SpinSpeedCurrent = SpinSpeedStart * Random.Range(1.0f, 2.0f); ;
     }
     public void EndSpinEvent()
     {
