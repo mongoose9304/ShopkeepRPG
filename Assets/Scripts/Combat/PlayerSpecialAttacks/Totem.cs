@@ -8,6 +8,7 @@ public class Totem : MonoBehaviour
     [SerializeField] bool lookAtEnemies;
     [SerializeField] List<GameObject> currentFoes;
     [SerializeField] GameObject currentTarget;
+    [SerializeField] GameObject damageObject;
 
     private void Update()
     {
@@ -26,6 +27,11 @@ public class Totem : MonoBehaviour
             if(currentTarget)
             {
                 eyeball.transform.LookAt(currentTarget.transform,Vector3.up);
+                damageObject.SetActive(true);
+            }
+            else
+            {
+                damageObject.SetActive(false);
             }
         }
     }
@@ -58,5 +64,10 @@ public class Totem : MonoBehaviour
                 currentFoes.Add(other.gameObject);
             }
         }
+    }
+    private void OnEnable()
+    {
+        currentFoes.Clear();
+        eyeball.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 }
