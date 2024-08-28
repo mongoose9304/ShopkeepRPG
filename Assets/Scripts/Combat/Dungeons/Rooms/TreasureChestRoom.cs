@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TreasureChestRoom : BasicRoom
 {
-    [SerializeField] GameObject moneyChest;
-    [SerializeField] GameObject itemChest;
+    [SerializeField] GameObject regularChest;
     [SerializeField] GameObject slotsChest;
     [SerializeField] TreasureChest myChest;
     [SerializeField] int curseSeverity = 1;

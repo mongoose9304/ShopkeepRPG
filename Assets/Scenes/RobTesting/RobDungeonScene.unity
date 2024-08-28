@@ -17385,9 +17385,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -125}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &609650958
@@ -25513,9 +25513,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -325}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &969456503
@@ -27651,85 +27651,58 @@ MonoBehaviour:
   itemsToDisplay:
   - name: Apples
     amount: 1
-    isNew: 0
   - name: Bannana
     amount: 1
-    isNew: 0
   - name: Waste
     amount: 1
-    isNew: 0
   - name: Forest
     amount: 1
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Mountain
     amount: 6
-    isNew: 0
   - name: Apples
     amount: 4
-    isNew: 0
   - name: Crap
     amount: 1
-    isNew: 0
   - name: Money
     amount: 2
-    isNew: 0
   - name: Honey
     amount: 2
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   - name: Swamp
     amount: 6
-    isNew: 0
   currentItem: 0
   maxUIBackgrounds: 2
   maxTimeBetweenAdds: 0.5
@@ -28201,14 +28174,30 @@ MonoBehaviour:
   currentDungeon: {fileID: 0}
   dungeonsCleared: -1
   dungeonList:
-  - {fileID: 360381576957040817, guid: 26171961ad98f084ea7bef42315f08e0, type: 3}
+  - {fileID: 9132438315496161734, guid: 9b4b51dd4cee01f4689762ac277bf8de, type: 3}
   - {fileID: 9132438315496161734, guid: 3964c19313dafa04c8848869685683ab, type: 3}
   - {fileID: 360381576957040817, guid: 26171961ad98f084ea7bef42315f08e0, type: 3}
   currentSin: 7
-  victoryLevel: {fileID: 47700488}
-  victoryPlayerPos: {fileID: 286087728}
+  currentItemTier: 0
   resourceSprites:
   - {fileID: 21300000, guid: a044f357c1b431a43b673053ca753de8, type: 3}
+  currentCurses: []
+  currentBlessings: []
+  availableCurses:
+  - {fileID: 11400000, guid: 28c3e3371af28fe49821c46405b63d51, type: 2}
+  - {fileID: 11400000, guid: 508852149547e414890e7037a274b2f9, type: 2}
+  availableSinBlessings:
+  - {fileID: 11400000, guid: 8c55dbf383ed4f240b70324214bba1bd, type: 2}
+  - {fileID: 11400000, guid: 4df54cd8b91e1ac47ae45f1aaaaea594, type: 2}
+  - {fileID: 11400000, guid: 62f1fb9dc819f304c8392d09ee3eb4e3, type: 2}
+  - {fileID: 11400000, guid: e784fb4a26ba8184e9efdbc0b3f52bcd, type: 2}
+  - {fileID: 11400000, guid: 836f06a7f2431164186bc5bbb342518c, type: 2}
+  - {fileID: 11400000, guid: 8cbc5bd275c7fa34b8c2f71b05b451c5, type: 2}
+  - {fileID: 11400000, guid: dbad0d8b50a32bd4d9e9803c120037e8, type: 2}
+  - {fileID: 11400000, guid: 440bc23fd98327c43878c7cecf8e2042, type: 2}
+  - {fileID: 11400000, guid: 34a3d7f84db641248806c4894aa66afa, type: 2}
+  victoryLevel: {fileID: 47700488}
+  victoryPlayerPos: {fileID: 286087728}
   curseImages:
   - {fileID: 1483995118}
   - {fileID: 265462561}
@@ -28241,21 +28230,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4460011158f8be6498eec28141689996, type: 3}
   - {fileID: 21300000, guid: 60dcc53f7be1f354db90fe65d417fae8, type: 3}
   - {fileID: 21300000, guid: 1cb6aa119b0127643b5d9a054651f7c5, type: 3}
-  currentCurses: []
-  currentBlessings: []
-  availableCurses:
-  - {fileID: 11400000, guid: 28c3e3371af28fe49821c46405b63d51, type: 2}
-  - {fileID: 11400000, guid: 508852149547e414890e7037a274b2f9, type: 2}
-  availableSinBlessings:
-  - {fileID: 11400000, guid: 8c55dbf383ed4f240b70324214bba1bd, type: 2}
-  - {fileID: 11400000, guid: 4df54cd8b91e1ac47ae45f1aaaaea594, type: 2}
-  - {fileID: 11400000, guid: 62f1fb9dc819f304c8392d09ee3eb4e3, type: 2}
-  - {fileID: 11400000, guid: e784fb4a26ba8184e9efdbc0b3f52bcd, type: 2}
-  - {fileID: 11400000, guid: 836f06a7f2431164186bc5bbb342518c, type: 2}
-  - {fileID: 11400000, guid: 8cbc5bd275c7fa34b8c2f71b05b451c5, type: 2}
-  - {fileID: 11400000, guid: dbad0d8b50a32bd4d9e9803c120037e8, type: 2}
-  - {fileID: 11400000, guid: 440bc23fd98327c43878c7cecf8e2042, type: 2}
-  - {fileID: 11400000, guid: 34a3d7f84db641248806c4894aa66afa, type: 2}
+  sinItemDropLists:
+  - {fileID: 11400000, guid: 40243f6f608ebbb47b0a8414c4406f12, type: 2}
+  - {fileID: 11400000, guid: ece40a5b354b3ff479e9949db4178ca8, type: 2}
+  - {fileID: 11400000, guid: bba079e761da60542891d906de76ad38, type: 2}
+  - {fileID: 11400000, guid: 56930aa2bff758944aee80e4ac13b8b7, type: 2}
+  - {fileID: 11400000, guid: 5a5310091c4b82b42856f043e44d9dd3, type: 2}
+  - {fileID: 11400000, guid: 54dad74739693ff439b1b91a45d30b6e, type: 2}
+  - {fileID: 11400000, guid: 38d51a03b33067b4980e174dba148d8e, type: 2}
+  - {fileID: 11400000, guid: 23a82a8f193ec90479a2e9c3396a558b, type: 2}
+  - {fileID: 11400000, guid: e1f18edb45ab2e249a8b4e31bcd87b15, type: 2}
+  - {fileID: 11400000, guid: bb8ce63226dab57498c090a591bef3c3, type: 2}
 --- !u!1 &1242486373
 GameObject:
   m_ObjectHideFlags: 0
@@ -31511,9 +31496,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -225}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1430944842
@@ -33391,9 +33376,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488556671
@@ -33541,9 +33526,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -275}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1501677301
@@ -36079,10 +36064,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed96ba500619a244c9808a43357422d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentItemDropList: {fileID: 11400000, guid: 56930aa2bff758944aee80e4ac13b8b7, type: 2}
   testItem:
     name: TestItem
     amount: 1
-    isNew: 0
   cashMultiplier: 1
   lootDropRateMultiplier: 1
   currentLootItems: []
@@ -36621,9 +36606,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1933010221
@@ -37393,9 +37378,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -375}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2016324104
@@ -38648,9 +38633,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1617043371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 179.28607, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 275, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &801511822973874696

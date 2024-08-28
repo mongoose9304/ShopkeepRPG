@@ -8,7 +8,7 @@ public class TreasureChest : MonoBehaviour
     public int curseSeverity;
     public bool isCursed;
     bool playerInRange;
-    bool isOpening;
+    protected bool isOpening;
     [SerializeField]
     Transform spawnLocation;
     [SerializeField] GameObject myText;

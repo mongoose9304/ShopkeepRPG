@@ -21,6 +21,8 @@ public class DungeonManager : MonoBehaviour
     public List<BasicDungeon> dungeonList = new List<BasicDungeon>();
     [Tooltip("The current Sin, used for dynamically changing elements of the dungeon")]
     public SinType currentSin;
+    [Tooltip("The current tier of Items to drop, used with lootmanager's currentItemDropList")]
+    public int currentItemTier;
     [Tooltip("Sprites for collected resources ")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("Current Curses on Player, Reset when changing levels")]
@@ -40,6 +42,8 @@ public class DungeonManager : MonoBehaviour
     public Image[] blessingImages;
     [Tooltip("REFERENCE to sprites used to represent the sins")]
     public Sprite[] SinSprites;
+    [Tooltip("REFERENCE to sprites used to represent the sins")]
+    public ItemDropList[] sinItemDropLists;
     private void Awake()
     {
         instance = this;
@@ -83,6 +87,7 @@ public class DungeonManager : MonoBehaviour
             return;
         }
         currentSin = sin_;
+        SwitchSinSrops();
         if(currentDungeon)
         Destroy(currentDungeon.gameObject);
         StartCoroutine(WaitAFrameBeforeMoving());
@@ -311,5 +316,16 @@ public class DungeonManager : MonoBehaviour
         LootDisplayManager.instance.StartVictoryScreen(hasLost_);
         CombatPlayerManager.instance.EnableFamiliars(false);
 
+    }
+    public void SwitchSinSrops()
+    {
+        foreach(ItemDropList list_ in sinItemDropLists)
+        {
+            if(currentSin.ToString()==list_.itemListName)
+            {
+                LootManager.instance.SetItemDropList(list_);
+            }
+        }
+       
     }
 }

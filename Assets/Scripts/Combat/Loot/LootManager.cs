@@ -11,7 +11,6 @@ public class LootItem
 {
     public string name;
     public int amount;
-    public bool isNew;
 }
 [System.Serializable]
 public class LootTableItem
@@ -23,6 +22,7 @@ public class LootTableItem
 public class LootManager : MonoBehaviour
 {
     public static LootManager instance;
+    [SerializeField] private ItemDropList currentItemDropList;
     public LootItem testItem;
     [SerializeField] private float cashMultiplier = 1;
     [SerializeField] public float lootDropRateMultiplier = 1;
@@ -102,7 +102,6 @@ public class LootManager : MonoBehaviour
     }
     public void AddUILootObject(LootItem item_,bool isNew=false)
     {
-        item_.isNew = isNew;
         WaitingLootItemPool.Add(item_);
        // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
@@ -115,7 +114,7 @@ public class LootManager : MonoBehaviour
         currentUIBackground += 1;
         if (currentUIBackground > maxUIBackgrounds)
             currentUIBackground = 0;
-        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, item_.isNew, currentUIBackground);
+        pooler.GetPooledGameObject().GetComponent<LootUIObject>().CreateUIObject(item_.amount, item_.name, false, currentUIBackground);
     }
     public void AddDemonMoney(int money_)
     {
@@ -173,6 +172,20 @@ public class LootManager : MonoBehaviour
     public void AddDebugUIItem()
     {
         AddUILootObject(testItem);
+    }
+    public void SetItemDropList(ItemDropList list_)
+    {
+        currentItemDropList = list_;
+    }
+    public ItemDropList GetItemDropList()
+    {
+        return currentItemDropList;
+    }
+    public LootItem GetTieredItem(int t_)
+    {
+        if (t_ > currentItemDropList.myTable.Count)
+            t_ = currentItemDropList.myTable.Count;
+        return currentItemDropList.myTable[t_].myTable[Random.Range(0, currentItemDropList.myTable[t_].myTable.Count)].item;
     }
 
 }
