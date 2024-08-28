@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerDamageCollider : MonoBehaviour
 {
-    BasicEnemy basicEnemyRef;
+    protected BasicEnemy basicEnemyRef;
     public float damage;
     public float hitStun;
     public float knockBack;
     public Element element;
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Enemy")
         {
