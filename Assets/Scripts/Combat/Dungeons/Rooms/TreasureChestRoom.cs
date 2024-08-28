@@ -11,6 +11,18 @@ public class TreasureChestRoom : BasicRoom
    
     private void OnEnable()
     {
+        if(DungeonManager.instance.currentSin==SinType.Capriciousness)
+        {
+            slotsChest.SetActive(true);
+            regularChest.SetActive(false);
+            myChest = slotsChest.GetComponent<TreasureChest>();
+        }
+        else
+        {
+            slotsChest.SetActive(false);
+            regularChest.SetActive(true);
+            myChest = regularChest.GetComponent<TreasureChest>();
+        }
         if (myType == RoomType.CursedLoot)
         {
             myChest.SetIsCursed(true, curseSeverity);

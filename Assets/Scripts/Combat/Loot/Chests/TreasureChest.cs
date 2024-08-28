@@ -7,11 +7,11 @@ public class TreasureChest : MonoBehaviour
     public int value;
     public int curseSeverity;
     public bool isCursed;
-    bool playerInRange;
+    protected bool playerInRange;
     protected bool isOpening;
     [SerializeField]
     protected Transform spawnLocation;
-    [SerializeField] GameObject myText;
+    [SerializeField] protected GameObject myText;
     [SerializeField] ParticleSystem OpenEffect;
     [SerializeField] ParticleSystem OpenCursedEffect;
     [SerializeField] GameObject curseIcon;
@@ -33,6 +33,7 @@ public class TreasureChest : MonoBehaviour
     {
         if (isOpening)
             return;
+        value = DungeonManager.instance.currentDungeon.GetTreasureChestAmount();
         CoinSpawner.instance_.CreateDemonCoins(value,spawnLocation);
         OpenEffect.Play();
         myText.SetActive(false);
@@ -63,7 +64,7 @@ public class TreasureChest : MonoBehaviour
         playerInRange = inRange_;
 
     }
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
             ToggleInteractablity(true);

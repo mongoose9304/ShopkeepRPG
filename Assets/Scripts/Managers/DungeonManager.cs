@@ -52,7 +52,7 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
-        NextLevel(SinType.Wrath);
+        NextLevel(SinType.Capriciousness);
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
