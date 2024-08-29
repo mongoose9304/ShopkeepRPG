@@ -5,7 +5,9 @@ using UnityEngine.Events;
 public class ConstantBob : MonoBehaviour
 {
     public Vector3 up;
+    private Vector3 trueUp;
     public Vector3 down;
+    public Vector3 trueDown;
     public float speed;
     bool movingUp;
     public bool changeSpeedBasedOnDistance;
@@ -15,8 +17,8 @@ public class ConstantBob : MonoBehaviour
     public UnityEvent endUpEvent;
     private void OnEnable()
     {
-        up += transform.position;
-        down += transform.position;
+        trueDown = transform.position+down;
+        trueUp = transform.position+up;
     }
     // Update is called once per frame
     void Update()
@@ -25,9 +27,9 @@ public class ConstantBob : MonoBehaviour
         {
             float x = speed * Time.deltaTime;
             if (changeSpeedBasedOnDistance)
-                x *= Vector3.Distance(transform.position, up);
-            transform.position = Vector3.MoveTowards(transform.position, up,x);
-            if(Vector3.Distance(transform.position,up)<.1f)
+                x *= Vector3.Distance(transform.position, trueUp);
+            transform.position = Vector3.MoveTowards(transform.position, trueUp, x);
+            if(Vector3.Distance(transform.position, trueUp) <.1f)
             {
                 movingUp = false;
                 if (useEvents)
@@ -40,9 +42,9 @@ public class ConstantBob : MonoBehaviour
         {
             float x = speed * Time.deltaTime;
             if (changeSpeedBasedOnDistance)
-                x *= Vector3.Distance(transform.position, down);
-            transform.position = Vector3.MoveTowards(transform.position, down,x*speedInceraseOnGoingDown);
-            if (Vector3.Distance(transform.position, down) < .1f)
+                x *= Vector3.Distance(transform.position, trueDown);
+            transform.position = Vector3.MoveTowards(transform.position, trueDown, x*speedInceraseOnGoingDown);
+            if (Vector3.Distance(transform.position, trueDown) < .1f)
             {
                 movingUp = true;
                 if(useEvents)
