@@ -509,6 +509,7 @@ public class CombatPlayerMovement : MonoBehaviour
         currentMana = maxMana;
         healthBar.SetBar01(currentHealth / maxHealth);
         manaBar.SetBar01(currentMana / maxMana);
+        combatActions.SetSpecialDamages(PhysicalAtk,MysticalAtk);
 
     }
     //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();

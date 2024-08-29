@@ -23,5 +23,9 @@ public class PlayerSpecialAttack : MonoBehaviour
     {
 
     }
+    public virtual void CalculateDamage(float PATK,float MATK)
+    {
+
+    }
     
 }

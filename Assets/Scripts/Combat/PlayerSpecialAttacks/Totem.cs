@@ -70,4 +70,5 @@ public class Totem : MonoBehaviour
         currentFoes.Clear();
         eyeball.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
+    
 }

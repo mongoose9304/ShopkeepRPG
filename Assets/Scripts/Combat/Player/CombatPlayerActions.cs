@@ -236,4 +236,15 @@ public class CombatPlayerActions : MonoBehaviour
         basicRangedDamage = basicRangedDamage_;
         basicRangedElement = rangedE_;
     }
+    public void SetSpecialDamages(float Patk_,float Matk_)
+    {
+        if(specialA)
+        {
+            specialA.CalculateDamage(Patk_, Matk_);
+        }
+        if(specialB)
+        {
+            specialB.CalculateDamage(Patk_, Matk_);
+        }
+    }
 }

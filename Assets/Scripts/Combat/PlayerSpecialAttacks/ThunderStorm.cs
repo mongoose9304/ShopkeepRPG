@@ -65,4 +65,8 @@ public class ThunderStorm : PlayerSpecialAttack
         }
 
     }
+    public override void CalculateDamage(float PATK, float MATK)
+    {
+        baseDamage = MATK * 5;
+    }
 }

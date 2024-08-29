@@ -20,4 +20,8 @@ public class SummonTotem : PlayerSpecialAttack
             myTotem.gameObject.SetActive(false);
         }
     }
+    public override void CalculateDamage(float PATK, float MATK)
+    {
+        baseDamage = MATK * 2;
+    }
 }
