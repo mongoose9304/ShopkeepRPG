@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDamageColliderOnStay : PlayerDamageCollider
 {
+    public float MaxTimeInterval;
+    float currentTimeInterval;
     protected override void OnTriggerEnter(Collider other)
     {
         
@@ -12,11 +14,14 @@ public class PlayerDamageColliderOnStay : PlayerDamageCollider
     {
         if (other.gameObject.tag == "Enemy")
         {
-
-            if (other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
+            currentTimeInterval -= Time.deltaTime;
+            if (currentTimeInterval <= 0)
             {
-                basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject);
-
+                if (other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
+                {
+                    basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject);
+                    currentTimeInterval = MaxTimeInterval;
+                }
             }
         }
     }

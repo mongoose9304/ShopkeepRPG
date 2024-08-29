@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class ConstantBob : MonoBehaviour
 {
     public Vector3 up;
@@ -9,7 +9,11 @@ public class ConstantBob : MonoBehaviour
     public float speed;
     bool movingUp;
     public bool changeSpeedBasedOnDistance;
-    private void Start()
+    public float speedInceraseOnGoingDown = 1;
+    public bool useEvents;
+    public UnityEvent endDownEvent;
+    public UnityEvent endUpEvent;
+    private void OnEnable()
     {
         up += transform.position;
         down += transform.position;
@@ -26,6 +30,10 @@ public class ConstantBob : MonoBehaviour
             if(Vector3.Distance(transform.position,up)<.1f)
             {
                 movingUp = false;
+                if (useEvents)
+                {
+                    endUpEvent.Invoke();
+                }
             }
         }
         else
@@ -33,10 +41,14 @@ public class ConstantBob : MonoBehaviour
             float x = speed * Time.deltaTime;
             if (changeSpeedBasedOnDistance)
                 x *= Vector3.Distance(transform.position, down);
-            transform.position = Vector3.MoveTowards(transform.position, down,x);
+            transform.position = Vector3.MoveTowards(transform.position, down,x*speedInceraseOnGoingDown);
             if (Vector3.Distance(transform.position, down) < .1f)
             {
                 movingUp = true;
+                if(useEvents)
+                {
+                    endDownEvent.Invoke();
+                }
             }
         }
     }

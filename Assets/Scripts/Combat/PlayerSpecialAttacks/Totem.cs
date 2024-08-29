@@ -9,6 +9,7 @@ public class Totem : MonoBehaviour
     [SerializeField] List<GameObject> currentFoes;
     [SerializeField] GameObject currentTarget;
     [SerializeField] GameObject damageObject;
+    public PlayerDamageCollider damgeCollider;
 
     private void Update()
     {
