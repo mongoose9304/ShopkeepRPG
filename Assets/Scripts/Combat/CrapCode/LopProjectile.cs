@@ -11,6 +11,7 @@ public class LopProjectile : MonoBehaviour
     float currentLifeTime;
     Quaternion rotation;
     Vector3 direction;
+  
     private void OnEnable()
     {
         currentLifeTime = MaxLifeTime;

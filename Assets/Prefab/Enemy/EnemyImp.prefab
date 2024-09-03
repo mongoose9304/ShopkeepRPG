@@ -5720,9 +5720,10 @@ GameObject:
   - component: {fileID: 2827325620055462810}
   - component: {fileID: 3042363637045548445}
   - component: {fileID: 3029596172311967375}
+  - component: {fileID: 1853536548953569490}
   m_Layer: 0
   m_Name: EnemyImp
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5763,7 +5764,7 @@ MonoBehaviour:
   myBaseData: {fileID: 11400000, guid: f14c1efc1400bb3448f8b96cc05d796d, type: 2}
   maxHealth: 50
   maxHitstun: 4
-  maxAttackCooldown: 8
+  maxAttackCooldown: 4
   myElement: 0
   moveSpeed: 8
   attackDistance: 12
@@ -5816,7 +5817,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 4.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -5900,7 +5901,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5908,6 +5909,28 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1853536548953569490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5392581523575410963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTable:
+  - item:
+      name: Imp Wing
+      amount: 1
+    maxAmount: 3
+    chancesToSpawn: 5
+  itemsToDrop: []
+  DropOnlyOneItem: 0
+  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!1 &7550189944655566300
 GameObject:
   m_ObjectHideFlags: 0
