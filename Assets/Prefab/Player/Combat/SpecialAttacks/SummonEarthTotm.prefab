@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5761455932394708135}
   - component: {fileID: 3849433385760327297}
+  - component: {fileID: 3639600864199266535}
   m_Layer: 0
   m_Name: SummonEarthTotm
   m_TagString: Untagged
@@ -47,9 +48,31 @@ MonoBehaviour:
   Player: {fileID: 0}
   myElement: 3
   isBusy: 0
+  hiddenTimerMax: 1
   manaCost: 60
-  maxCoolDown: 30
+  maxCoolDown: 12
   baseDamage: 50
+  useCharges: 1
+  maxCharges: 3
+  currentCharges: 3
+  hiddenTimerCurrent: 0
   myTotem: {fileID: 0}
   damageMulti: 2
-  totemPrefab: {fileID: 5396229790758149679, guid: 49d46383e1db737409db6c199920a579, type: 3}
+  totemPool: {fileID: 3639600864199266535}
+--- !u!114 &3639600864199266535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589665024882387160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 5396229790758149679, guid: 49d46383e1db737409db6c199920a579, type: 3}
+  PoolSize: 3
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0

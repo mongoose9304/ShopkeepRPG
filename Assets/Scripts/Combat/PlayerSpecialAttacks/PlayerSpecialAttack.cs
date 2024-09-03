@@ -11,10 +11,16 @@ public class PlayerSpecialAttack : MonoBehaviour
     public GameObject Player;
     public Element myElement;
     public bool isBusy;
+    //used for attacks that shouldnt be held
+    public float hiddenTimerMax;
     [Header("Stats")]
     public float manaCost;
     public float maxCoolDown;
     public float baseDamage;
+    public bool useCharges;
+    public int maxCharges;
+    public float currentCharges;
+    public float hiddenTimerCurrent;
 
     /// <summary>
     /// The behavior once the move is activated 
@@ -27,5 +33,10 @@ public class PlayerSpecialAttack : MonoBehaviour
     {
 
     }
+    public virtual bool CanBeUsed()
+    {
+        return true;
+    }
+
     
 }

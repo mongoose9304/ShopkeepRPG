@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
+using TMPro;
 public class CombatPlayerActions : MonoBehaviour
 {
     public CombatPlayerMovement combatMovement;
@@ -32,7 +33,11 @@ public class CombatPlayerActions : MonoBehaviour
     private GameObject tempObj;
     [Header("Feel")]
     public MMProgressBar specialCoolDownBarA;
+    public GameObject chargesUIBGA;
+    public TextMeshProUGUI chargesTextA;
     public MMProgressBar specialCoolDownBarB;
+    public GameObject chargesUIBGB;
+    public GameObject chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
     private void Start()
     {
@@ -95,17 +100,36 @@ public class CombatPlayerActions : MonoBehaviour
         {
             currentSpecialACooldown -= Time.deltaTime;
             //specialCoolDownBarA.UpdateBar01((specialA.maxCoolDown-currentSpecialACooldown)/specialA.maxCoolDown);
+            if (currentSpecialACooldown <= 0)
+            {
+                if (specialA.useCharges)
+                {
+                    if (specialA.currentCharges < specialA.maxCharges)
+                    {
+                        specialA.currentCharges += 1;
+                        currentSpecialACooldown = specialA.maxCoolDown;
+                    }
+                }
+            }
             specialCoolDownBarA.SetBar01((specialA.maxCoolDown-currentSpecialACooldown)/specialA.maxCoolDown);
-        
-           
            
         }
         if (currentSpecialBCooldown > 0)
         {
             currentSpecialBCooldown -= Time.deltaTime;
             //specialCoolDownBarA.UpdateBar01((specialB.maxCoolDown-currentSpecialBCooldown)/specialB.maxCoolDown);
+            if (currentSpecialBCooldown <= 0)
+            {
+                if (specialB.useCharges)
+                {
+                    if (specialB.currentCharges < specialB.maxCharges)
+                    {
+                        specialB.currentCharges += 1;
+                        currentSpecialBCooldown = specialB.maxCoolDown;
+                    }
+                }
+            }
             specialCoolDownBarB.SetBar01((specialB.maxCoolDown - currentSpecialBCooldown) / specialB.maxCoolDown);
-
 
 
         }
@@ -161,19 +185,39 @@ public class CombatPlayerActions : MonoBehaviour
 
         if(specialA_)
         {
-            if (combatMovement.GetCurrentMana() < specialA.manaCost||currentSpecialACooldown>0)
+            if (combatMovement.GetCurrentMana() < specialA.manaCost||!specialA.CanBeUsed())
                 return;
-            combatMovement.UseMana(specialA.manaCost);
+            if(specialA.useCharges)
+            {
+                if (specialA.currentCharges <= 0)
+                    return;
+            }
+            else
+            {
+                if ( currentSpecialACooldown > 0)
+                    return;
+            }
             currentSpecialACooldown = specialA.maxCoolDown;
+            combatMovement.UseMana(specialA.manaCost);
             specialA.OnPress(this.gameObject);
            
         }
         else
         {
-            if (combatMovement.GetCurrentMana() < specialB.manaCost || currentSpecialBCooldown > 0)
+            if (combatMovement.GetCurrentMana() < specialB.manaCost|| !specialB.CanBeUsed())
                 return;
-            combatMovement.UseMana(specialB.manaCost);
+            if (specialB.useCharges)
+            {
+                if (specialB.currentCharges <= 0)
+                    return;
+            }
+            else
+            {
+                if (currentSpecialBCooldown > 0)
+                    return;
+            }
             currentSpecialBCooldown = specialB.maxCoolDown;
+            combatMovement.UseMana(specialB.manaCost);
             specialB.OnPress(this.gameObject);
           
         }
@@ -245,6 +289,26 @@ public class CombatPlayerActions : MonoBehaviour
         if(specialB)
         {
             specialB.CalculateDamage(Patk_, Matk_);
+        }
+    }
+    public void SwapSpecials()
+    {
+        if(specialA.useCharges)
+        {
+            chargesUIBGA.SetActive(true);
+        }
+        else
+        {
+
+            chargesUIBGA.SetActive(false);
+        }
+        if (specialB.useCharges)
+        {
+            chargesUIBGB.SetActive(true);
+        }
+        else
+        {
+            chargesUIBGB.SetActive(false);
         }
     }
 }

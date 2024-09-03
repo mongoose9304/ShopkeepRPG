@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5761455932394708135}
   - component: {fileID: 3849433385760327297}
+  - component: {fileID: 731466331792553998}
   m_Layer: 0
   m_Name: SummonFlameTotem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5761455932394708135
 Transform:
   m_ObjectHideFlags: 0
@@ -47,9 +48,31 @@ MonoBehaviour:
   Player: {fileID: 0}
   myElement: 0
   isBusy: 0
+  hiddenTimerMax: 1
   manaCost: 60
-  maxCoolDown: 30
+  maxCoolDown: 12
   baseDamage: 50
+  useCharges: 1
+  maxCharges: 3
+  currentCharges: 3
+  hiddenTimerCurrent: 0
   myTotem: {fileID: 0}
   damageMulti: 1
-  totemPrefab: {fileID: 7045962063541636784, guid: c064c2d174d499247b948344c1e3341d, type: 3}
+  totemPool: {fileID: 731466331792553998}
+--- !u!114 &731466331792553998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589665024882387160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 7045962063541636784, guid: c064c2d174d499247b948344c1e3341d, type: 3}
+  PoolSize: 3
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
