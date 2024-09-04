@@ -63,4 +63,15 @@ public class CombatPlayerManager : MonoBehaviour
                 player_.combatMovement.RemoveExternalMod(modx);
         }
     }
+    public void LevelUp()
+    {
+        foreach (CombatPlayerActions player_ in players)
+        {
+            player_.combatMovement.LevelUp();
+        }
+    }
+    public int GetExpToNextLevel()
+    {
+        return players[0].combatMovement.GetExpToNextLevel();
+    }
 }

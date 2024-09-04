@@ -25,6 +25,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private ItemDropList currentItemDropList;
     public LootItem testItem;
     [SerializeField] private float cashMultiplier = 1;
+    [SerializeField] private float expMultiplier = 1;
     [SerializeField] public float lootDropRateMultiplier = 1;
   [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
@@ -46,6 +47,9 @@ public class LootManager : MonoBehaviour
     public MMF_Player[] resourcePickUpFeedBacks;
     public int currentResource;
     public TextMeshProUGUI currentResourceText;
+    public MMF_Player[] expPickUpFeedBacks;
+    public int expToNextLevel;
+    public TextMeshProUGUI expToNextLevelText;
     public List<LootItem> AquiredLootItems =new List<LootItem>();
     public List<LootItem> WaitingLootItemPool =new List<LootItem>();
     public float maxDelayBetweenPopUps;
@@ -53,6 +57,7 @@ public class LootManager : MonoBehaviour
     private void Start()
     {
         instance = this;
+        SetExpToNextLevel();
     }
     private void Update()
     {
@@ -144,6 +149,21 @@ public class LootManager : MonoBehaviour
             player_.PlayFeedbacks();
         }
     }
+    public void AddExp(int exp_)
+    {
+
+        expToNextLevel -= Mathf.RoundToInt(exp_ * expMultiplier);
+        expToNextLevelText.text = expToNextLevel.ToString("#,#");
+        foreach (MMF_Player player_ in expPickUpFeedBacks)
+        {
+            player_.PlayFeedbacks();
+        }
+        if(expToNextLevel<=0)
+        {
+            CombatPlayerManager.instance.LevelUp();
+            SetExpToNextLevel();
+        }
+    }
     public void BringlootCollectionUIObjectOut()
     {
         //1303.8
@@ -196,6 +216,11 @@ public class LootManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void SetExpToNextLevel()
+    {
+        expToNextLevel = CombatPlayerManager.instance.GetExpToNextLevel();
+        expToNextLevelText.text = expToNextLevel.ToString();
     }
 
 }

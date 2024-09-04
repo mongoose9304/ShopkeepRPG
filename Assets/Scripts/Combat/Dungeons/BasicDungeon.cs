@@ -29,6 +29,8 @@ public class BasicDungeon : MonoBehaviour
     [SerializeField] int treasureChestAmount;
     [SerializeField] int basicEnemyValueMin;
     [SerializeField] int basicEnemyValueMax;
+    [SerializeField] int basicEnemyExpValueMin;
+    [SerializeField] int basicEnemyExpValueMax;
     public List<Transform> regularRoomSpots = new List<Transform>();
 
     private void OnEnable()
@@ -62,6 +64,10 @@ public class BasicDungeon : MonoBehaviour
     public int GetBasicEnemyValue()
     {
         return Random.Range(basicEnemyValueMin, basicEnemyValueMax);
+    }
+    public int GetBasicEnemyExpValue()
+    {
+        return Random.Range(basicEnemyExpValueMin, basicEnemyExpValueMax);
     }
     public void ChangeSin(SinType sin_)
     {

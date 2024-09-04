@@ -627,4 +627,13 @@ public class CombatPlayerMovement : MonoBehaviour
             return A + B;
         }
     }
+    public void LevelUp()
+    {
+        myStats.Level += 1;
+        CalculateAllModifiers();
+    }
+    public int GetExpToNextLevel()
+    {
+        return myStats.GetEXPToLevelUp();
+    }
 }
