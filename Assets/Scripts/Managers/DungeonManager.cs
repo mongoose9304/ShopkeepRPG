@@ -11,6 +11,8 @@ public class DungeonManager : MonoBehaviour
 {
     [Tooltip("The singleton instance")]
     public static DungeonManager instance;
+    [Tooltip("The singleton instance")]
+    public bool inArenaMode;
     [Tooltip("The navmesh must be stored like this so we can rebuild it when loading new levels")]
     public NavMeshSurface surface;
     [Tooltip("The dungeon that is currently being played")]
