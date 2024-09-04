@@ -14,7 +14,7 @@ public class SummonTotem : PlayerSpecialAttack
         myTotem.damgeCollider.damage = baseDamage;
         myTotem.gameObject.SetActive(true);
         hiddenTimerCurrent = hiddenTimerMax;
-        currentCharges -= 1;
+        
     }
     public override void CalculateDamage(float PATK, float MATK)
     {

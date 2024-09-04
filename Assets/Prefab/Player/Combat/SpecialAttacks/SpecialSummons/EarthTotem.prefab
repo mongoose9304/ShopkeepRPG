@@ -52,7 +52,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.4
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 2}
 --- !u!114 &4249929809107474719
 MonoBehaviour:
@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockTag: EnemyProjectile
+  maxBlocks: 15
 --- !u!1 &3619699915156469843
 GameObject:
   m_ObjectHideFlags: 0
@@ -10100,6 +10101,7 @@ MonoBehaviour:
   up: {x: 0, y: 2, z: 0}
   down: {x: 0, y: -0.5, z: 0}
   trueDown: {x: 0, y: 0, z: 0}
+  originalPosition: {x: 0, y: 0, z: 0}
   speed: 2
   changeSpeedBasedOnDistance: 0
   speedInceraseOnGoingDown: 3
@@ -10216,6 +10218,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   damageObject: {fileID: 476557135135902295}
   damgeCollider: {fileID: 4249929809107474719}
+  forceField: {fileID: 2089367581923364218}
 --- !u!1 &6390997829245673324
 GameObject:
   m_ObjectHideFlags: 0
@@ -10332,8 +10335,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 1
+      scalar: 1.2
+      minScalar: 1.2
       maxCurve:
         serializedVersion: 2
         m_Curve:

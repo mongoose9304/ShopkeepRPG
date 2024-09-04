@@ -10,6 +10,7 @@ public class Totem : MonoBehaviour
     [SerializeField] GameObject currentTarget;
     [SerializeField] GameObject damageObject;
     public PlayerDamageCollider damgeCollider;
+    public GameObject forceField;
 
     private void Update()
     {
@@ -70,6 +71,7 @@ public class Totem : MonoBehaviour
     {
         currentFoes.Clear();
         eyeball.transform.rotation = new Quaternion(0, 0, 0, 0);
+        forceField.SetActive(true);
     }
     
 }

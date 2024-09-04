@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockTag: EnemyProjectile
+  maxBlocks: 15
 --- !u!1 &3174698607973909713
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +399,7 @@ Transform:
   m_GameObject: {fileID: 4522892132711197329}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.026, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -489,7 +490,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.2
       minScalar: 0.3
       maxCurve:
         serializedVersion: 2
@@ -977,7 +978,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 30
+    maxNumParticles: 40
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -14952,7 +14953,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 7, z: 1}
+  m_Size: {x: 1, y: 8.5, z: 1}
   m_Center: {x: 0, y: 3.5, z: 0}
 --- !u!114 &42920687835836547
 MonoBehaviour:
@@ -15123,6 +15124,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   damageObject: {fileID: 5617397707859530719}
   damgeCollider: {fileID: 42920687835836547}
+  forceField: {fileID: 1457401503103889078}
 --- !u!65 &1759994498991166432
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15142,5 +15144,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8, y: 1, z: 8}
+  m_Size: {x: 10, y: 1, z: 10}
   m_Center: {x: 0, y: 0.5, z: 0}

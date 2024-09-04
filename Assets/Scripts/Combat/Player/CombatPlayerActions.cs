@@ -37,11 +37,12 @@ public class CombatPlayerActions : MonoBehaviour
     public TextMeshProUGUI chargesTextA;
     public MMProgressBar specialCoolDownBarB;
     public GameObject chargesUIBGB;
-    public GameObject chargesTextB;
+    public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
     private void Start()
     {
         SetUpProjectiles();
+        SwapSpecials();
     }
     private void Update()
     {
@@ -107,7 +108,9 @@ public class CombatPlayerActions : MonoBehaviour
                     if (specialA.currentCharges < specialA.maxCharges)
                     {
                         specialA.currentCharges += 1;
-                        currentSpecialACooldown = specialA.maxCoolDown;
+                        chargesTextA.text = specialA.currentCharges.ToString();
+                        if (specialA.currentCharges < specialA.maxCharges)
+                            currentSpecialACooldown = specialA.maxCoolDown;
                     }
                 }
             }
@@ -125,7 +128,9 @@ public class CombatPlayerActions : MonoBehaviour
                     if (specialB.currentCharges < specialB.maxCharges)
                     {
                         specialB.currentCharges += 1;
-                        currentSpecialBCooldown = specialB.maxCoolDown;
+                        chargesTextB.text = specialB.currentCharges.ToString();
+                        if (specialB.currentCharges < specialB.maxCharges)
+                            currentSpecialBCooldown = specialB.maxCoolDown;
                     }
                 }
             }
@@ -191,6 +196,8 @@ public class CombatPlayerActions : MonoBehaviour
             {
                 if (specialA.currentCharges <= 0)
                     return;
+                specialA.currentCharges -= 1;
+                chargesTextA.text = specialA.currentCharges.ToString();
             }
             else
             {
@@ -210,6 +217,8 @@ public class CombatPlayerActions : MonoBehaviour
             {
                 if (specialB.currentCharges <= 0)
                     return;
+                specialB.currentCharges -= 1;
+                chargesTextB.text = specialB.currentCharges.ToString();
             }
             else
             {
@@ -296,6 +305,7 @@ public class CombatPlayerActions : MonoBehaviour
         if(specialA.useCharges)
         {
             chargesUIBGA.SetActive(true);
+            chargesTextA.text = specialA.currentCharges.ToString();
         }
         else
         {
@@ -305,6 +315,8 @@ public class CombatPlayerActions : MonoBehaviour
         if (specialB.useCharges)
         {
             chargesUIBGB.SetActive(true);
+            chargesTextB.text = specialB.currentCharges.ToString();
+
         }
         else
         {

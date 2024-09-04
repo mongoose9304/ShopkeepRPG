@@ -8,6 +8,7 @@ public class ConstantBob : MonoBehaviour
     private Vector3 trueUp;
     public Vector3 down;
     public Vector3 trueDown;
+    public Vector3 originalPosition;
     public float speed;
     bool movingUp;
     public bool changeSpeedBasedOnDistance;
@@ -15,8 +16,10 @@ public class ConstantBob : MonoBehaviour
     public bool useEvents;
     public UnityEvent endDownEvent;
     public UnityEvent endUpEvent;
+    private bool isQuitting;
     private void OnEnable()
     {
+        originalPosition = transform.position;
         trueDown = transform.position+down;
         trueUp = transform.position+up;
     }
@@ -53,5 +56,15 @@ public class ConstantBob : MonoBehaviour
                 }
             }
         }
+    }
+    private void OnDisable()
+    {
+        if (isQuitting)
+            return;
+        transform.position = originalPosition;
+    }
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
 }
