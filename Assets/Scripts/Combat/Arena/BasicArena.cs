@@ -15,8 +15,7 @@ public class BasicArena : BasicDungeon
     [SerializeField] float spawnDelayMax;
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
     public bool SpawnInOrder;
-    private int currentSpawn;
-    private int enemyLevel;
+    private int currentSpawn=0;
     private float delayBeforeWave;
     private void OnEnable()
     {

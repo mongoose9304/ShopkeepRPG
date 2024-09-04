@@ -70,6 +70,7 @@ public class CombatPlayerMovement : MonoBehaviour
     float currentMana;
     float currentManaRechargeDelay;
     private GameObject tempObj;
+    public GameObject levelUpEffect;
     [Header("UI")]
     public MMProgressBar healthBar;
     public MMProgressBar manaBar;
@@ -463,13 +464,13 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 10) * (myStats.Level * LevelModifier);
-        maxMana = (myStats.Soul * 10) * (myStats.Level * LevelModifier);
-        PhysicalAtk = (myStats.PhysicalProwess) * (myStats.Level * LevelModifier);
-        MysticalAtk = (myStats.MysticalProwess) * (myStats.Level * LevelModifier);
-        PhysicalDef = (myStats.PhysicalDefense) * (myStats.Level * LevelModifier);
-        MysticalDef = (myStats.MysticalDefense) * (myStats.Level * LevelModifier);
-        playerLuck = (myStats.Luck) * (myStats.Level * LevelModifier);
+        maxHealth = (myStats.Vitality * 10) * (1 + (myStats.Level * LevelModifier));
+        maxMana = (myStats.Soul * 10) * (1 + (myStats.Level * LevelModifier));
+        PhysicalAtk = (myStats.PhysicalProwess) * (1 + (myStats.Level * LevelModifier));
+        MysticalAtk = (myStats.MysticalProwess) * (1 + (myStats.Level * LevelModifier));
+        PhysicalDef = (myStats.PhysicalDefense) * (1 + (myStats.Level * LevelModifier));
+        MysticalDef = (myStats.MysticalDefense) * (1 + (myStats.Level * LevelModifier));
+        playerLuck = (myStats.Luck) * (1+(myStats.Level * LevelModifier));
         HealthRegenPercent = 0;
         ManaRegenPercent = 0;
     }
@@ -631,6 +632,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         myStats.Level += 1;
         CalculateAllModifiers();
+        Instantiate(levelUpEffect,transform.position,transform.rotation);
     }
     public int GetExpToNextLevel()
     {
