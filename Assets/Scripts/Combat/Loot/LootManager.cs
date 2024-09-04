@@ -54,6 +54,13 @@ public class LootManager : MonoBehaviour
     public List<LootItem> WaitingLootItemPool =new List<LootItem>();
     public float maxDelayBetweenPopUps;
     float currentDelayBetweenPopUps;
+    MMF_TMPCountTo expCounter;
+    [SerializeField] MMF_Player expFeedback;
+    private void Awake()
+    {
+        expCounter = expFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
+
+    }
     private void Start()
     {
         instance = this;
@@ -151,9 +158,10 @@ public class LootManager : MonoBehaviour
     }
     public void AddExp(int exp_)
     {
-
+        expCounter.CountFrom = expToNextLevel;
         expToNextLevel -= Mathf.RoundToInt(exp_ * expMultiplier);
-        expToNextLevelText.text = expToNextLevel.ToString("#,#");
+        expCounter.CountTo = expToNextLevel;
+        expFeedback.PlayFeedbacks();
         foreach (MMF_Player player_ in expPickUpFeedBacks)
         {
             player_.PlayFeedbacks();
