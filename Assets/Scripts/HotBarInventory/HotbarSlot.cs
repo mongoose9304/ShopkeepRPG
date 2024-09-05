@@ -29,10 +29,10 @@ public class HotbarSlot : MonoBehaviour
         }
         return 1;
     }
-    public void AddItem(Sprite itemSprite_,int amount_)
+    public void AddItem(Sprite itemSprite_,int amount_,Color color_)
     {
         itemImage.sprite = itemSprite_;
-        itemImage.color = Color.white;
+        itemImage.color = color_;
         amountText.text = amount_.ToString();
     }
 }

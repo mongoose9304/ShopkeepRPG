@@ -78,4 +78,8 @@ public class CombatPlayerManager : MonoBehaviour
     {
         players[0].combatMovement.HealthPickup(healAmount);
     }
+    public void RestorePlayerMana(float healAmount)
+    {
+        players[0].combatMovement.ManaPickup(healAmount);
+    }
 }

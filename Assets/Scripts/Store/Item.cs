@@ -21,6 +21,7 @@ public class ItemData : ScriptableObject{
     public float consumeHealthValue;
     public float consumeManaValue;
     public Sprite itemSprite;
+    public Color itemColor;
     public ItemType type;
 }
 

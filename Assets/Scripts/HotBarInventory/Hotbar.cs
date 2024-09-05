@@ -78,6 +78,7 @@ public class Hotbar : MonoBehaviour
                 if(CombatPlayerManager.instance)
                 {
                     CombatPlayerManager.instance.HealPlayer(Items[currentHighlight].consumeHealthValue);
+                    CombatPlayerManager.instance.RestorePlayerMana(Items[currentHighlight].consumeManaValue);
                 }
             }
         }
@@ -116,7 +117,7 @@ public class Hotbar : MonoBehaviour
             {
                 Items[i] = data_;
                 ItemAmounts[i] = amount;
-                mySlots[i].AddItem(data_.itemSprite, amount);
+                mySlots[i].AddItem(data_.itemSprite, amount, Items[i].itemColor);
                 break;
             }
         }
