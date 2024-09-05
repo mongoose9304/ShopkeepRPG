@@ -4,15 +4,66 @@ using UnityEngine;
 
 public class Hotbar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<HotbarSlot> mySlots = new List<HotbarSlot>();
+    public int currentHighlight;
+    float hotbarInput;
+    public float delayBetweenInputsMax;
+    float delayBetweenInputsCurrent;
+    private void Start()
     {
+        SetHighlightedSlot(0);
+    }
+    private void Update()
+    {
+        GetInput();
+        if (delayBetweenInputsCurrent > 0)
+        {
+            delayBetweenInputsCurrent -= Time.deltaTime;
+            return;
+        }
+        if(hotbarInput>.1)
+        {
+            MoveHighlightedSlot(true);
+            delayBetweenInputsCurrent = delayBetweenInputsMax;
+        }
+        else if (hotbarInput < -0.1)
+        {
+            MoveHighlightedSlot(false);
+            delayBetweenInputsCurrent = delayBetweenInputsMax;
+        }
+    }
+    void GetInput()
+    {
+        hotbarInput = Input.GetAxis("DpadHorizontal");
+        if(hotbarInput==0)
+        {
+            delayBetweenInputsCurrent = 0;
+        }
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SetHighlightedSlot(int Slot_)
     {
-        
+        mySlots[Slot_].SetHighlighted();
+    }
+    public void DeHighlightSlot(int Slot_)
+    {
+        mySlots[Slot_].SetUnHighlighted();
+    }
+    public void MoveHighlightedSlot(bool moveRight=false)
+    {
+        DeHighlightSlot(currentHighlight);
+        if(moveRight)
+        {
+            currentHighlight += 1;
+            if(currentHighlight>=mySlots.Count)
+                currentHighlight = 0;
+        }
+        else
+        {
+            currentHighlight -= 1;
+            if (currentHighlight < 0)
+                currentHighlight = mySlots.Count-1;
+        }
+        mySlots[currentHighlight].SetHighlighted();
     }
 }
