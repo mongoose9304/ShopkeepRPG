@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Hotbar : MonoBehaviour
 {
+    public List<ItemData> TESTITEMS = new List<ItemData>();
     public List<HotbarSlot> mySlots = new List<HotbarSlot>();
+    public List<ItemData> Items = new List<ItemData>();
+    public List<int> ItemAmounts = new List<int>();
     public int currentHighlight;
     float hotbarInput;
     public float delayBetweenInputsMax;
@@ -12,6 +15,10 @@ public class Hotbar : MonoBehaviour
     public float delayBetweenItemUsages;
     private void Start()
     {
+        foreach(ItemData data in TESTITEMS)
+        {
+            AddItemToHotbar(data, 10);
+        }
         SetHighlightedSlot(0);
     }
     private void Update()
@@ -57,7 +64,24 @@ public class Hotbar : MonoBehaviour
     }
     public void UseSelectedItem()
     {
-       delayBetweenItemUsages= mySlots[currentHighlight].Use();
+        if(Items[currentHighlight] && ItemAmounts[currentHighlight]>0)
+        {
+            if (Items[currentHighlight].type == ItemData.ItemType.consumable)
+            {
+
+
+                ItemAmounts[currentHighlight] -= 1;
+                if (ItemAmounts[currentHighlight] == 0)
+                {
+                    Items[currentHighlight] = null;
+                }
+                if(CombatPlayerManager.instance)
+                {
+                    CombatPlayerManager.instance.HealPlayer(Items[currentHighlight].consumeHealthValue);
+                }
+            }
+        }
+       delayBetweenItemUsages = mySlots[currentHighlight].Use(ItemAmounts[currentHighlight]);
     }
     public void SetHighlightedSlot(int Slot_)
     {
@@ -83,5 +107,18 @@ public class Hotbar : MonoBehaviour
                 currentHighlight = mySlots.Count-1;
         }
         mySlots[currentHighlight].SetHighlighted();
+    }
+    public void AddItemToHotbar(ItemData data_,int amount=1)
+    {
+        for(int i=0;i<mySlots.Count;i++)
+        {
+            if(!Items[i])
+            {
+                Items[i] = data_;
+                ItemAmounts[i] = amount;
+                mySlots[i].AddItem(data_.itemSprite, amount);
+                break;
+            }
+        }
     }
 }

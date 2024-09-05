@@ -11,12 +11,16 @@ public class ItemData : ScriptableObject{
         Accessory,
         Material,
         Treasure,
-        Trash
+        Trash,
+        consumable
     }
 
     public string itemName;
     public string description;
     public int basePrice;
+    public float consumeHealthValue;
+    public float consumeManaValue;
+    public Sprite itemSprite;
     public ItemType type;
 }
 

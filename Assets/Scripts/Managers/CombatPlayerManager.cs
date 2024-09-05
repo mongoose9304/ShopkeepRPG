@@ -74,4 +74,8 @@ public class CombatPlayerManager : MonoBehaviour
     {
         return players[0].combatMovement.GetExpToNextLevel();
     }
+    public void HealPlayer(float healAmount)
+    {
+        players[0].combatMovement.HealthPickup(healAmount);
+    }
 }
