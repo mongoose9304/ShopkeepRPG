@@ -15,8 +15,9 @@ public class HotbarSlot : MonoBehaviour
         highlightObject.SetActive(false);
         engagedObject.SetActive(false);
     }
-    public void Use()
+    public float Use()
     {
         engagedObject.SetActive(true);
+        return 1;
     }
 }

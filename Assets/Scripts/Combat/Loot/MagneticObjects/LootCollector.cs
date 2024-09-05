@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LootCollector : MonoBehaviour
 {
-    public ParticleSystem coinCollected;
+    public ParticleSystem[] coinCollected;
     public ParticleSystem itemCollected;
     private void OnTriggerEnter(Collider other)
     {
@@ -20,26 +20,37 @@ public class LootCollector : MonoBehaviour
         {
             LootManager.instance.AddDemonMoney(other.GetComponent<DemonCoin>().value);
             other.gameObject.SetActive(false);
-            coinCollected.Play();
+            PlayCoinCollectedEffect();
         }
         if (other.tag == "Lumber")
         {
             LootManager.instance.AddResource(other.GetComponent<LumberPickUp>().lumberAmount);
             other.gameObject.SetActive(false);
-            coinCollected.Play();
+            PlayCoinCollectedEffect();
         }
         if (other.tag == "Stone")
         {
             LootManager.instance.AddResource(other.GetComponent<StonePickUp>().stoneAmount);
             other.gameObject.SetActive(false);
-            coinCollected.Play();
+            PlayCoinCollectedEffect();
         }
         if (other.tag == "RegularCoin")
         {
             LootManager.instance.AddRegularMoney(other.GetComponent<DemonCoin>().value);
             other.gameObject.SetActive(false);
-            coinCollected.Play();
+            PlayCoinCollectedEffect();
         }
 
+    }
+    private void PlayCoinCollectedEffect()
+    {
+        foreach(ParticleSystem sys in coinCollected)
+        {
+            if(!sys.isPlaying)
+            {
+                sys.Play();
+                break;
+            }
+        }
     }
 }

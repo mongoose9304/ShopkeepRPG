@@ -9,6 +9,7 @@ public class Hotbar : MonoBehaviour
     float hotbarInput;
     public float delayBetweenInputsMax;
     float delayBetweenInputsCurrent;
+    public float delayBetweenItemUsages;
     private void Start()
     {
         SetHighlightedSlot(0);
@@ -16,6 +17,14 @@ public class Hotbar : MonoBehaviour
     private void Update()
     {
         GetInput();
+        if (delayBetweenItemUsages > 0)
+        {
+            delayBetweenItemUsages -= Time.deltaTime;
+            if (delayBetweenItemUsages < 0)
+            {
+
+            }
+        }
         if (delayBetweenInputsCurrent > 0)
         {
             delayBetweenInputsCurrent -= Time.deltaTime;
@@ -39,7 +48,16 @@ public class Hotbar : MonoBehaviour
         {
             delayBetweenInputsCurrent = 0;
         }
-        
+        if (Input.GetAxis("UseItem") == 1)
+        {
+            if(delayBetweenItemUsages<=0)
+            UseSelectedItem();
+        }
+
+    }
+    public void UseSelectedItem()
+    {
+       delayBetweenItemUsages= mySlots[currentHighlight].Use();
     }
     public void SetHighlightedSlot(int Slot_)
     {
