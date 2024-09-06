@@ -23,6 +23,8 @@ public class Hotbar : MonoBehaviour
     }
     private void Update()
     {
+        if (TempPause.instance.isPaused)
+            return;
         GetInput();
         if (delayBetweenItemUsages > 0)
         {
@@ -64,21 +66,26 @@ public class Hotbar : MonoBehaviour
     }
     public void UseSelectedItem()
     {
-        if(Items[currentHighlight] && ItemAmounts[currentHighlight]>0)
+        if (Items[currentHighlight]==null)
+        {
+            return;
+        }
+        if (Items[currentHighlight] && ItemAmounts[currentHighlight]>0)
         {
             if (Items[currentHighlight].type == ItemData.ItemType.consumable)
             {
 
 
                 ItemAmounts[currentHighlight] -= 1;
-                if (ItemAmounts[currentHighlight] == 0)
-                {
-                    Items[currentHighlight] = null;
-                }
+                
                 if(CombatPlayerManager.instance)
                 {
                     CombatPlayerManager.instance.HealPlayer(Items[currentHighlight].consumeHealthValue);
                     CombatPlayerManager.instance.RestorePlayerMana(Items[currentHighlight].consumeManaValue);
+                }
+                if (ItemAmounts[currentHighlight] == 0)
+                {
+                    Items[currentHighlight] = null;
                 }
             }
         }

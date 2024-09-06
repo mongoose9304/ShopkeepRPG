@@ -7,6 +7,11 @@ public class TempPause : MonoBehaviour
     public GameObject pauseObject;
     public bool isPaused;
     // Update is called once per frame
+    public static TempPause instance;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Update()
     {
         if (Input.GetButtonDown("PauseGame"))

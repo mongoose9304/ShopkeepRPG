@@ -5,6 +5,7 @@ using TMPro;
 public class CombatEquiptUI : MonoBehaviour
 {
     public StatBlock playerStatBlock;
+    public CombatPlayerMovement player;
     public PlayerEquiptmentHolder playerEquiptment;
     public TextMeshProUGUI skillPointsText;
     public TextMeshProUGUI levelText;
@@ -27,6 +28,8 @@ public class CombatEquiptUI : MonoBehaviour
         playerStatBlock.remainingSkillPoints -= 1;
         skillPointsText.text = playerStatBlock.remainingSkillPoints.ToString();
         SaveChanges();
+        if (player)
+            player.CalculateAllModifiers();
     }
     public void SetUpUI()
     {

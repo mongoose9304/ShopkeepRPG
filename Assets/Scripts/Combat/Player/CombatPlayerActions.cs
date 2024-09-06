@@ -46,7 +46,9 @@ public class CombatPlayerActions : MonoBehaviour
     }
     private void Update()
     {
-        if(specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
+        if (TempPause.instance.isPaused)
+            return;
+        if (specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
         {
             isBusy = true;
             meleeObject.ForceEndAttack();

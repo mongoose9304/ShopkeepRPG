@@ -82,7 +82,7 @@ public class CombatPlayerMovement : MonoBehaviour
         AddAllEquipmentMods();
         CalculateAllModifiers();
         SetArmorElements();
-        combatActions.SetStats(PhysicalAtk, MysticalAtk,myEquiptment.RangedWeapon.myElement,myEquiptment.MeleeWeapon.myElement);
+        
         currentHealth = maxHealth;
         currentMana = maxMana;
     }
@@ -90,6 +90,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (TempPause.instance.isPaused)
+            return;
         if (isDying)
             return;
         if(isInSaveYourSoulMode)
@@ -507,11 +509,14 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             ApplyModifier(mods_[i]);
         }
-        currentHealth = maxHealth;
-        currentMana = maxMana;
+        if(currentHealth>maxHealth)
+            currentHealth = maxHealth;
+        if (currentMana > maxMana)
+            currentMana = maxMana;
         healthBar.SetBar01(currentHealth / maxHealth);
         manaBar.SetBar01(currentMana / maxMana);
         combatActions.SetSpecialDamages(PhysicalAtk,MysticalAtk);
+        combatActions.SetStats(PhysicalAtk, MysticalAtk, myEquiptment.RangedWeapon.myElement, myEquiptment.MeleeWeapon.myElement);
 
     }
     //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
