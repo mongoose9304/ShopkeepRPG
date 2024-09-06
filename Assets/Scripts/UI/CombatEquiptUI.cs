@@ -7,6 +7,8 @@ public class CombatEquiptUI : MonoBehaviour
     public StatBlock playerStatBlock;
     public TextMeshProUGUI skillPointsText;
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI descriptionTitle;
+    public TextMeshProUGUI descriptionText;
     public List<PlayerStatUIObject> playerStatObjects = new List<PlayerStatUIObject>();
     public bool TryToLevelUp()
     {
@@ -46,5 +48,10 @@ public class CombatEquiptUI : MonoBehaviour
     private void OnEnable()
     {
         SetUpUI();
+    }
+    public void SetDescription(string title_,string description_)
+    {
+        descriptionTitle.text = title_;
+        descriptionText.text = description_;
     }
 }
