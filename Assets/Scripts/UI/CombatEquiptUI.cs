@@ -5,11 +5,14 @@ using TMPro;
 public class CombatEquiptUI : MonoBehaviour
 {
     public StatBlock playerStatBlock;
+    public PlayerEquiptmentHolder playerEquiptment;
     public TextMeshProUGUI skillPointsText;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI descriptionTitle;
     public TextMeshProUGUI descriptionText;
     public List<PlayerStatUIObject> playerStatObjects = new List<PlayerStatUIObject>();
+    public List<PlayerEquiptSlotUI> playerEquiptObjects = new List<PlayerEquiptSlotUI>();
+
     public bool TryToLevelUp()
     {
         if(playerStatBlock.remainingSkillPoints>0)
@@ -35,6 +38,12 @@ public class CombatEquiptUI : MonoBehaviour
         playerStatObjects[3].SetUpStat(playerStatBlock.MysticalProwess);
         playerStatObjects[4].SetUpStat(playerStatBlock.PhysicalDefense);
         playerStatObjects[5].SetUpStat(playerStatBlock.MysticalDefense);
+        playerEquiptObjects[0].SetSlot(playerEquiptment.Armor.equiptName, playerEquiptment.Armor.description);
+        playerEquiptObjects[1].SetSlot(playerEquiptment.MeleeWeapon.equiptName, playerEquiptment.MeleeWeapon.description);
+        playerEquiptObjects[2].SetSlot(playerEquiptment.RangedWeapon.equiptName, playerEquiptment.RangedWeapon.description);
+        playerEquiptObjects[3].SetSlot(playerEquiptment.Rings[0].equiptName, playerEquiptment.Rings[0].description);
+        playerEquiptObjects[4].SetSlot(playerEquiptment.Rings[1].equiptName, playerEquiptment.Rings[1].description);
+        playerEquiptObjects[5].SetSlot(playerEquiptment.Rings[2].equiptName, playerEquiptment.Rings[2].description);
     }
     public void SaveChanges()
     {

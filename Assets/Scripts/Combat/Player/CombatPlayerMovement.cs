@@ -57,10 +57,11 @@ public class CombatPlayerMovement : MonoBehaviour
     public List<EquipModifier> equipModifiers = new List<EquipModifier>();
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     //Equipment
-    public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
-    public EquipmentStatBlock MeleeWeapon;
-    public EquipmentStatBlock RangedWeapon;
-    public EquipmentStatBlock Armor;
+    public PlayerEquiptmentHolder myEquiptment;
+    //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
+    //public EquipmentStatBlock MeleeWeapon;
+    //public EquipmentStatBlock RangedWeapon;
+    //public EquipmentStatBlock Armor;
 
 
 
@@ -81,7 +82,7 @@ public class CombatPlayerMovement : MonoBehaviour
         AddAllEquipmentMods();
         CalculateAllModifiers();
         SetArmorElements();
-        combatActions.SetStats(PhysicalAtk, MysticalAtk,RangedWeapon.myElement,MeleeWeapon.myElement);
+        combatActions.SetStats(PhysicalAtk, MysticalAtk,myEquiptment.RangedWeapon.myElement,myEquiptment.MeleeWeapon.myElement);
         currentHealth = maxHealth;
         currentMana = maxMana;
     }
@@ -520,10 +521,10 @@ public class CombatPlayerMovement : MonoBehaviour
     private void AddAllEquipmentMods()
     {
         equipModifiers.Clear();
-        equipModifiers.AddRange(MeleeWeapon.myModifiers);
-        equipModifiers.AddRange(RangedWeapon.myModifiers);
-        equipModifiers.AddRange(Armor.myModifiers);
-        foreach(EquipmentStatBlock block in Rings)
+        equipModifiers.AddRange(myEquiptment.MeleeWeapon.myModifiers);
+        equipModifiers.AddRange(myEquiptment.RangedWeapon.myModifiers);
+        equipModifiers.AddRange(myEquiptment.Armor.myModifiers);
+        foreach(EquipmentStatBlock block in myEquiptment.Rings)
         {
             equipModifiers.AddRange(block.myModifiers);
         }
@@ -601,7 +602,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void SetArmorElements()
     {
-        switch (Armor.myElement)
+        switch (myEquiptment.Armor.myElement)
         {
             case Element.Fire:
                 myWeakness = Element.Water;

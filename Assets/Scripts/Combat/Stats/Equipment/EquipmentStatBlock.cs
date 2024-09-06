@@ -32,6 +32,8 @@ public struct EquipModifier
 public class EquipmentStatBlock : ScriptableObject
 {
     public string equiptName;
+    [TextArea]
+    public string description;
     public EquipType EquipmentType;
     public Element myElement;
     public List<EquipModifier> myModifiers = new List<EquipModifier>();
