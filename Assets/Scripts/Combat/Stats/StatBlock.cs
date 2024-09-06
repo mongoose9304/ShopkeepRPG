@@ -16,7 +16,8 @@ public class StatBlock : ScriptableObject
     public int PhysicalDefense;
     public int MysticalDefense;
     public int Luck;
-    public int totalEXP;
+    public int savedExp;
+    public int remainingSkillPoints;
 
     private int LevelFormula(int lv_)
     {
@@ -29,7 +30,7 @@ public class StatBlock : ScriptableObject
         {
             temp += LevelFormula(i+1);
         }
-        temp -= totalEXP;
+        temp -= savedExp;
         return temp;
     }
 }
