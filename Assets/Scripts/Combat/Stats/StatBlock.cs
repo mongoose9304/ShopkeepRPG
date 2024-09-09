@@ -9,6 +9,7 @@ using UnityEngine;
 public class StatBlock : ScriptableObject
 {
     public int Level;
+    public int ascension=1;
     public int Vitality;
     public int Soul;
     public int PhysicalProwess;
@@ -18,10 +19,20 @@ public class StatBlock : ScriptableObject
     public int Luck;
     public int savedExp;
     public int remainingSkillPoints;
+    public int talentPoints;
 
     private int LevelFormula(int lv_)
     {
-        return (lv_ * lv_) * 10 + lv_ * 200;
+        int expNeeded= ((lv_ * ascension) * 10) + (lv_ * 200);
+        if(lv_>50)
+        {
+            expNeeded *= 2;
+        }
+        if (lv_ > 90)
+        {
+            expNeeded *= 2;
+        }
+        return expNeeded;
     }
     public int GetEXPToLevelUp()
     {
