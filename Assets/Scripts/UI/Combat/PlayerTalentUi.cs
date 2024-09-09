@@ -6,6 +6,8 @@ public class PlayerTalentUi : MonoBehaviour
 {
     public SavedTalents playerTalents;
     public TextMeshProUGUI talentPointsRemainingText;
+    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI talentTitleText;
     public List<TalentTree> myTrees = new List<TalentTree>();
     private void OnEnable()
     {
@@ -52,5 +54,10 @@ public class PlayerTalentUi : MonoBehaviour
             }
             
         }
+    }
+    public void SetDescription(string title_, string description_)
+    {
+        talentTitleText.text = title_;
+        descriptionText.text = description_;
     }
 }

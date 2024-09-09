@@ -51,4 +51,8 @@ public class TalentTree : MonoBehaviour
         }
 
     }
+    public void SetText(string desc_,string title_)
+    {
+        myTalentUI.SetDescription(title_,desc_);
+    }
 }
