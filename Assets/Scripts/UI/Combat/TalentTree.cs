@@ -8,15 +8,20 @@ public class TalentTree : MonoBehaviour
     public string ID;
     public PlayerTalentUi myTalentUI;
     public List<TalentSlot> mySlots = new List<TalentSlot>();
-    public void InvestPoint(int target_)
+    public void InvestPoint()
     {
-        if (pointsInvested <= 11)
+        Debug.Log("InvestPoint");
+        if (pointsInvested >= 11)
             return;
         if (myTalentUI.playerTalents.unspentTalents <= 0)
             return;
 
 
-       // myTalentUI.
+        if(myTalentUI.InvestPoint(ID))
+        {
+            pointsInvested += 1;
+            SetUp(pointsInvested);
+        }
 
 
     }

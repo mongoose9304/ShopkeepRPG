@@ -11,11 +11,28 @@ public class PlayerTalentUi : MonoBehaviour
     {
         SetUp();
     }
-    public void SpendPoint()
+    private void SpendPoint()
     {
         playerTalents.unspentTalents -= 1;
         talentPointsRemainingText.text = playerTalents.unspentTalents.ToString();
     }
+    public bool InvestPoint(string ID)
+    {
+      
+        for (int i= 0;i < playerTalents.talents.Count;i++)
+        {
+            if (playerTalents.talents[i].ID ==ID)
+            {
+                Talent tx = playerTalents.talents[i];
+                tx.levelInvested += 1;
+                playerTalents.talents[i] = tx;
+                SpendPoint();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void SetUp()
     {
         bool hasBeenfound = false;
