@@ -11,7 +11,7 @@ public class TalentTree : MonoBehaviour
     public List<TalentSlot> mySlots = new List<TalentSlot>();
     public void InvestPoint()
     {
-        Debug.Log("InvestPoint");
+        
         if (pointsInvested >= 11)
             return;
         if (myTalentUI.playerTalents.unspentTalents <= 0)

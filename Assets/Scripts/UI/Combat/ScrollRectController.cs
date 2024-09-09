@@ -20,6 +20,7 @@ public class ScrollRectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Vector3 x = new Vector3(target * distanceBetweenTargets, 0, 0);
         if(target * distanceBetweenTargets> scrollObject.localPosition.x)
         {
@@ -30,5 +31,6 @@ public class ScrollRectController : MonoBehaviour
         {
             scrollObject.localPosition = Vector3.MoveTowards(scrollObject.localPosition, x, speed * Time.deltaTime * Vector3.Distance(scrollObject.localPosition, x));
         }
+        scrollObject.localPosition = new Vector3(scrollObject.localPosition.x, -531, 0);
     }
 }

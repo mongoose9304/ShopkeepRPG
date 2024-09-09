@@ -38,19 +38,15 @@ public class PlayerTalentUi : MonoBehaviour
 
     public void SetUp()
     {
-        bool hasBeenfound = false;
         talentPointsRemainingText.text = playerTalents.unspentTalents.ToString();
         foreach(TalentTree tree in myTrees)
         {
-            if (hasBeenfound)
-                break;
            foreach(Talent t_ in playerTalents.talents)
             {
                 if(t_.ID==tree.ID)
                 {
                     tree.SetUp(t_.levelInvested);
-                    hasBeenfound = true;
-                    break;
+                    
                 }
             }
             
