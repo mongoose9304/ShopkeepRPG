@@ -5,6 +5,7 @@ using UnityEngine;
 public class TalentTree : MonoBehaviour
 {
     public int pointsInvested;
+    public int scrollTarget;
     public string ID;
     public PlayerTalentUi myTalentUI;
     public List<TalentSlot> mySlots = new List<TalentSlot>();
@@ -54,5 +55,6 @@ public class TalentTree : MonoBehaviour
     public void SetText(string desc_,string title_)
     {
         myTalentUI.SetDescription(title_,desc_);
+        myTalentUI.SetScrollTarget(scrollTarget);
     }
 }

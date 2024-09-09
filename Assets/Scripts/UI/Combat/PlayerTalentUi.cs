@@ -9,6 +9,7 @@ public class PlayerTalentUi : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public TextMeshProUGUI talentTitleText;
     public List<TalentTree> myTrees = new List<TalentTree>();
+    public ScrollRectController rectController;
     private void OnEnable()
     {
         SetUp();
@@ -59,5 +60,9 @@ public class PlayerTalentUi : MonoBehaviour
     {
         talentTitleText.text = title_;
         descriptionText.text = description_;
+    }
+    public void SetScrollTarget(int target_)
+    {
+        rectController.target = target_;
     }
 }
