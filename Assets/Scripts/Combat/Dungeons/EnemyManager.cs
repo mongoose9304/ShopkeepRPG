@@ -221,6 +221,10 @@ public class EnemyManager : MonoBehaviour
                 if (t_.myTeam == team_)
                     continue;
             }
+            else
+            {
+                continue;
+            }
             if(Vector3.Distance(position,currentEnemiesList[i].transform.position)<minDistance)
             {
                 closestEnemy = currentEnemiesList[i];

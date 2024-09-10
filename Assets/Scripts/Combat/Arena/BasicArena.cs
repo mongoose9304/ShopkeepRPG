@@ -8,7 +8,7 @@ public class BasicArena : BasicDungeon
     public int currentWave;
     public bool onGoingWave;
     [SerializeField] EnemyCounter myCounter;
-    private int spawnedEnemies;
+    [SerializeField] private int spawnedEnemies;
     private int maxEnemies;
     [SerializeField] float currentSpawnDelay;
     [SerializeField] float spawnDelayMin;
@@ -129,7 +129,7 @@ public class BasicArena : BasicDungeon
         }
         lastTeamSpawned += 1;
         currentSpawn += 1;
-        if (lastTeamSpawned > availableTeams.Count)
+        if (lastTeamSpawned >= availableTeams.Count)
             lastTeamSpawned = 0;
             
         
