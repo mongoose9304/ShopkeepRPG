@@ -19,7 +19,7 @@ public class SlimeEnemy : BasicEnemy
    
     public override void Attack()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
+        if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
             return;
         canMove = false;
         isJumping = true ;
@@ -100,6 +100,7 @@ public class SlimeEnemy : BasicEnemy
     protected override void OnEnable()
     {
         ResetEnemy();
+        FindTarget();
         isJumping = false;
         isSlaming = false;
     }
@@ -109,7 +110,7 @@ public class SlimeEnemy : BasicEnemy
             return;
         if (canMove)
         {
-            agent.SetDestination(player.transform.position);
+            agent.SetDestination(target.transform.position);
             agent.speed = moveSpeed * currentMoveSpeedPercent;
             currentMoveSpeedPercent -= Time.deltaTime;
             if (currentMoveSpeedPercent <= 0)

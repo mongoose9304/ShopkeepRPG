@@ -41,6 +41,7 @@ public class BasicEnemy : MonoBehaviour
     Element myWeakness;
     public GameObject stunIcon;
     public GameObject player;
+    public GameObject target;
     public EnemyCounter myEnemyCounter;
     [SerializeField]protected NavMeshAgent agent;
     [SerializeField] protected TextMeshProUGUI damageText;
@@ -48,6 +49,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [SerializeField] GameObject[] deathEffects;
+    [SerializeField] TeamUser myTeamUser;
 
 
     [Header("Feel")]
@@ -103,6 +105,7 @@ public class BasicEnemy : MonoBehaviour
     {
         ResetEnemy();
         NavMeshHit hit;
+        FindTarget();
         if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
         {
             transform.position = hit.position;
@@ -231,7 +234,7 @@ public class BasicEnemy : MonoBehaviour
     /// </summary>
     public virtual void Attack()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance)
+        if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
             return;
     }
 
@@ -251,7 +254,7 @@ public class BasicEnemy : MonoBehaviour
         if (!agent.isActiveAndEnabled)
             return;
         if (canMove)
-            agent.SetDestination(player.transform.position);
+            agent.SetDestination(target.transform.position);
         else
             agent.ResetPath();
     }
@@ -289,6 +292,36 @@ public class BasicEnemy : MonoBehaviour
     {
         maxHealth = myBaseData.CalculateHealth(false,Level);
         damage = myBaseData.CalculateDamage(false, Level);
+    }
+    public virtual void FindTarget()
+    {
+        if(!player)
+        player = GameObject.FindGameObjectWithTag("Player");
+        TryGetComponent<TeamUser>(out myTeamUser);
+        if (!myTeamUser)
+        {
+            Debug.Log("NoTeam");
+        target = player;
+            return;
+        }
+        GameObject obj=EnemyManager.instance.FindEnemyTarget(myTeamUser.myTeam, transform.position);
+        if(obj!=null)
+        {
+            Debug.Log("ObjFOund");
+            if (Vector3.Distance(transform.position,obj.transform.position)< Vector3.Distance(transform.position, player.transform.position))
+            {
+                target = obj;
+            }
+            else
+            {
+                target = player;
+            }
+        }
+        else
+        {
+            Debug.Log("Obj Null");
+            target = player;
+        }
     }
 
 }

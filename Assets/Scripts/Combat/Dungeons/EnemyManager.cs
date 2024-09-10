@@ -208,5 +208,27 @@ public class EnemyManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
+    public GameObject FindEnemyTarget(string team_,Vector3 position)
+    {
+        if(currentEnemiesList.Count==0)
+        return null;
+        float minDistance=100000;
+        GameObject closestEnemy=null;
+        for(int i=0;i<currentEnemiesList.Count;i++)
+        {
+            if(TryGetComponent<TeamUser>(out TeamUser t_))
+            {
+                if (t_.myTeam == team_)
+                    continue;
+            }
+            if(Vector3.Distance(position,currentEnemiesList[i].transform.position)<minDistance)
+            {
+                closestEnemy = currentEnemiesList[i];
+                minDistance = Vector3.Distance(position, currentEnemiesList[i].transform.position);
+            }
+        }
+
+        return closestEnemy;
+    }
 
 }

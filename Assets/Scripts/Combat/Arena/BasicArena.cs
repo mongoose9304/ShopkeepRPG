@@ -107,22 +107,22 @@ public class BasicArena : BasicDungeon
         switch(lastTeamSpawned)
         {
             case 0:
-                if (currentSpawn > aTeamSpawns.Count)
+                if (currentSpawn >= aTeamSpawns.Count)
                     currentSpawn = 0;
                 EnemyManager.instance.SpawnRandomEnemy(false, aTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(),availableTeams[lastTeamSpawned]);
                 break;
             case 1:
-                if (currentSpawn > bTeamSpawns.Count)
+                if (currentSpawn >= bTeamSpawns.Count)
                     currentSpawn = 0;
                 EnemyManager.instance.SpawnRandomEnemy(false, bTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;
             case 2:
-                if (currentSpawn > cTeamSpawns.Count)
+                if (currentSpawn >= cTeamSpawns.Count)
                     currentSpawn = 0;
                 EnemyManager.instance.SpawnRandomEnemy(false, cTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;
             case 3:
-                if (currentSpawn > dTeamSpawns.Count)
+                if (currentSpawn >= dTeamSpawns.Count)
                     currentSpawn = 0;
                 EnemyManager.instance.SpawnRandomEnemy(false, dTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;

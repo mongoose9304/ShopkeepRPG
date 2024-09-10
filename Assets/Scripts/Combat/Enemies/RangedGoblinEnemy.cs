@@ -14,7 +14,7 @@ public class RangedGoblinEnemy : BasicEnemy
     Vector3 lookAt;
     public override void Attack()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance||isPreparingShot)
+        if (Vector3.Distance(transform.position, target.transform.position) > attackDistance||isPreparingShot)
             return;
         
         isPreparingShot = true;
@@ -29,6 +29,7 @@ public class RangedGoblinEnemy : BasicEnemy
     protected override void OnEnable()
     {
         ResetEnemy();
+        FindTarget();
         shotPrepTimecurrent = shotPrepTimeMax;
     }
     protected override void Update()
@@ -39,7 +40,7 @@ public class RangedGoblinEnemy : BasicEnemy
             return;
         }
         transform.LookAt(lookAt, Vector3.up);
-        lookAt = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        lookAt = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         if (isPreparingShot)
         {
             PrepShot();

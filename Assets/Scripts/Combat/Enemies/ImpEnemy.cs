@@ -12,16 +12,16 @@ public class ImpEnemy : BasicEnemy
     public UnityEvent endAttackEvent;
     public override void Attack()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > attackDistance&&canAttack)
+        if (Vector3.Distance(transform.position, target.transform.position) > attackDistance&&canAttack)
             return;
 
         canAttack = false;
         GameObject obj = attackIconPooler.GetPooledGameObject();
-         obj.transform.position = player.transform.position;
+         obj.transform.position = target.transform.position;
          obj.SetActive(true);
         GameObject objB = attackProjectilesPool.GetPooledGameObject();
         objB.transform.position = attackSpawn.position;
-        objB.GetComponent<LopProjectile>().target = player.transform.position;
+        objB.GetComponent<LopProjectile>().target = target.transform.position;
         objB.GetComponent<EnemyProjectile>().damage = damage;
         objB.GetComponent<OnDisableEvent>().endEvent = endAttackEvent;
         objB.SetActive(true);
@@ -35,6 +35,7 @@ public class ImpEnemy : BasicEnemy
     protected override void OnEnable()
     {
         ResetEnemy();
+        FindTarget();
         canAttack = true;
     }
 }
