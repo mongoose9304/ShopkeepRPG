@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 6618822763816982608}
   - component: {fileID: 6152224102705101945}
   - component: {fileID: 7289725986723413572}
+  - component: {fileID: 74586503041455894}
   m_Layer: 0
   m_Name: SlimeDummy
   m_TagString: Enemy
@@ -1011,6 +1012,7 @@ MonoBehaviour:
   attackDistance: 5
   knockBackMax: 0.2
   damage: 5
+  isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 6611630499809330876}
   player: {fileID: 0}
@@ -1064,25 +1066,35 @@ MonoBehaviour:
   - item:
       name: Rusty Spoon
       amount: 1
-      isNew: 0
     maxAmount: 5
     chancesToSpawn: 5
   - item:
       name: Broken Sword
       amount: 1
-      isNew: 0
     maxAmount: 5
     chancesToSpawn: 4
   - item:
       name: Apples
       amount: 1
-      isNew: 0
     maxAmount: 10
     chancesToSpawn: 3
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
   dropNothing: 0
+--- !u!114 &74586503041455894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658827452453938793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0718bc3afa3184fa964327872cad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: Gluttony
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0

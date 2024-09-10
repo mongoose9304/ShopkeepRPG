@@ -748,6 +748,7 @@ GameObject:
   - component: {fileID: 8064418402044043358}
   - component: {fileID: 3167825987927063511}
   - component: {fileID: 8897757053860857412}
+  - component: {fileID: 2729977575159150118}
   m_Layer: 0
   m_Name: SlimeDummyEx
   m_TagString: Enemy
@@ -891,6 +892,7 @@ MonoBehaviour:
   attackDistance: 6
   knockBackMax: 0.2
   damage: 5
+  isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 8463199300756448662}
   player: {fileID: 0}
@@ -955,6 +957,19 @@ MonoBehaviour:
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
   dropNothing: 0
+--- !u!114 &2729977575159150118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110615113856666677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0718bc3afa3184fa964327872cad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: Gluttony
 --- !u!1 &4148427308125815427
 GameObject:
   m_ObjectHideFlags: 0

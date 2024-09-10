@@ -74,7 +74,7 @@ public class DungeonManager : MonoBehaviour
             CombatPickupManager.instance.ClearPickups();
         }
         EnemyManager.instance.DisableAllEnemies();
-
+        currentDungeon.SetEnemyManagerTeams();
 
     }
     /// <summary>

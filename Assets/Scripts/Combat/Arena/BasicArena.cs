@@ -14,6 +14,13 @@ public class BasicArena : BasicDungeon
     [SerializeField] float spawnDelayMin;
     [SerializeField] float spawnDelayMax;
     [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
+    [SerializeField] private List<Transform> aTeamSpawns = new List<Transform>();
+    [SerializeField] private List<Transform> bTeamSpawns = new List<Transform>();
+    [SerializeField] private List<Transform> cTeamSpawns = new List<Transform>();
+    [SerializeField] private List<Transform> dTeamSpawns = new List<Transform>();
+    //to keep track of what the last guy we spawned was so we can ensure areound 50 50 for each team
+    [SerializeField] private int lastTeamSpawned;
+    
     public bool SpawnInOrder;
     private int currentSpawn=0;
     private float delayBeforeWave;
@@ -48,7 +55,14 @@ public class BasicArena : BasicDungeon
             currentSpawnDelay -= Time.deltaTime;
             if (currentSpawnDelay <= 0)
             {
-                SpawnBasicEnemy();
+                if (useRandomTeams)
+                {
+                    SpawnBasicEnemyOnTeam();
+                }
+                else
+                {
+                    SpawnBasicEnemy();
+                }
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
             }
 
@@ -83,6 +97,43 @@ public class BasicArena : BasicDungeon
         {
         EnemyManager.instance.SpawnRandomEnemy(false, spawnPoints[Random.Range(0, spawnPoints.Count)], myCounter, enemyLevel);
         }
+        spawnedEnemies += 1;
+    }
+    private void SpawnBasicEnemyOnTeam()
+    {
+        if (spawnedEnemies >= maxEnemies)
+            return;
+        Debug.Log("Spawn");
+        switch(lastTeamSpawned)
+        {
+            case 0:
+                if (currentSpawn > aTeamSpawns.Count)
+                    currentSpawn = 0;
+                EnemyManager.instance.SpawnRandomEnemy(false, aTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(),availableTeams[lastTeamSpawned]);
+                break;
+            case 1:
+                if (currentSpawn > bTeamSpawns.Count)
+                    currentSpawn = 0;
+                EnemyManager.instance.SpawnRandomEnemy(false, bTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                break;
+            case 2:
+                if (currentSpawn > cTeamSpawns.Count)
+                    currentSpawn = 0;
+                EnemyManager.instance.SpawnRandomEnemy(false, cTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                break;
+            case 3:
+                if (currentSpawn > dTeamSpawns.Count)
+                    currentSpawn = 0;
+                EnemyManager.instance.SpawnRandomEnemy(false, dTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                break;
+        }
+        lastTeamSpawned += 1;
+        currentSpawn += 1;
+        if (lastTeamSpawned > availableTeams.Count)
+            lastTeamSpawned = 0;
+            
+        
+      
         spawnedEnemies += 1;
     }
 }

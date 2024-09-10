@@ -32,6 +32,9 @@ public class BasicDungeon : MonoBehaviour
     [SerializeField] int basicEnemyExpValueMin;
     [SerializeField] int basicEnemyExpValueMax;
     public List<Transform> regularRoomSpots = new List<Transform>();
+    [SerializeField] public List<string> availableTeams = new List<string>();
+    public string onlyTeam;
+    public bool useRandomTeams;
 
     private void OnEnable()
     {
@@ -75,5 +78,11 @@ public class BasicDungeon : MonoBehaviour
         {
             room.ChangeSinType(sin_);
         }
+    }
+    public void SetEnemyManagerTeams()
+    {
+        EnemyManager.instance.randomTeams = availableTeams;
+        EnemyManager.instance.singleTeam = onlyTeam;
+        EnemyManager.instance.useRandomTeams = useRandomTeams;
     }
 }

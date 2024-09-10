@@ -5489,6 +5489,7 @@ GameObject:
   - component: {fileID: 6551820595359314126}
   - component: {fileID: 3215752825878701075}
   - component: {fileID: 719385258473200012}
+  - component: {fileID: 4954135472343162662}
   m_Layer: 0
   m_Name: GoblinDummy
   m_TagString: Enemy
@@ -5609,6 +5610,7 @@ MonoBehaviour:
   attackDistance: 15
   knockBackMax: 0
   damage: 10
+  isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 2726459677985465011}
   player: {fileID: 0}
@@ -5662,13 +5664,25 @@ MonoBehaviour:
   - item:
       name: Broken Arrow
       amount: 1
-      isNew: 0
     maxAmount: 1
     chancesToSpawn: 5
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
   dropNothing: 1
+--- !u!114 &4954135472343162662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5154405269253715279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0718bc3afa3184fa964327872cad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: Wrath
 --- !u!1 &6453099296734266126
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,9 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> currentEnemiesList = new List<GameObject>();
     public float timeBetweenEnemyListCleans;
     float currentTimeBetweenEnemyListCleans;
-
+    [SerializeField] public List<string> randomTeams = new List<string>();
+    [SerializeField] public bool useRandomTeams;
+    [SerializeField] public string singleTeam;
     //hitParticles
     [SerializeField] protected MMMiniObjectPooler physicalHitEffects;
     [SerializeField] protected MMMiniObjectPooler airHitEffects;
@@ -65,7 +67,7 @@ public class EnemyManager : MonoBehaviour
             eliteEnemies.Add(obj.GetComponent<EnemyItem>());
     }
 
-    public void SpawnEnemy(string name_,Transform pos_,EnemyCounter counter_=null,int enemyLevel=1)
+    public void SpawnEnemy(string name_,Transform pos_,EnemyCounter counter_=null,int enemyLevel=1,string team="")
     {
         foreach(EnemyItem item_ in enemies)
         {
@@ -82,11 +84,29 @@ public class EnemyManager : MonoBehaviour
                 obj.SetActive(true);
                 currentEnemiesList.Add(obj);
                 if (counter_) obj.GetComponent<BasicEnemy>().myEnemyCounter = counter_;
+                if(obj.TryGetComponent<TeamUser>(out TeamUser t))
+                {
+                    if (team == "")
+                    {
+                        if (useRandomTeams)
+                        {
+                            t.myTeam = randomTeams[Random.Range(0, randomTeams.Count)];
+                        }
+                        else
+                        {
+                            t.myTeam = singleTeam;
+                        }
+                    }
+                    else
+                    {
+                        t.myTeam = team;
+                    }
+                }
                 break;
             }
         }
     }
-    public void SpawnEliteEnemy(string name_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1)
+    public void SpawnEliteEnemy(string name_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1,string team="")
     {
         foreach (EnemyItem item_ in eliteEnemies)
         {
@@ -103,22 +123,40 @@ public class EnemyManager : MonoBehaviour
                 obj.SetActive(true);
                 currentEnemiesList.Add(obj);
                 if (counter_) obj.GetComponent<BasicEnemy>().myEnemyCounter = counter_;
+                if (obj.TryGetComponent<TeamUser>(out TeamUser t))
+                {
+                    if (team == "")
+                    {
+                        if (useRandomTeams)
+                        {
+                            t.myTeam = randomTeams[Random.Range(0, randomTeams.Count)];
+                        }
+                        else
+                        {
+                            t.myTeam = singleTeam;
+                        }
+                    }
+                    else
+                    {
+                        t.myTeam = team;
+                    }
+                }
                 break;
             }
         }
     }
-    public void SpawnRandomEnemy(bool isElite_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1)
+    public void SpawnRandomEnemy(bool isElite_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1,string team="")
     {
         string name = "";
         if (!isElite_)
         {
              name = enemies[Random.Range(0, enemies.Count)].myname;
-            SpawnEnemy(name, pos_, counter_,enemyLevel);
+            SpawnEnemy(name, pos_, counter_,enemyLevel,team);
         }
         else
         {
             name = eliteEnemies[Random.Range(0, eliteEnemies.Count)].myname;
-            SpawnEliteEnemy(name, pos_, counter_, enemyLevel);
+            SpawnEliteEnemy(name, pos_, counter_, enemyLevel,team);
         }
     }
     private void CleanCurrentEnemyList()
