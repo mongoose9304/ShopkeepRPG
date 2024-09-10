@@ -166,7 +166,10 @@ public class BasicEnemy : MonoBehaviour
     /// <param name="knockBackObject">The object initiating the knockback effect</param>
     public void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null)
     {
-       
+       if(knockBackObject)
+        {
+            target = knockBackObject;
+        }
         if (!superArmor)
         {
             if (!isElite)
@@ -254,7 +257,13 @@ public class BasicEnemy : MonoBehaviour
         if (!agent.isActiveAndEnabled)
             return;
         if (canMove)
+        {
+            if (!target)
+                target = player;
+            if(!target.activeInHierarchy)
+                  target = player;
             agent.SetDestination(target.transform.position);
+        }
         else
             agent.ResetPath();
     }
@@ -322,6 +331,24 @@ public class BasicEnemy : MonoBehaviour
             Debug.Log("Obj Null");
             target = player;
         }
+    }
+    //returns true if the teams are different 
+    public virtual bool CheckTeam(GameObject target)
+    {
+        if (target.TryGetComponent<TeamUser>(out TeamUser t_) && gameObject.TryGetComponent<TeamUser>(out TeamUser myT))
+        {
+            if (t_.myTeam != myT.myTeam)
+                return true;
+        }
+        return false;
+    }
+    public string GetTeam()
+    {
+        if(gameObject.TryGetComponent<TeamUser>(out TeamUser myT))
+        {
+            return myT.myTeam;
+        }
+        return "";
     }
 
 }

@@ -216,7 +216,7 @@ public class EnemyManager : MonoBehaviour
         GameObject closestEnemy=null;
         for(int i=0;i<currentEnemiesList.Count;i++)
         {
-            if(TryGetComponent<TeamUser>(out TeamUser t_))
+            if(currentEnemiesList[i].gameObject.TryGetComponent<TeamUser>(out TeamUser t_))
             {
                 if (t_.myTeam == team_)
                     continue;

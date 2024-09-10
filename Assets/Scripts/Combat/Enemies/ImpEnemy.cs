@@ -23,6 +23,7 @@ public class ImpEnemy : BasicEnemy
         objB.transform.position = attackSpawn.position;
         objB.GetComponent<LopProjectile>().target = target.transform.position;
         objB.GetComponent<EnemyProjectile>().damage = damage;
+        objB.GetComponent<EnemyProjectile>().myTeam = GetTeam();
         objB.GetComponent<OnDisableEvent>().endEvent = endAttackEvent;
         objB.SetActive(true);
 

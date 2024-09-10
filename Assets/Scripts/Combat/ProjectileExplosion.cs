@@ -8,6 +8,7 @@ public class ProjectileExplosion : MonoBehaviour
     public float damage;
     public Element myElement;
     public bool isMysticalDamage;
+    public string myTeam;
 
     private void OnEnable()
     {
@@ -21,6 +22,16 @@ public class ProjectileExplosion : MonoBehaviour
             if (hitCollider.tag == "Familiar")
             {
                 hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            }
+            if (hitCollider.tag == "Enemy")
+            {
+                if (hitCollider.gameObject.TryGetComponent<TeamUser>(out TeamUser t_))
+                {
+                    if (t_.myTeam == myTeam)
+                        return;
+
+                }
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
             }
         }
     }

@@ -43,6 +43,10 @@ public class RangedGoblinEnemy : BasicEnemy
         lookAt = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         if (isPreparingShot)
         {
+            if (!target)
+                target = player;
+            if (!target.activeInHierarchy)
+                target = player;
             PrepShot();
         }
         else
@@ -64,6 +68,7 @@ public class RangedGoblinEnemy : BasicEnemy
             obj.transform.rotation = attackSpawn.rotation;
             obj.GetComponent<EnemyProjectile>().myElement = myElement;
             obj.GetComponent<EnemyProjectile>().damage = damage;
+            obj.GetComponent<EnemyProjectile>().myTeam = GetTeam();
             obj.SetActive(true);
             isPreparingShot = false;
             currentAttackCooldown = maxAttackCooldown;

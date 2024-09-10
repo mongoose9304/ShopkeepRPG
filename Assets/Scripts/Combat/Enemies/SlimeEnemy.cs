@@ -53,6 +53,12 @@ public class SlimeEnemy : BasicEnemy
             {
                 hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
             }
+            if (hitCollider.tag == "Enemy")
+            {
+                if(CheckTeam(hitCollider.gameObject))
+                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
+                
+            }
         }
     }
     private void SlamDown()
@@ -110,6 +116,10 @@ public class SlimeEnemy : BasicEnemy
             return;
         if (canMove)
         {
+            if (!target)
+                target = player;
+            if (!target.activeInHierarchy)
+                target = player;
             agent.SetDestination(target.transform.position);
             agent.speed = moveSpeed * currentMoveSpeedPercent;
             currentMoveSpeedPercent -= Time.deltaTime;
@@ -121,4 +131,5 @@ public class SlimeEnemy : BasicEnemy
         else
             agent.ResetPath();
     }
+    
 }
