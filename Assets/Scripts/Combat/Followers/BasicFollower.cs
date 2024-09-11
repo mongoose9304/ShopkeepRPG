@@ -20,6 +20,8 @@ public class BasicFollower : MonoBehaviour
     [SerializeField] protected float specialDistance;
     [SerializeField] protected float knockBackMax;
     [SerializeField] protected float basicDamage;
+    [SerializeField] protected float physicalDef;
+    [SerializeField] protected float mysticalDef;
     [SerializeField] protected float basicStun;
     [SerializeField] protected float specialDamage;
     [SerializeField] protected bool isMysticalDamage;
@@ -123,12 +125,23 @@ public class BasicFollower : MonoBehaviour
     {
 
     }
-    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
+        float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
-            damage_ *= 1.5f;
+            newDamage *= 1.5f;
         }
+        if (isMystical)
+        {
+            newDamage -= mysticalDef;
+        }
+        else
+        {
+            newDamage -= physicalDef;
+        }
+        if (newDamage < damage_ * 0.05f)
+            newDamage = damage_ * 0.05f;
         currentHealth -= damage_;
         if (currentHealth <= 0)
         {
@@ -156,5 +169,14 @@ public class BasicFollower : MonoBehaviour
     public virtual void OnEnable()
     {
         ResetStats();
+    }
+    public virtual void SetStats(float health, float regularDamage, float specialDamage_, float physicalDef_, float mysticalDef_)
+    {
+        basicDamage = regularDamage;
+        specialDamage = specialDamage_;
+        maxHealth = health;
+        currentHealth = maxHealth;
+        physicalDef = physicalDef_;
+        mysticalDef = mysticalDef_;
     }
 }

@@ -20,6 +20,13 @@ public class FollowerMaster : MonoBehaviour
     public float maxTimeBetweenRespawns;
     public float currentTimeBetweenRespawns;
     bool isQuitting;
+    public float maxHealth;
+    public float regularDamage;
+    public float specialDamage;
+    public float physicalDef;
+    public float mysticalDef;
+
+
     protected virtual void Awake()
     {
         for (int i = 0; i < maxFollowers; i++)
@@ -85,6 +92,7 @@ public class FollowerMaster : MonoBehaviour
                 {
                 myFollowers[i].transform.position = transform.position;
                 }
+                myFollowers[i].SetStats(maxHealth, regularDamage, specialDamage,physicalDef,mysticalDef);
                 myFollowers[i].gameObject.SetActive(true);
                 if(spawnEffectPool)
                 {
@@ -139,6 +147,10 @@ public class FollowerMaster : MonoBehaviour
             obj.transform.position = location_.position;
             obj.SetActive(true);
         }
+    }
+    public virtual void SetStats(float health,float damage,float specialDamage_,float physicalDef_,float mysticalDef_)
+    {
+        
     }
 
 }

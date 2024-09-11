@@ -58,11 +58,9 @@ public class CombatPlayerMovement : MonoBehaviour
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     //Equipment
     public PlayerEquiptmentHolder myEquiptment;
-    //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
-    //public EquipmentStatBlock MeleeWeapon;
-    //public EquipmentStatBlock RangedWeapon;
-    //public EquipmentStatBlock Armor;
-
+    //SkillTree Abilities and Effects
+    [SerializeField] SavedTalents myTalents;
+    public PlayerSkeletonMaster mySkeltonMaster;
 
 
     public float maxManaRechargeDelay;
@@ -517,7 +515,7 @@ public class CombatPlayerMovement : MonoBehaviour
         manaBar.SetBar01(currentMana / maxMana);
         combatActions.SetSpecialDamages(PhysicalAtk,MysticalAtk);
         combatActions.SetStats(PhysicalAtk, MysticalAtk, myEquiptment.RangedWeapon.myElement, myEquiptment.MeleeWeapon.myElement);
-
+        mySkeltonMaster.SetStats(maxHealth, PhysicalAtk, MysticalAtk, PhysicalDef, MysticalDef);
     }
     //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
     //public EquipmentStatBlock MeleeWeapon;
@@ -643,5 +641,9 @@ public class CombatPlayerMovement : MonoBehaviour
     public int GetExpToNextLevel()
     {
         return myStats.GetEXPToLevelUp();
+    }
+    public void SkillTreeEffects()
+    {
+
     }
 }
