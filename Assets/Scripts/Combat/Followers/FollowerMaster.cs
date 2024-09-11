@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class FollowerMaster : MonoBehaviour
 {
+    public MMMiniObjectPooler deathEffectPool;
     public GameObject followerPrefab;
     public int maxFollowers;
     public List<BasicFollower> myFollowers = new List<BasicFollower>();
@@ -15,6 +16,7 @@ public class FollowerMaster : MonoBehaviour
     public List<string> teams=new List<string>();
     public float maxTimeBetweenRespawns;
     public float currentTimeBetweenRespawns;
+    bool isQuitting;
     protected virtual void Awake()
     {
         for (int i = 0; i < maxFollowers; i++)
@@ -27,10 +29,16 @@ public class FollowerMaster : MonoBehaviour
     }
     protected virtual void OnDisable()
     {
+        if (isQuitting)
+            return;
         foreach(BasicFollower follower in myFollowers)
         {
             follower.gameObject.SetActive(false);
         }
+    }
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
     }
     protected virtual void Update()
     {
@@ -106,6 +114,14 @@ public class FollowerMaster : MonoBehaviour
             }
         }
     }
-
+    public virtual void FollowerDeath(Transform location_)
+    {
+        if(deathEffectPool)
+        {
+            GameObject obj = deathEffectPool.GetPooledGameObject();
+            obj.transform.position = location_.position;
+            obj.SetActive(true);
+        }
+    }
 
 }

@@ -143,9 +143,12 @@ public class CombatFamiliar : MonoBehaviour
             Death();
             return;
         }
-        floatingText.Value = damage_.ToString();
+
         if (textSpawner)
+        {
+            floatingText.Value = damage_.ToString();
             textSpawner.PlayFeedbacks();
+        }
         if (hitEffects)
             hitEffects.PlayFeedbacks();
         combatPlayerMovement.UpdateFamiliarHealth(currentHealth/monsterData.CalculateHealth());

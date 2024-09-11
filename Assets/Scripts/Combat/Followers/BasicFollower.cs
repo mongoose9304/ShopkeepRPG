@@ -123,4 +123,38 @@ public class BasicFollower : MonoBehaviour
     {
 
     }
+    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    {
+        if (element_ == myWeakness && element_ != Element.Neutral)
+        {
+            damage_ *= 1.5f;
+        }
+        currentHealth -= damage_;
+        if (currentHealth <= 0)
+        {
+            Death();
+            return;
+        }
+
+        if (textSpawner)
+        {
+            floatingText.Value = damage_.ToString();
+            textSpawner.PlayFeedbacks();
+        }
+        if (hitEffects)
+            hitEffects.PlayFeedbacks();
+    }
+    public virtual void Death()
+    {
+        gameObject.SetActive(false);
+        myMaster.FollowerDeath(transform);
+    }
+    public virtual void ResetStats()
+    {
+        currentHealth = maxHealth;
+    }
+    public virtual void OnEnable()
+    {
+        ResetStats();
+    }
 }

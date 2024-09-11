@@ -69,6 +69,24 @@ public class EnemyProjectile : MonoBehaviour
                 other.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
             }
         }
+        else if (other.tag == "Follower")
+        {
+            if (other.gameObject.TryGetComponent<TeamUser>(out TeamUser t_))
+            {
+                if (t_.myTeam == myTeam)
+                    return;
+
+            }
+            gameObject.SetActive(false);
+            if (projectileExplosionObject)
+            {
+                CreateExplosion();
+            }
+            else
+            {
+                other.gameObject.GetComponent<BasicFollower>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            }
+        }
     }
     public void CreateExplosion()
     {

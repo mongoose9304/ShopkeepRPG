@@ -49,15 +49,21 @@ public class SlimeEnemy : BasicEnemy
             {
                 hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage,0,myElement,0,this.gameObject,isMysticalDamage);
             }
-            if (hitCollider.tag == "Familiar")
+            else if (hitCollider.tag == "Familiar")
             {
                 hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
             }
-            if (hitCollider.tag == "Enemy")
+            else if (hitCollider.tag == "Enemy")
             {
                 if(CheckTeam(hitCollider.gameObject))
                     hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
                 
+            }
+            else if (hitCollider.tag == "Follower")
+            {
+                if (CheckTeam(hitCollider.gameObject))
+                    hitCollider.gameObject.GetComponent<BasicFollower>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+
             }
         }
     }
