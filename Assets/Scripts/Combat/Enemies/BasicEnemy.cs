@@ -309,14 +309,12 @@ public class BasicEnemy : MonoBehaviour
         TryGetComponent<TeamUser>(out myTeamUser);
         if (!myTeamUser)
         {
-            Debug.Log("NoTeam");
         target = player;
             return;
         }
         GameObject obj=EnemyManager.instance.FindEnemyTarget(myTeamUser.myTeam, transform.position);
         if(obj!=null)
         {
-            Debug.Log("ObjFOund");
             if (Vector3.Distance(transform.position,obj.transform.position)< Vector3.Distance(transform.position, player.transform.position))
             {
                 target = obj;

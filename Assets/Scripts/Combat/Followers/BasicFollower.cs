@@ -13,11 +13,15 @@ public class BasicFollower : MonoBehaviour
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float maxHitstun;
     [SerializeField] protected float maxAttackCooldown;
+    [SerializeField] protected float maxSpecialCooldown;
     [SerializeField] protected Element myElement;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float attackDistance;
+    [SerializeField] protected float specialDistance;
     [SerializeField] protected float knockBackMax;
-    [SerializeField] protected float damage;
+    [SerializeField] protected float basicDamage;
+    [SerializeField] protected float basicStun;
+    [SerializeField] protected float specialDamage;
     [SerializeField] protected bool isMysticalDamage;
     [SerializeField] float maxDistanceToMyMaster;
     [Header("CurrentValues")]
@@ -26,6 +30,7 @@ public class BasicFollower : MonoBehaviour
     //count for how long an enemy has been stunned, after this passes the max an enemy should be able to act regardless of if the player could stun them again
     protected float currentHitstun;
     protected float currentAttackCooldown = 0.2f;
+    protected float currentSpecialCooldown = 0.2f;
     protected float currentHealth;
     bool superArmor;
 
@@ -54,6 +59,8 @@ public class BasicFollower : MonoBehaviour
         else
             FollowMaster();
 
+        WaitForAttacks();
+
     }
 
     /// <summary>
@@ -80,6 +87,27 @@ public class BasicFollower : MonoBehaviour
             agent.SetDestination(target.transform.position);
         
         
+    }
+    /// <summary>
+    /// Causes the Familiar to attack targets
+    /// </summary>
+    public virtual void WaitForAttacks()
+    {
+        currentAttackCooldown -= Time.deltaTime;
+        currentSpecialCooldown -= Time.deltaTime;
+        if (currentSpecialCooldown <= 0)
+        {
+
+            currentSpecialCooldown = maxSpecialCooldown;
+            SpecialAttack();
+        }
+        else if (currentAttackCooldown <= 0)
+        {
+
+            currentAttackCooldown = maxAttackCooldown;
+            Attack();
+        }
+
     }
     /// <summary>
     /// The most basic attack the familar knows

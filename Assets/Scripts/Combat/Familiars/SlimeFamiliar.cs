@@ -23,7 +23,7 @@ public class SlimeFamiliar : CombatFamiliar
   
     public override void Attack()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) > AttackDistance&&target)
+        if (Vector3.Distance(transform.position, target.transform.position) > AttackDistance)
             return;
         anim.SetTrigger("basicAttack");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);

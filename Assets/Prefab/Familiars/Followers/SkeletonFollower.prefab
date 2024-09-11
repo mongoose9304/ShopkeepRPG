@@ -56,15 +56,19 @@ MonoBehaviour:
   myBaseData: {fileID: 0}
   maxHealth: 10
   maxHitstun: 3
-  maxAttackCooldown: 3
+  maxAttackCooldown: 0.5
+  maxSpecialCooldown: 10
   myElement: 2
   moveSpeed: 6
   attackDistance: 2
+  specialDistance: 0
   knockBackMax: 0
-  damage: 5
+  basicDamage: 5
+  basicStun: 0
+  specialDamage: 0
   isMysticalDamage: 0
   maxDistanceToMyMaster: 8
-  canMove: 0
+  canMove: 1
   myMaster: {fileID: 0}
   stunIcon: {fileID: 0}
   target: {fileID: 0}
@@ -87,11 +91,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 99
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 0
   m_AutoRepath: 0

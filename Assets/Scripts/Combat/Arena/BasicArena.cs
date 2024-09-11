@@ -103,7 +103,6 @@ public class BasicArena : BasicDungeon
     {
         if (spawnedEnemies >= maxEnemies)
             return;
-        Debug.Log("Spawn");
         switch(lastTeamSpawned)
         {
             case 0:
