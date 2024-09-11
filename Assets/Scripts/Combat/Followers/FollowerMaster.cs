@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FollowerMaster : MonoBehaviour
 {
+    public GameObject followerPrefab;
+    public int maxFollowers;
     public List<BasicFollower> myFollowers = new List<BasicFollower>();
     public List<GameObject> myTargets = new List<GameObject>();
     public float maxTimeBeforeTargetSearchs;
@@ -11,6 +13,18 @@ public class FollowerMaster : MonoBehaviour
     public float SearchRange;
     public List<string> searchableTags=new List<string>();
     public List<string> teams=new List<string>();
+    public float maxTimeBetweenRespawns;
+    public float currentTimeBetweenRespawns;
+    protected virtual void Awake()
+    {
+        for (int i = 0; i < maxFollowers; i++)
+        {
+           GameObject obj= GameObject.Instantiate(followerPrefab);
+            obj.SetActive(false);
+            myFollowers.Add(obj.GetComponent<BasicFollower>());
+            obj.GetComponent<BasicFollower>().myMaster = this;
+        }
+    }
     protected virtual void OnDisable()
     {
         foreach(BasicFollower follower in myFollowers)
@@ -21,6 +35,7 @@ public class FollowerMaster : MonoBehaviour
     protected virtual void Update()
     {
         SearchForTargetsUpdate();
+        SpawnFollowersUpdate();
     }
     public virtual void SearchForTargetsUpdate()
     {
@@ -32,6 +47,29 @@ public class FollowerMaster : MonoBehaviour
         currentTimeBeforeTargetSearchs = maxTimeBeforeTargetSearchs;
         SearchForTargets();
         
+    }
+    public virtual void SpawnFollowersUpdate()
+    {
+        if (currentTimeBetweenRespawns > 0)
+        {
+            currentTimeBetweenRespawns -= Time.deltaTime;
+            return;
+        }
+        currentTimeBetweenRespawns = maxTimeBetweenRespawns;
+        SpawnFollowers();
+
+    }
+    public virtual void SpawnFollowers()
+    {
+        for (int i = 0; i < myFollowers.Count; i++)
+        {
+            if(!myFollowers[i].gameObject.activeInHierarchy)
+            {
+                myFollowers[i].transform.position = transform.position;
+                myFollowers[i].gameObject.SetActive(true);
+                return;
+            }
+        }
     }
     public virtual void SearchForTargets()
     {
@@ -58,6 +96,13 @@ public class FollowerMaster : MonoBehaviour
                         myTargets.RemoveAt(i);
                     }
                 }
+            }
+        }
+        if(myTargets.Count>0)
+        {
+            for (int i = 0; i < myFollowers.Count; i++)
+            {
+                myFollowers[i].target = myTargets[Random.Range(0, myTargets.Count)];
             }
         }
     }

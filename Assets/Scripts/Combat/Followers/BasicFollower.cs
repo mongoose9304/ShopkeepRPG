@@ -47,11 +47,19 @@ public class BasicFollower : MonoBehaviour
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
     public bool useFlicker;
+    public virtual void Update()
+    {
+        if(target)
+            FollowTarget();
+        else
+            FollowMaster();
+
+    }
 
     /// <summary>
     /// Causes the Familiar to walk towards the player if they have no current target
     /// </summary>
-    public virtual void FollowPlayer()
+    public virtual void FollowMaster()
     {
         if (Vector3.Distance(this.transform.position, myMaster.transform.position) > maxDistanceToMyMaster)
         {
@@ -65,7 +73,10 @@ public class BasicFollower : MonoBehaviour
     public virtual void FollowTarget()
     {
         if (!target.activeInHierarchy)
+        {
             target = null;
+            return;
+        }
             agent.SetDestination(target.transform.position);
         
         
