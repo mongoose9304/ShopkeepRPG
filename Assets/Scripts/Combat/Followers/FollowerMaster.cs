@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using UnityEngine.AI;
+
 public class FollowerMaster : MonoBehaviour
 {
     public MMMiniObjectPooler deathEffectPool;
+    public MMMiniObjectPooler spawnEffectPool;
     public GameObject followerPrefab;
     public int maxFollowers;
     public List<BasicFollower> myFollowers = new List<BasicFollower>();
@@ -73,8 +76,22 @@ public class FollowerMaster : MonoBehaviour
         {
             if(!myFollowers[i].gameObject.activeInHierarchy)
             {
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(transform.position+new Vector3(2,0,0), out hit, 3.0f, NavMesh.AllAreas))
+                {
+                    myFollowers[i].transform.position = hit.position;
+                }
+                else
+                {
                 myFollowers[i].transform.position = transform.position;
+                }
                 myFollowers[i].gameObject.SetActive(true);
+                if(spawnEffectPool)
+                {
+                    GameObject obj = spawnEffectPool.GetPooledGameObject();
+                    obj.transform.position = myFollowers[i].transform.position;
+                    obj.SetActive(true);
+                }
                 return;
             }
         }

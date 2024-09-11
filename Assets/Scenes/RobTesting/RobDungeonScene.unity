@@ -13791,6 +13791,7 @@ GameObject:
   - component: {fileID: 363149385}
   - component: {fileID: 363149386}
   - component: {fileID: 363149387}
+  - component: {fileID: 363149388}
   m_Layer: 0
   m_Name: SkeletonOverlord
   m_TagString: Untagged
@@ -13826,6 +13827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffectPool: {fileID: 363149387}
+  spawnEffectPool: {fileID: 363149388}
   followerPrefab: {fileID: 1409099129502374210, guid: 8ac1e6f283d8c914cac780ff75156a81, type: 3}
   maxFollowers: 5
   myFollowers: []
@@ -13851,6 +13853,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObjectToPool: {fileID: 5480857277832582209, guid: e1b643e6ea28e0944ba2ec79f90a2730, type: 3}
+  PoolSize: 5
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
+--- !u!114 &363149388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363149384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 1737921928726309688, guid: 9c72ee8035b15944897801c687a9a1c5, type: 3}
   PoolSize: 5
   PoolCanExpand: 1
   MutualizeWaitingPools: 0
