@@ -19,7 +19,7 @@ public class BasicFollower : MonoBehaviour
     [SerializeField] protected float knockBackMax;
     [SerializeField] protected float damage;
     [SerializeField] protected bool isMysticalDamage;
-
+    [SerializeField] float maxDistanceToMyMaster;
     [Header("CurrentValues")]
     public bool canMove;
     float currentTimeStunned;
@@ -30,12 +30,10 @@ public class BasicFollower : MonoBehaviour
     bool superArmor;
 
     [Header("References")]
-    public GameObject myMaster;
+    public FollowerMaster myMaster;
     Element myWeakness;
     public GameObject stunIcon;
-    public GameObject player;
     public GameObject target;
-    public EnemyCounter myEnemyCounter;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected TextMeshProUGUI damageText; 
     [SerializeField] float maxTimeBeforeDamageTextFades;
@@ -48,8 +46,42 @@ public class BasicFollower : MonoBehaviour
     [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
-    [SerializeField] protected MMMiniObjectPooler attackIconPooler;
     public bool useFlicker;
 
-    
+    /// <summary>
+    /// Causes the Familiar to walk towards the player if they have no current target
+    /// </summary>
+    public virtual void FollowPlayer()
+    {
+        if (Vector3.Distance(this.transform.position, myMaster.transform.position) > maxDistanceToMyMaster)
+        {
+            agent.SetDestination(myMaster.transform.position + new Vector3(0, 0, 2));
+        }
+
+    }
+    /// <summary>
+    /// Causes the Familiar to walk towards the target 
+    /// </summary>
+    public virtual void FollowTarget()
+    {
+        if (!target.activeInHierarchy)
+            target = null;
+            agent.SetDestination(target.transform.position);
+        
+        
+    }
+    /// <summary>
+    /// The most basic attack the familar knows
+    /// </summary>
+    public virtual void Attack()
+    {
+
+    }
+    /// <summary>
+    /// The more character specific attack the familar knows, same as thier enemy counterpart
+    /// </summary>
+    public virtual void SpecialAttack()
+    {
+
+    }
 }
