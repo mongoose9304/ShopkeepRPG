@@ -13,7 +13,7 @@ public class ScrollRectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scrollObject.localPosition = new Vector3(startPos, 0, 0);
+        scrollObject.localPosition = new Vector3(startPos, -90, 0);
         
     }
 
@@ -24,13 +24,13 @@ public class ScrollRectController : MonoBehaviour
         Vector3 x = new Vector3(target * distanceBetweenTargets, 0, 0);
         if(target * distanceBetweenTargets> scrollObject.localPosition.x)
         {
-        scrollObject.localPosition = Vector3.MoveTowards(scrollObject.localPosition, x, speed*Time.deltaTime*Vector3.Distance(scrollObject.localPosition,x));
+        scrollObject.localPosition = Vector3.MoveTowards(scrollObject.localPosition, x, speed*Time.unscaledDeltaTime*Vector3.Distance(scrollObject.localPosition,x));
 
         }
         else if(target * distanceBetweenTargets < scrollObject.localPosition.x)
         {
-            scrollObject.localPosition = Vector3.MoveTowards(scrollObject.localPosition, x, speed * Time.deltaTime * Vector3.Distance(scrollObject.localPosition, x));
+            scrollObject.localPosition = Vector3.MoveTowards(scrollObject.localPosition, x, speed * Time.unscaledDeltaTime * Vector3.Distance(scrollObject.localPosition, x));
         }
-        scrollObject.localPosition = new Vector3(scrollObject.localPosition.x, -531, 0);
+        scrollObject.localPosition = new Vector3(scrollObject.localPosition.x, -640, 0); 
     }
 }
