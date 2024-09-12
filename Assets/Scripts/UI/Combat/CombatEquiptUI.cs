@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class CombatEquiptUI : MonoBehaviour
 {
     public StatBlock playerStatBlock;
+    public PlayerSpecialAbilities playerSpecialAbilities;
     public CombatPlayerMovement player;
     public PlayerEquiptmentHolder playerEquiptment;
     public TextMeshProUGUI skillPointsText;
@@ -13,7 +15,10 @@ public class CombatEquiptUI : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public List<PlayerStatUIObject> playerStatObjects = new List<PlayerStatUIObject>();
     public List<PlayerEquiptSlotUI> playerEquiptObjects = new List<PlayerEquiptSlotUI>();
-
+    public List<PlayerAbilitySlotUI> playerAbilityInventorySlots = new List<PlayerAbilitySlotUI>();
+    public List<PlayerAbilitySlotUI> playerAbilityCurrentlyEquiptSlots = new List<PlayerAbilitySlotUI>();
+    public GameObject playerAbilityInventoryHolder;
+    private int currentlySelectedAbility;
     public bool TryToLevelUp()
     {
         if(playerStatBlock.remainingSkillPoints>0)
@@ -47,6 +52,18 @@ public class CombatEquiptUI : MonoBehaviour
         playerEquiptObjects[3].SetSlot(playerEquiptment.Rings[0].equiptName, playerEquiptment.Rings[0].description);
         playerEquiptObjects[4].SetSlot(playerEquiptment.Rings[1].equiptName, playerEquiptment.Rings[1].description);
         playerEquiptObjects[5].SetSlot(playerEquiptment.Rings[2].equiptName, playerEquiptment.Rings[2].description);
+        for (int i = 0; i < playerAbilityInventorySlots.Count; i++)
+        {
+            playerAbilityInventorySlots[i].gameObject.SetActive(false);
+        }
+        for (int i=0;i<playerSpecialAbilities.allAbilities.Count;i++)
+        {
+            playerAbilityInventorySlots[i].SetSlot(playerSpecialAbilities.allAbilities[i].name_, playerSpecialAbilities.allAbilities[i].description_, playerSpecialAbilities.allAbilities[i].abilitySprite);
+            playerAbilityInventorySlots[i].gameObject.SetActive(true);
+        }
+        playerAbilityCurrentlyEquiptSlots[0].SetSlot(playerSpecialAbilities.currentlyEquipt[0].name_, playerSpecialAbilities.currentlyEquipt[0].description_, playerSpecialAbilities.currentlyEquipt[0].abilitySprite);
+        playerAbilityCurrentlyEquiptSlots[1].SetSlot(playerSpecialAbilities.currentlyEquipt[1].name_, playerSpecialAbilities.currentlyEquipt[1].description_, playerSpecialAbilities.currentlyEquipt[1].abilitySprite);
+        playerAbilityInventoryHolder.SetActive(false);
     }
     public void SaveChanges()
     {
@@ -65,5 +82,19 @@ public class CombatEquiptUI : MonoBehaviour
     {
         descriptionTitle.text = title_;
         descriptionText.text = description_;
+    }
+    public void OpenAbilityChangeSection(int abilityIndex)
+    {
+        currentlySelectedAbility = abilityIndex;
+        playerAbilityInventoryHolder.SetActive(true);
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(playerAbilityInventorySlots[0].gameObject);
+    }
+    public void SetAbilityAsEquipt(string name_)
+    {
+        playerSpecialAbilities.SetEquiptPower(currentlySelectedAbility, name_);
+        playerAbilityCurrentlyEquiptSlots[0].SetSlot(playerSpecialAbilities.currentlyEquipt[0].name_, playerSpecialAbilities.currentlyEquipt[0].description_, playerSpecialAbilities.currentlyEquipt[0].abilitySprite);
+        playerAbilityCurrentlyEquiptSlots[1].SetSlot(playerSpecialAbilities.currentlyEquipt[1].name_, playerSpecialAbilities.currentlyEquipt[1].description_, playerSpecialAbilities.currentlyEquipt[1].abilitySprite);
+        playerAbilityInventoryHolder.SetActive(false);
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(playerAbilityCurrentlyEquiptSlots[currentlySelectedAbility].gameObject);
     }
 }
