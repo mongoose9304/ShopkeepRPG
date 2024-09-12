@@ -30,7 +30,7 @@ public class CombatPlayerMovement : MonoBehaviour
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
    [SerializeField] LayerMask wallMask;
     [SerializeField] GameObject dashEffect;
-    [SerializeField] CombatPlayerActions combatActions;
+    public CombatPlayerActions combatActions;
     //targeting and lock on
     [SerializeField] GameObject currentTarget;
     [SerializeField] bool hardLockOn;

@@ -96,5 +96,7 @@ public class CombatEquiptUI : MonoBehaviour
         playerAbilityCurrentlyEquiptSlots[1].SetSlot(playerSpecialAbilities.currentlyEquipt[1].name_, playerSpecialAbilities.currentlyEquipt[1].description_, playerSpecialAbilities.currentlyEquipt[1].abilitySprite);
         playerAbilityInventoryHolder.SetActive(false);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(playerAbilityCurrentlyEquiptSlots[currentlySelectedAbility].gameObject);
+        if (player)
+            player.combatActions.SwapSpecials();
     }
 }

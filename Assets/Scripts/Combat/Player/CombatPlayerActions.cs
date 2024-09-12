@@ -21,12 +21,17 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private List<GameObject> projectiles=new List<GameObject>();
     [SerializeField] private int projectileLimit;
     [SerializeField] Transform spawnPosition;
+
     [Header("SpecialAttacks")]
     [SerializeField] PlayerSpecialAttack specialA;
     float currentSpecialACooldown;
     [SerializeField] PlayerSpecialAttack specialB;
     public bool isBusy;
     float currentSpecialBCooldown;
+    public GameObject specialAbilityHolder;
+    public PlayerSpecialAbilities specialAbilities;
+
+
     [Header("Familiar")]
     [SerializeField] CombatFamiliar myFamiliar;
     float familarRespawnTimer;
@@ -304,6 +309,16 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void SwapSpecials()
     {
+        if(specialA)
+        {
+            Destroy(specialA.gameObject);
+        }
+        if(specialB)
+        {
+            Destroy(specialB.gameObject);
+        }
+        specialA = GameObject.Instantiate(specialAbilities.currentlyEquipt[0].theSpecialAttack.gameObject,specialAbilityHolder.transform).GetComponent<PlayerSpecialAttack>();
+        specialB = GameObject.Instantiate(specialAbilities.currentlyEquipt[1].theSpecialAttack.gameObject,specialAbilityHolder.transform).GetComponent<PlayerSpecialAttack>();
         if(specialA.useCharges)
         {
             chargesUIBGA.SetActive(true);
