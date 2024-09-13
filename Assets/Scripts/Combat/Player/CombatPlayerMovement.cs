@@ -60,7 +60,11 @@ public class CombatPlayerMovement : MonoBehaviour
     public PlayerEquiptmentHolder myEquiptment;
     //SkillTree Abilities and Effects
     [SerializeField] SavedTalents myTalents;
+    //Undead
     public PlayerSkeletonMaster mySkeltonMaster;
+    [SerializeField] GameObject skullHead;
+    public bool extraLife;
+    bool hasUsedExtraLife;
 
 
     public float maxManaRechargeDelay;
@@ -375,6 +379,15 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void TrueDeath()
     {
+        if(extraLife)
+        {
+            if(!hasUsedExtraLife)
+            {
+                hasUsedExtraLife = true;
+                UndeadExtraLife();
+                return;
+            }
+        }
         isDying = true;
         foreach (GameObject obj in saveYourSoulObjects)
         {
@@ -645,5 +658,11 @@ public class CombatPlayerMovement : MonoBehaviour
     public void SkillTreeEffects()
     {
 
+    }
+    public void UndeadExtraLife()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetBar01(currentHealth / maxHealth);
+        skullHead.SetActive(true);
     }
 }

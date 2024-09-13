@@ -868,6 +868,7 @@ GameObject:
   - component: {fileID: 6064075630194287261}
   - component: {fileID: 7555750362501816374}
   - component: {fileID: 6937294402763450928}
+  - component: {fileID: 4843803865518131581}
   m_Layer: 0
   m_Name: SlimeFamiliar
   m_TagString: Familiar
@@ -1002,6 +1003,7 @@ MonoBehaviour:
   player: {fileID: 0}
   agent: {fileID: 8608462071610935158}
   target: {fileID: 0}
+  isBusy: 0
   monsterData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
   deathEffect: {fileID: 141433446842962269, guid: 8ccfd1efcbf90e24c91cfbd9fabeeef2, type: 3}
   specialAttackCooldownMax: 5
@@ -1021,6 +1023,19 @@ MonoBehaviour:
   jumpHeight: 4
   jumpSpeed: {x: 0, y: 16, z: 0}
   slamRange: 5
+--- !u!114 &4843803865518131581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658827452453938793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da0718bc3afa3184fa964327872cad45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTeam: Player
 --- !u!1 &5371057260661388563
 GameObject:
   m_ObjectHideFlags: 0
