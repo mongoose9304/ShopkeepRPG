@@ -487,6 +487,8 @@ public class CombatPlayerMovement : MonoBehaviour
         playerLuck = (myStats.Luck) * (1+(myStats.Level * LevelModifier));
         HealthRegenPercent = 0;
         ManaRegenPercent = 0;
+        combatActions.attackSpeedMod = 1;
+        combatActions.fireRateMod = 1;
     }
     public void CalculateAllModifiers()
     {
@@ -615,6 +617,12 @@ public class CombatPlayerMovement : MonoBehaviour
             case UniqueEquipEffect.ManaRegen:
                 ManaRegenPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.basicMeleeSpeed:
+                combatActions.attackSpeedMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.basicRangedSpeed:
+                combatActions.fireRateMod += mod_.amount;
+                break;
         }
     }
     private void SetArmorElements()
@@ -658,6 +666,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void SkillTreeEffects()
     {
+        //Create the empty mods first here , then in the for loops you set up the exact stats based on points invested 
         //Slime
         EquipModifier slimeIncreasedPDef = new EquipModifier();
         slimeIncreasedPDef.isMultiplicative = true;
@@ -676,6 +685,32 @@ public class CombatPlayerMovement : MonoBehaviour
         slimeHealthRegen.modName = "slimeHealthRegen";
         slimeHealthRegen.amount = 0;
         slimeHealthRegen.uniqueEffect = UniqueEquipEffect.HealthRegen;
+
+        //Sword
+        EquipModifier swordSpeed = new EquipModifier();
+        swordSpeed.isMultiplicative = false;
+        swordSpeed.modName = "swordAttackSpeed";
+        swordSpeed.amount = 0;
+        swordSpeed.uniqueEffect = UniqueEquipEffect.basicMeleeSpeed;
+
+        EquipModifier swordPDamage = new EquipModifier();
+        swordPDamage.isMultiplicative = true;
+        swordPDamage.modName = "swordPhysicalDamage";
+        swordPDamage.amount = 1;
+        swordPDamage.uniqueEffect = UniqueEquipEffect.None;
+
+        //Dragon
+        EquipModifier dragonSpeed = new EquipModifier();
+        dragonSpeed.isMultiplicative = false;
+        dragonSpeed.modName = "dragonAttackSpeed";
+        dragonSpeed.amount = 0;
+        dragonSpeed.uniqueEffect = UniqueEquipEffect.basicRangedSpeed;
+
+        EquipModifier dragonMDamage = new EquipModifier();
+        dragonMDamage.isMultiplicative = true;
+        dragonMDamage.modName = "dragonMysticalDamage";
+        dragonMDamage.amount = 1;
+        dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -735,11 +770,46 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                     }
                     break;
+                case "Dragon":
+
+                    for (int i = 0; i < tal_.levelInvested; i++)
+                    {
+                        if (i < 5)
+                        {
+                            dragonSpeed.amount += 0.1f;
+                        }
+                        else if (i < 10)
+                        {
+                            dragonMDamage.amount += 0.05f;
+                        }
+                        else if (i == 10)
+                        {
+                        }
+                    }
+                    break;
+                case "Sword":
+
+                    for (int i = 0; i < tal_.levelInvested; i++)
+                    {
+                        if (i < 5)
+                        {
+                            swordSpeed.amount += 0.1f;
+                        }
+                        else if (i < 10)
+                        {
+                            swordPDamage.amount += 0.05f;
+                        }
+                        else if (i == 10)
+                        {
+                        }
+                    }
+                    break;
 
 
 
             }
         }
+        //add the mods to players and fams here
         //Slime mods
         combatActions.myFamiliar.AddExternalMod(slimeHealthRegen);
         combatActions.myFamiliar.AddExternalMod(slimeIncreasedMDef);
@@ -747,6 +817,17 @@ public class CombatPlayerMovement : MonoBehaviour
         AddExternalMod(slimeHealthRegen);
         AddExternalMod(slimeIncreasedMDef);
         AddExternalMod(slimeIncreasedPDef);
+
+        //Dragon
+        combatActions.myFamiliar.AddExternalMod(dragonMDamage);
+        AddExternalMod(dragonSpeed);
+        AddExternalMod(dragonMDamage);
+        //Sword mods
+        combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        AddExternalMod(swordSpeed);
+        AddExternalMod(swordPDamage);
+
+
         combatActions.myFamiliar.CalculateAllModifiers();
 
     }

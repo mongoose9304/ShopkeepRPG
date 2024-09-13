@@ -15,6 +15,8 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] float basicRangedDamage;
     public Element basicRangedElement;
     [SerializeField] private float fireRate;
+    public float fireRateMod = 1;
+    public float attackSpeedMod = 1;
     [SerializeField] private float fireCost;
     private float currentFireRate = 0.0f;
     [SerializeField] private GameObject rangedProjectile;
@@ -103,7 +105,7 @@ public class CombatPlayerActions : MonoBehaviour
     private void Cooldowns()
     {
         BasicMeleeCooldown -= Time.deltaTime;
-        currentFireRate -= Time.deltaTime;
+        currentFireRate -= Time.deltaTime*fireRateMod;
         if (currentSpecialACooldown > 0)
         {
             currentSpecialACooldown -= Time.deltaTime;
