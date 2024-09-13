@@ -83,7 +83,8 @@ public class BasicFollower : MonoBehaviour
     {
         if (!target.activeInHierarchy)
         {
-            target = null;
+            target = myMaster.TryToGetNewTarget();
+
             return;
         }
             agent.SetDestination(target.transform.position);

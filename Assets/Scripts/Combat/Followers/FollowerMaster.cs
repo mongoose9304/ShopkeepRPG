@@ -135,6 +135,7 @@ public class FollowerMaster : MonoBehaviour
         {
             for (int i = 0; i < myFollowers.Count; i++)
             {
+                if (myFollowers[i].target==null)
                 myFollowers[i].target = myTargets[Random.Range(0, myTargets.Count)];
             }
         }
@@ -151,6 +152,17 @@ public class FollowerMaster : MonoBehaviour
     public virtual void SetStats(float health,float damage,float specialDamage_,float physicalDef_,float mysticalDef_)
     {
         
+    }
+    public GameObject TryToGetNewTarget()
+    {
+        if(myTargets.Count>0)
+        {
+            return myTargets[Random.Range(0, myTargets.Count)];
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }
