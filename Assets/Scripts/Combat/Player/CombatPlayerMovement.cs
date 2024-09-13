@@ -489,6 +489,7 @@ public class CombatPlayerMovement : MonoBehaviour
         ManaRegenPercent = 0;
         combatActions.attackSpeedMod = 1;
         combatActions.fireRateMod = 1;
+        combatActions.lifeStealPercent = 0;
     }
     public void CalculateAllModifiers()
     {
@@ -623,6 +624,9 @@ public class CombatPlayerMovement : MonoBehaviour
             case UniqueEquipEffect.basicRangedSpeed:
                 combatActions.fireRateMod += mod_.amount;
                 break;
+            case UniqueEquipEffect.LifeSteal:
+                combatActions.lifeStealPercent += mod_.amount;
+                break;
         }
     }
     private void SetArmorElements()
@@ -698,6 +702,12 @@ public class CombatPlayerMovement : MonoBehaviour
         swordPDamage.modName = "swordPhysicalDamage";
         swordPDamage.amount = 1;
         swordPDamage.uniqueEffect = UniqueEquipEffect.None;
+
+        EquipModifier swordLifeSteal = new EquipModifier();
+        swordPDamage.isMultiplicative = false;
+        swordPDamage.modName = "swordLifeSteal";
+        swordPDamage.amount = 0;
+        swordPDamage.uniqueEffect = UniqueEquipEffect.LifeSteal;
 
         //Dragon
         EquipModifier dragonSpeed = new EquipModifier();
@@ -801,6 +811,7 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                         else if (i == 10)
                         {
+                            swordPDamage.amount = 0.25f;
                         }
                     }
                     break;
@@ -826,6 +837,7 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
+        AddExternalMod(swordLifeSteal);
 
 
         combatActions.myFamiliar.CalculateAllModifiers();

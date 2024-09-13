@@ -5,9 +5,11 @@ using UnityEngine;
 public class BasicMeleeObject : MonoBehaviour
 {
     [SerializeField] private float swingSpeed;
+    float swingSpeedModified;
     [SerializeField] private Quaternion startRotaton;
     [SerializeField] private Quaternion startRotatonB;
     [SerializeField] private float attackDurationMax;
+    float attackDurationMaxModified;
     private float attackDurationCurrent;
     public PlayerDamageCollider damageCollider;
     [SerializeField] private float hitStun;
@@ -23,9 +25,9 @@ public class BasicMeleeObject : MonoBehaviour
 
            
             if(rightAttackDirection)
-            transform.Rotate(0.0f, swingSpeed*Time.deltaTime, 0.0f, Space.Self);
+            transform.Rotate(0.0f, swingSpeedModified*Time.deltaTime, 0.0f, Space.Self);
             else
-                transform.Rotate(0.0f, -swingSpeed * Time.deltaTime, 0.0f, Space.Self);
+                transform.Rotate(0.0f, -swingSpeedModified * Time.deltaTime, 0.0f, Space.Self);
 
             attackDurationCurrent -= Time.deltaTime;
             if (attackDurationCurrent<=0)
@@ -40,14 +42,14 @@ public class BasicMeleeObject : MonoBehaviour
     {
         transform.localRotation = startRotaton;
         weaponObject.SetActive(true);
-        attackDurationCurrent = attackDurationMax;
+        attackDurationCurrent = attackDurationMaxModified;
     }
     public void EndAttack()
     {
         if(queuedAttack)
         {
             rightAttackDirection = !rightAttackDirection;
-            attackDurationCurrent = attackDurationMax;
+            attackDurationCurrent = attackDurationMaxModified;
             queuedAttack=false;
             weaponObject.GetComponent<CapsuleCollider>().enabled = false;
             weaponObject.GetComponent<CapsuleCollider>().enabled = true;
@@ -78,10 +80,13 @@ public class BasicMeleeObject : MonoBehaviour
     {
         queuedAttack = false;
     }
-    public void SetDamage(float damage_,Element damageType_)
+    public void SetDamage(float damage_,Element damageType_,float swingSpeed_=1,float lifeSteal=0)
     {
         damageCollider.damage = damage_;
         damageCollider.element = damageType_;
+        damageCollider.lifeSteal = lifeSteal;
+        swingSpeedModified = swingSpeed * swingSpeed_;
+        attackDurationMaxModified = attackDurationMax / swingSpeed_;
     }
   
    

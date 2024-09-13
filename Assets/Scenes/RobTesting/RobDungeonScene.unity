@@ -13711,6 +13711,7 @@ MonoBehaviour:
   damage: 10
   hitStun: 1
   knockBack: 50
+  lifeSteal: 0
   element: 0
 --- !u!1 &379237476
 GameObject:
@@ -14866,6 +14867,7 @@ MonoBehaviour:
   fireRate: 0.2
   fireRateMod: 1
   attackSpeedMod: 1
+  lifeStealPercent: 1
   fireCost: 2
   rangedProjectile: {fileID: 8230403905138075863, guid: 9f9f61fa2d561e3488d6754fd6afb31c, type: 3}
   projectiles: []
@@ -54264,10 +54266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd91acf7d5502c4288102e05ada923e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingSpeed: 1350
+  swingSpeed: 900
   startRotaton: {x: 0, y: -120, z: 0, w: 0}
   startRotatonB: {x: 0, y: 0, z: 0, w: 0}
-  attackDurationMax: 0.2
+  attackDurationMax: 0.3
   damageCollider: {fileID: 377811247}
   hitStun: 0
   weaponObject: {fileID: 377811242}

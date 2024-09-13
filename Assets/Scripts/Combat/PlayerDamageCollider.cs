@@ -8,6 +8,7 @@ public class PlayerDamageCollider : MonoBehaviour
     public float damage;
     public float hitStun;
     public float knockBack;
+    public float lifeSteal;
     public Element element;
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -17,7 +18,10 @@ public class PlayerDamageCollider : MonoBehaviour
             if(other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
                 basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject) ;
-              
+              if(lifeSteal>0)
+                {
+                    CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);
+                }
             }
         }
     }
