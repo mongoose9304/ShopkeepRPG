@@ -14,10 +14,7 @@ public class CombatPlayerActions : MonoBehaviour
     [Header("BasicRanged")]
     [SerializeField] float basicRangedDamage;
     public Element basicRangedElement;
-    [SerializeField] private float fireRate;
-    public float fireRateMod = 1;
-    public float attackSpeedMod = 1;
-    public float lifeStealPercent = 0;
+   
     [SerializeField] private float fireCost;
     private float currentFireRate = 0.0f;
     [SerializeField] private GameObject rangedProjectile;
@@ -33,7 +30,12 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
-
+    [Header("Modifiers")]
+    [SerializeField] private float fireRate;
+    public float fireRateMod = 1;
+    public float attackSpeedMod = 1;
+    public float lifeStealPercent = 0;
+    public bool rangedPierce;
 
     [Header("Familiar")]
     public CombatFamiliar myFamiliar;
@@ -190,6 +192,7 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = null;
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
+            tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;
             currentFireRate = fireRate;
         }
     }

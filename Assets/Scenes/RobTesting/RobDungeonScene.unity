@@ -13713,6 +13713,7 @@ MonoBehaviour:
   knockBack: 50
   lifeSteal: 0
   element: 0
+  canPierceEnemies: 0
 --- !u!1 &379237476
 GameObject:
   m_ObjectHideFlags: 0
@@ -14864,10 +14865,6 @@ MonoBehaviour:
   meleeObject: {fileID: 1462204833}
   basicRangedDamage: 0
   basicRangedElement: 0
-  fireRate: 0.2
-  fireRateMod: 1
-  attackSpeedMod: 1
-  lifeStealPercent: 1
   fireCost: 2
   rangedProjectile: {fileID: 8230403905138075863, guid: 9f9f61fa2d561e3488d6754fd6afb31c, type: 3}
   projectiles: []
@@ -14878,6 +14875,11 @@ MonoBehaviour:
   isBusy: 0
   specialAbilityHolder: {fileID: 367948933}
   specialAbilities: {fileID: 11400000, guid: 76306bc68a344754493436f92421900e, type: 2}
+  fireRate: 0.2
+  fireRateMod: 1
+  attackSpeedMod: 1
+  lifeStealPercent: 1
+  rangedPierce: 0
   myFamiliar: {fileID: 1841314803}
   specialCoolDownBarA: {fileID: 730443572}
   chargesUIBGA: {fileID: 1713701187}

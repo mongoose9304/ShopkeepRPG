@@ -721,6 +721,7 @@ public class CombatPlayerMovement : MonoBehaviour
         dragonMDamage.modName = "dragonMysticalDamage";
         dragonMDamage.amount = 1;
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
+        combatActions.rangedPierce = false;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -794,6 +795,7 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                         else if (i == 10)
                         {
+                            combatActions.rangedPierce = true;
                         }
                     }
                     break;

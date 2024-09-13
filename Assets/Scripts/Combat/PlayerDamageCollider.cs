@@ -10,6 +10,7 @@ public class PlayerDamageCollider : MonoBehaviour
     public float knockBack;
     public float lifeSteal;
     public Element element;
+    public bool canPierceEnemies;
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Enemy")
