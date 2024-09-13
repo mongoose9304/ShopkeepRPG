@@ -31,7 +31,7 @@ public class SlimeFamiliar : CombatFamiliar
         {
             if (hitCollider.tag == "Enemy")
             {
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(monsterData.CalculateDamage(), 0, monsterData.element, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(PhysicalAtk, 0, Element.Neutral, 0, this.gameObject);
             }
         }
     }
@@ -73,7 +73,8 @@ public class SlimeFamiliar : CombatFamiliar
             FollowPlayer();
             EnemyDetection();
             WaitForAttacks();
-           if(agent.velocity != Vector3.zero)
+            RegenHealth();
+            if (agent.velocity != Vector3.zero)
             {
                 anim.SetBool("isWalking", true);
             }
@@ -135,7 +136,7 @@ public class SlimeFamiliar : CombatFamiliar
             {
                 if (hitCollider.tag == "Enemy")
                 {
-                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, monsterData.element, 0, this.gameObject);
+                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, myElement, 0, this.gameObject);
                 }
             }
             isBusy = false;
@@ -148,7 +149,7 @@ public class SlimeFamiliar : CombatFamiliar
         {
             if (hitCollider.tag == "Enemy")
             {
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, monsterData.element, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, myElement, 0, this.gameObject);
             }
         }
     }
@@ -165,14 +166,14 @@ public class SlimeFamiliar : CombatFamiliar
     /// </summary>
     private float SlamDamage()
     {
-        return monsterData.CalculateDamage() * 3;
+        return PhysicalAtk * 3;
     }
     /// <summary>
     /// Calculates the damage of the ultimate slam
     /// </summary>
     private float UltimateSlamDamage()
     {
-        return monsterData.CalculateDamage() * 9;
+        return PhysicalAtk * 9;
     }
     public override void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
     {

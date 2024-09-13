@@ -33,7 +33,7 @@ public class CombatPlayerActions : MonoBehaviour
 
 
     [Header("Familiar")]
-    [SerializeField] CombatFamiliar myFamiliar;
+    public CombatFamiliar myFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
     [Header("Feel")]

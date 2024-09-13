@@ -19,7 +19,6 @@ public class StatBlock : ScriptableObject
     public int Luck;
     public int savedExp;
     public int remainingSkillPoints;
-    public int talentPoints;
 
     private int LevelFormula(int lv_)
     {

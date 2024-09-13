@@ -491,6 +491,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public void CalculateAllModifiers()
     {
         CalculateStats();
+        SkillTreeEffects();
         List<EquipModifier> mods_ = new List<EquipModifier>();
         for(int i=0;i< equipModifiers.Count;i++)
         {
@@ -657,6 +658,96 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void SkillTreeEffects()
     {
+        //Slime
+        EquipModifier slimeIncreasedPDef = new EquipModifier();
+        slimeIncreasedPDef.isMultiplicative = true;
+        slimeIncreasedPDef.modName = "slimeIncreasedPDefense";
+        slimeIncreasedPDef.affectedStat = Stat.PDEF;
+        slimeIncreasedPDef.amount = 1;
+        slimeIncreasedPDef.uniqueEffect = UniqueEquipEffect.None;
+        EquipModifier slimeIncreasedMDef = new EquipModifier();
+        slimeIncreasedMDef.isMultiplicative = true;
+        slimeIncreasedMDef.modName = "slimeIncreasedMDefense";
+        slimeIncreasedMDef.affectedStat = Stat.MDEF;
+        slimeIncreasedMDef.amount = 1;
+        slimeIncreasedMDef.uniqueEffect = UniqueEquipEffect.None;
+        EquipModifier slimeHealthRegen = new EquipModifier();
+        slimeHealthRegen.isMultiplicative = false;
+        slimeHealthRegen.modName = "slimeHealthRegen";
+        slimeHealthRegen.amount = 0;
+        slimeHealthRegen.uniqueEffect = UniqueEquipEffect.HealthRegen;
+
+        foreach (Talent tal_ in myTalents.talents)
+        {
+            switch(tal_.ID)
+            {
+                case "Necromancer":
+                    mySkeltonMaster.enabled = false;
+                    mySkeltonMaster.maxSuperFollowers = 0;
+                    mySkeltonMaster.maxFollowers = 0;
+                    mySkeltonMaster.superSkeletonPower = 0;
+                    extraLife = false;
+                    for(int i=0;i<tal_.levelInvested;i++)
+                    {
+                        if(i<5)
+                        {
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 1;
+                        }
+                        else if (i == 5)
+                        {
+                            mySkeltonMaster.maxSuperFollowers += 1;
+                            mySkeltonMaster.superSkeletonPower += 1.0f;
+                        }
+                        else if (i < 10)
+                        {
+                            mySkeltonMaster.superSkeletonPower += 1.0f;
+                        }
+                        else if (i == 10)
+                        {
+                            extraLife = true;
+                        }
+                    }
+                    mySkeltonMaster.Reset();
+                    break;
+                case "Slime":
+                    
+                    for (int i = 0; i < tal_.levelInvested; i++)
+                    {
+                        if (i < 5)
+                        {
+                            slimeIncreasedPDef.amount += 0.04f;
+                            slimeIncreasedMDef.amount += 0.04f;
+                        }
+                        else if (i < 10)
+                        {
+                            slimeHealthRegen.amount += 0.01f;
+                        }
+                        else if (i == 10)
+                        {
+                            EquipModifier unkillable = new EquipModifier();
+                            unkillable.isMultiplicative = true;
+                            slimeIncreasedMDef.affectedStat = Stat.HP;
+                            unkillable.modName = "unkillable";
+                            unkillable.amount = 4;
+                            unkillable.uniqueEffect = UniqueEquipEffect.None;
+                            combatActions.myFamiliar.AddExternalMod(unkillable);
+                        }
+                    }
+                    break;
+
+
+
+            }
+        }
+        //Slime mods
+        combatActions.myFamiliar.AddExternalMod(slimeHealthRegen);
+        combatActions.myFamiliar.AddExternalMod(slimeIncreasedMDef);
+        combatActions.myFamiliar.AddExternalMod(slimeIncreasedPDef);
+        AddExternalMod(slimeHealthRegen);
+        AddExternalMod(slimeIncreasedMDef);
+        AddExternalMod(slimeIncreasedPDef);
+        combatActions.myFamiliar.CalculateAllModifiers();
 
     }
     public void UndeadExtraLife()

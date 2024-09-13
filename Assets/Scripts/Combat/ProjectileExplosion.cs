@@ -23,7 +23,8 @@ public class ProjectileExplosion : MonoBehaviour
             }
             else if (hitCollider.tag == "Familiar")
             {
-                hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+                if (!ignorePlayer)
+                    hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
             }
             else if (hitCollider.tag == "Enemy")
             {

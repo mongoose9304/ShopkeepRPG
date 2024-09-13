@@ -12,9 +12,15 @@ public class PlayerSkeletonMaster : FollowerMaster
     public int maxSuperFollowers;
     public List<BasicFollower> mySuperSkeletons = new List<BasicFollower>();
 
-    protected override void Awake()
+   
+    public override void Reset()
     {
-        base.Awake();
+        base.Reset();
+        for (int i = 0; i < mySuperSkeletons.Count; i++)
+        {
+            Destroy(mySuperSkeletons[i].gameObject);
+        }
+        mySuperSkeletons.Clear();
         for (int i = 0; i < maxSuperFollowers; i++)
         {
             GameObject obj = GameObject.Instantiate(superSkeleton);

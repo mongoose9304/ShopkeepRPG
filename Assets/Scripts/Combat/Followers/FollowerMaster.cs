@@ -29,9 +29,18 @@ public class FollowerMaster : MonoBehaviour
 
     protected virtual void Awake()
     {
-        for (int i = 0; i < maxFollowers; i++)
+        Reset();
+    }
+    public virtual void Reset()
+    {
+        for (int i = 0; i < myFollowers.Count; i++)
         {
-           GameObject obj= GameObject.Instantiate(followerPrefab);
+            Destroy(myFollowers[i].gameObject);
+        }
+        myFollowers.Clear();
+            for (int i = 0; i < maxFollowers; i++)
+        {
+            GameObject obj = GameObject.Instantiate(followerPrefab);
             obj.SetActive(false);
             myFollowers.Add(obj.GetComponent<BasicFollower>());
             obj.GetComponent<BasicFollower>().myMaster = this;

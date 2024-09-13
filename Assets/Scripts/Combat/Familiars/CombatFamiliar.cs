@@ -17,10 +17,10 @@ public class CombatFamiliar : MonoBehaviour
     protected Animator anim;
     private CombatPlayerMovement combatPlayerMovement;
     private CombatPlayerActions combatPlayerActions;
-    [SerializeField] protected BasicMonsterData monsterData;
+    [SerializeField] protected StatBlock monsterStats;
     [SerializeField] GameObject deathEffect;
 
-    Element myWeakness;
+    bool hasLookedForNewtarget;
     [Header("Stats")]
     [SerializeField]protected  float specialAttackCooldownMax;
     [SerializeField]protected float ultimateAttackCooldownMax;
@@ -34,36 +34,50 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] float respawnTimeMax;
     [SerializeField] float delayBeforeLookingForAnotherTargetMax;
     float delayBeforeLookingForAnotherTargetCurrent;
+    //StatsFromData
     float currentHealth;
-    float damage;
-    bool hasLookedForNewtarget;
+    //Stats Calculated based on Stat block
+    public float maxHealth;
+    public Element myWeakness;
+    public Element myElement;
+    public float PhysicalAtk;
+    public float MysticalAtk;
+    public float PhysicalDef;
+    public float MysticalDef;
+    public float LevelModifier;
+    public float HealthRegenPercent;
+    public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     [Header("Feel")]
     [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
-    protected virtual void Start()
+    private void Awake()
     {
-        specialAttackCooldowncurrent = specialAttackCooldownMax;
-        ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
-        currentHealth = monsterData.CalculateHealth();
-        damage = monsterData.CalculateDamage();
         player = GameObject.FindGameObjectWithTag("Player");
-        if(player)
+        if (player)
         {
             combatPlayerMovement = player.GetComponent<CombatPlayerMovement>();
             combatPlayerActions = player.GetComponent<CombatPlayerActions>();
         }
+    }
+    protected virtual void Start()
+    {
+        specialAttackCooldowncurrent = specialAttackCooldownMax;
+        ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
         anim = GetComponent<Animator>();
-        CalculateWeakness();
         floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
         //fix this later, if the enemies have the same channel their damage numbers will appear even if they are not hit =(
         floatingText.Channel = Random.Range(0, 1000000);
         textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
+        currentHealth = maxHealth;
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+
     }
     protected virtual void Update()
     {
         FollowPlayer();
         EnemyDetection();
+        RegenHealth();
     }
     /// <summary>
     /// Causes the Familiar to walk towards the player if they have no current target
@@ -151,7 +165,7 @@ public class CombatFamiliar : MonoBehaviour
         }
         if (hitEffects)
             hitEffects.PlayFeedbacks();
-        combatPlayerMovement.UpdateFamiliarHealth(currentHealth/monsterData.CalculateHealth());
+        combatPlayerMovement.UpdateFamiliarHealth(currentHealth/maxHealth);
     }
     private void Death()
     {
@@ -163,8 +177,8 @@ public class CombatFamiliar : MonoBehaviour
     {
         specialAttackCooldowncurrent = specialAttackCooldownMax;
         ultimateAttackCooldowncurrent = ultimateAttackCooldownMax;
-        currentHealth = monsterData.CalculateHealth();
-        combatPlayerMovement.UpdateFamiliarHealth(currentHealth / monsterData.CalculateHealth());
+        currentHealth = maxHealth;
+        combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
     }
     public void TeleportToLocation(Transform location_)
     {
@@ -196,26 +210,105 @@ public class CombatFamiliar : MonoBehaviour
     {
 
     }
-    private void CalculateWeakness()
-    {
-        switch (monsterData.element)
-        {
-            case Element.Fire:
-                myWeakness = Element.Water;
-                break;
-            case Element.Water:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Air:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Earth:
-                myWeakness = Element.Fire;
-                break;
-        }
-    }
+    
     public float GetUltimateAttackCooldown()
     {
         return (ultimateAttackCooldownMax - ultimateAttackCooldowncurrent) / ultimateAttackCooldownMax;
+    }
+    protected virtual void CalculateStats()
+    {
+        maxHealth = (monsterStats.Vitality * 10) * (1 + (monsterStats.Level * LevelModifier));
+        PhysicalAtk = (monsterStats.PhysicalProwess) * (1 + (monsterStats.Level * LevelModifier));
+        MysticalAtk = (monsterStats.MysticalProwess) * (1 + (monsterStats.Level * LevelModifier));
+        PhysicalDef = (monsterStats.PhysicalDefense) * (1 + (monsterStats.Level * LevelModifier));
+        MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier));
+        HealthRegenPercent = 0;
+    }
+    public virtual void CalculateAllModifiers()
+    {
+        CalculateStats();
+        List<EquipModifier> mods_ = new List<EquipModifier>();
+        for (int i = 0; i < externalModifiers.Count; i++)
+        {
+            if (!externalModifiers[i].isMultiplicative)
+            {
+                mods_.Insert(0, externalModifiers[i]);
+            }
+            else
+            {
+                mods_.Add(externalModifiers[i]);
+            }
+        }
+        for (int i = 0; i < mods_.Count; i++)
+        {
+            ApplyModifier(mods_[i]);
+        }
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+
+    }
+    private void ApplyModifier(EquipModifier mod_)
+    {
+        if (mod_.uniqueEffect == UniqueEquipEffect.None)
+        {
+            switch (mod_.affectedStat)
+            {
+                case Stat.HP:
+                    maxHealth = AddOrMultiply(mod_.isMultiplicative, maxHealth, mod_.amount);
+                    break;
+                case Stat.PATK:
+                    PhysicalAtk = AddOrMultiply(mod_.isMultiplicative, PhysicalAtk, mod_.amount);
+                    break;
+                case Stat.MATK:
+                    MysticalAtk = AddOrMultiply(mod_.isMultiplicative, MysticalAtk, mod_.amount);
+                    break;
+                case Stat.PDEF:
+                    PhysicalDef = AddOrMultiply(mod_.isMultiplicative, PhysicalDef, mod_.amount);
+                    break;
+                case Stat.MDEF:
+                    MysticalDef = AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+                    break;
+            }
+        }
+        switch (mod_.uniqueEffect)
+        {
+            case UniqueEquipEffect.None:
+                return;
+            case UniqueEquipEffect.HealthRegen:
+                HealthRegenPercent += mod_.amount;
+                break;
+        }
+    }
+    private float AddOrMultiply(bool multiply_, float A, float B)
+    {
+        if (multiply_)
+        {
+            return A * B;
+        }
+        else
+        {
+            return A + B;
+        }
+    }
+    public void AddExternalMod(EquipModifier mod_)
+    {
+        foreach (EquipModifier modX in externalModifiers)
+        {
+            if (modX.modName == mod_.modName)
+                return;
+        }
+        externalModifiers.Add(mod_);
+    }
+    protected void RegenHealth()
+    {
+        if (HealthRegenPercent == 0)
+            return;
+        currentHealth += HealthRegenPercent * maxHealth * Time.deltaTime;
+
+        if (currentHealth >= maxHealth)
+            currentHealth = maxHealth;
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+
     }
 }
