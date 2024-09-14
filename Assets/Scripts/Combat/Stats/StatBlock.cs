@@ -19,10 +19,11 @@ public class StatBlock : ScriptableObject
     public int Luck;
     public int savedExp;
     public int remainingSkillPoints;
+    public int totalSkillPoints;
 
     private int LevelFormula(int lv_)
     {
-        int expNeeded= ((lv_ * ascension) * 10) + (lv_ * 200);
+        int expNeeded= ((lv_ * ascension) * 10);
         if(lv_>50)
         {
             expNeeded *= 2;

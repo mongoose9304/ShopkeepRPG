@@ -478,12 +478,12 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 10) * (1 + (myStats.Level * LevelModifier));
-        maxMana = (myStats.Soul * 10) * (1 + (myStats.Level * LevelModifier));
-        PhysicalAtk = (myStats.PhysicalProwess) * (1 + (myStats.Level * LevelModifier));
-        MysticalAtk = (myStats.MysticalProwess) * (1 + (myStats.Level * LevelModifier));
-        PhysicalDef = (myStats.PhysicalDefense) * (1 + (myStats.Level * LevelModifier));
-        MysticalDef = (myStats.MysticalDefense) * (1 + (myStats.Level * LevelModifier));
+        maxHealth = (myStats.Vitality * 2) * (1 + (myStats.Level * LevelModifier));
+        maxMana = (myStats.Soul * 2) * (1 + (myStats.Level * LevelModifier));
+        PhysicalAtk = (myStats.PhysicalProwess) * (1 + (myStats.Level * LevelModifier))/5;
+        MysticalAtk = (myStats.MysticalProwess) * (1 + (myStats.Level * LevelModifier))/5;
+        PhysicalDef = (myStats.PhysicalDefense) * (1 + (myStats.Level * LevelModifier))/5;
+        MysticalDef = (myStats.MysticalDefense) * (1 + (myStats.Level * LevelModifier))/5;
         playerLuck = (myStats.Luck) * (1+(myStats.Level * LevelModifier));
         HealthRegenPercent = 0;
         ManaRegenPercent = 0;
@@ -661,6 +661,11 @@ public class CombatPlayerMovement : MonoBehaviour
     public void LevelUp()
     {
         myStats.Level += 1;
+        myStats.remainingSkillPoints += 1;
+        myStats.totalSkillPoints += 1;
+        combatActions.myFamiliar.monsterStats.Level += 1;
+        combatActions.myFamiliar.monsterStats.remainingSkillPoints += 1;
+        combatActions.myFamiliar.monsterStats.totalSkillPoints += 1;
         CalculateAllModifiers();
         Instantiate(levelUpEffect,transform.position,transform.rotation);
     }

@@ -17,7 +17,7 @@ public class CombatFamiliar : MonoBehaviour
     protected Animator anim;
     private CombatPlayerMovement combatPlayerMovement;
     private CombatPlayerActions combatPlayerActions;
-    [SerializeField] protected StatBlock monsterStats;
+    [SerializeField] public StatBlock monsterStats;
     [SerializeField] GameObject deathEffect;
 
     bool hasLookedForNewtarget;
@@ -217,11 +217,11 @@ public class CombatFamiliar : MonoBehaviour
     }
     protected virtual void CalculateStats()
     {
-        maxHealth = (monsterStats.Vitality * 10) * (1 + (monsterStats.Level * LevelModifier));
-        PhysicalAtk = (monsterStats.PhysicalProwess) * (1 + (monsterStats.Level * LevelModifier));
-        MysticalAtk = (monsterStats.MysticalProwess) * (1 + (monsterStats.Level * LevelModifier));
-        PhysicalDef = (monsterStats.PhysicalDefense) * (1 + (monsterStats.Level * LevelModifier));
-        MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier));
+        maxHealth = (monsterStats.Vitality * 2) * (1 + (monsterStats.Level * LevelModifier));
+        PhysicalAtk = (monsterStats.PhysicalProwess) * (1 + (monsterStats.Level * LevelModifier))/5;
+        MysticalAtk = (monsterStats.MysticalProwess) * (1 + (monsterStats.Level * LevelModifier))/5;
+        PhysicalDef = (monsterStats.PhysicalDefense) * (1 + (monsterStats.Level * LevelModifier))/5;
+        MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier))/5;
         HealthRegenPercent = 0;
     }
     public virtual void CalculateAllModifiers()
