@@ -220,10 +220,8 @@ public class EnemyManager : MonoBehaviour
         {
             if(currentEnemiesList[i].gameObject.TryGetComponent<TeamUser>(out TeamUser t_))
             {
-                Debug.Log("Myteam " + team_);
                 if (t_.myTeam == team_)
                 {
-                    Debug.Log("SameTeam");
                     continue;
                 }
             }
