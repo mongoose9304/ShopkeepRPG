@@ -68,7 +68,6 @@ public class DungeonManager : MonoBehaviour
         currentDungeon = dungeon_;
         currentDungeon.SetUpEnemies();
         currentDungeon.ChangeSin(currentSin);
-        ClearCurses();
         if(CombatPickupManager.instance)
         {
             CombatPickupManager.instance.ClearPickups();
