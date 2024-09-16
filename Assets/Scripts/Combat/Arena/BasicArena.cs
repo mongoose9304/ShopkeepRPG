@@ -18,6 +18,7 @@ public class BasicArena : BasicDungeon
     [SerializeField] private List<Transform> bTeamSpawns = new List<Transform>();
     [SerializeField] private List<Transform> cTeamSpawns = new List<Transform>();
     [SerializeField] private List<Transform> dTeamSpawns = new List<Transform>();
+    [SerializeField] private List<GameObject> lockObjects = new List<GameObject>();
     //to keep track of what the last guy we spawned was so we can ensure areound 50 50 for each team
     [SerializeField] private int lastTeamSpawned;
     
@@ -27,6 +28,7 @@ public class BasicArena : BasicDungeon
     private void OnEnable()
     {
         StartWave(0);
+        LockArena(true);
     }
     public void StartWave(int wave_)
     {
@@ -74,6 +76,7 @@ public class BasicArena : BasicDungeon
             if(currentWave>=myWaveList.maxWaves)
             {
                 //Win
+                LockArena(false);
             }
             else
             {
@@ -134,5 +137,22 @@ public class BasicArena : BasicDungeon
         
       
         spawnedEnemies += 1;
+    }
+    public void LockArena(bool lock_)
+    {
+        if(lock_)
+        {
+            foreach(GameObject obj in lockObjects)
+            {
+                obj.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (GameObject obj in lockObjects)
+            {
+                obj.SetActive(false);
+            }
+        }
     }
 }

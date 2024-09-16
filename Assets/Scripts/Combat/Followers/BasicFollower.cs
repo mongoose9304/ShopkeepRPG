@@ -74,6 +74,14 @@ public class BasicFollower : MonoBehaviour
         {
             agent.SetDestination(myMaster.transform.position + new Vector3(0, 0, 2));
         }
+        if (Vector3.Distance(this.transform.position, myMaster.transform.position) > maxDistanceToMyMaster*2)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(myMaster.transform.position + new Vector3(2, 0, 0), out hit, 3.0f, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
+            }
+        }
 
     }
     /// <summary>
