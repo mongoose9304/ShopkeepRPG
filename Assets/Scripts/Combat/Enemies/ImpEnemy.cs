@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Blobcreate.ProjectileToolkit;
 
 public class ImpEnemy : BasicEnemy
 {
@@ -21,11 +22,16 @@ public class ImpEnemy : BasicEnemy
          obj.SetActive(true);
         GameObject objB = attackProjectilesPool.GetPooledGameObject();
         objB.transform.position = attackSpawn.position;
-        objB.GetComponent<LopProjectile>().target = target.transform.position;
+        //objB.GetComponent<LopProjectile>().target = target.transform.position;
+        //var v = Projectile.VelocityByTime(myRigid.position, predictedPos, timeOfFlight);
+        // myRigid.AddForce(v, ForceMode.VelocityChange);
+        Debug.Log("V+ " + Projectile.VelocityByA(objB.transform.position, target.transform.position, -0.01f));
         objB.GetComponent<EnemyProjectile>().damage = damage;
         objB.GetComponent<EnemyProjectile>().myTeam = GetTeam();
         objB.GetComponent<OnDisableEvent>().endEvent = endAttackEvent;
         objB.SetActive(true);
+        objB.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position, target.transform.position, -0.1f), ForceMode.VelocityChange);
 
     }
     public void AttackHit()
