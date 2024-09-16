@@ -79,7 +79,7 @@ public class BasicFollower : MonoBehaviour
             NavMeshHit hit;
             if (NavMesh.SamplePosition(myMaster.transform.position + new Vector3(2, 0, 0), out hit, 3.0f, NavMesh.AllAreas))
             {
-                transform.position = hit.position;
+                agent.Warp(hit.position);
             }
         }
 

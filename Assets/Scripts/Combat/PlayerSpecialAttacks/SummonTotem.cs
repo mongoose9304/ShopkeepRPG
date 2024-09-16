@@ -10,7 +10,9 @@ public class SummonTotem : PlayerSpecialAttack
     public override void OnPress(GameObject obj_)
     {
         myTotem = totemPool.GetPooledGameObject().GetComponent<Totem>() ;
-        myTotem.transform.position = transform.position;
+        Vector3 temp = transform.position;
+        temp.y -= 0.45f;
+        myTotem.transform.position = temp;
         myTotem.damgeCollider.damage = baseDamage;
         myTotem.gameObject.SetActive(true);
         hiddenTimerCurrent = hiddenTimerMax;
