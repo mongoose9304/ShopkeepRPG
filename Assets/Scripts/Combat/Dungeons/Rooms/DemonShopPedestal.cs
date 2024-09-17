@@ -6,6 +6,7 @@ using TMPro;
 public class DemonShopPedestal : MonoBehaviour
 {
    public ShopRoom myShop;
+    public bool isActive;
    [SerializeField] TextMeshProUGUI itemTitleText;
    [SerializeField] TextMeshProUGUI itemDescText;
    [SerializeField] Image itemImage;
@@ -18,9 +19,22 @@ public class DemonShopPedestal : MonoBehaviour
     }
     public void ToggleVisibility(bool visible_)
     {
+        isActive = visible_;
         foreach(GameObject obj in toggleObjects)
         {
             obj.SetActive(visible_);
         }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="Player")
+        {
+            myShop.SetPedestalsInactive();
+            ToggleVisibility(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        ToggleVisibility(false);
     }
 }
