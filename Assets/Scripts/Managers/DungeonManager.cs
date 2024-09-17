@@ -56,7 +56,8 @@ public class DungeonManager : MonoBehaviour
         ClearBlessings();
         NextLevel(SinType.Capriciousness);
         //For Testing purchases, use responsibly 
-        LootManager.instance.AddRegularMoney(1000);
+        LootManager.instance.AddDemonMoney(1000);
+
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }

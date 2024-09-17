@@ -29907,6 +29907,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 673846671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &829099128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 829099129}
+  - component: {fileID: 829099130}
+  m_Layer: 0
+  m_Name: DemonShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &829099129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829099128}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1932757578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &829099130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829099128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2af02558102b3a64e9afecb4921bce62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySinPurchaseableItems: []
+  currentSinItemList: {fileID: 11400000, guid: d1324c68e51a5ab4bb51c4d5d8213ec0, type: 2}
 --- !u!1 &834515186
 GameObject:
   m_ObjectHideFlags: 0
@@ -58184,6 +58230,7 @@ Transform:
   - {fileID: 1444653200}
   - {fileID: 1013863567}
   - {fileID: 911666730}
+  - {fileID: 829099129}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933010219
@@ -70311,6 +70358,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9126984078830733843, guid: 1ebb1ca883951b74bab18f2ddad8a510, type: 3}
+      propertyPath: TESTITEMS.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a183800f0d45f04bbea48e8162eb930, type: 2}
+    - target: {fileID: 9126984078830733843, guid: 1ebb1ca883951b74bab18f2ddad8a510, type: 3}
+      propertyPath: TESTITEMS.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f96e0bec2bd0c4e4cbbbf334af3c6b88, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

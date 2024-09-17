@@ -6,7 +6,7 @@ using UnityEngine;
 /// The Basic stats of a Player or familiar
 /// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SinItemList", order = 1)]
-public class SinItemList : MonoBehaviour
+public class SinItemList : ScriptableObject
 {
     public List<SinTieredPurchaseableItemList> itemTiers;
     public string sinID;
@@ -14,6 +14,9 @@ public class SinItemList : MonoBehaviour
 [System.Serializable]
 public class SinTieredPurchaseableItemList
 {
-    public string sinID;
     public List<ItemData> myItems;
+    public ItemData GetRandomItem()
+    {
+        return myItems[Random.Range(0, myItems.Count)];
+    }
 }
