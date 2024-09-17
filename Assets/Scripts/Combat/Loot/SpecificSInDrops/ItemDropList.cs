@@ -7,6 +7,10 @@ using UnityEngine;
 public class TieredItemList
 {
     public List<LootTableItem> myTable=new List<LootTableItem>();
+    public LootTableItem GetRandomItem()
+    {
+        return myTable[Random.Range(0, myTable.Count)];
+    }
 }
 
 public class ItemDropList : ScriptableObject
