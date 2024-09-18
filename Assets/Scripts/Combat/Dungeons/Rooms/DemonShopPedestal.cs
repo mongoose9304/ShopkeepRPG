@@ -13,6 +13,20 @@ public class DemonShopPedestal : MonoBehaviour
    [SerializeField] TextMeshProUGUI costText;
    [SerializeField] Image itemImage;
     public List<GameObject> toggleObjects = new List<GameObject>();
+    virtual protected void Update()
+    {
+        if (!isActive)
+            return;
+
+
+        if (Input.GetButtonDown("Fire3"))
+        {
+            if (LootManager.instance.AttemptDemonPayment(myItem.basePrice))
+                PurchaseItem();
+        }
+
+
+    }
     public void SetItem(ItemData newItem)
     {
         myItem = newItem;
@@ -43,5 +57,11 @@ public class DemonShopPedestal : MonoBehaviour
         {
             ToggleVisibility(false);
         }
+    }
+    virtual protected void PurchaseItem()
+    {
+        if (!myItem)
+            return;
+        myShop.PurchaseItem(myItem, transform);
     }
 }

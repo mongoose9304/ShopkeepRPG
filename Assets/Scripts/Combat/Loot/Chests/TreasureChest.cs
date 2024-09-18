@@ -22,7 +22,7 @@ public class TreasureChest : MonoBehaviour
             return;
 
 
-        if (Input.GetButtonUp("Fire3"))
+        if (Input.GetButtonDown("Fire3"))
         {
             OpenChest();
         }

@@ -116,17 +116,32 @@ public class Hotbar : MonoBehaviour
         }
         mySlots[currentHighlight].SetHighlighted();
     }
-    public void AddItemToHotbar(ItemData data_,int amount=1)
+    public bool AddItemToHotbar(ItemData data_,int amount=1)
     {
         for(int i=0;i<mySlots.Count;i++)
         {
-            if(!Items[i])
+            if (!Items[i])
+            {
+                continue;
+            }
+            if (Items[i].itemName==data_.itemName)
+            {
+                Items[i] = data_;
+                ItemAmounts[i] = amount;
+                mySlots[i].AddItem(data_.itemSprite, amount+int.Parse(mySlots[i].amountText.text), Items[i].itemColor);
+                return true;
+            }
+        }
+        for (int i = 0; i < mySlots.Count; i++)
+        {
+            if (!Items[i])
             {
                 Items[i] = data_;
                 ItemAmounts[i] = amount;
                 mySlots[i].AddItem(data_.itemSprite, amount, Items[i].itemColor);
-                break;
+                return true;
             }
         }
+        return false;
     }
 }

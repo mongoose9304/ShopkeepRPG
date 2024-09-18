@@ -27,5 +27,36 @@ public class ShopRoom : BasicRoom
             myPedestals[i].ToggleVisibility(false);
         }
     }
+    public void PurchaseItem(ItemData item_,Transform loc_)
+    {
+        if(item_.type==ItemData.ItemType.consumable)
+        {
+            if(CombatPlayerManager.instance.playerHotbar.AddItemToHotbar(item_))
+            {
+                return;
+            }
+            else
+            {
+                SpawnWorldItem(item_, loc_);
+                return;
+            }
+        }
+        else
+        {
+            SpawnWorldItem(item_, loc_);
+        }
+    }
+    public void SpawnWorldItem(ItemData item_, Transform loc_,int amount=1)
+    {
+
+     GameObject temp = LootManager.instance.GetWorldLootObject();
+        temp.transform.position = loc_.position;
+        temp.transform.rotation = new Quaternion(0, 0, 0, 0);
+        LootItem lItem=new LootItem();
+        lItem.name = item_.itemName;
+        lItem.amount = amount;
+        temp.GetComponent<LootWorldObject>().myItem = lItem;
+        temp.SetActive(true);
+    }
    
 }

@@ -6,6 +6,7 @@ public class CombatPlayerManager : MonoBehaviour
 {
     public static CombatPlayerManager instance;
     [SerializeField] CombatPlayerActions[] players;
+    public Hotbar playerHotbar;
     private void Awake()
     {
         instance = this;
