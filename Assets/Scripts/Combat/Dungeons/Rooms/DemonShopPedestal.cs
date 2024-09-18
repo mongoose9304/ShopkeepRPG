@@ -8,14 +8,16 @@ public class DemonShopPedestal : MonoBehaviour
     public ShopRoom myShop;
     public bool isActive;
     public int itemTier;
+    public int amountLeft;
     [SerializeField] ItemData myItem;
    [SerializeField] TextMeshProUGUI itemTitleText;
+   [SerializeField] TextMeshProUGUI amountLeftText;
    [SerializeField] TextMeshProUGUI costText;
    [SerializeField] Image itemImage;
     public List<GameObject> toggleObjects = new List<GameObject>();
     virtual protected void Update()
     {
-        if (!isActive)
+        if (!isActive|| amountLeft <= 0)
             return;
 
 
@@ -27,20 +29,25 @@ public class DemonShopPedestal : MonoBehaviour
 
 
     }
-    public void SetItem(ItemData newItem)
+    public void SetItem(ItemData newItem, int amount = 1)
     {
         myItem = newItem;
         itemTitleText.text = myItem.itemName;
         itemImage.sprite = myItem.itemSprite;
         itemImage.color = myItem.itemColor;
         costText.text = myItem.basePrice.ToString();
+        amountLeft = amount;
+        amountLeftText.text = "(" + amountLeft + ")";
+
     }
     public void ToggleVisibility(bool visible_)
     {
         isActive = visible_;
-        foreach(GameObject obj in toggleObjects)
+        if (amountLeft <= 0)
+            isActive = false;
+        foreach (GameObject obj in toggleObjects)
         {
-            obj.SetActive(visible_);
+            obj.SetActive(isActive);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -62,6 +69,10 @@ public class DemonShopPedestal : MonoBehaviour
     {
         if (!myItem)
             return;
+        amountLeft -= 1;
+        amountLeftText.text = "(" + amountLeft + ")";
         myShop.PurchaseItem(myItem, transform);
+        if (amountLeft <= 0)
+            ToggleVisibility(false);
     }
 }

@@ -186,7 +186,8 @@ public class CombatFamiliar : MonoBehaviour
         NavMeshHit hit;
         if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
         {
-            transform.position = hit.position;
+            agent.Warp(hit.position);
+            //transform.position = hit.position;
         }
     }
     /// <summary>
