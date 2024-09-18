@@ -5,7 +5,8 @@ using UnityEngine;
 public class ShopRoom : BasicRoom
 {
     public List<DemonShopPedestal> myPedestals = new List<DemonShopPedestal>();
-
+    public List<TreasureChest> myChests = new List<TreasureChest>();
+    public bool isBeingRobbed;
     private void OnEnable()
     {
         SetUpPedestals();
@@ -57,6 +58,14 @@ public class ShopRoom : BasicRoom
         lItem.amount = amount;
         temp.GetComponent<LootWorldObject>().myItem = lItem;
         temp.SetActive(true);
+    }
+    public void RobTheShop()
+    {
+        isBeingRobbed = true;
+        for (int i = 0; i < myPedestals.Count; i++)
+        {
+            myPedestals[i].SetBeingRobbed();
+        }
     }
    
 }

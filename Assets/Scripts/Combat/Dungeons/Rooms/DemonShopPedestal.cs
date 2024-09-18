@@ -23,6 +23,11 @@ public class DemonShopPedestal : MonoBehaviour
 
         if (Input.GetButtonDown("Fire3"))
         {
+             if(myShop.isBeingRobbed)
+            {
+                PurchaseItem();
+                return;
+            }
             if (LootManager.instance.AttemptDemonPayment(myItem.basePrice))
                 PurchaseItem();
         }
@@ -74,5 +79,9 @@ public class DemonShopPedestal : MonoBehaviour
         myShop.PurchaseItem(myItem, transform);
         if (amountLeft <= 0)
             ToggleVisibility(false);
+    }
+    public void SetBeingRobbed()
+    {
+        costText.text = "Free";
     }
 }

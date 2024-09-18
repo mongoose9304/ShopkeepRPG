@@ -15,6 +15,7 @@ public class Hotbar : MonoBehaviour
     public float delayBetweenItemUsages;
     private void Start()
     {
+        //Adding test items for debug pruposes, remove when ready 
         foreach(ItemData data in TESTITEMS)
         {
             AddItemToHotbar(data, 10);
@@ -127,7 +128,7 @@ public class Hotbar : MonoBehaviour
             if (Items[i].itemName==data_.itemName)
             {
                 Items[i] = data_;
-                ItemAmounts[i] = amount;
+                ItemAmounts[i] = amount + int.Parse(mySlots[i].amountText.text);
                 mySlots[i].AddItem(data_.itemSprite, amount+int.Parse(mySlots[i].amountText.text), Items[i].itemColor);
                 return true;
             }
