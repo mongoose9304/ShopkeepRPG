@@ -6,6 +6,7 @@ public class ShopRoom : BasicRoom
 {
     public List<DemonShopPedestal> myPedestals = new List<DemonShopPedestal>();
     public List<TreasureChest> myChests = new List<TreasureChest>();
+    public List<Transform> guardSpawns = new List<Transform>();
     public bool isBeingRobbed;
     private void OnEnable()
     {
@@ -65,6 +66,10 @@ public class ShopRoom : BasicRoom
         for (int i = 0; i < myPedestals.Count; i++)
         {
             myPedestals[i].SetBeingRobbed();
+        }
+        for (int i = 0; i < guardSpawns.Count; i++)
+        {
+            EnemyManager.instance.SpawnRandomEnemy(true, guardSpawns[i],null, DungeonManager.instance.GetEnemyLevel(),"Guards");
         }
     }
    

@@ -12,6 +12,8 @@ public class DungeonManager : MonoBehaviour
     [Tooltip("The singleton instance")]
     public static DungeonManager instance;
     [Tooltip("The singleton instance")]
+    public Transform levelSpawn;
+    [Tooltip("The singleton instance")]
     public bool inArenaMode;
     [Tooltip("The navmesh must be stored like this so we can rebuild it when loading new levels")]
     public NavMeshSurface surface;
@@ -103,7 +105,7 @@ public class DungeonManager : MonoBehaviour
     IEnumerator WaitAFrameBeforeMoving()
     {
         yield return new WaitForSeconds(0.001f);
-        BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject).GetComponent<BasicDungeon>();
+        BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject,levelSpawn).GetComponent<BasicDungeon>();
         ChangeLevel(d);
         yield return new WaitForSeconds(0.201f);
         surface.BuildNavMesh();

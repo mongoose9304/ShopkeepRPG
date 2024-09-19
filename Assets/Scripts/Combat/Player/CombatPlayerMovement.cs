@@ -213,13 +213,13 @@ public class CombatPlayerMovement : MonoBehaviour
 
         var dir = transform.TransformDirection(Vector3.down);
         newInput = temp_;
-        // Up
-
+        // Down
+        Debug.Log("Z input " + newInput.z);
         if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
-        // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, .5f), dir, 15, wallMask))
+        // Up
+        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 0.5f), dir, 15, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left

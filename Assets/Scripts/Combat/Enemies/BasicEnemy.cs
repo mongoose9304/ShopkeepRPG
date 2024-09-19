@@ -219,15 +219,9 @@ public class BasicEnemy : MonoBehaviour
         agent.enabled = false;
         if(CombatPickupManager.instance)
         {
-            if (isElite)
-            {
-                CombatPickupManager.instance.CreateHealthPickup(transform);
-            }
-            else
-            {
+
                 CombatPickupManager.instance.TryForHealthPickup(transform);
                 CombatPickupManager.instance.TryForManaPickup(transform);
-            }
         }
         //death effects buggy RN, add later -Rob
       //  Instantiate(deathEffects[Random.Range(0,deathEffects.Length)], transform.position+new Vector3(0,1,0), Quaternion.Euler(new Vector3(0, 0, 0)));

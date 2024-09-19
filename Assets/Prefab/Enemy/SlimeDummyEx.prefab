@@ -809,10 +809,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
-  m_Acceleration: 8
+  m_Speed: 15
+  m_Acceleration: 16
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -889,13 +889,14 @@ MonoBehaviour:
   maxAttackCooldown: 2
   myElement: 0
   moveSpeed: 12
-  attackDistance: 6
+  attackDistance: 7
   knockBackMax: 0.2
   damage: 5
   isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 8463199300756448662}
   player: {fileID: 0}
+  target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 5890966177527715490}
   damageText: {fileID: 0}
@@ -903,6 +904,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
   deathEffects: []
+  myTeamUser: {fileID: 0}
   textSpawner: {fileID: 702407520697695468}
   hitEffects: {fileID: 6645059372470791588}
   attackIconPooler: {fileID: 0}
