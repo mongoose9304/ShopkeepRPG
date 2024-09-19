@@ -10,12 +10,18 @@ public class ButtonEventObject : MonoBehaviour, ISelectHandler, IDeselectHandler
 	public UnityEvent deselectEvent;
 	public void OnSelect(BaseEventData eventData)
 	{
-		Debug.Log(this.gameObject.name + " was selected");
 		selectEvent.Invoke();
+	}
+	void OnMouseOver()
+	{
+		selectEvent.Invoke();
+	}
+	void OnMouseExit()
+	{
+		deselectEvent.Invoke();
 	}
 	public void OnDeselect(BaseEventData data)
 	{
-		Debug.Log("Deselected");
 		deselectEvent.Invoke();
 	}
 

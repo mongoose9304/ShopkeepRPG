@@ -51,4 +51,12 @@ public class EventHotbar : MonoBehaviour
     {
         mySlots[Slot_].SetUnHighlighted();
     }
+    public void MoveToSlot_(int Slot_)
+    {
+        foreach(HotbarSlot slot in mySlots)
+        {
+            slot.SetUnHighlighted();
+        }
+        mySlots[Slot_].SetHighlighted();
+    }
 }
