@@ -22,6 +22,7 @@ public class TalentTree : MonoBehaviour
         {
             pointsInvested += 1;
             SetUp(pointsInvested);
+            myTalentUI.ApplyPlayerChanges();
         }
 
 

@@ -10,6 +10,7 @@ public class PlayerTalentUi : MonoBehaviour
     public TextMeshProUGUI talentTitleText;
     public List<TalentTree> myTrees = new List<TalentTree>();
     public ScrollRectController rectController;
+    public CombatPlayerMovement myPlayer;
     private void OnEnable()
     {
         SetUp();
@@ -60,5 +61,10 @@ public class PlayerTalentUi : MonoBehaviour
     public void SetScrollTarget(int target_)
     {
         rectController.target = target_;
+    }
+    public void ApplyPlayerChanges()
+    {
+        if (myPlayer)
+            myPlayer.CalculateAllModifiers();
     }
 }

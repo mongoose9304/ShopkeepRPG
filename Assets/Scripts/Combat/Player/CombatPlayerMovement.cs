@@ -561,7 +561,11 @@ public class CombatPlayerMovement : MonoBehaviour
        foreach(EquipModifier modX in externalModifiers)
         {
             if (modX.modName == mod_.modName)
+            {
+                externalModifiers.Remove(modX);
+                externalModifiers.Add(mod_);
                 return;
+            }
         }
         externalModifiers.Add(mod_);
         CalculateAllModifiers();
