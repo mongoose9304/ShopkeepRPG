@@ -330,6 +330,7 @@ public class DungeonManager : MonoBehaviour
             if(currentSin.ToString()==list_.itemListName)
             {
                 LootManager.instance.SetItemDropList(list_);
+                DemonShopManager.instance.SwitchSinSrops(list_.itemListName);
             }
         }
        

@@ -15,4 +15,15 @@ public class DemonShopManager : MonoBehaviour
     {
         instance = this;
     }
+    public void SwitchSinSrops(string name_)
+    {
+        foreach (SinItemList list_ in mySinPurchaseableItems)
+        {
+            if (name_ == list_.sinID)
+            {
+                currentSinItemList = list_;
+            }
+        }
+
+    }
 }

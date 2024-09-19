@@ -39,14 +39,15 @@ public class RangedGoblinEnemy : BasicEnemy
             CheckStun();
             return;
         }
-        transform.LookAt(lookAt, Vector3.up);
-        lookAt = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+       
         if (isPreparingShot)
         {
             if (!target)
                 target = player;
             if (!target.activeInHierarchy)
                 target = player;
+            transform.LookAt(lookAt, Vector3.up);
+            lookAt = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
             PrepShot();
         }
         else
