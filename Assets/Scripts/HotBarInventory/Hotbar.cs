@@ -63,6 +63,88 @@ public class Hotbar : MonoBehaviour
             if(delayBetweenItemUsages<=0)
             UseSelectedItem();
         }
+        //temp number inputs, get this crap outta here later -Rob
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 0;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 1;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 2;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 3;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 4;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 5;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 6;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 7;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 8;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            DeHighlightSlot(currentHighlight);
+            currentHighlight = 9;
+            SetHighlightedSlot(currentHighlight);
+            if (delayBetweenItemUsages <= 0)
+                UseSelectedItem();
+        }
+
 
     }
     public void UseSelectedItem()
