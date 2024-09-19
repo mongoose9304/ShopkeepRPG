@@ -74,7 +74,7 @@ public class RouletteRumble : BasicRoom
     }
     private void ActivateJackpot()
     {
-        Debug.Log("Jackpot "+ myDungeon.GetTreasureChestAmount() * 3);
+        myDungeon = DungeonManager.instance.currentDungeon;
         coinRain.StartCoinRain(myDungeon.GetTreasureChestAmount()*3);
         winImage.sprite = slotSprites[2];
     }

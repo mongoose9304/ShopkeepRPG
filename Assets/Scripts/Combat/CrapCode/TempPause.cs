@@ -5,6 +5,7 @@ using UnityEngine;
 public class TempPause : MonoBehaviour
 {
     public GameObject pauseObject;
+    public List<GameObject> toggleOnPauseObjects = new List<GameObject>();
     public bool isPaused;
     // Update is called once per frame
     public static TempPause instance;
@@ -21,12 +22,20 @@ public class TempPause : MonoBehaviour
                 Time.timeScale = 1;
                 pauseObject.SetActive(false);
                 isPaused = false;
+                foreach(GameObject obj in toggleOnPauseObjects)
+                {
+                    obj.SetActive(true);
+                }
             }
             else
             {
                 Time.timeScale = 0;
                 pauseObject.SetActive(true);
                 isPaused = true;
+                foreach (GameObject obj in toggleOnPauseObjects)
+                {
+                    obj.SetActive(false);
+                }
             }
         }
     }
