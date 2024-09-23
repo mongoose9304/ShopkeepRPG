@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// The absolute data of a monster. This does not inlcude any stats that are modified by a player. These are the monsters default data
+///These are the curses and blessinsg that can be applied to a combat player. The functionality fo what each curse does must be defined in the Dungeon Manager
 /// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Curse", order = 1)]
 public class BasicCurse : ScriptableObject
 {
-    public string name;
+    [Tooltip("The name of the curse, will be used to apply the effect of teh curse")]
+    public string id;
     public Sprite icon;
     public string description;
+    [Tooltip("Curses will be given out based on severity, higher should be considered more serious debuffs ")]
     public int severity;
 }

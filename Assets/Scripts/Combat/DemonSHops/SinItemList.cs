@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The Basic stats of a Player or familiar
+/// A list of all the items that can be bought in a domain's shop. They are sorted into tiers 
 /// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SinItemList", order = 1)]
 public class SinItemList : ScriptableObject
