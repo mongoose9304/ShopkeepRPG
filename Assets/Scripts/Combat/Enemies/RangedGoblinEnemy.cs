@@ -33,6 +33,8 @@ public class RangedGoblinEnemy : BasicEnemy
     }
     protected override void Update()
     {
+        if (TempPause.instance.isPaused)
+            return;
         if (currentHitstun > 0)
         {
             CheckStun();

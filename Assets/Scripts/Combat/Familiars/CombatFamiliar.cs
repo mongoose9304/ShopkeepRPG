@@ -75,6 +75,8 @@ public class CombatFamiliar : MonoBehaviour
     }
     protected virtual void Update()
     {
+        if (TempPause.instance.isPaused)
+            return;
         FollowPlayer();
         EnemyDetection();
         RegenHealth();

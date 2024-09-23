@@ -90,6 +90,8 @@ public class BasicEnemy : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (TempPause.instance.isPaused)
+            return;
         if (currentHitstun > 0)
         {
             CheckStun();

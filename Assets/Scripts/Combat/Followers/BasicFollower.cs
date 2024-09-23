@@ -56,7 +56,9 @@ public class BasicFollower : MonoBehaviour
     public bool useFlicker;
     public virtual void Update()
     {
-        if(target)
+        if (TempPause.instance.isPaused)
+            return;
+        if (target)
             FollowTarget();
         else
             FollowMaster();

@@ -66,7 +66,8 @@ public class SlimeFamiliar : CombatFamiliar
     }
     protected override void Update()
     {
-      
+        if (TempPause.instance.isPaused)
+            return;
 
         if (!isJumping)
         {

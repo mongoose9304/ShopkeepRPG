@@ -72,7 +72,8 @@ public class SlimeEnemy : BasicEnemy
 
     protected override void Update()
     {
-       
+        if (TempPause.instance.isPaused)
+            return;
         if (!isJumping)
         {
             if (currentHitstun > 0)

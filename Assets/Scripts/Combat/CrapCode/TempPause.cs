@@ -7,6 +7,8 @@ public class TempPause : MonoBehaviour
     public GameObject pauseObject;
     public List<GameObject> toggleOnPauseObjects = new List<GameObject>();
     public bool isPaused;
+    public bool isInDialogue;
+    public List<GameObject> objectsToDisableDuringDialogue = new List<GameObject>();
     // Update is called once per frame
     public static TempPause instance;
     private void Awake()
@@ -20,6 +22,7 @@ public class TempPause : MonoBehaviour
             if (isPaused)
             {
                 Time.timeScale = 1;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
                 pauseObject.SetActive(false);
                 isPaused = false;
                 foreach(GameObject obj in toggleOnPauseObjects)
@@ -30,6 +33,7 @@ public class TempPause : MonoBehaviour
             else
             {
                 Time.timeScale = 0;
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
                 pauseObject.SetActive(true);
                 isPaused = true;
                 foreach (GameObject obj in toggleOnPauseObjects)
@@ -42,9 +46,23 @@ public class TempPause : MonoBehaviour
     public void PauseForDialogue()
     {
         Time.timeScale = 0;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        isInDialogue = true;
+        isPaused = true;
+        foreach(GameObject obj in objectsToDisableDuringDialogue)
+        {
+            obj.SetActive(false);
+        }
     }
     public void UnPauseForDialogue()
     {
         Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        isPaused = false;
+        isInDialogue = false;
+        foreach (GameObject obj in objectsToDisableDuringDialogue)
+        {
+            obj.SetActive(true);
+        }
     }
 }
