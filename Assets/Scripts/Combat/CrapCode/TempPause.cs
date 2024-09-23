@@ -17,6 +17,8 @@ public class TempPause : MonoBehaviour
     }
     void Update()
     {
+        if (isInDialogue)
+            return;
         if (Input.GetButtonDown("PauseGame"))
         {
             if (isPaused)
