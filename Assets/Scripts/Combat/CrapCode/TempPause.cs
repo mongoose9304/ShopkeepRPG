@@ -39,4 +39,12 @@ public class TempPause : MonoBehaviour
             }
         }
     }
+    public void PauseForDialogue()
+    {
+        Time.timeScale = 0;
+    }
+    public void UnPauseForDialogue()
+    {
+        Time.timeScale = 1;
+    }
 }
