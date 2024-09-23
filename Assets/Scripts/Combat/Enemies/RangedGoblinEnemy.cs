@@ -18,7 +18,6 @@ public class RangedGoblinEnemy : BasicEnemy
             return;
         
         isPreparingShot = true;
-        canMove = false;
         //GameObject obj = attackIconPooler.GetPooledGameObject();
        // obj.transform.position = transform.position;
        // obj.SetActive(true);
@@ -39,7 +38,7 @@ public class RangedGoblinEnemy : BasicEnemy
             CheckStun();
             return;
         }
-       
+        Move();
         if (isPreparingShot)
         {
             if (!target)
@@ -52,7 +51,6 @@ public class RangedGoblinEnemy : BasicEnemy
         }
         else
         {
-            Move();
             WaitingToAttack();
         }
 

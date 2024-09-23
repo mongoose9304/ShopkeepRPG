@@ -59,11 +59,17 @@ public class BasicArena : BasicDungeon
             {
                 if (useRandomTeams)
                 {
-                    SpawnBasicEnemyOnTeam();
+                    if (Random.Range(0.0f, 1.0f) < myWaveList.eliteChance)
+                        SpawnBasicEnemyOnTeam(true);
+                    else
+                        SpawnBasicEnemyOnTeam();
                 }
                 else
                 {
-                    SpawnBasicEnemy();
+                    if(Random.Range(0.0f,1.0f)<myWaveList.eliteChance)
+                        SpawnBasicEnemy(true);
+                    else
+                        SpawnBasicEnemy();
                 }
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
             }
@@ -84,25 +90,25 @@ public class BasicArena : BasicDungeon
             }
         }
     }
-    private void SpawnBasicEnemy()
+    private void SpawnBasicEnemy(bool isElite_=false)
     {
         if (spawnedEnemies >= maxEnemies)
             return;
         Debug.Log("Spawn");
         if(SpawnInOrder)
         {
-            EnemyManager.instance.SpawnRandomEnemy(false, spawnPoints[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel());
+            EnemyManager.instance.SpawnRandomEnemy(isElite_, spawnPoints[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel());
             currentSpawn += 1;
             if (currentSpawn >= spawnPoints.Count)
                 currentSpawn = 0;
         }
         else
         {
-        EnemyManager.instance.SpawnRandomEnemy(false, spawnPoints[Random.Range(0, spawnPoints.Count)], myCounter, enemyLevel);
+        EnemyManager.instance.SpawnRandomEnemy(isElite_, spawnPoints[Random.Range(0, spawnPoints.Count)], myCounter, enemyLevel);
         }
         spawnedEnemies += 1;
     }
-    private void SpawnBasicEnemyOnTeam()
+    private void SpawnBasicEnemyOnTeam(bool isElite_ = false)
     {
         if (spawnedEnemies >= maxEnemies)
             return;
@@ -111,22 +117,22 @@ public class BasicArena : BasicDungeon
             case 0:
                 if (currentSpawn >= aTeamSpawns.Count)
                     currentSpawn = 0;
-                EnemyManager.instance.SpawnRandomEnemy(false, aTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(),availableTeams[lastTeamSpawned]);
+                EnemyManager.instance.SpawnRandomEnemy(isElite_, aTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(),availableTeams[lastTeamSpawned]);
                 break;
             case 1:
                 if (currentSpawn >= bTeamSpawns.Count)
                     currentSpawn = 0;
-                EnemyManager.instance.SpawnRandomEnemy(false, bTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                EnemyManager.instance.SpawnRandomEnemy(isElite_, bTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;
             case 2:
                 if (currentSpawn >= cTeamSpawns.Count)
                     currentSpawn = 0;
-                EnemyManager.instance.SpawnRandomEnemy(false, cTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                EnemyManager.instance.SpawnRandomEnemy(isElite_, cTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;
             case 3:
                 if (currentSpawn >= dTeamSpawns.Count)
                     currentSpawn = 0;
-                EnemyManager.instance.SpawnRandomEnemy(false, dTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
+                EnemyManager.instance.SpawnRandomEnemy(isElite_, dTeamSpawns[currentSpawn], myCounter, DungeonManager.instance.GetEnemyLevel(), availableTeams[lastTeamSpawned]);
                 break;
         }
         lastTeamSpawned += 1;

@@ -28,9 +28,6 @@ public class SlimeEnemy : BasicEnemy
         jumpStart = transform.position.y;
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
-        GameObject obj = attackIconPooler.GetPooledGameObject();
-        obj.transform.position = transform.position;
-        obj.SetActive(true);
         JumpEffect.PlayFeedbacks();
     }
 

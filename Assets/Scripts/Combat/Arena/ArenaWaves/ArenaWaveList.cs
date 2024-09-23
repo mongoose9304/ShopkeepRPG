@@ -13,7 +13,7 @@ public class ArenaWaveList : ScriptableObject
     public int extraEnemiesPerWave;
     public int startingEnemyLevel;
     public int extraEnemyLevelPerWave;
-
+    public float eliteChance;
 
     
 }

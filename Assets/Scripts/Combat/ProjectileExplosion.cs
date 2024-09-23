@@ -10,16 +10,36 @@ public class ProjectileExplosion : MonoBehaviour
     public Element myElement;
     public bool isMysticalDamage;
     public string myTeam;
+    public bool isContinuous;
+    public float maxDelayBetweenActivations;
+    float currentDelayBetweenActivations;
 
     private void OnEnable()
+    {
+        Explode();
+        currentDelayBetweenActivations = maxDelayBetweenActivations;
+    }
+    private void Update()
+    {
+        if (!isContinuous)
+            return;
+        currentDelayBetweenActivations -= Time.deltaTime;
+        if(currentDelayBetweenActivations<=0)
+        {
+            currentDelayBetweenActivations = maxDelayBetweenActivations;
+            Explode();
+        }
+
+    }
+    private void Explode()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, range);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.tag == "Player")
             {
-                if(!ignorePlayer)
-                hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
+                if (!ignorePlayer)
+                    hitCollider.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
             }
             else if (hitCollider.tag == "Familiar")
             {

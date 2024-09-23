@@ -5487,7 +5487,6 @@ GameObject:
   - component: {fileID: 3235833597105826646}
   - component: {fileID: 5559254286609959254}
   - component: {fileID: 6551820595359314126}
-  - component: {fileID: 3215752825878701075}
   - component: {fileID: 719385258473200012}
   - component: {fileID: 4954135472343162662}
   m_Layer: 0
@@ -5604,7 +5603,7 @@ MonoBehaviour:
   myBaseData: {fileID: 11400000, guid: 441616f619671f949af31d92aef6a095, type: 2}
   maxHealth: 35
   maxHitstun: 4
-  maxAttackCooldown: 1
+  maxAttackCooldown: 0.4
   myElement: 4
   moveSpeed: 18
   attackDistance: 15
@@ -5614,6 +5613,7 @@ MonoBehaviour:
   canMove: 1
   stunIcon: {fileID: 2726459677985465011}
   player: {fileID: 0}
+  target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 8868628790568603205}
   damageText: {fileID: 0}
@@ -5621,33 +5621,16 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
   deathEffects: []
+  myTeamUser: {fileID: 0}
   textSpawner: {fileID: 1515498765607761511}
   hitEffects: {fileID: 2278016337899292895}
-  attackIconPooler: {fileID: 0}
   useFlicker: 0
   isPreparingShot: 0
-  shotPrepTimeMax: 1.5
-  shotPrepTimecurrent: 1.5
+  shotPrepTimeMax: 0.4
+  shotPrepTimecurrent: 0.4
   optimalDistanceToPlayer: 8
   attackProjectilesPool: {fileID: 452029734224341741}
   attackSpawn: {fileID: 4669456779081687449}
---- !u!114 &3215752825878701075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5154405269253715279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameObjectToPool: {fileID: 6797680122488819032, guid: 551e47f357ecfcc4fb07f18f939c3a0d, type: 3}
-  PoolSize: 2
-  PoolCanExpand: 1
-  MutualizeWaitingPools: 0
-  NestWaitingPool: 0
 --- !u!114 &719385258473200012
 MonoBehaviour:
   m_ObjectHideFlags: 0

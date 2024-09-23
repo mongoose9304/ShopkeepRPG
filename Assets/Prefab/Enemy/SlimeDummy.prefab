@@ -868,7 +868,6 @@ GameObject:
   - component: {fileID: 6064075630194287261}
   - component: {fileID: 7555750362501816374}
   - component: {fileID: 6618822763816982608}
-  - component: {fileID: 6152224102705101945}
   - component: {fileID: 7289725986723413572}
   - component: {fileID: 74586503041455894}
   m_Layer: 0
@@ -1016,6 +1015,7 @@ MonoBehaviour:
   canMove: 1
   stunIcon: {fileID: 6611630499809330876}
   player: {fileID: 0}
+  target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 8608462071610935158}
   damageText: {fileID: 0}
@@ -1023,9 +1023,9 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
   deathEffects: []
+  myTeamUser: {fileID: 0}
   textSpawner: {fileID: 2334537997967041440}
   hitEffects: {fileID: 6735126338250919985}
-  attackIconPooler: {fileID: 0}
   useFlicker: 1
   jumpSpeed: {x: 0, y: 6, z: 0}
   jumpHeight: 4
@@ -1033,23 +1033,6 @@ MonoBehaviour:
   slamRange: 2.5
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   JumpEffect: {fileID: 4004696566595043345}
---- !u!114 &6152224102705101945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4658827452453938793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameObjectToPool: {fileID: 8887607378761658214, guid: 8fadb4864043a064c8363bc6b45d0f40, type: 3}
-  PoolSize: 3
-  PoolCanExpand: 1
-  MutualizeWaitingPools: 0
-  NestWaitingPool: 0
 --- !u!114 &7289725986723413572
 MonoBehaviour:
   m_ObjectHideFlags: 0

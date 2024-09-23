@@ -17,9 +17,6 @@ public class ImpEnemy : BasicEnemy
             return;
 
         canAttack = false;
-        GameObject obj = attackIconPooler.GetPooledGameObject();
-         obj.transform.position = target.transform.position;
-         obj.SetActive(true);
         GameObject objB = attackProjectilesPool.GetPooledGameObject();
         objB.transform.position = attackSpawn.position;
         //objB.GetComponent<LopProjectile>().target = target.transform.position;
@@ -36,7 +33,6 @@ public class ImpEnemy : BasicEnemy
     }
     public void AttackHit()
     {
-        attackIconPooler.ResetAllObjects();
         canAttack = true;
     }
     protected override void OnEnable()

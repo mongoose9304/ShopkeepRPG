@@ -746,7 +746,6 @@ GameObject:
   - component: {fileID: 1847374302446831949}
   - component: {fileID: 4523049996383194941}
   - component: {fileID: 8064418402044043358}
-  - component: {fileID: 3167825987927063511}
   - component: {fileID: 8897757053860857412}
   - component: {fileID: 2729977575159150118}
   m_Layer: 0
@@ -907,7 +906,6 @@ MonoBehaviour:
   myTeamUser: {fileID: 0}
   textSpawner: {fileID: 702407520697695468}
   hitEffects: {fileID: 6645059372470791588}
-  attackIconPooler: {fileID: 0}
   useFlicker: 1
   jumpSpeed: {x: 0, y: 12, z: 0}
   jumpHeight: 6
@@ -915,23 +913,6 @@ MonoBehaviour:
   slamRange: 4
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   JumpEffect: {fileID: 5320956429681983243}
---- !u!114 &3167825987927063511
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3110615113856666677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameObjectToPool: {fileID: 8887607378761658214, guid: 8fadb4864043a064c8363bc6b45d0f40, type: 3}
-  PoolSize: 3
-  PoolCanExpand: 1
-  MutualizeWaitingPools: 0
-  NestWaitingPool: 0
 --- !u!114 &8897757053860857412
 MonoBehaviour:
   m_ObjectHideFlags: 0

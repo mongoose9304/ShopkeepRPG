@@ -56,7 +56,6 @@ public class BasicEnemy : MonoBehaviour
    [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
-    [SerializeField] protected MMMiniObjectPooler attackIconPooler;
     public bool useFlicker;
 
 
@@ -87,7 +86,6 @@ public class BasicEnemy : MonoBehaviour
         //fix this later, if the enemies have the same channel thier damage numbers will appear even if they are not hit =(
         floatingText.Channel = Random.Range(0, 1000000);
         textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
-        attackIconPooler = GetComponent<MMMiniObjectPooler>();
     }
 
     protected virtual void Update()
@@ -209,7 +207,6 @@ public class BasicEnemy : MonoBehaviour
     public virtual void Death()
     {
         gameObject.SetActive(false);
-        attackIconPooler.ResetAllObjects();
         lootDropper.DropItems();
         CoinSpawner.instance_.CreateDemonCoins(DungeonManager.instance.currentDungeon.GetBasicEnemyValue(),this.transform);
         LootManager.instance.AddExp(DungeonManager.instance.currentDungeon.GetBasicEnemyExpValue());
@@ -242,7 +239,6 @@ public class BasicEnemy : MonoBehaviour
     public void EndAttack()
     {
         superArmor = false;
-        attackIconPooler.ResetAllObjects();
     }
     /// <summary>
     /// Move towards the player when allowed to
