@@ -3,26 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 
-
+/// <summary>
+/// A singleton class that manages the combat enemies and spawns 
+/// </summary>
 public class EnemyManager : MonoBehaviour
 {
-
-    public GameObject EnemyItemPrefab;
-    public CombatPlayerMovement playerMovement;
+    [Tooltip("List of all the enemy types")]
     public List<EnemyItem> enemies = new List<EnemyItem>();
+    [Tooltip("List of all the elite types")]
     public List<EnemyItem> eliteEnemies = new List<EnemyItem>();
+    [Tooltip("Singleton instance")]
     public static EnemyManager instance;
+    [Tooltip("The current active enemies for lock ons and such")]
     public List<GameObject> currentEnemiesList = new List<GameObject>();
+    [Tooltip("We shouldnt clean the list every frame but it does need to happen")]
     public float timeBetweenEnemyListCleans;
     float currentTimeBetweenEnemyListCleans;
+    [Tooltip("The teams we can spawn, set by the current Dungeon")]
     [SerializeField] public List<string> randomTeams = new List<string>();
+    [Tooltip("Should we be using multiple teams?")]
     [SerializeField] public bool useRandomTeams;
+    [Tooltip("The team tag if theres only one, usuallyw ahtever sin domain we are in")]
     [SerializeField] public string singleTeam;
     //hitParticles
+    [Header("References")]
+    [Tooltip("Reference to the Enemy Item Prefab")]
+    public GameObject EnemyItemPrefab;
+    [Tooltip("Reference player script")]
+    public CombatPlayerMovement playerMovement;
+    [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler physicalHitEffects;
+    [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler airHitEffects;
+    [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler fireHitEffects;
+    [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler waterHitEffects;
+    [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler earthHitEffects;
 
     private void Awake()
@@ -38,6 +55,9 @@ public class EnemyManager : MonoBehaviour
             CleanCurrentEnemyList();
         }
     }
+    /// <summary>
+    /// Create an enemy item so we can pool this enemy
+    /// </summary>
     public void CreateEnemyItem(string name_,GameObject object_,bool isElite=false)
     {
         if(!isElite)
@@ -66,7 +86,9 @@ public class EnemyManager : MonoBehaviour
         else
             eliteEnemies.Add(obj.GetComponent<EnemyItem>());
     }
-
+    /// <summary>
+    /// Create an enemy at a location
+    /// </summary>
     public void SpawnEnemy(string name_,Transform pos_,EnemyCounter counter_=null,int enemyLevel=1,string team="")
     {
         foreach(EnemyItem item_ in enemies)
@@ -107,6 +129,9 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Create an elite enemy at a location
+    /// </summary>
     public void SpawnEliteEnemy(string name_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1,string team="")
     {
         foreach (EnemyItem item_ in eliteEnemies)
@@ -147,6 +172,9 @@ public class EnemyManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Spawn a random enemy at a location. The enemy will be randomized from the ones available in this dungeon
+    /// </summary>
     public void SpawnRandomEnemy(bool isElite_, Transform pos_, EnemyCounter counter_ = null, int enemyLevel = 1,string team="")
     {
         string name = "";
@@ -161,6 +189,9 @@ public class EnemyManager : MonoBehaviour
             SpawnEliteEnemy(name, pos_, counter_, enemyLevel,team);
         }
     }
+    /// <summary>
+    /// Remove any unused enemies
+    /// </summary>
     private void CleanCurrentEnemyList()
     {
         for(int i=0;i<currentEnemiesList.Count;i++)
@@ -171,6 +202,9 @@ public class EnemyManager : MonoBehaviour
        
 
     }
+    /// <summary>
+    /// Disables all active enemies in the scene
+    /// </summary>
     public void DisableAllEnemies()
     {
         for (int i = 0; i < currentEnemiesList.Count; i++)
@@ -178,10 +212,16 @@ public class EnemyManager : MonoBehaviour
             currentEnemiesList[i].SetActive(false);
         }
     }
+    /// <summary>
+    /// An enemy has died, inform the player for any on Kill abilities 
+    /// </summary>
     public void EnemyDeath()
     {
         playerMovement.GetAKill();
     }
+    /// <summary>
+    /// Create an elemental effect at the location we have hit an enemy
+    /// </summary>
     public void ApplyHitEffect(Element element_, Transform location_)
     {
         GameObject obj;
@@ -210,6 +250,9 @@ public class EnemyManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
+    /// <summary>
+    /// Find the nearest target for enemies. This is team based so Greed enemies will try to find Gluttony enemies and so on.
+    /// </summary>
     public GameObject FindEnemyTarget(string team_,Vector3 position)
     {
         if(currentEnemiesList.Count==0)

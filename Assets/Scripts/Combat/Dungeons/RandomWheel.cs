@@ -2,20 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+/// <summary>
+/// A random wheel that will spin and provide an event that can be customized. The closest slot will be labled under winSlot, switch your outcomes based on the winSlot after spinning
+/// </summary>
 public class RandomWheel : MonoBehaviour
 {
+    [Header("Variables that can be changes")]
     bool isSpinning;
     bool isComingToAStop;
-    public float spinDecayDelayMin; 
-    public float spinDecayDelayMax; 
-    public float spinDecay; 
+    [Tooltip("Min amount fo time to spin")]
+    public float spinDecayDelayMin;
+    [Tooltip("Max amount of time to spin")]
+    public float spinDecayDelayMax;
+    [Tooltip("Speed loss per sec")]
+    public float spinDecay;
+    [Tooltip("Starting speed")]
     public float speed;
+    [Header("The win slot")]
+    [Tooltip("The slot that has won the spin, use this for determining outcomes")]
     public int winSlot;
     float spinDecayDelayCurrent;
-    [SerializeField] ConstantRotate rotater;
+    [Header("References")]
+    [Tooltip("REFERENCE to The indicator where the wheel stops")]
     [SerializeField] GameObject stopPos;
+    [Tooltip("The currently closest slot")]
     [SerializeField] GameObject currentShortestSlot;
+    [Tooltip("REFERENCE to the rotation object")]
+    [SerializeField] ConstantRotate rotater;
+    [Tooltip("REFERENCE to all the possible slots")]
     [SerializeField] List<GameObject> slots = new List<GameObject>();
     
     public UnityEvent endSpinEvent;
