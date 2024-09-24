@@ -25,7 +25,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public bool isDashing;
     Vector3 moveInput;
     Vector3 newInput;
-    Vector3 dashStartPos;
+   [SerializeField] Vector3 dashStartPos;
     Rigidbody rb;
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
    [SerializeField] LayerMask wallMask;
@@ -174,7 +174,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         if (currentMana < dashCost)
             return;
-        if (Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), transform.TransformDirection(Vector3.down), 10))
+       
             dashStartPos = transform.position;
         UseMana(dashCost);
         if (moveInput != Vector3.zero)
@@ -240,10 +240,10 @@ public class CombatPlayerMovement : MonoBehaviour
         if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
         dir = transform.TransformDirection(Vector3.right);
-        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
+        if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
         dir = transform.TransformDirection(Vector3.left);
-        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
+        if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
         return false;
 
