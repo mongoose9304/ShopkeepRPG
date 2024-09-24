@@ -23,6 +23,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public float dashTime;
     public float dashCost;
     public bool isDashing;
+    public float minMeleeDistance;
     Vector3 moveInput;
     Vector3 newInput;
    [SerializeField] Vector3 dashStartPos;
@@ -104,14 +105,23 @@ public class CombatPlayerMovement : MonoBehaviour
         RegenHealth();
         if (combatActions.isBusy)
             return;
-        if (!combatActions.isUsingBasicAttack)
+        CheckForSoftLockOn();
+        if (!combatActions.isUsingBasicAttackRanged&&!combatActions.isUsingBasicAttackMelee)
             GetInput();
         else
         {
             moveInput = Vector3.zero;
+            if(combatActions.isUsingBasicAttackMelee&&currentTarget)
+            {
+               if(Vector3.Distance(transform.position,currentTarget.transform.position)>minMeleeDistance)
+                {
+                    moveInput = (currentTarget.transform.position - transform.position).normalized;
+                    moveInput = new Vector3(moveInput.x, 0, moveInput.z);
+                }
+            }
         }
      moveInput=PreventGoingThroughWalls(moveInput);
-        CheckForSoftLockOn();
+       
         if (!isDashing)
         {
 
