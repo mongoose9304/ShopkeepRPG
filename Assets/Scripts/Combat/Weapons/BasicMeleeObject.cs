@@ -6,8 +6,7 @@ public class BasicMeleeObject : MonoBehaviour
 {
     [SerializeField] private float swingSpeed;
     float swingSpeedModified;
-    [SerializeField] private Quaternion startRotaton;
-    [SerializeField] private Quaternion startRotatonB;
+    [SerializeField] private Vector3 startRotaton;
     [SerializeField] private float attackDurationMax;
     float attackDurationMaxModified;
     private float attackDurationCurrent;
@@ -40,7 +39,7 @@ public class BasicMeleeObject : MonoBehaviour
 
     public void StartAttack()
     {
-        transform.localRotation = startRotaton;
+        transform.localRotation=Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
         weaponObject.SetActive(true);
         attackDurationCurrent = attackDurationMaxModified;
     }
