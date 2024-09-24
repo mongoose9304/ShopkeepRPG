@@ -104,7 +104,12 @@ public class CombatPlayerMovement : MonoBehaviour
         RegenHealth();
         if (combatActions.isBusy)
             return;
-        GetInput();
+        if (!combatActions.isUsingBasicAttack)
+            GetInput();
+        else
+        {
+            moveInput = Vector3.zero;
+        }
      moveInput=PreventGoingThroughWalls(moveInput);
         CheckForSoftLockOn();
         if (!isDashing)

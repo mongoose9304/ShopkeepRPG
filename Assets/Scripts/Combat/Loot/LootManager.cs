@@ -170,6 +170,9 @@ public class LootManager : MonoBehaviour
         {
             CombatPlayerManager.instance.LevelUp();
             SetExpToNextLevel();
+            expFeedback.StopFeedbacks();
+            expCounter.CountFrom = expToNextLevel;
+            expCounter.CountTo = expToNextLevel;
         }
     }
     public void BringlootCollectionUIObjectOut()

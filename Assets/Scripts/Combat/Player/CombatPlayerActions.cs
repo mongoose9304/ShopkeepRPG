@@ -27,6 +27,7 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialACooldown;
     [SerializeField] PlayerSpecialAttack specialB;
     public bool isBusy;
+    public bool isUsingBasicAttack;
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
@@ -58,6 +59,7 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
+        isUsingBasicAttack = false;
         if (specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
         {
             isBusy = true;
@@ -67,17 +69,21 @@ public class CombatPlayerActions : MonoBehaviour
         else
         {
             isBusy = false;
+            
         }
 
         if(Input.GetButton("Fire3"))
         {
            
             BasicMelee();
-          
+            isUsingBasicAttack = true;
+
+
         }
         else if(Input.GetButton("Fire1"))
         {
             BasicRanged();
+            isUsingBasicAttack = true;
             meleeObject.ForceEndAttack();
         }
         else if(Input.GetButton("Special1"))
