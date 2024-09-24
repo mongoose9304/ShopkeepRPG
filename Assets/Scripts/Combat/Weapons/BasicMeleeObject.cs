@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using MoreMountains.Feedbacks;
 public class BasicMeleeObject : MonoBehaviour
 {
     [SerializeField] private float swingSpeed;
@@ -21,7 +21,8 @@ public class BasicMeleeObject : MonoBehaviour
      private bool rightAttackDirection;
      private int comboCount;
      [SerializeField] private int comboCountMax;
-
+    [SerializeField] MMMiniObjectPooler specialAttackPool;
+    [SerializeField] Transform specialAttackSpawn;
 
     private void Update()
     {
@@ -64,6 +65,11 @@ public class BasicMeleeObject : MonoBehaviour
              {
                  weaponObject.SetActive(false);
                  queuedAttack = false;
+              GameObject obj=specialAttackPool.GetPooledGameObject();
+                obj.transform.position = specialAttackSpawn.position;
+                obj.transform.rotation = specialAttackSpawn.rotation;
+                obj.GetComponent<PlayerDamageCollider>().damage = damageCollider.damage * 2;
+                obj.SetActive(true);
                  return;
              }
             
