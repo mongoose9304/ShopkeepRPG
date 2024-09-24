@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+///  Automatically opens and closes walls and doors based on if there is another room connected to this one. 
+///  There are small colliders called connectors, as long as 2 are touching they will automatically open both rooms
+/// </summary>
 public class RoomWallController : MonoBehaviour
 {
     [SerializeField] List<GameObject> doors = new List<GameObject>();
