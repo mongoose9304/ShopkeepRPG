@@ -85,7 +85,7 @@ public class CombatPlayerMovement : MonoBehaviour
         AddAllEquipmentMods();
         CalculateAllModifiers();
         SetArmorElements();
-        
+        Time.timeScale = 0.2f;
         currentHealth = maxHealth;
         currentMana = maxMana;
     }

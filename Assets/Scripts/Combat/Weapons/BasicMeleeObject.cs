@@ -5,8 +5,11 @@ using UnityEngine;
 public class BasicMeleeObject : MonoBehaviour
 {
     [SerializeField] private float swingSpeed;
+    [SerializeField] float xSwingRotation;
     float swingSpeedModified;
     [SerializeField] private Vector3 startRotaton;
+    [SerializeField] private Vector3 startRotatonB;
+    [SerializeField] private Vector3 startRotatonC;
     [SerializeField] private float attackDurationMax;
     float attackDurationMaxModified;
     private float attackDurationCurrent;
@@ -16,18 +19,26 @@ public class BasicMeleeObject : MonoBehaviour
     
      private bool queuedAttack;
      private bool rightAttackDirection;
+     private int comboCount;
+     [SerializeField] private int comboCountMax;
+
 
     private void Update()
     {
         if(weaponObject.activeInHierarchy)
         {
-
-           
-            if(rightAttackDirection)
-            transform.Rotate(0.0f, swingSpeedModified*Time.deltaTime, 0.0f, Space.Self);
+            if (comboCount >= comboCountMax)
+            {
+                transform.Rotate(0, -swingSpeedModified * Time.deltaTime, 0.0f, Space.Self);
+            }
             else
-                transform.Rotate(0.0f, -swingSpeedModified * Time.deltaTime, 0.0f, Space.Self);
+            {
 
+                if (rightAttackDirection)
+                    transform.Rotate(0, swingSpeedModified * Time.deltaTime, 0.0f, Space.Self);
+                else
+                    transform.Rotate(0, -swingSpeedModified * Time.deltaTime, 0.0f, Space.Self);
+            }
             attackDurationCurrent -= Time.deltaTime;
             if (attackDurationCurrent<=0)
                 EndAttack();
@@ -42,12 +53,37 @@ public class BasicMeleeObject : MonoBehaviour
         transform.localRotation=Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
         weaponObject.SetActive(true);
         attackDurationCurrent = attackDurationMaxModified;
+        comboCount = 0;
     }
     public void EndAttack()
     {
         if(queuedAttack)
         {
-            rightAttackDirection = !rightAttackDirection;
+            comboCount += 1;
+             if (comboCount > comboCountMax)
+             {
+                 weaponObject.SetActive(false);
+                 queuedAttack = false;
+                 return;
+             }
+            
+            if (comboCount >= comboCountMax)
+            {
+                transform.localRotation = Quaternion.Euler(startRotatonC.x, startRotatonC.y, startRotatonC.z);
+            }
+            else
+            {
+                if (rightAttackDirection)
+                {
+                    rightAttackDirection = false;
+                    transform.localRotation = Quaternion.Euler(startRotatonB.x, startRotatonB.y, startRotatonB.z);
+                }
+                else
+                {
+                    rightAttackDirection = true;
+                    transform.localRotation = Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
+                }
+            }
             attackDurationCurrent = attackDurationMaxModified;
             queuedAttack=false;
             weaponObject.GetComponent<Collider>().enabled = false;
