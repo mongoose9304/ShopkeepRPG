@@ -38,7 +38,7 @@ public class CombatPlayerActions : MonoBehaviour
     public float attackSpeedMod = 1;
     public float lifeStealPercent = 0;
     public bool rangedPierce;
-
+    
     [Header("Familiar")]
     public CombatFamiliar myFamiliar;
     float familarRespawnTimer;
@@ -51,6 +51,9 @@ public class CombatPlayerActions : MonoBehaviour
     public GameObject chargesUIBGB;
     public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
+    [Header("Audio")]
+    public AudioClip basicRangedAudio;
+
     private void Start()
     {
         SetUpProjectiles();
@@ -202,6 +205,7 @@ public class CombatPlayerActions : MonoBehaviour
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
             tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;
             currentFireRate = fireRate;
+            MMSoundManager.Instance.PlaySound(basicRangedAudio,MMSoundManagerPlayOptions.Default);
         }
     }
     private void UseSpecialAttack(bool specialA_)
