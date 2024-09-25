@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// MOve a gameobject to a specific location
+/// </summary>
 public class Teleporter : MonoBehaviour
 {
     [SerializeField] Transform destination;

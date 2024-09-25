@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Room where the player collects treasure, can be set to be cursed and give the player a negative effect if picked up
+/// </summary>
 public class TreasureChestRoom : BasicRoom
 {
     [SerializeField] GameObject regularChest;

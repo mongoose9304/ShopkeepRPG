@@ -3,15 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+/// <summary>
+/// Activate effects by holding the specified button down
+/// </summary>
 public class HoldUseEvent : MonoBehaviour
 {
-    public List<GameObject> toggleObjects = new List<GameObject>();
+    
+    [Tooltip("The event that will play after being held")]
     public UnityEvent triggeredEvent;
+    [Tooltip("How long the player must hold for the event to activate ")]
     public float maxHoldTime;
     float currentHoldTime;
     bool isActive;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
+    [Tooltip("REFERNCE to the objects that are toggled on or off when in range ")]
+    public List<GameObject> toggleObjects = new List<GameObject>();
     virtual protected void Update()
     {
         if (!isActive)

@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A room where players can buy items based on what domain they are in. The shops can be robbed
+/// </summary>
 public class ShopRoom : BasicRoom
 {
-    public List<DemonShopPedestal> myPedestals = new List<DemonShopPedestal>();
-    public List<TreasureChest> myChests = new List<TreasureChest>();
-    public List<Transform> guardSpawns = new List<Transform>();
     public bool isBeingRobbed;
+    [Tooltip("REFERNCE to the pedestals to store items")]
+    public List<DemonShopPedestal> myPedestals = new List<DemonShopPedestal>();
+    [Tooltip("REFERNCE to the chests behind the counter the player can rob")]
+    public List<TreasureChest> myChests = new List<TreasureChest>();
+    [Tooltip("REFERENCE to the spawn locations for guards that spawn when being robbed")]
+    public List<Transform> guardSpawns = new List<Transform>();
     private void OnEnable()
     {
         SetUpPedestals();
@@ -48,6 +54,9 @@ public class ShopRoom : BasicRoom
             SpawnWorldItem(item_, loc_);
         }
     }
+    /// <summary>
+    /// Used to spawn items the player doesnt need until after exiting the combat minigame such as upgrade materials
+    /// </summary>
     public void SpawnWorldItem(ItemData item_, Transform loc_,int amount=1)
     {
 

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Room with traps that are meant to be dodged or navigated, more traps will be added in certain domains
+/// </summary>
 public class NavigationRoom : BasicRoom
 {
     [SerializeField] List<GameObject> extraTraps;

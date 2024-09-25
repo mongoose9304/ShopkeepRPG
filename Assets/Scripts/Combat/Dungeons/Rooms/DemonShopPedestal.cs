@@ -3,17 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+/// <summary>
+/// The slots that hold purchaseable items in the demon shop
+/// </summary>
 public class DemonShopPedestal : MonoBehaviour
 {
+    [Tooltip("The shop that I am a part of")]
     public ShopRoom myShop;
+    [Tooltip("Is my UI visible in the game")]
     public bool isActive;
+    [Tooltip("The tier my item should be from")]
     public int itemTier;
+    [Tooltip("The number of items left to buy")]
     public int amountLeft;
+    [Tooltip("The item i sell")]
     [SerializeField] ItemData myItem;
-   [SerializeField] TextMeshProUGUI itemTitleText;
-   [SerializeField] TextMeshProUGUI amountLeftText;
-   [SerializeField] TextMeshProUGUI costText;
-   [SerializeField] Image itemImage;
+    [Tooltip("REFERENCE UI item title")]
+    [SerializeField] TextMeshProUGUI itemTitleText;
+    [Tooltip("REFERENCE amount left UI text")]
+    [SerializeField] TextMeshProUGUI amountLeftText;
+    [Tooltip("REFERENCE to the cost UI text")]
+    [SerializeField] TextMeshProUGUI costText;
+    [Tooltip("REFERENCE to UI image of this item")]
+    [SerializeField] Image itemImage;
+    [Tooltip("REFERENCE to objects that should be toggled on and off when player is in range")]
     public List<GameObject> toggleObjects = new List<GameObject>();
     virtual protected void Update()
     {
