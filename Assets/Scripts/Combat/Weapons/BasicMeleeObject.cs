@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 public class BasicMeleeObject : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class BasicMeleeObject : MonoBehaviour
      [SerializeField] private int comboCountMax;
     [SerializeField] MMMiniObjectPooler specialAttackPool;
     [SerializeField] Transform specialAttackSpawn;
+    [SerializeField] AudioClip[] audioClips;
 
     private void Update()
     {
@@ -55,6 +57,7 @@ public class BasicMeleeObject : MonoBehaviour
         weaponObject.SetActive(true);
         attackDurationCurrent = attackDurationMaxModified;
         comboCount = 0;
+        MMSoundManager.Instance.PlaySound(audioClips[0], MMSoundManagerPlayOptions.Default);
     }
     public void EndAttack()
     {
@@ -76,6 +79,7 @@ public class BasicMeleeObject : MonoBehaviour
             if (comboCount >= comboCountMax)
             {
                 transform.localRotation = Quaternion.Euler(startRotatonC.x, startRotatonC.y, startRotatonC.z);
+                MMSoundManager.Instance.PlaySound(audioClips[2], MMSoundManagerPlayOptions.Default);
             }
             else
             {
@@ -83,10 +87,12 @@ public class BasicMeleeObject : MonoBehaviour
                 {
                     rightAttackDirection = false;
                     transform.localRotation = Quaternion.Euler(startRotatonB.x, startRotatonB.y, startRotatonB.z);
+                    MMSoundManager.Instance.PlaySound(audioClips[1], MMSoundManagerPlayOptions.Default);
                 }
                 else
                 {
                     rightAttackDirection = true;
+                    MMSoundManager.Instance.PlaySound(audioClips[0], MMSoundManagerPlayOptions.Default);
                     transform.localRotation = Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
                 }
             }

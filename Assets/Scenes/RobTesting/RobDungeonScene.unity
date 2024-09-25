@@ -10154,6 +10154,7 @@ MonoBehaviour:
   chargesUIBGB: {fileID: 1983608377}
   chargesTextB: {fileID: 1718218953}
   ultimateCoolDownBar: {fileID: 839925870}
+  basicRangedAudio: {fileID: 8300000, guid: 97788ef5d361f7740bdd7a278a3aab6d, type: 3}
 --- !u!54 &448174651
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -36929,6 +36930,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056222332}
   m_CullTransparentMesh: 1
+--- !u!1 &1058409174
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1058409175}
+  - component: {fileID: 1058409176}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1058409175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058409174}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1932757578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1058409176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058409174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614edb33c38bcf949846d5675f29f9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutomaticallyUnparentOnAwake: 1
+  settingsSo: {fileID: 11400000, guid: 07ea3ff88e1ecb84d91f58aa804badc6, type: 2}
+  AudioSourcePoolSize: 10
+  PoolCanExpand: 1
 --- !u!1 &1075363065
 GameObject:
   m_ObjectHideFlags: 0
@@ -43714,8 +43763,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7536e742fb343cf4286d277f5d6db04c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyItemPrefab: {fileID: 5462116824332333798, guid: b6cccb2e93cd782498ff9c6f55c7db23, type: 3}
-  playerMovement: {fileID: 448174652}
   enemies: []
   eliteEnemies: []
   currentEnemiesList: []
@@ -43727,6 +43774,8 @@ MonoBehaviour:
   - Greed
   useRandomTeams: 0
   singleTeam: 
+  EnemyItemPrefab: {fileID: 5462116824332333798, guid: b6cccb2e93cd782498ff9c6f55c7db23, type: 3}
+  playerMovement: {fileID: 448174652}
   physicalHitEffects: {fileID: 1219365494}
   airHitEffects: {fileID: 1219365495}
   fireHitEffects: {fileID: 1219365497}
@@ -53783,6 +53832,7 @@ Transform:
   - {fileID: 1013863567}
   - {fileID: 911666730}
   - {fileID: 829099129}
+  - {fileID: 1058409175}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933010219
@@ -60493,6 +60543,10 @@ MonoBehaviour:
   comboCountMax: 2
   specialAttackPool: {fileID: 2119228512}
   specialAttackSpawn: {fileID: 1076503916}
+  audioClips:
+  - {fileID: 8300000, guid: 90ff191aab896724dbd77f2e53ad9f93, type: 3}
+  - {fileID: 8300000, guid: f27df6e72307a734fa517a8b1da24dee, type: 3}
+  - {fileID: 8300000, guid: 44b968b5e7402ad4090d09a896631b19, type: 3}
 --- !u!33 &2119228511
 MeshFilter:
   m_ObjectHideFlags: 0
