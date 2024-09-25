@@ -21,6 +21,14 @@ public class StatBlock : ScriptableObject
     public int remainingSkillPoints;
     public int totalSkillPoints;
 
+    //StartStats;
+    public int StartVitality;
+    public int StartSoul;
+    public int StartPhysicalProwess;
+    public int StartMysticalProwess;
+    public int StartPhysicalDefense;
+    public int StartMysticalDefense;
+
     private int LevelFormula(int lv_)
     {
         int expNeeded= ((lv_ * ascension) * 10);
@@ -43,5 +51,15 @@ public class StatBlock : ScriptableObject
         }
         temp -= savedExp;
         return temp;
+    }
+    public void ResetStats()
+    {
+        Vitality = StartVitality;
+        Soul = StartSoul;
+        PhysicalProwess = StartPhysicalProwess;
+        MysticalProwess = StartMysticalProwess;
+        PhysicalDefense = StartPhysicalDefense;
+        MysticalDefense = StartMysticalDefense;
+        remainingSkillPoints = totalSkillPoints;
     }
 }

@@ -18,4 +18,14 @@ public class SavedTalents : ScriptableObject
     public List<Talent> talents = new List<Talent>();
     public int totalTalents;
     public int unspentTalents;
+    public void ResetTalents()
+    {
+       for(int i=0;i<talents.Count;i++)
+        {
+            var x = talents[i];
+            x.levelInvested = 0;
+            talents[i] = x;
+        }
+        unspentTalents = totalTalents;
+    }
 }

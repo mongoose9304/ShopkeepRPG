@@ -67,4 +67,10 @@ public class PlayerTalentUi : MonoBehaviour
         if (myPlayer)
             myPlayer.CalculateAllModifiers();
     }
+    public void ResetTalentPoints()
+    {
+        playerTalents.ResetTalents();
+        if (myPlayer)
+            myPlayer.CalculateAllModifiers();
+    }
 }

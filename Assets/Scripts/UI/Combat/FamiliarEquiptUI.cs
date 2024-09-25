@@ -56,4 +56,10 @@ public class FamiliarEquiptUI : MonoBehaviour
         famStatObjects[3].SetUpStat(famStatBlock.PhysicalDefense);
         famStatObjects[4].SetUpStat(famStatBlock.MysticalDefense);
     }
+    public void ResetFamiliarStats()
+    {
+        famStatBlock.ResetStats();
+        if (combatFam)
+            combatFam.CalculateAllModifiers();
+    }
 }

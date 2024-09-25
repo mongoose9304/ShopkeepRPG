@@ -99,4 +99,10 @@ public class CombatEquiptUI : MonoBehaviour
         if (player)
             player.combatActions.SwapSpecials();
     }
+    public void ResetPlayerStats()
+    {
+        playerStatBlock.ResetStats();
+        if (player)
+            player.CalculateAllModifiers();
+    }
 }
