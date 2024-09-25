@@ -7,11 +7,17 @@ using UnityEngine;
 /// </summary>
 public class RoomWallController : MonoBehaviour
 {
+    [Tooltip("REFERENCE to the door objects ")]
     [SerializeField] List<GameObject> doors = new List<GameObject>();
+    [Tooltip("REFERENCE connector objects ")]
     [SerializeField] List<GameObject> connectors = new List<GameObject>();
+    [Tooltip("REFERENCE to solid walls without any holes")]
     [SerializeField] List<GameObject> wallsNoDoors = new List<GameObject>();
+    [Tooltip("REFERENCE to the walls with holes for the doors ")]
     [SerializeField] List<GameObject> wallsWDoors = new List<GameObject>();
+    [Tooltip("Stops the automatic enabling and disabling of walls")]
     [SerializeField] bool manualSetUp;
+    [Tooltip("The layer to check for connectors")]
     [SerializeField] LayerMask connectorLayer;
     private void OnEnable()
     {
@@ -36,6 +42,9 @@ public class RoomWallController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         CheckConnections();
     }
+    /// <summary>
+    /// Check if any nearby rooms connect to this one and if any do open the room up 
+    /// </summary>
     private void CheckConnections()
     {
         if (manualSetUp)
@@ -110,7 +119,9 @@ public class RoomWallController : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    ///  Lock this door 
+    /// </summary>
     public void ToggleLocks(bool lock_)
     {
         foreach(GameObject obj in doors)

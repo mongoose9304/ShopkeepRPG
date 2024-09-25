@@ -2,19 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A room that will spawn a set number of enemies over time, can be locked until they are defeated
+/// </summary>
 public class CombatRoom : BasicRoom
-{
+{   [Header("Variables to change")]
     bool isLocked;
-
-    [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
+    [Tooltip("The maximum amount of enemies to spawn")]
     [SerializeField] private int maxEnemies;
-    [SerializeField] private int instantEnemies;
+    [Tooltip("Should the enemies be elite")]
     [SerializeField] private bool useEliteEnemies;
-    [SerializeField] EnemyCounter myCounter;
     [SerializeField] private float spawnDelayMin;
     [SerializeField] private float spawnDelayMax;
     private float currentSpawnDelay;
     private int spawnedEnemies;
+    [Header("References")]
+    [Tooltip("REFERNCE to the object that counts how many enemies you have killed so we know when to unlock the room")]
+    [SerializeField] EnemyCounter myCounter;
+    [Tooltip("REFERNCE to the places we can put enemies")]
+    [SerializeField] private List<Transform> spawnPoints = new List<Transform>();
 
     public override void StartRoomActivity()
     {
@@ -22,10 +28,6 @@ public class CombatRoom : BasicRoom
         LockRoom(true);
         myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
-        for(int i=0;i<instantEnemies;i++)
-        {
-          //  SpawnBasicEnemy();
-        }
     }
     private void LockRoom(bool lock_)
     {
