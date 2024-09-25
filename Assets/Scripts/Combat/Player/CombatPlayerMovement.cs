@@ -106,18 +106,24 @@ public class CombatPlayerMovement : MonoBehaviour
         if (combatActions.isBusy)
             return;
         CheckForSoftLockOn();
-        if (!combatActions.isUsingBasicAttackRanged&&!combatActions.isUsingBasicAttackMelee)
-            GetInput();
-        else
+        GetInput();
+        if (combatActions.isUsingBasicAttackRanged||combatActions.isUsingBasicAttackMelee)
         {
-            moveInput = Vector3.zero;
-            if(combatActions.isUsingBasicAttackMelee&&currentTarget)
+            if(combatActions.isUsingBasicAttackMelee)
             {
-               if(Vector3.Distance(transform.position,currentTarget.transform.position)>minMeleeDistance)
+                moveInput = Vector3.zero;
+                if (currentTarget)
                 {
-                    moveInput = (currentTarget.transform.position - transform.position).normalized;
-                    moveInput = new Vector3(moveInput.x, 0, moveInput.z);
+                    if (Vector3.Distance(transform.position, currentTarget.transform.position) > minMeleeDistance)
+                    {
+                        moveInput = (currentTarget.transform.position - transform.position).normalized;
+                        moveInput = new Vector3(moveInput.x, 0, moveInput.z);
+                    }
                 }
+            }
+            else if(combatActions.isUsingBasicAttackRanged)
+            {
+                moveInput /= 1.75f;
             }
         }
      moveInput=PreventGoingThroughWalls(moveInput);

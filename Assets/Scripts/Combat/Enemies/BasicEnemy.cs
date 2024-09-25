@@ -168,8 +168,11 @@ public class BasicEnemy : MonoBehaviour
     {
        if(knockBackObject)
         {
-            if(target.TryGetComponent<BasicEnemy>(out BasicEnemy e))
-            target = knockBackObject;
+            if (target.TryGetComponent<BasicEnemy>(out BasicEnemy e))
+            {
+                if(e)
+                target = e.gameObject;
+            }
         }
         if (!superArmor)
         {
