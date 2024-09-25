@@ -50843,6 +50843,54 @@ Transform:
   - {fileID: 1415539093}
   m_Father: {fileID: 2063412508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1602804220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1602804221}
+  - component: {fileID: 1602804222}
+  m_Layer: 0
+  m_Name: SceneAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1602804221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602804220}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1932757578}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1602804222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602804220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 745b447a7855d0246bbcab870f0dbf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMs:
+  - {fileID: 8300000, guid: 3e5d71295b462d94fb90c094f7adddca, type: 3}
+  - {fileID: 8300000, guid: 874e07363baa8a541acb1bc7b6f0e0d9, type: 3}
+  - {fileID: 8300000, guid: 6e1bf2c2b557b2a4a921da4d418de50b, type: 3}
 --- !u!1 &1611186554
 GameObject:
   m_ObjectHideFlags: 0
@@ -53833,6 +53881,7 @@ Transform:
   - {fileID: 911666730}
   - {fileID: 829099129}
   - {fileID: 1058409175}
+  - {fileID: 1602804221}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933010219
@@ -60544,9 +60593,9 @@ MonoBehaviour:
   specialAttackPool: {fileID: 2119228512}
   specialAttackSpawn: {fileID: 1076503916}
   audioClips:
-  - {fileID: 8300000, guid: 90ff191aab896724dbd77f2e53ad9f93, type: 3}
+  - {fileID: 8300000, guid: eb4347a43f7aa074c8468cc825ef82f0, type: 3}
+  - {fileID: 8300000, guid: bed0f92f04d2fbd4b8a9638458fcdb15, type: 3}
   - {fileID: 8300000, guid: f27df6e72307a734fa517a8b1da24dee, type: 3}
-  - {fileID: 8300000, guid: 44b968b5e7402ad4090d09a896631b19, type: 3}
 --- !u!33 &2119228511
 MeshFilter:
   m_ObjectHideFlags: 0
