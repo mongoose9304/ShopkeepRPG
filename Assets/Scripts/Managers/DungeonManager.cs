@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.AI.Navigation;
+using MoreMountains.Tools;
 
 /// <summary>
 /// The singleton class that will handle loading the dungeon levels, winning and losing the game and Player buffs/Debuffs
@@ -48,6 +49,8 @@ public class DungeonManager : MonoBehaviour
     public Sprite[] SinSprites;
     [Tooltip("REFERENCE to sprites used to represent the sins")]
     public ItemDropList[] sinItemDropLists;
+    [Tooltip("REFERENCE to BGMs available")]
+    public List<AudioClip> BGMs = new List<AudioClip>();
     private void Awake()
     {
         instance = this;
@@ -93,6 +96,7 @@ public class DungeonManager : MonoBehaviour
             return;
         }
         currentSin = sin_;
+        PlayRandomBGM();
         SwitchSinSrops();
         if(currentDungeon)
         Destroy(currentDungeon.gameObject);
@@ -334,5 +338,10 @@ public class DungeonManager : MonoBehaviour
             }
         }
        
+    }
+    public void PlayRandomBGM()
+    {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero,true);
     }
 }

@@ -44070,6 +44070,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a0ffa5afacd984ca9ef9a186a8bd35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BGMOptions:
+    Initialized: 0
+    MmSoundManagerTrack: 1
+    AudioGroup: {fileID: -2273146209696275378, guid: 7e984f512e89b60468e829489e8883e3, type: 2}
+    Loop: 1
+    Volume: 0.2
+    Pitch: 0
+    ID: 0
+    Fade: 0
+    FadeInitialVolume: 0
+    FadeDuration: 0
+    FadeTween:
+      MMTweenDefinitionType: 0
+      MMTweenCurve: 0
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      Initialized: 0
+    Persistent: 0
+    RecycleAudioSource: {fileID: 0}
+    PlaybackTime: 0
+    PlaybackDuration: 0
+    PanStereo: 0
+    SpatialBlend: 0
+    AttachToTransform: {fileID: 0}
+    SoloSingleTrack: 0
+    SoloAllTracks: 0
+    AutoUnSoloOnEnd: 0
+    BypassEffects: 0
+    BypassListenerEffects: 0
+    BypassReverbZones: 0
+    Priority: 0
+    ReverbZoneMix: 0
+    DopplerLevel: 0
+    Location: {x: 0, y: 0, z: 0}
+    Spread: 0
+    RolloffMode: 0
+    MinDistance: 0
+    MaxDistance: 0
+    DoNotAutoRecycleIfNotDonePlaying: 0
+    UseCustomRolloffCurve: 0
+    CustomRolloffCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    UseSpatialBlendCurve: 0
+    SpatialBlendCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    UseReverbZoneMixCurve: 0
+    ReverbZoneMixCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    UseSpreadCurve: 0
+    SpreadCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   levelSpawn: {fileID: 886616559}
   inArenaMode: 1
   surface: {fileID: 1386589697}
@@ -44143,6 +44214,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 23a82a8f193ec90479a2e9c3396a558b, type: 2}
   - {fileID: 11400000, guid: e1f18edb45ab2e249a8b4e31bcd87b15, type: 2}
   - {fileID: 11400000, guid: bb8ce63226dab57498c090a591bef3c3, type: 2}
+  BGMs:
+  - {fileID: 8300000, guid: 196ba871ec3698340b3b0b3ba150a008, type: 3}
+  - {fileID: 8300000, guid: fd37264873de35445912fd5cdaf9e2c3, type: 3}
+  - {fileID: 8300000, guid: 21820914312ca204ea52ef3d7879dbe7, type: 3}
+  - {fileID: 8300000, guid: a6179d0383beb374889182e04ed8cf78, type: 3}
+  - {fileID: 8300000, guid: a27e89964ef26dc499f8f76082acb135, type: 3}
+  - {fileID: 8300000, guid: 670552803410f304ba3ca14cf1ad71ed, type: 3}
+  - {fileID: 8300000, guid: 5856e182b664c284c96254c3dff5baef, type: 3}
 --- !u!1 &1242486373
 GameObject:
   m_ObjectHideFlags: 0
@@ -50843,54 +50922,6 @@ Transform:
   - {fileID: 1415539093}
   m_Father: {fileID: 2063412508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1602804220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1602804221}
-  - component: {fileID: 1602804222}
-  m_Layer: 0
-  m_Name: SceneAudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1602804221
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602804220}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1932757578}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1602804222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602804220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745b447a7855d0246bbcab870f0dbf6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BGMs:
-  - {fileID: 8300000, guid: 3e5d71295b462d94fb90c094f7adddca, type: 3}
-  - {fileID: 8300000, guid: 874e07363baa8a541acb1bc7b6f0e0d9, type: 3}
-  - {fileID: 8300000, guid: 6e1bf2c2b557b2a4a921da4d418de50b, type: 3}
 --- !u!1 &1611186554
 GameObject:
   m_ObjectHideFlags: 0
@@ -53881,7 +53912,6 @@ Transform:
   - {fileID: 911666730}
   - {fileID: 829099129}
   - {fileID: 1058409175}
-  - {fileID: 1602804221}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933010219
