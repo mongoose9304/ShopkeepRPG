@@ -217,7 +217,7 @@ public class BasicEnemy : MonoBehaviour
         LootManager.instance.AddExp(DungeonManager.instance.currentDungeon.GetBasicEnemyExpValue());
         if (myEnemyCounter)
             myEnemyCounter.currentEnemies -= 1;
-        EnemyManager.instance.EnemyDeath();
+        EnemyManager.instance.EnemyDeath(transform.position);
         agent.enabled = false;
         if(CombatPickupManager.instance)
         {

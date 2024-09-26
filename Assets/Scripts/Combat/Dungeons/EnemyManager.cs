@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 /// <summary>
 /// A singleton class that manages the combat enemies and spawns 
@@ -41,6 +42,10 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] protected MMMiniObjectPooler waterHitEffects;
     [Tooltip("Reference particles that can play when hitting an enemy")]
     [SerializeField] protected MMMiniObjectPooler earthHitEffects;
+    [Tooltip("Reference effects that play when killing an enemy")]
+    [SerializeField] protected MMMiniObjectPooler[] cartoonDeathEffects;
+    [Tooltip("Reference audios that play when killing an enemy")]
+    [SerializeField] protected AudioClip[] enemyDeathAudios;
 
     private void Awake()
     {
@@ -215,9 +220,15 @@ public class EnemyManager : MonoBehaviour
     /// <summary>
     /// An enemy has died, inform the player for any on Kill abilities 
     /// </summary>
-    public void EnemyDeath()
+    public void EnemyDeath(Vector3 pos_)
     {
         playerMovement.GetAKill();
+        GameObject obj=cartoonDeathEffects[Random.Range(0,cartoonDeathEffects.Length)].GetPooledGameObject();
+        obj.transform.position = pos_;
+        obj.SetActive(true);
+        MMSoundManager.Instance.PlaySound(enemyDeathAudios[Random.Range(0, enemyDeathAudios.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, pos_,
+     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     /// <summary>
     /// Create an elemental effect at the location we have hit an enemy

@@ -359,5 +359,6 @@ public class CombatPlayerActions : MonoBehaviour
         {
             chargesUIBGB.SetActive(false);
         }
+        combatMovement.CalculateAllModifiers();
     }
 }
