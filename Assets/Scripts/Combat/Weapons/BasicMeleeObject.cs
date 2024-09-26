@@ -57,7 +57,9 @@ public class BasicMeleeObject : MonoBehaviour
         weaponObject.SetActive(true);
         attackDurationCurrent = attackDurationMaxModified;
         comboCount = 0;
-        MMSoundManager.Instance.PlaySound(audioClips[0], MMSoundManagerPlayOptions.Default);
+        MMSoundManager.Instance.PlaySound(audioClips[1], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void EndAttack()
     {
@@ -79,7 +81,9 @@ public class BasicMeleeObject : MonoBehaviour
             if (comboCount >= comboCountMax)
             {
                 transform.localRotation = Quaternion.Euler(startRotatonC.x, startRotatonC.y, startRotatonC.z);
-                MMSoundManager.Instance.PlaySound(audioClips[2], MMSoundManagerPlayOptions.Default);
+                MMSoundManager.Instance.PlaySound(audioClips[2], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+           1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
             }
             else
             {
@@ -87,13 +91,17 @@ public class BasicMeleeObject : MonoBehaviour
                 {
                     rightAttackDirection = false;
                     transform.localRotation = Quaternion.Euler(startRotatonB.x, startRotatonB.y, startRotatonB.z);
-                    MMSoundManager.Instance.PlaySound(audioClips[1], MMSoundManagerPlayOptions.Default);
+                    MMSoundManager.Instance.PlaySound(audioClips[1], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+           1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
                 }
                 else
                 {
                     rightAttackDirection = true;
-                    MMSoundManager.Instance.PlaySound(audioClips[0], MMSoundManagerPlayOptions.Default);
-                    transform.localRotation = Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
+                    MMSoundManager.Instance.PlaySound(audioClips[0], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+            false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+            1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                    transform.localRotation = Quaternion.Euler(startRotatonB.x, startRotatonB.y, startRotatonB.z);
                 }
             }
             attackDurationCurrent = attackDurationMaxModified;

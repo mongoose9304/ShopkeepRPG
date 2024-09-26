@@ -10129,7 +10129,7 @@ MonoBehaviour:
   meleeObject: {fileID: 2119228510}
   basicRangedDamage: 0
   basicRangedElement: 0
-  fireCost: 2
+  fireCost: 4
   rangedProjectile: {fileID: 8230403905138075863, guid: 9f9f61fa2d561e3488d6754fd6afb31c, type: 3}
   projectiles: []
   projectileLimit: 40
@@ -10141,7 +10141,7 @@ MonoBehaviour:
   isUsingBasicAttackMelee: 0
   specialAbilityHolder: {fileID: 367948933}
   specialAbilities: {fileID: 11400000, guid: 76306bc68a344754493436f92421900e, type: 2}
-  fireRate: 0.2
+  fireRate: 0.3
   fireRateMod: 1
   attackSpeedMod: 1
   lifeStealPercent: 1
@@ -10250,6 +10250,7 @@ MonoBehaviour:
   healthBar: {fileID: 332624534}
   manaBar: {fileID: 536419135}
   familiarHealthBar: {fileID: 1242486375}
+  dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
 --- !u!1 &455132322
 GameObject:
   m_ObjectHideFlags: 0
@@ -44070,77 +44071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a0ffa5afacd984ca9ef9a186a8bd35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGMOptions:
-    Initialized: 0
-    MmSoundManagerTrack: 1
-    AudioGroup: {fileID: -2273146209696275378, guid: 7e984f512e89b60468e829489e8883e3, type: 2}
-    Loop: 1
-    Volume: 0.2
-    Pitch: 0
-    ID: 0
-    Fade: 0
-    FadeInitialVolume: 0
-    FadeDuration: 0
-    FadeTween:
-      MMTweenDefinitionType: 0
-      MMTweenCurve: 0
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      Initialized: 0
-    Persistent: 0
-    RecycleAudioSource: {fileID: 0}
-    PlaybackTime: 0
-    PlaybackDuration: 0
-    PanStereo: 0
-    SpatialBlend: 0
-    AttachToTransform: {fileID: 0}
-    SoloSingleTrack: 0
-    SoloAllTracks: 0
-    AutoUnSoloOnEnd: 0
-    BypassEffects: 0
-    BypassListenerEffects: 0
-    BypassReverbZones: 0
-    Priority: 0
-    ReverbZoneMix: 0
-    DopplerLevel: 0
-    Location: {x: 0, y: 0, z: 0}
-    Spread: 0
-    RolloffMode: 0
-    MinDistance: 0
-    MaxDistance: 0
-    DoNotAutoRecycleIfNotDonePlaying: 0
-    UseCustomRolloffCurve: 0
-    CustomRolloffCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    UseSpatialBlendCurve: 0
-    SpatialBlendCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    UseReverbZoneMixCurve: 0
-    ReverbZoneMixCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    UseSpreadCurve: 0
-    SpreadCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
   levelSpawn: {fileID: 886616559}
   inArenaMode: 1
   surface: {fileID: 1386589697}
@@ -60610,12 +60540,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd91acf7d5502c4288102e05ada923e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingSpeed: 600
+  swingSpeed: 400
   xSwingRotation: 0
   startRotaton: {x: -10, y: -80, z: 0}
   startRotatonB: {x: -10, y: 80, z: 0}
   startRotatonC: {x: 180, y: 0, z: 90}
-  attackDurationMax: 0.3
+  attackDurationMax: 0.5
   damageCollider: {fileID: 1900852578}
   hitStun: 0
   weaponObject: {fileID: 1900852576}
