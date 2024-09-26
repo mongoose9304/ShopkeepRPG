@@ -19,17 +19,33 @@ public class HoldUseEvent : MonoBehaviour
     public MMProgressBar myUIBar;
     [Tooltip("REFERNCE to the objects that are toggled on or off when in range ")]
     public List<GameObject> toggleObjects = new List<GameObject>();
+    public AudioSource holdAudioSource;
     virtual protected void Update()
     {
         if (!isActive)
             return;
         if (currentHoldTime < maxHoldTime)
+        {
             currentHoldTime += Time.deltaTime;
+        }
+        else
+        {
+            if(holdAudioSource)
+            {
+                holdAudioSource.Stop();
+            }
+        }
        
         if (Input.GetButton("Fire3"))
         {
             currentHoldTime -= Time.deltaTime*2;
-            
+            if (holdAudioSource)
+            {
+                if (!holdAudioSource.isPlaying)
+                {
+                    holdAudioSource.Play();
+                }
+            }
             if(currentHoldTime<=0)
             {
                 triggeredEvent.Invoke();

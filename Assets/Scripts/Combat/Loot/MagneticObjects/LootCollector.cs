@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class LootCollector : MonoBehaviour
 {
     public ParticleSystem[] coinCollected;
     public ParticleSystem itemCollected;
+    public AudioClip[] coinAudios;
     private void OnTriggerEnter(Collider other)
     {
        
@@ -21,6 +23,9 @@ public class LootCollector : MonoBehaviour
             LootManager.instance.AddDemonMoney(other.GetComponent<DemonCoin>().value);
             other.gameObject.SetActive(false);
             PlayCoinCollectedEffect();
+            MMSoundManager.Instance.PlaySound(coinAudios[Random.Range(0,coinAudios.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+          false, 0.2f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         }
         if (other.tag == "Lumber")
         {
@@ -52,5 +57,6 @@ public class LootCollector : MonoBehaviour
                 break;
             }
         }
+
     }
 }

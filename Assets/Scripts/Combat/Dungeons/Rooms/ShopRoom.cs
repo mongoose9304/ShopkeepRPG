@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class ShopRoom : BasicRoom
     public List<TreasureChest> myChests = new List<TreasureChest>();
     [Tooltip("REFERENCE to the spawn locations for guards that spawn when being robbed")]
     public List<Transform> guardSpawns = new List<Transform>();
+    public AudioClip crimeBGM;
+    public AudioClip[] purchaseSounds;
     private void OnEnable()
     {
         SetUpPedestals();
@@ -53,6 +56,12 @@ public class ShopRoom : BasicRoom
         {
             SpawnWorldItem(item_, loc_);
         }
+        if(!isBeingRobbed)
+        {
+            MMSoundManager.Instance.PlaySound(purchaseSounds[Random.Range(0,purchaseSounds.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+        false, 0.8f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+        1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+        }
     }
     /// <summary>
     /// Used to spawn items the player doesnt need until after exiting the combat minigame such as upgrade materials
@@ -72,6 +81,8 @@ public class ShopRoom : BasicRoom
     public void RobTheShop()
     {
         isBeingRobbed = true;
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(crimeBGM, MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
         for (int i = 0; i < myPedestals.Count; i++)
         {
             myPedestals[i].SetBeingRobbed();
