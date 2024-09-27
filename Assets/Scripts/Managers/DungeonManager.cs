@@ -60,6 +60,7 @@ public class DungeonManager : MonoBehaviour
     }
     private void Start()
     {
+        ClearBlessings();
         StartTutorial();
         //For Testing purchases, use responsibly 
         LootManager.instance.AddDemonMoney(1000);
