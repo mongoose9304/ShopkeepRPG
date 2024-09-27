@@ -24,6 +24,8 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] int dungeonsCleared;
     [Tooltip("The dungeons to load in order ")]
     public List<BasicDungeon> dungeonList = new List<BasicDungeon>();
+    [Tooltip("The dungeons to load in order ")]
+    public BasicDungeon tutDungeon;
     [Tooltip("The current Sin, used for dynamically changing elements of the dungeon")]
     public SinType currentSin;
     [Tooltip("The current tier of Items to drop, used with lootmanager's currentItemDropList")]
@@ -58,11 +60,16 @@ public class DungeonManager : MonoBehaviour
     }
     private void Start()
     {
-        ClearBlessings();
-        NextLevel(SinType.Capriciousness);
+        StartTutorial();
         //For Testing purchases, use responsibly 
         LootManager.instance.AddDemonMoney(1000);
 
+    }
+    public void StartTutorial()
+    {
+        if (currentDungeon)
+            Destroy(currentDungeon.gameObject);
+        StartCoroutine(WaitAFrameBeforeMovingTut());
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -109,12 +116,33 @@ public class DungeonManager : MonoBehaviour
     IEnumerator WaitAFrameBeforeMoving()
     {
         yield return new WaitForSeconds(0.001f);
-        BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject,levelSpawn).GetComponent<BasicDungeon>();
+        BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject, levelSpawn).GetComponent<BasicDungeon>();
         ChangeLevel(d);
         yield return new WaitForSeconds(0.201f);
         surface.BuildNavMesh();
         yield return new WaitForSeconds(0.01f);
         AddSinBlessing(currentSin);
+        CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
+        CombatPlayerManager.instance.ReturnFamiliars();
+    }
+    /// <summary>
+    /// Used to wait a few frame to ensure everything loads correctly 
+    /// </summary>
+    IEnumerator WaitAFrameBeforeMovingTut()
+    {
+        yield return new WaitForSeconds(0.001f);
+        BasicDungeon d = GameObject.Instantiate(tutDungeon.GetComponent<BasicDungeon>());
+        currentDungeon = d;
+        currentDungeon.SetUpEnemies();
+        if (CombatPickupManager.instance)
+        {
+            CombatPickupManager.instance.ClearPickups();
+        }
+        EnemyManager.instance.DisableAllEnemies();
+        currentDungeon.SetEnemyManagerTeams();
+        yield return new WaitForSeconds(0.201f);
+        surface.BuildNavMesh();
+        yield return new WaitForSeconds(0.01f);
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
         CombatPlayerManager.instance.ReturnFamiliars();
     }

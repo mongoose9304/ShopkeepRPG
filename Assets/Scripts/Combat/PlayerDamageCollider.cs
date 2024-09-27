@@ -11,6 +11,8 @@ public class PlayerDamageCollider : MonoBehaviour
     public float lifeSteal;
     public Element element;
     public bool canPierceEnemies;
+    //Currently only used in tutorial
+    public string damageTag;
     protected virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag=="Enemy")
@@ -18,7 +20,7 @@ public class PlayerDamageCollider : MonoBehaviour
            
             if(other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
-                basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject) ;
+                basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject,damageTag) ;
               if(lifeSteal>0)
                 {
                     CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);

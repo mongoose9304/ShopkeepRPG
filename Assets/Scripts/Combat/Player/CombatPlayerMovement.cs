@@ -70,7 +70,7 @@ public class CombatPlayerMovement : MonoBehaviour
 
     public float maxManaRechargeDelay;
     public float manaRechargeRate;
-    float currentHealth;
+    [SerializeField] float currentHealth;
     float currentMana;
     float currentManaRechargeDelay;
     private GameObject tempObj;
@@ -86,9 +86,10 @@ public class CombatPlayerMovement : MonoBehaviour
         AddAllEquipmentMods();
         CalculateAllModifiers();
         SetArmorElements();
-        
         currentHealth = maxHealth;
         currentMana = maxMana;
+        healthBar.SetBar01(currentHealth / maxHealth);
+
     }
     // Update is called once per frame
 

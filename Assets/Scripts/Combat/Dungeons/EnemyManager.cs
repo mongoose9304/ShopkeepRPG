@@ -292,5 +292,9 @@ public class EnemyManager : MonoBehaviour
 
         return closestEnemy;
     }
+    public void AddEnemyToEnemyList(GameObject enemy_)
+    {
+        currentEnemiesList.Add(enemy_);
+    }
 
 }

@@ -54,12 +54,12 @@ public class BasicEnemy : MonoBehaviour
 
     [Header("Feel")]
    [SerializeField] MMF_Player textSpawner;
-    [SerializeField] MMF_Player hitEffects;
+    [SerializeField]protected  MMF_Player hitEffects;
     public MMF_FloatingText floatingText;
     public bool useFlicker;
 
 
-    private void Start()
+    protected virtual void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         LoadMonsterData();
@@ -164,7 +164,7 @@ public class BasicEnemy : MonoBehaviour
     /// <param name="element_">The element of the damage</param>
     /// <param name="knockBack_">The magnitude of the knockback</param>
     /// <param name="knockBackObject">The object initiating the knockback effect</param>
-    public void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null)
+    public virtual void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null,string playerAttackType="")
     {
        if(knockBackObject)
         {
