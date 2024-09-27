@@ -167,6 +167,7 @@ public class CombatFamiliar : MonoBehaviour
         }
         if (hitEffects)
             hitEffects.PlayFeedbacks();
+        if(combatPlayerMovement)
         combatPlayerMovement.UpdateFamiliarHealth(currentHealth/maxHealth);
     }
     private void Death()
@@ -248,6 +249,7 @@ public class CombatFamiliar : MonoBehaviour
         }
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
+        if(combatPlayerMovement)
         combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
 
     }

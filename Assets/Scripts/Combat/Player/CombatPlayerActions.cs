@@ -263,6 +263,10 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if(myFamiliar)
         {
+            if(!myFamiliar.gameObject.activeInHierarchy)
+            {
+                return;
+            }
             if(familarRespawnTimer<=0)
             myFamiliar.UltimateAttack();
         }

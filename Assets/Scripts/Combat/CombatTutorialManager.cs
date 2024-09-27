@@ -2,29 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Controls the tutorial and its possible states 
-/// </summary>
-public class TutorialManager : MonoBehaviour
+public class CombatTutorialManager : TutorialManager
 {
-    [Tooltip("The singleton instance")]
-    public static TutorialManager instance_;
-    protected int tutorialState;
-    [Tooltip("All the messages for the tutorial in order of appearance")]
-    [SerializeField] protected string[] tutorialMessages;
-    [Tooltip("All the messages that can appear if the player does something incorrectly in order of apperance")]
-    [SerializeField] protected string[] tutorialAlternateMessages;
-    [Tooltip("REFERNCE to the controller of the UI for the tutorial")]
-    [SerializeField]protected TutorialUIManager tutUIManager;
-    bool isQuitting;
-    private void Awake()
+    public GameObject[] objectsToDisableDuringTut;
+
+    public void StartTutorial()
     {
-        instance_ = this;
+        foreach(GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(false);
+        }
+    }
+    public void EndTutorial()
+    {
+        foreach (GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(true);
+        }
     }
     /// <summary>
     /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
     /// </summary>
-    public virtual void SetTutorialState(int tutorialState_)
+    public override void SetTutorialState(int tutorialState_)
     {
         tutorialState = tutorialState_;
         switch (tutorialState_)
@@ -33,7 +32,7 @@ public class TutorialManager : MonoBehaviour
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
                 break;
             case 1:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState],0,true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
                 break;
             case 2:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
@@ -56,15 +55,5 @@ public class TutorialManager : MonoBehaviour
                 break;
 
         }
-    }
-    private void OnDisable()
-    {
-        if (isQuitting)
-            return;
-        tutUIManager.gameObject.SetActive(false);
-    }
-    private void OnApplicationQuit()
-    {
-        isQuitting = true;
     }
 }

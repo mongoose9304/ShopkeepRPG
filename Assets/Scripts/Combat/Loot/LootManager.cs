@@ -58,6 +58,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] MMF_Player expFeedback;
     private void Awake()
     {
+        if(expFeedback)
         expCounter = expFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
     }
