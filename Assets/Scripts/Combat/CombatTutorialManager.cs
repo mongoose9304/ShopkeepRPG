@@ -4,22 +4,7 @@ using UnityEngine;
 
 public class CombatTutorialManager : TutorialManager
 {
-    public GameObject[] objectsToDisableDuringTut;
-
-    public void StartTutorial()
-    {
-        foreach(GameObject obj in objectsToDisableDuringTut)
-        {
-            obj.SetActive(false);
-        }
-    }
-    public void EndTutorial()
-    {
-        foreach (GameObject obj in objectsToDisableDuringTut)
-        {
-            obj.SetActive(true);
-        }
-    }
+    
     /// <summary>
     /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
     /// </summary>

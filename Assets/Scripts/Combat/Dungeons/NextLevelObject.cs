@@ -9,6 +9,9 @@ using TMPro;
 /// </summary>
 public class NextLevelObject : MonoBehaviour
 {
+    [Tooltip("If false the portal will be rondomized")]
+    public bool staticPortal;
+
     [SerializeField] SinType mySin;
     List<SinType> sinsAlreadyUsed=new List<SinType>();
     [Tooltip("The time you must hold the interact button before the tunnel will teleport a player")]
@@ -32,7 +35,10 @@ public class NextLevelObject : MonoBehaviour
     }
     private void Start()
     {
-        RandomizeAllNextLevelObjects();
+        if (!staticPortal)
+            RandomizeAllNextLevelObjects();
+        else
+            ChangeSin(mySin);
     }
     private void Update()
     {

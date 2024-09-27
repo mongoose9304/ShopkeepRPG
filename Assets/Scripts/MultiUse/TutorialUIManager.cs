@@ -34,7 +34,9 @@ public class TutorialUIManager : MonoBehaviour
             gamepadButton.SetActive(true);
             gamepadButtonBackground.SetActive(true);
         }
+        tutorialText.gameObject.SetActive(false);
         tutorialText.text = text;
+        tutorialText.gameObject.SetActive(true);
     }
     public void SetJoystickMessage(string text = "",int joystickType=0 ,bool useWASD = false)
     {
@@ -49,7 +51,9 @@ public class TutorialUIManager : MonoBehaviour
             joyStickButton.SetActive(true);
             gamepadButtonBackground.SetActive(true);
         }
+        tutorialText.gameObject.SetActive(false);
         tutorialText.text = text;
+        tutorialText.gameObject.SetActive(true);
     }
 
 }

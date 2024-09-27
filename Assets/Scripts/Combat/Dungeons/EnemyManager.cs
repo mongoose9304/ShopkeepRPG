@@ -208,13 +208,24 @@ public class EnemyManager : MonoBehaviour
 
     }
     /// <summary>
+    /// Hrad Clear enemy List , use wisely 
+    /// </summary>
+    public void HardClearEnemyList()
+    {
+        currentEnemiesList.Clear();
+
+
+    }
+    /// <summary>
     /// Disables all active enemies in the scene
     /// </summary>
     public void DisableAllEnemies()
     {
         for (int i = 0; i < currentEnemiesList.Count; i++)
         {
+            if(currentEnemiesList[i])
             currentEnemiesList[i].SetActive(false);
+
         }
     }
     /// <summary>

@@ -53,6 +53,7 @@ public class DungeonManager : MonoBehaviour
     public ItemDropList[] sinItemDropLists;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
+    public AudioClip tutBGM;
     private void Awake()
     {
         instance = this;
@@ -68,9 +69,12 @@ public class DungeonManager : MonoBehaviour
     }
     public void StartTutorial()
     {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(tutBGM, MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
         if (currentDungeon)
             Destroy(currentDungeon.gameObject);
         StartCoroutine(WaitAFrameBeforeMovingTut());
+        TutorialManager.instance_.StartTutorial();
     }
 
     public int GetEnemyLevel() { return currentDungeon.enemyLevel; }
@@ -97,6 +101,11 @@ public class DungeonManager : MonoBehaviour
     /// </summary>
     public void NextLevel(SinType sin_)
     {
+        if(TutorialManager.instance_.inTut)
+        {
+            EnemyManager.instance.HardClearEnemyList();
+            TutorialManager.instance_.EndTutorial();
+        }
         dungeonsCleared += 1;
         if(dungeonsCleared>=dungeonList.Count)
         {

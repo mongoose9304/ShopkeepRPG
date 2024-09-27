@@ -17,10 +17,38 @@ public class TutorialManager : MonoBehaviour
     [Tooltip("REFERNCE to the controller of the UI for the tutorial")]
     [SerializeField]protected TutorialUIManager tutUIManager;
     bool isQuitting;
+    public GameObject[] objectsToDisableDuringTut;
+    public GameObject[] objectsToDisablePostTut;
+    public bool inTut;
     private void Awake()
     {
         instance_ = this;
     }
+    public virtual void StartTutorial()
+    {
+        foreach (GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in objectsToDisablePostTut)
+        {
+            obj.SetActive(true);
+        }
+        inTut = true;
+    }
+    public virtual void EndTutorial()
+    {
+        foreach (GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(true);
+        }
+        foreach (GameObject obj in objectsToDisablePostTut)
+        {
+            obj.SetActive(false);
+        }
+        inTut = false;
+    }
+   
     /// <summary>
     /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
     /// </summary>
