@@ -10,18 +10,22 @@ using MoreMountains.Feedbacks;
 public class BasicEnemy : MonoBehaviour
 {
     [Header("Stats")]
+    [Tooltip("Elite enemies are immmune to hitstun ")]
     public bool isElite;
     public int Level;
-    public BasicMonsterData myBaseData;
-    [SerializeField] protected float maxHealth;
-    [SerializeField] protected float maxHitstun;
-    [SerializeField] protected float maxAttackCooldown;
-    [SerializeField] protected Element myElement;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float attackDistance;
     [SerializeField] protected float knockBackMax;
+    [SerializeField] protected float maxAttackCooldown;
+    [Tooltip("The data for a monsters stats. All the be")]
+    public BasicMonsterData myBaseData;
+    [SerializeField] protected float maxHealth;
+    [SerializeField] protected float maxHitstun;
+    [SerializeField] protected Element myElement;
     [SerializeField] protected float damage;
     [SerializeField] protected bool isMysticalDamage;
+
+    [Tooltip("REFERNCE to the script that allows for items to drop ")]
     LootDropper lootDropper;
 
     [Header("CurrentValues")]
@@ -35,26 +39,36 @@ public class BasicEnemy : MonoBehaviour
     float currentKnockbackTime;
     private Vector3 knockbackRefVector;
     Vector3 knockBackDirection;
+    //is the user currentlt immune to hitstun
     bool superArmor;
 
     [Header("References")]
+    [Tooltip("I take double damage from this source")]
     Element myWeakness;
+    [Tooltip("REFERENCE to the icon that displays I am stunned")]
     public GameObject stunIcon;
+    [Tooltip("REFERENCE to the player object for targeting")]
     public GameObject player;
+    [Tooltip("The current object I am trying to move towards and fight")]
     public GameObject target;
+    [Tooltip("Used for rooms where the player must kill enemies to leave and such")]
     public EnemyCounter myEnemyCounter;
     [SerializeField]protected NavMeshAgent agent;
+    [Tooltip("REFERENCE to the text that pops up when taking damage")]
     [SerializeField] protected TextMeshProUGUI damageText;
     [SerializeField] float maxTimeBeforeDamageTextFades;
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
-    [SerializeField] GameObject[] deathEffects;
+    [Tooltip("REFERNCE to the team I am on")]
     [SerializeField] TeamUser myTeamUser;
 
 
     [Header("Feel")]
-   [SerializeField] MMF_Player textSpawner;
+    [Tooltip("REFERENCE to the text that pops up when taking damage")]
+    [SerializeField] MMF_Player textSpawner;
+    [Tooltip("REFERENCE to the effects that happen when i am hit ")]
     [SerializeField]protected  MMF_Player hitEffects;
+    [Tooltip("REFERENCE to the text that pops up when taking damage")]
     public MMF_FloatingText floatingText;
     public bool useFlicker;
 
@@ -112,6 +126,9 @@ public class BasicEnemy : MonoBehaviour
         }
         
     }
+    /// <summary>
+    /// Reset an enemy post death
+    /// </summary>
     protected virtual void ResetEnemy()
     {
         LoadMonsterData();
@@ -148,6 +165,9 @@ public class BasicEnemy : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Used when outside forces affect the enemies movement such as pulls and pushes
+    /// </summary>
     public void AffectMovement(Vector3 newPos)
     {
         agent.enabled = false;
