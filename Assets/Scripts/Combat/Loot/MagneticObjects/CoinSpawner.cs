@@ -56,6 +56,7 @@ public class CoinSpawner : MonoBehaviour
                 coin.transform.position += new Vector3(Random.Range(0, 2), Random.Range(0, 2), Random.Range(0, 2));
                 coin.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
                 coin.SetUpCoin(regularCoins[i]);
+                coin.gameObject.SetActive(true);
             }
 
         }

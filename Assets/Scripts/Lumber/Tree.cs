@@ -66,20 +66,20 @@ public class Tree : MonoBehaviour
         switch (direction_)
         {
             case 0:
-                fallDirection = new Vector3(-1, 0, 0);
-                lineDirection = new Vector3(0, 0, 1);
-                break;
-            case 1:
-                fallDirection = new Vector3(0, 0, 1);
-                lineDirection = new Vector3(1, 0, 0);
-                break;
-            case 2:
                 fallDirection = new Vector3(1, 0, 0);
                 lineDirection = new Vector3(0, 0, -1);
                 break;
-            case 3:
+            case 1:
                 fallDirection = new Vector3(0, 0, -1);
                 lineDirection = new Vector3(-1, 0, 0);
+                break;
+            case 2:
+                fallDirection = new Vector3(-1,0, 0);
+                lineDirection = new Vector3(0, 0, 1);
+                break;
+            case 3:
+                fallDirection = new Vector3(0, 0, 1);
+                lineDirection = new Vector3(1, 0, 0);
                 break;
 
         }

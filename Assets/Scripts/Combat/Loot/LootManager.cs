@@ -65,6 +65,7 @@ public class LootManager : MonoBehaviour
     private void Start()
     {
         instance = this;
+        if(expFeedback)
         SetExpToNextLevel();
     }
     private void Update()
