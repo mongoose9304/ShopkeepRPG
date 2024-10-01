@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using MoreMountains.Tools;
+
 public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
@@ -30,9 +32,12 @@ public class Tree : MonoBehaviour
     [SerializeField]protected int treeCurrentHealth;
     public bool isFalling;
     protected bool hasBeenHit;
+    [SerializeField] protected MMProgressBar myHealthBar;
     private void Start()
     {
         treeCurrentHealth = treeMaxHealth;
+        UpdateHealthBar();
+        myHealthBar.gameObject.SetActive(false);
         isFalling = false;
         hasBeenHit = false;
         for(int i=0;i<treeHeight;i++)
@@ -59,11 +64,7 @@ public class Tree : MonoBehaviour
     {
         if (isFalling)
             return;
-        if(treeCurrentHealth<=0)
-        {
-           // ChopInteraction.SetActive(false);
-            FallInteraction.SetActive(true);
-        }
+        
         hasBeenHit = true;
         fallDirectionIndicator.gameObject.SetActive(true);
         switch (direction_)
@@ -90,6 +91,8 @@ public class Tree : MonoBehaviour
         fallDirectionIndicator.transform.localRotation = fallDirectionIndicatorPositions[direction_].localRotation;
         fallPivot = fallDirectionPivotPositions[direction_].position;
         treeCurrentHealth -= damage_;
+        UpdateHealthBar();
+        myHealthBar.gameObject.SetActive(true);
         RaycastHit hit;
        
         if (Physics.Raycast(transform.position, lineDirection, out hit ,treeHeight+2f, wallMask))
@@ -102,7 +105,11 @@ public class Tree : MonoBehaviour
         {
             fallDirectionLineRenderer.gameObject.SetActive(false);
         }
-       
+        if (treeCurrentHealth <= 0)
+        {
+            // ChopInteraction.SetActive(false);
+            FallInteraction.SetActive(true);
+        }
 
 
 
@@ -168,6 +175,10 @@ public class Tree : MonoBehaviour
         gameObject.SetActive(false);
         GuardManager.instance.CreateNoise(transform, 2);
         treeBrokenEvent.Invoke();
+    }
+    private void UpdateHealthBar()
+    {
+        myHealthBar.UpdateBar(treeCurrentHealth ,0, treeMaxHealth);
     }
 
 }
