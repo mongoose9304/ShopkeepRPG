@@ -22,6 +22,8 @@ public class Tree : MonoBehaviour
     [SerializeField] protected GameObject fallDirectionIndicator;
     [SerializeField]protected Transform[] fallDirectionIndicatorPositions;
     [SerializeField]protected Transform[] fallDirectionPivotPositions;
+    [SerializeField] protected GameObject ChopInteraction;
+    [SerializeField] protected GameObject FallInteraction;
     public List<GameObject> myTreeSections=new List<GameObject>();
     public int treeMaxHealth;
     [SerializeField]protected int treeCurrentHealth;
@@ -56,12 +58,12 @@ public class Tree : MonoBehaviour
     {
         if (isFalling)
             return;
-        hasBeenHit = true;
-        if (treeCurrentHealth <= 0)
+        if(treeCurrentHealth<=0)
         {
-            Fall();
-            return;
+           // ChopInteraction.SetActive(false);
+            FallInteraction.SetActive(true);
         }
+        hasBeenHit = true;
         fallDirectionIndicator.gameObject.SetActive(true);
         switch (direction_)
         {
