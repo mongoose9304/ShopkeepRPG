@@ -28,6 +28,11 @@ public class LootDigSpot : InteractableObject
 
     public override void Interact(GameObject interactingObject_ = null)
     {
+        if(interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer p_))
+        {
+            currentHoldDuration += Time.deltaTime*p_.shovelPower;
+        }
+        else
         currentHoldDuration += Time.deltaTime;
         if (currentHoldDuration >= maxHoldDuration)
         {

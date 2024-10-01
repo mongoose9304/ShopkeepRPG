@@ -8,7 +8,7 @@ public class InteractableEventOnHold : InteractableObject
 {
     [Tooltip("The time you must hold the interact button before the tunnel will teleport a player")]
     [SerializeField] float maxHoldDuration;
-    float currentHoldDuration;
+    protected float currentHoldDuration;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
     public UnityEvent useEvent;

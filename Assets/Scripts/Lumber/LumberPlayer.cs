@@ -5,6 +5,8 @@ using UnityEngine;
 public class LumberPlayer : MonoBehaviour
 {
     //movement
+    public int axePower;
+    public int shovelPower;
     public float maxdashCoolDown;
     public float moveSpeed;
     public float moveSpeedModifier;
@@ -54,7 +56,7 @@ public class LumberPlayer : MonoBehaviour
 
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
-        GetClosestMineableObject();
+        GetClosestChopableObject();
         GetClosestInteractableObject();
         if(isHiding)
         {
@@ -182,7 +184,7 @@ public class LumberPlayer : MonoBehaviour
             isSwinging = true;
             if (axeLockOnTarget.TryGetComponent<ChopableObject>(out ChopableObject obj))
             {
-                obj.ChopInteraction();
+                obj.ChopInteraction(axePower);
             }
             return;
         }
@@ -192,7 +194,7 @@ public class LumberPlayer : MonoBehaviour
         myAxe.transform.localEulerAngles = startRotation;
         isSwinging = true;
     }
-    private void GetClosestMineableObject()
+    private void GetClosestChopableObject()
     {
         if (myChopableObjects.Count == 0)
         {
@@ -408,19 +410,6 @@ public class LumberPlayer : MonoBehaviour
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
-    }
-    private Tile GetCurrentTile()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 10, tileLayer))
-        {
-
-            if (hit.collider.gameObject.TryGetComponent<Tile>(out Tile tile))
-            {
-                return tile;
-            }
-        }
-        return null;
     }
 
     public void Hide(Transform hideLocation_,bool isHiding_ = true)

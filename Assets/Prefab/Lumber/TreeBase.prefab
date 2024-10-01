@@ -1243,8 +1243,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5940172971119771394}
-  - component: {fileID: 7502688553312691024}
   - component: {fileID: 7950868466005350957}
+  - component: {fileID: 513126891928938859}
   m_Layer: 10
   m_Name: PlantTreeInteraction
   m_TagString: Interactable
@@ -1268,7 +1268,28 @@ Transform:
   - {fileID: 8021926392551909396}
   m_Father: {fileID: 589988955123262522}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7502688553312691024
+--- !u!135 &7950868466005350957
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3860442632365626660}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &513126891928938859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1277,10 +1298,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3860442632365626660}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b3ded14aa48e54e891eb42a4fc0aa5, type: 3}
+  m_Script: {fileID: 11500000, guid: eed771165b91cfc4bb7013b322482e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHoldDuration: 2
+  maxHoldDuration: 5
   myUIBar: {fileID: 6977552064500074167}
   useEvent:
     m_PersistentCalls:
@@ -1309,27 +1330,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!135 &7950868466005350957
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3860442632365626660}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4029795925476500712
 GameObject:
   m_ObjectHideFlags: 0
@@ -12035,8 +12035,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5690177821955322919}
-  - component: {fileID: 1426669071598765201}
   - component: {fileID: 8786282212230718126}
+  - component: {fileID: 7330978114113129621}
   m_Layer: 10
   m_Name: RemoveStumpInteraction
   m_TagString: Interactable
@@ -12060,7 +12060,28 @@ Transform:
   - {fileID: 4507124818338190790}
   m_Father: {fileID: 2637995107643533389}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1426669071598765201
+--- !u!135 &8786282212230718126
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7648933095464846346}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7330978114113129621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12069,10 +12090,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7648933095464846346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21b3ded14aa48e54e891eb42a4fc0aa5, type: 3}
+  m_Script: {fileID: 11500000, guid: eed771165b91cfc4bb7013b322482e33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHoldDuration: 2
+  maxHoldDuration: 5
   myUIBar: {fileID: 31340327830332979}
   useEvent:
     m_PersistentCalls:
@@ -12137,27 +12158,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!135 &8786282212230718126
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7648933095464846346}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7752289345877796365
 GameObject:
   m_ObjectHideFlags: 0
