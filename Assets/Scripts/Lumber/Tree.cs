@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
@@ -24,6 +24,7 @@ public class Tree : MonoBehaviour
     [SerializeField]protected Transform[] fallDirectionPivotPositions;
     [SerializeField] protected GameObject ChopInteraction;
     [SerializeField] protected GameObject FallInteraction;
+    [SerializeField] protected UnityEvent treeBrokenEvent;
     public List<GameObject> myTreeSections=new List<GameObject>();
     public int treeMaxHealth;
     [SerializeField]protected int treeCurrentHealth;
@@ -166,6 +167,7 @@ public class Tree : MonoBehaviour
         SpawnWood();
         gameObject.SetActive(false);
         GuardManager.instance.CreateNoise(transform, 2);
+        treeBrokenEvent.Invoke();
     }
 
 }
