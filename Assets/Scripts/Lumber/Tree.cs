@@ -180,5 +180,9 @@ public class Tree : MonoBehaviour
     {
         myHealthBar.UpdateBar(treeCurrentHealth ,0, treeMaxHealth);
     }
+    public void RemoveStump()
+    {
+        LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier);
+    }
 
 }
