@@ -33,7 +33,7 @@ public class Tree : MonoBehaviour
     public bool isFalling;
     protected bool hasBeenHit;
     [SerializeField] protected MMProgressBar myHealthBar;
-    private void Start()
+    protected virtual void Start()
     {
         treeCurrentHealth = treeMaxHealth;
         UpdateHealthBar();
