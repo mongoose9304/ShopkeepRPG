@@ -37,4 +37,8 @@ public class LumberLevelManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
+    private void Start()
+    {
+        currentLevel.SpawnAllPuzzles();
+    }
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class LumberLevel : MonoBehaviour
 {
+    public GameObject[] smallPuzzles;
+    public GameObject[] mediumPuzzles;
+    public GameObject[] largePuzzles;
+    public Transform[] smallPuzzleLocations;
+    public Transform[] mediumPuzzleLocations;
+    public Transform[] largePuzzleLocations;             
     public LootTableItem[] tier1Items;
     public LootTableItem[] tier2Items;
     public LootTableItem[] tier3Items;
@@ -17,7 +23,12 @@ public class LumberLevel : MonoBehaviour
     public LootTableItem[] tier5DigItems;
 
 
-
+    public void SpawnAllPuzzles()
+    {
+        SpawnPuzzles(smallPuzzleLocations, smallPuzzles);
+        SpawnPuzzles(mediumPuzzleLocations, mediumPuzzles);
+        SpawnPuzzles(largePuzzleLocations, largePuzzles);
+    }
     public LootTableItem[] GetItemTier(int tier_)
     {
         switch (tier_)
@@ -66,6 +77,24 @@ public class LumberLevel : MonoBehaviour
                 return tier1DigItems;
                 break;
 
+        }
+    }
+    private void SpawnPuzzles(Transform[] spawns_,GameObject[] spawnableObjects)
+    {
+        List<int> usedObjects = new List<int>();
+        for(int i=0;i<spawns_.Length;i++)
+        {
+            int randomIndex = Random.Range(0, spawnableObjects.Length);
+            while(usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, spawnableObjects.Length);
+                if(usedObjects.Count>=spawnableObjects.Length)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            GameObject.Instantiate(spawnableObjects[randomIndex], spawns_[i].position, spawns_[i].rotation);
         }
     }
 }
