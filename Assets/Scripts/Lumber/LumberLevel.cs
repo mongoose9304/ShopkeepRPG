@@ -127,6 +127,18 @@ public class LumberLevel : MonoBehaviour
         int dirtSpawnCount = Mathf.RoundToInt(averagelootDirtPileAmount * forestHP);
         int lootBushCount = Mathf.RoundToInt(averagelootBushAmount * forestHP);
         int holdLootBushCount = Mathf.RoundToInt(averagelootHoldBushAmount * forestHP);
+        foreach(GameObject obj in lootDirtPiles)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in lootBushes)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in lootHoldBushes)
+        {
+            obj.SetActive(false);
+        }
         for (int i = 0; i < dirtSpawnCount; i++)
         {
             randomIndex = Random.Range(0, lootDirtPiles.Length);
