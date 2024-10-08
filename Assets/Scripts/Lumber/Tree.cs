@@ -166,7 +166,7 @@ public class Tree : MonoBehaviour
         }
         else if( TreeManager.instance.GetCurrentCombo() > 1)
         {
-            LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier*TreeManager.instance.GetCurrentCombo());
+            LumberLevelManager.instance.SpawnLumber(transform, Mathf.RoundToInt(woodMultiplier*TreeManager.instance.GetCurrentCombo()*LumberLevelManager.instance.forestHealth),true);
         }
     }
     public void BreakTree()
