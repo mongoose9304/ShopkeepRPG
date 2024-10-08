@@ -7,6 +7,8 @@ public class LumberLevelManager : MonoBehaviour
     public static LumberLevelManager instance;
     public LumberLevel currentLevel;
     public LumberLevel nextLevel;
+    //ranges from 0.5 to 1.5, the rough amount of how much of each reasource your should be aquiring. ALso affects visuals 
+    public float forestHealth;
     [Tooltip("REFERNCE to the pool of wood world objects")]
     [SerializeField] MMMiniObjectPooler woodWorldObjectPooler;
     [Tooltip("REFERNCE to the pool of multiwood world objects")]
@@ -39,6 +41,13 @@ public class LumberLevelManager : MonoBehaviour
     }
     private void Start()
     {
-        currentLevel.SpawnAllPuzzles();
+        
+        SetUpCurrentLevel();
+    }
+    private void SetUpCurrentLevel()
+    {
+        currentLevel.SpawnLootables(forestHealth);
+        currentLevel.SpawnAllPuzzles(forestHealth);
+
     }
 }

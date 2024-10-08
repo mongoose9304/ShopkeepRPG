@@ -5,6 +5,7 @@ using UnityEngine;
 public class LumberLevel : MonoBehaviour
 {
     public GameObject[] smallPuzzles;
+    public GameObject[] smallDeadTreePatches;
     public GameObject[] mediumPuzzles;
     public GameObject[] largePuzzles;
     public Transform[] smallPuzzleLocations;
@@ -21,11 +22,27 @@ public class LumberLevel : MonoBehaviour
     public LootTableItem[] tier3DigItems;
     public LootTableItem[] tier4DigItems;
     public LootTableItem[] tier5DigItems;
+    public GameObject[] lootDirtPiles;
+    public GameObject[] lootBushes;
+    public GameObject[] lootHoldBushes;
+    public int averagelootDirtPileAmount;
+    public int averagelootBushAmount;
+    public int averagelootHoldBushAmount;
 
-
-    public void SpawnAllPuzzles()
+    public void SpawnAllPuzzles(float forestHP)
     {
-        SpawnPuzzles(smallPuzzleLocations, smallPuzzles);
+        if(forestHP>0.8f)
+        {
+            SpawnPuzzles(smallPuzzleLocations, smallPuzzles);
+        }
+        else if (forestHP > 0.6f)
+        {
+            SpawnPuzzles(smallPuzzleLocations, smallPuzzles,1, smallDeadTreePatches);
+        }
+        else
+        {
+            SpawnPuzzles(smallPuzzleLocations, smallPuzzles, 2,smallDeadTreePatches);
+        }
         SpawnPuzzles(mediumPuzzleLocations, mediumPuzzles);
         SpawnPuzzles(largePuzzleLocations, largePuzzles);
     }
@@ -79,7 +96,7 @@ public class LumberLevel : MonoBehaviour
 
         }
     }
-    private void SpawnPuzzles(Transform[] spawns_,GameObject[] spawnableObjects)
+    private void SpawnPuzzles(Transform[] spawns_,GameObject[] spawnableObjects,int deadSpawns=0, GameObject[] spawnableDeadObjects=null)
     {
         List<int> usedObjects = new List<int>();
         for(int i=0;i<spawns_.Length;i++)
@@ -94,7 +111,66 @@ public class LumberLevel : MonoBehaviour
                 }
             }
             usedObjects.Add(randomIndex);
+            if(deadSpawns>0)
+            {
+                deadSpawns -= 1;
+                GameObject.Instantiate(spawnableDeadObjects[Random.Range(0,spawnableDeadObjects.Length)], spawns_[i].position, spawns_[i].rotation);
+            }
+            else
             GameObject.Instantiate(spawnableObjects[randomIndex], spawns_[i].position, spawns_[i].rotation);
+        }
+    }
+    public void SpawnLootables(float forestHP)
+    {
+        List<int> usedObjects = new List<int>();
+        int randomIndex = 0;
+        int dirtSpawnCount = Mathf.RoundToInt(averagelootDirtPileAmount * forestHP);
+        int lootBushCount = Mathf.RoundToInt(averagelootBushAmount * forestHP);
+        int holdLootBushCount = Mathf.RoundToInt(averagelootHoldBushAmount * forestHP);
+        for (int i = 0; i < dirtSpawnCount; i++)
+        {
+            randomIndex = Random.Range(0, lootDirtPiles.Length);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, lootDirtPiles.Length);
+                if (usedObjects.Count >= lootDirtPiles.Length)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            lootDirtPiles[randomIndex].SetActive(true);
+        }
+        usedObjects.Clear();
+        for (int i = 0; i < lootBushCount; i++)
+        {
+            randomIndex = Random.Range(0, lootBushes.Length);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, lootBushes.Length);
+                if (usedObjects.Count >= lootBushes.Length)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            lootBushes[randomIndex].SetActive(true);
+        }
+        usedObjects.Clear();
+        for (int i = 0; i < holdLootBushCount; i++)
+        {
+            randomIndex = Random.Range(0, lootHoldBushes.Length);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, lootHoldBushes.Length);
+                if (usedObjects.Count >= lootHoldBushes.Length)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            lootHoldBushes[randomIndex].SetActive(true);
+
         }
     }
 }
