@@ -76,8 +76,18 @@ public class CombatPlayerMovement : MonoBehaviour
     float currentManaRechargeDelay;
     private GameObject tempObj;
     public GameObject levelUpEffect;
+    //guard settings
+    public GameObject guardObject;
+    public float maxGuardTime;
+    float currentGuardTime;
+    public float secondsToRechargeGuardTime;
+    public float guardChargeDelayMax;
+    float guardChargeDelay;
+    bool isGuarding;
+
     [Header("UI")]
     public MMProgressBar healthBar;
+    public MMProgressBar shieldBar;
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
@@ -106,6 +116,7 @@ public class CombatPlayerMovement : MonoBehaviour
         }
         ChargeMana();
         RegenHealth();
+        ChargeGuardTime();
         if (combatActions.isBusy)
             return;
         CheckForSoftLockOn();
@@ -115,12 +126,18 @@ public class CombatPlayerMovement : MonoBehaviour
             if(combatActions.isUsingBasicAttackMelee)
             {
                 moveInput /= 1.2f;
+                TryGuarding();
                
             }
             else if(combatActions.isUsingBasicAttackRanged)
             {
                 moveInput /= 1.75f;
             }
+
+        }
+        if(!combatActions.isUsingBasicAttackMelee)
+        {
+            StopGuarding();
         }
      moveInput=PreventGoingThroughWalls(moveInput);
        
@@ -332,6 +349,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
         if(isInSaveYourSoulMode){ return; }
+        if (isGuarding) { return; }
         float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
@@ -394,6 +412,44 @@ public class CombatPlayerMovement : MonoBehaviour
             }
             timesYouHaveDied += 1;
         }
+    }
+    public void TryGuarding()
+    {
+        guardChargeDelay = guardChargeDelayMax;
+        if(currentGuardTime>0)
+        {
+            currentGuardTime -= Time.deltaTime;
+            shieldBar.SetBar01(currentGuardTime/maxGuardTime);
+            guardObject.SetActive(true);
+            isGuarding = true;
+        }
+        else
+        {
+            StopGuarding();
+        }
+        
+    }
+    public void StopGuarding()
+    {
+        guardObject.SetActive(false);
+        isGuarding = false;
+    }
+    private void ChargeGuardTime()
+    {
+        if (combatActions.isUsingBasicAttackMelee)
+        {
+            return;
+
+        }
+        if(guardChargeDelay>0)
+        {
+            guardChargeDelay -= Time.deltaTime;
+            return;
+        }
+        currentGuardTime += Time.deltaTime*(maxGuardTime / secondsToRechargeGuardTime);
+        if (currentGuardTime > maxGuardTime)
+            currentGuardTime = maxGuardTime;
+        shieldBar.SetBar01(currentGuardTime / maxGuardTime);
     }
     public void TrueDeath()
     {
