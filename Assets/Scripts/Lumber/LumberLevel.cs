@@ -28,6 +28,12 @@ public class LumberLevel : MonoBehaviour
     public int averagelootDirtPileAmount;
     public int averagelootBushAmount;
     public int averagelootHoldBushAmount;
+    //Decorations
+    public GameObject maxDecorations;
+    public GameObject highDecorations;
+    public GameObject lowDecorations;
+    public GameObject minDecorations;
+
 
     public void SpawnAllPuzzles(float forestHP)
     {
@@ -183,6 +189,42 @@ public class LumberLevel : MonoBehaviour
             usedObjects.Add(randomIndex);
             lootHoldBushes[randomIndex].SetActive(true);
 
+        }
+    }
+    public void SetUpDecorations(float forestHP)
+    {
+        minDecorations.SetActive(false);
+        maxDecorations.SetActive(false);
+        lowDecorations.SetActive(false);
+        maxDecorations.SetActive(false);
+        if(forestHP<0.6f)
+        {
+            //Min
+            minDecorations.SetActive(true);
+        }
+        else if (forestHP < 0.8f)
+        {
+            //Low
+            lowDecorations.SetActive(true);
+        }
+        else if (forestHP < 1.2f)
+        {
+            //Medium
+            lowDecorations.SetActive(true);
+            highDecorations.SetActive(true);
+        }
+        else if (forestHP < 1.4)
+        {
+            //High
+            lowDecorations.SetActive(true);
+            highDecorations.SetActive(true);
+        }
+        else
+        {
+            lowDecorations.SetActive(true);
+            highDecorations.SetActive(true);
+            maxDecorations.SetActive(true);
+            //Max
         }
     }
 }

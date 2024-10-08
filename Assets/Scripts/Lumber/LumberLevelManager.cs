@@ -48,6 +48,7 @@ public class LumberLevelManager : MonoBehaviour
     {
         currentLevel.SpawnLootables(forestHealth);
         currentLevel.SpawnAllPuzzles(forestHealth);
+        currentLevel.SetUpDecorations(forestHealth);
 
     }
 }
