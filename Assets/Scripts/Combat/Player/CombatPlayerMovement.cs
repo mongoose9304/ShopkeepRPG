@@ -30,6 +30,7 @@ public class CombatPlayerMovement : MonoBehaviour
     Rigidbody rb;
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
    [SerializeField] LayerMask wallMask;
+   [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
     public CombatPlayerActions combatActions;
     //targeting and lock on
@@ -113,15 +114,8 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if(combatActions.isUsingBasicAttackMelee)
             {
-                moveInput = Vector3.zero;
-                if (currentTarget)
-                {
-                    if (Vector3.Distance(transform.position, currentTarget.transform.position) > minMeleeDistance)
-                    {
-                        moveInput = (currentTarget.transform.position - transform.position).normalized;
-                        moveInput = new Vector3(moveInput.x, 0, moveInput.z);
-                    }
-                }
+                moveInput /= 1.2f;
+               
             }
             else if(combatActions.isUsingBasicAttackRanged)
             {
@@ -276,7 +270,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void GroundCheck()
     {
-        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
+        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10,groundMask))
         {
             // transform.position = new Vector3.(0, 0.66f, 0);
             transform.position = dashStartPos;

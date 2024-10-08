@@ -175,6 +175,7 @@ public class Tree : MonoBehaviour
         gameObject.SetActive(false);
         GuardManager.instance.CreateNoise(transform, 2);
         treeBrokenEvent.Invoke();
+        LumberLevelManager.instance.TreeFall();
     }
     private void UpdateHealthBar()
     {
@@ -183,6 +184,10 @@ public class Tree : MonoBehaviour
     public void RemoveStump()
     {
         LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier);
+    }
+    public void ReplantTree()
+    {
+        LumberLevelManager.instance.TreeReplanted();
     }
 
 }

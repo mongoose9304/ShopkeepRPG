@@ -5,28 +5,28 @@ using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 public class BasicMeleeObject : MonoBehaviour
 {
-    [SerializeField] private float swingSpeed;
-    [SerializeField] float xSwingRotation;
-    float swingSpeedModified;
-    [SerializeField] private Vector3 startRotaton;
-    [SerializeField] private Vector3 startRotatonB;
-    [SerializeField] private Vector3 startRotatonC;
-    [SerializeField] private float attackDurationMax;
-    float attackDurationMaxModified;
-    private float attackDurationCurrent;
+    [SerializeField] protected float swingSpeed;
+    [SerializeField] protected float xSwingRotation;
+    protected float swingSpeedModified;
+    [SerializeField] protected Vector3 startRotaton;
+    [SerializeField] protected Vector3 startRotatonB;
+    [SerializeField] protected Vector3 startRotatonC;
+    [SerializeField] protected float attackDurationMax;
+    protected float attackDurationMaxModified;
+    protected float attackDurationCurrent;
     public PlayerDamageCollider damageCollider;
-    [SerializeField] private float hitStun;
-    [SerializeField] private GameObject weaponObject;
-    
-     private bool queuedAttack;
-     private bool rightAttackDirection;
-     private int comboCount;
-     [SerializeField] private int comboCountMax;
-    [SerializeField] MMMiniObjectPooler specialAttackPool;
-    [SerializeField] Transform specialAttackSpawn;
-    [SerializeField] AudioClip[] audioClips;
+    [SerializeField] protected float hitStun;
+    [SerializeField] protected GameObject weaponObject;
 
-    private void Update()
+    protected bool queuedAttack;
+    protected bool rightAttackDirection;
+    protected int comboCount;
+     [SerializeField] protected int comboCountMax;
+    [SerializeField] protected MMMiniObjectPooler specialAttackPool;
+    [SerializeField] protected Transform specialAttackSpawn;
+    [SerializeField] protected AudioClip[] audioClips;
+
+    protected virtual void Update()
     {
         if(weaponObject.activeInHierarchy)
         {
@@ -51,7 +51,7 @@ public class BasicMeleeObject : MonoBehaviour
     }
 
 
-    public void StartAttack()
+    public virtual void StartAttack()
     {
         transform.localRotation=Quaternion.Euler(startRotaton.x, startRotaton.y, startRotaton.z);
         weaponObject.SetActive(true);
@@ -61,7 +61,7 @@ public class BasicMeleeObject : MonoBehaviour
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
           1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
-    public void EndAttack()
+    public virtual void EndAttack()
     {
         if(queuedAttack)
         {
@@ -112,12 +112,12 @@ public class BasicMeleeObject : MonoBehaviour
         else
         weaponObject.SetActive(false);
     }
-    public void ForceEndAttack()
+    public virtual void ForceEndAttack()
     {
         attackDurationCurrent = 0;
         weaponObject.SetActive(false);
     }
-    public bool TryToAttack()
+    public virtual bool TryToAttack()
     {
         if(weaponObject.gameObject.activeInHierarchy)
         {
@@ -131,11 +131,11 @@ public class BasicMeleeObject : MonoBehaviour
             return true;
         }
     }
-    public void ReleaseMeleeButton()
+    public virtual void ReleaseMeleeButton()
     {
         queuedAttack = false;
     }
-    public void SetDamage(float damage_,Element damageType_,float swingSpeed_=1,float lifeSteal=0)
+    public virtual void SetDamage(float damage_,Element damageType_,float swingSpeed_=1,float lifeSteal=0)
     {
         damageCollider.damage = damage_;
         damageCollider.element = damageType_;
