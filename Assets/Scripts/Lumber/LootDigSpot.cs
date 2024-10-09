@@ -14,7 +14,8 @@ public class LootDigSpot : InteractableObject
     [SerializeField] float currentHoldDuration;
     [SerializeField] float shakeSpeed;
     [SerializeField] AudioSource diggingAudio;
-    bool isInteracting;
+    float timeSinceInteration;
+    float startVolume;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
     private void Awake()
@@ -26,24 +27,26 @@ public class LootDigSpot : InteractableObject
         if (!useSpecificItemDrop)
             SetUpLootDrop();
         currentHoldDuration = 0;
+        startVolume = diggingAudio.volume;
     }
     private void Update()
     {
-        if (!isInteracting)
+        if (timeSinceInteration<=0)
         {
             if (diggingAudio.isPlaying)
             {
-                diggingAudio.Stop();
+                diggingAudio.volume -= startVolume * Time.deltaTime * 3;
             }
         }
-        if(isInteracting)
+        if(timeSinceInteration >= 0)
         {
-            isInteracting = false;
+            timeSinceInteration -= Time.deltaTime ;
         }
     }
     public override void Interact(GameObject interactingObject_ = null)
     {
-        isInteracting = true;
+        timeSinceInteration = 0.5f;
+        diggingAudio.volume = startVolume;
         if (!diggingAudio.isPlaying)
         {
             diggingAudio.Play();
@@ -62,7 +65,7 @@ public class LootDigSpot : InteractableObject
     }
     void DropItems()
     {
-        diggingAudio.Stop();
+        StartCoroutine(FadeAudio());
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);
@@ -82,5 +85,22 @@ public class LootDigSpot : InteractableObject
     private void AdjustBar()
     {
         myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+    }
+    IEnumerator FadeAudio()
+    {
+        if (timeSinceInteration <= 0)
+        {
+            if (diggingAudio.isPlaying)
+            {
+                diggingAudio.volume -= startVolume * Time.deltaTime * 6;
+                if (diggingAudio.volume <= 0.1f)
+                    yield break;
+            }
+        }
+        if (timeSinceInteration >= 0)
+        {
+            timeSinceInteration -= Time.deltaTime;
+        }
+        yield return null;
     }
 }

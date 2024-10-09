@@ -17,7 +17,8 @@ public class HoldLootBush : InteractableObject
     [SerializeField] MMF_Player feedBackPlayer;
      MMF_RotationShake feedBackShake;
     [SerializeField] AudioSource rustleAudio;
-    bool isInteracting;
+    float timeSinceInteration;
+    float startVolume;
     private void Awake()
     {
         myDropper = GetComponent<LootDropper>();
@@ -29,25 +30,27 @@ public class HoldLootBush : InteractableObject
         currentHoldDuration = 0;
         Debug.Log("Feedback counts " + feedBackPlayer.FeedbacksList.Count);
         feedBackShake = (MMF_RotationShake)feedBackPlayer.FeedbacksList[0];
+        startVolume = rustleAudio.volume;
     }
     private void Update()
     {
-        if (!isInteracting)
+        if (timeSinceInteration<=0)
         {
             if (rustleAudio.isPlaying)
             {
-                rustleAudio.Stop();
+                rustleAudio.volume -= startVolume * Time.deltaTime * 3;
             }
         }
-        if (isInteracting)
+        if (timeSinceInteration >= 0)
         {
-            isInteracting = false;
+            timeSinceInteration -= Time.deltaTime;
         }
     }
 
     public override void Interact(GameObject interactingObject_ = null)
     {
-        isInteracting = true;
+        timeSinceInteration = 0.5f;
+        rustleAudio.volume = startVolume;
         if (!rustleAudio.isPlaying)
         {
             rustleAudio.Play();
@@ -62,7 +65,8 @@ public class HoldLootBush : InteractableObject
     }
     void DropItems()
     {
-        rustleAudio.Stop();
+        timeSinceInteration = 0.1f;
+        StartCoroutine(FadeAudio());
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);
@@ -82,5 +86,22 @@ public class HoldLootBush : InteractableObject
     private void ShakeEffect()
     {
         
+    }
+    IEnumerator FadeAudio()
+    {
+        if (timeSinceInteration <= 0)
+        {
+            if (rustleAudio.isPlaying)
+            {
+                rustleAudio.volume -= startVolume * Time.deltaTime * 6;
+                if (rustleAudio.volume <= 0.1f)
+                    yield break;
+            }
+        }
+        if (timeSinceInteration >= 0)
+        {
+            timeSinceInteration -= Time.deltaTime;
+        }
+        yield return null;
     }
 }
