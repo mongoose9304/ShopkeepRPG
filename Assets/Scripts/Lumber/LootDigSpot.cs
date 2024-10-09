@@ -13,6 +13,8 @@ public class LootDigSpot : InteractableObject
     [SerializeField] float maxHoldDuration;
     [SerializeField] float currentHoldDuration;
     [SerializeField] float shakeSpeed;
+    [SerializeField] AudioSource diggingAudio;
+    bool isInteracting;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
     private void Awake()
@@ -25,10 +27,28 @@ public class LootDigSpot : InteractableObject
             SetUpLootDrop();
         currentHoldDuration = 0;
     }
-
+    private void Update()
+    {
+        if (!isInteracting)
+        {
+            if (diggingAudio.isPlaying)
+            {
+                diggingAudio.Stop();
+            }
+        }
+        if(isInteracting)
+        {
+            isInteracting = false;
+        }
+    }
     public override void Interact(GameObject interactingObject_ = null)
     {
-        if(interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer p_))
+        isInteracting = true;
+        if (!diggingAudio.isPlaying)
+        {
+            diggingAudio.Play();
+        }
+        if (interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer p_))
         {
             currentHoldDuration += Time.deltaTime*p_.shovelPower;
         }
@@ -42,6 +62,7 @@ public class LootDigSpot : InteractableObject
     }
     void DropItems()
     {
+        diggingAudio.Stop();
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);

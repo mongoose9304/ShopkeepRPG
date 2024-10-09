@@ -13344,6 +13344,7 @@ GameObject:
   - component: {fileID: 9184540851144976259}
   - component: {fileID: 6443104134915343567}
   - component: {fileID: 1412454100626031882}
+  - component: {fileID: 177561921550548306}
   m_Layer: 6
   m_Name: TreasureTreeBase
   m_TagString: TreeBase
@@ -13485,6 +13486,102 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!82 &177561921550548306
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6868148246281773785}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -3165942800488051908, guid: 7e984f512e89b60468e829489e8883e3, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 6b1539a0b47050d498d73c2feccd3f92, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6977498926967484632
 GameObject:
   m_ObjectHideFlags: 0
@@ -28848,6 +28945,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2721482588520575928}
     - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: fallAudio
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b1539a0b47050d498d73c2feccd3f92, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
       propertyPath: myDropper
       value: 
       objectReference: {fileID: 5837198058211686972}
@@ -28856,6 +28957,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: fallingAudio
+      value: 
+      objectReference: {fileID: 177561921550548306}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
       propertyPath: comboRequired
       value: 5
       objectReference: {fileID: 0}
@@ -28863,6 +28968,34 @@ PrefabInstance:
       propertyPath: chanceForHigherLoot
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e9b8e2cad492a8341b16fa4ccb799fc1, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b589cef2f6a10a74aaee8fa5cc89d247, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2088b0bf95632f64da9655e00cdea40f, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6577453e67d5abc47b28044cb12e7880, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: chopAudios.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2fb1cdf9fc3cd3d4faebd74c4adb3513, type: 3}
+    - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
+      propertyPath: fallingCrashIntoOtherTree
+      value: 
+      objectReference: {fileID: 8300000, guid: 72314c9ee9b82f948b33a9d0be105afe, type: 3}
     - target: {fileID: 4561788586052718445, guid: e5f96ef8240e7fc4e866ad30a4fddeeb, type: 3}
       propertyPath: openChestEvent.m_PersistentCalls.m_Calls.Array.size
       value: 3

@@ -33,6 +33,9 @@ public class Tree : MonoBehaviour
     public bool isFalling;
     protected bool hasBeenHit;
     [SerializeField] protected MMProgressBar myHealthBar;
+    public AudioClip[] chopAudios;
+    public AudioSource fallingAudio;
+    public AudioClip fallingCrashIntoOtherTree;
     protected virtual void Start()
     {
         treeCurrentHealth = treeMaxHealth;
@@ -64,7 +67,9 @@ public class Tree : MonoBehaviour
     {
         if (isFalling)
             return;
-        
+        MMSoundManager.Instance.PlaySound(chopAudios[Random.Range(0,chopAudios.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+        false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+        1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         hasBeenHit = true;
         fallDirectionIndicator.gameObject.SetActive(true);
         switch (direction_)
@@ -119,6 +124,7 @@ public class Tree : MonoBehaviour
     {
         if (isFalling)
             return;
+        fallingAudio.Play();
         isFalling = true;
         fallSpeed = fallSpeedMin;
         fallDirectionIndicator.gameObject.SetActive(false);
@@ -176,6 +182,14 @@ public class Tree : MonoBehaviour
         GuardManager.instance.CreateNoise(transform, 2);
         treeBrokenEvent.Invoke();
         LumberLevelManager.instance.TreeFall();
+    }
+    public void HitOtherTreeAudio()
+    {
+        fallingAudio.Stop();
+        MMSoundManager.Instance.PlaySound(fallingCrashIntoOtherTree, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+       false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+       1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+
     }
     private void UpdateHealthBar()
     {

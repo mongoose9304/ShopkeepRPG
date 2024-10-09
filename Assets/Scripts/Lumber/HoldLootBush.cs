@@ -16,6 +16,8 @@ public class HoldLootBush : InteractableObject
     [SerializeField] float shakeSpeed;
     [SerializeField] MMF_Player feedBackPlayer;
      MMF_RotationShake feedBackShake;
+    [SerializeField] AudioSource rustleAudio;
+    bool isInteracting;
     private void Awake()
     {
         myDropper = GetComponent<LootDropper>();
@@ -28,9 +30,28 @@ public class HoldLootBush : InteractableObject
         Debug.Log("Feedback counts " + feedBackPlayer.FeedbacksList.Count);
         feedBackShake = (MMF_RotationShake)feedBackPlayer.FeedbacksList[0];
     }
-   
+    private void Update()
+    {
+        if (!isInteracting)
+        {
+            if (rustleAudio.isPlaying)
+            {
+                rustleAudio.Stop();
+            }
+        }
+        if (isInteracting)
+        {
+            isInteracting = false;
+        }
+    }
+
     public override void Interact(GameObject interactingObject_ = null)
     {
+        isInteracting = true;
+        if (!rustleAudio.isPlaying)
+        {
+            rustleAudio.Play();
+        }
         currentHoldDuration += Time.deltaTime;
         feedBackPlayer.PlayFeedbacks();
         feedBackShake.ShakeSpeed = shakeSpeed * (currentHoldDuration/maxHoldDuration);
@@ -41,6 +62,7 @@ public class HoldLootBush : InteractableObject
     }
     void DropItems()
     {
+        rustleAudio.Stop();
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);

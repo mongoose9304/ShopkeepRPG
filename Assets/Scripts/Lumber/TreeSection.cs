@@ -15,6 +15,7 @@ public class TreeSection : MonoBehaviour
             {
                 tree_.Fall();
                 myTree.BreakTree();
+                myTree.HitOtherTreeAudio();
                 TreeManager.instance.AddToCombo();
             }
         }
@@ -26,6 +27,7 @@ public class TreeSection : MonoBehaviour
                     return;
                 tree_.myTree.Fall();
                 myTree.BreakTree();
+                myTree.HitOtherTreeAudio();
                 TreeManager.instance.AddToCombo();
             }
         }
