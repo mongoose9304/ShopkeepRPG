@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
+
 public class LumberLevelManager : MonoBehaviour
 {
     public static LumberLevelManager instance;
@@ -14,6 +16,8 @@ public class LumberLevelManager : MonoBehaviour
     [SerializeField] MMMiniObjectPooler woodWorldObjectPooler;
     [Tooltip("REFERNCE to the pool of multiwood world objects")]
     [SerializeField] MMMiniObjectPooler multiwoodWorldObjectPooler;
+    [Tooltip("REFERENCE to BGMs available")]
+    public List<AudioClip> BGMs = new List<AudioClip>();
     private void Awake()
     {
         instance = this;
@@ -45,6 +49,7 @@ public class LumberLevelManager : MonoBehaviour
         
         SetUpCurrentLevel();
         currentForestHealthChange = 0;
+        PlayRandomBGM();
     }
     private void SetUpCurrentLevel()
     {
@@ -68,5 +73,10 @@ public class LumberLevelManager : MonoBehaviour
         if(currentForestHealthChange>10)
             currentForestHealthChange = 10;
         forestHealth -= currentForestHealthChange;
+    }
+    public void PlayRandomBGM()
+    {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
     }
 }
