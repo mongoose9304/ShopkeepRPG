@@ -27,7 +27,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private float cashMultiplier = 1;
     [SerializeField] private float expMultiplier = 1;
     [SerializeField] public float lootDropRateMultiplier = 1;
-  [SerializeField] List<LootItem> currentLootItems = new List<LootItem>();
+  public List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
     public MMMiniObjectPooler pooler;
     [SerializeField] MMMiniObjectPooler worldObjectPool;

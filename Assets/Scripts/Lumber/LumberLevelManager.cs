@@ -104,7 +104,7 @@ public class LumberLevelManager : MonoBehaviour
         
         victoryLevel.SetActive(true);
         if (LootManager.instance.AquiredLootItems.Count >= 1)
-            LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
+            LootDisplayManager.instance.AddItems(LootManager.instance.currentLootItems);
         List<int> x = new List<int>();
         //here is where you would load the inventorys count of how many resources *Regular cash* you have.
         List<int> y = new List<int>();

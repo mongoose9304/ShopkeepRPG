@@ -352,7 +352,7 @@ public class DungeonManager : MonoBehaviour
         //CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.position = victoryPlayerPos.transform.position;
         //CombatPlayerManager.instance.GetPlayer(0).gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
         if(LootManager.instance.AquiredLootItems.Count>=1)
-        LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
+        LootDisplayManager.instance.AddItems(LootManager.instance.currentLootItems);
         List<int> x = new List<int>();
         //here is where you would load the inventorys count of how many resources *demon cash* you have.
         List<int> y = new List<int>();
