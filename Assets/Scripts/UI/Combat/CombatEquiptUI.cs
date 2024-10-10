@@ -105,4 +105,8 @@ public class CombatEquiptUI : MonoBehaviour
         if (player)
             player.CalculateAllModifiers();
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

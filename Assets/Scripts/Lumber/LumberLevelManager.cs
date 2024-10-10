@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using UnityEngine.SceneManagement;
 
 public class LumberLevelManager : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class LumberLevelManager : MonoBehaviour
     }
     private void Start()
     {
-        
+        forestHealth= PlayerPrefs.GetFloat("ForestHealth", 100);
         SetUpCurrentLevel();
         currentForestHealthChange = 0;
         PlayRandomBGM();
@@ -78,5 +79,18 @@ public class LumberLevelManager : MonoBehaviour
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
         MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
+    }
+    public void DebugSetForestHealth(float newHP)
+    {
+        PlayerPrefs.SetFloat("ForestHealth",newHP);
+        forestHealth = newHP;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

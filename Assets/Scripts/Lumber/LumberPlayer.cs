@@ -52,7 +52,8 @@ public class LumberPlayer : MonoBehaviour
 
     void Update()
     {
-
+        if (TempPause.instance.isPaused)
+            return;
 
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
