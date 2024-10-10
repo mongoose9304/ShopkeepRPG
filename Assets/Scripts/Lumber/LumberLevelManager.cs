@@ -19,6 +19,9 @@ public class LumberLevelManager : MonoBehaviour
     [SerializeField] MMMiniObjectPooler multiwoodWorldObjectPooler;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
+    public GameObject victoryLevel;
+    [Tooltip("Sprites for collected resources ")]
+    public List<Sprite> resourceSprites = new List<Sprite>();
     private void Awake()
     {
         instance = this;
@@ -92,5 +95,25 @@ public class LumberLevelManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    /// <summary>
+    /// Stop playing lumber, display your score then return to the overworld
+    /// </summary>
+    public void WinLevel(bool hasLost_ = false)
+    {
+        
+        victoryLevel.SetActive(true);
+        if (LootManager.instance.AquiredLootItems.Count >= 1)
+            LootDisplayManager.instance.AddItems(LootManager.instance.AquiredLootItems);
+        List<int> x = new List<int>();
+        //here is where you would load the inventorys count of how many resources *Regular cash* you have.
+        List<int> y = new List<int>();
+        y.Add(500);
+        //y.Add(1000);
+        x.Add(LootManager.instance.currentResource);
+       // x.Add(LootManager.instance.regularCurrentCash);
+        LootDisplayManager.instance.AddResources(x, y, resourceSprites);
+        LootDisplayManager.instance.StartVictoryScreen(hasLost_);
+
     }
 }

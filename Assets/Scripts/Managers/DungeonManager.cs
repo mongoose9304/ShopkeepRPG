@@ -41,8 +41,6 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] List<BasicCurse> availableSinBlessings;
     [Tooltip("REFERENCE to the location for displaying the win/loss cutscene")]
     public GameObject victoryLevel;
-    [Tooltip("REFERENCE to the location the player stands during the win/loss cutscene")]
-    public GameObject victoryPlayerPos;
     [Tooltip("REFERENCE to slots for curses on the UI")]
     public Image[] curseImages;
     [Tooltip("REFERENCE to slots for blessings on the UI")]
