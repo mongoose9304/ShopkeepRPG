@@ -4,13 +4,23 @@ using UnityEngine;
 using DG.Tweening;
 public class LookAtCamera : MonoBehaviour
 {
+    public bool LockX;
+    public bool LockY;
+    public bool LockZ;
     // Update is called once per frame
     void Update()
     {
-        transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.X, Vector3.up);
-    }
-    private void OnEnable()
-    {
-        transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.None, Vector3.up);
+        if (!LockX && !LockY && !LockZ)
+        {
+            transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.W, Vector3.up);
+        }
+        else if (LockX)
+        {
+            transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.X, Vector3.up);
+        }
+        else if (LockY)
+            transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.Y, Vector3.up);
+        else if (LockZ)
+            transform.DOLookAt(Camera.main.transform.position, 0.0f, AxisConstraint.Z, Vector3.up);
     }
 }
