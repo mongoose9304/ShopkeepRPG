@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 4561788586052718445}
   m_Layer: 6
   m_Name: TreasureTree
-  m_TagString: TreeBase
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,7 +363,18 @@ MonoBehaviour:
   treeCurrentHealth: 20
   isFalling: 0
   myHealthBar: {fileID: 2258569298939971139}
+  chopAudios: []
+  fallingAudio: {fileID: 0}
+  fallingCrashIntoOtherTree: {fileID: 0}
+  comboRequired: 0
+  comboText: {fileID: 0}
+  openChestEvent:
+    m_PersistentCalls:
+      m_Calls: []
   value: 5
+  myQuality: 0
+  chanceForHigherLoot: 0
+  myDropper: {fileID: 0}
 --- !u!1 &1227137176815456326
 GameObject:
   m_ObjectHideFlags: 0

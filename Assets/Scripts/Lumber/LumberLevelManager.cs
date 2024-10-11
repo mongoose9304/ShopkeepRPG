@@ -81,7 +81,7 @@ public class LumberLevelManager : MonoBehaviour
     public void PlayRandomBGM()
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
-        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
+        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true,0.75f);
     }
     public void DebugSetForestHealth(float newHP)
     {

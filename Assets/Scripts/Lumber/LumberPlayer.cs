@@ -18,6 +18,7 @@ public class LumberPlayer : MonoBehaviour
     [SerializeField] GameObject cameraObject;
     [SerializeField] Vector3 cameraRotationRegular;
     [SerializeField] Vector3 cameraRotationPuzzle;
+    public LumberPuzzle myPuzzle;
     //Stealth
     public bool isHiding;
     public Transform hideLocation;
@@ -147,7 +148,11 @@ public class LumberPlayer : MonoBehaviour
         {
             InteractAction();
         }
-        
+        else if (Input.GetButton("Special1"))
+        {
+            ResetCurrentPuzzle();
+        }
+
 
     }
     private void DashAction()
@@ -438,15 +443,20 @@ public class LumberPlayer : MonoBehaviour
             interactableObjectTarget = null;
         interactableObjectLockOnObject.SetActive(false);
     }
-
+    public void ResetCurrentPuzzle()
+    {
+        if(myPuzzle)
+        myPuzzle.ResetTreeChopDirections();
+    }
 
 
     public void Death()
     {
 
     }
-    public void EnterPuzzle()
+    public void EnterPuzzle(LumberPuzzle puzzle_)
     {
+        myPuzzle = puzzle_;
         cameraObject.transform.DORotate(cameraRotationPuzzle,1,RotateMode.Fast);
     }
     public void ExitPuzzle()

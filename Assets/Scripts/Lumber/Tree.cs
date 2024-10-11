@@ -203,5 +203,8 @@ public class Tree : MonoBehaviour
     {
         LumberLevelManager.instance.TreeReplanted();
     }
-
+    public void ResetFallIndicator()
+    {
+        fallDirectionLineRenderer.gameObject.SetActive(false);
+    }
 }

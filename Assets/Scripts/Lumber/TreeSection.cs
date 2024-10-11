@@ -9,7 +9,7 @@ public class TreeSection : MonoBehaviour
     {
         if (!myTree.isFalling)
             return;
-        if(other.tag=="TreeBase"&&other.gameObject!=myTree.gameObject)
+        if(other.tag=="TreeBase"|| other.tag == "Tree" && other.gameObject!=myTree.gameObject)
         {
            if(other.gameObject.TryGetComponent<Tree>(out Tree tree_))
             {
