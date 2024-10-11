@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using MoreMountains.Tools;
+
 public class LumberPlayer : MonoBehaviour
 {
     //movement
@@ -47,7 +49,7 @@ public class LumberPlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
 
     [SerializeField] string enemyTag;
-
+    public AudioClip dashAudio;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -166,7 +168,9 @@ public class LumberPlayer : MonoBehaviour
         isDashing = true;
         dashTime = 0.2f;
         Instantiate(dashEffect, transform.position, transform.rotation);
-
+        MMSoundManager.Instance.PlaySound(dashAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
    
     private void InteractAction()
