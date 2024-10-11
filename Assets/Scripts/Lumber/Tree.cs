@@ -36,6 +36,8 @@ public class Tree : MonoBehaviour
     public AudioClip[] chopAudios;
     public AudioSource fallingAudio;
     public AudioClip fallingCrashIntoOtherTree;
+    public Color correctLineColor;
+    public Color incorrectLineColor;
     protected virtual void Start()
     {
         treeCurrentHealth = treeMaxHealth;
@@ -105,10 +107,14 @@ public class Tree : MonoBehaviour
             fallDirectionLineRenderer.SetPosition(0, transform.position);
             fallDirectionLineRenderer.SetPosition(1, hit.transform.position);
             fallDirectionLineRenderer.gameObject.SetActive(true);
+            fallDirectionLineRenderer.materials[0].color = correctLineColor;
         }
         else
         {
-            fallDirectionLineRenderer.gameObject.SetActive(false);
+            fallDirectionLineRenderer.SetPosition(0, transform.position);
+            fallDirectionLineRenderer.SetPosition(1, transform.position+lineDirection*(treeHeight+1f));
+            fallDirectionLineRenderer.gameObject.SetActive(true);
+            fallDirectionLineRenderer.materials[0].color = incorrectLineColor;
         }
         if (treeCurrentHealth <= 0)
         {

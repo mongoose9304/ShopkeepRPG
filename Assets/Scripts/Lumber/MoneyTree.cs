@@ -13,6 +13,7 @@ public class MoneyTree : Tree
     public int myQuality;
     public float chanceForHigherLoot;
     public LootDropper myDropper;
+
     protected override void Start()
     {
 
