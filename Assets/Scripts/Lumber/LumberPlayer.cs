@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class LumberPlayer : MonoBehaviour
 {
     //movement
@@ -14,6 +14,10 @@ public class LumberPlayer : MonoBehaviour
     public float dashCoolDown;
     public float dashTime;
     public bool isDashing;
+    //Camera
+    [SerializeField] GameObject cameraObject;
+    [SerializeField] Vector3 cameraRotationRegular;
+    [SerializeField] Vector3 cameraRotationPuzzle;
     //Stealth
     public bool isHiding;
     public Transform hideLocation;
@@ -441,7 +445,14 @@ public class LumberPlayer : MonoBehaviour
     {
 
     }
-
+    public void EnterPuzzle()
+    {
+        cameraObject.transform.DORotate(cameraRotationPuzzle,1,RotateMode.Fast);
+    }
+    public void ExitPuzzle()
+    {
+        cameraObject.transform.DORotate(cameraRotationRegular, 1, RotateMode.Fast);
+    }
 
 
 
