@@ -10,6 +10,7 @@ public class LumberLevelManager : MonoBehaviour
     public static LumberLevelManager instance;
     public LumberLevel currentLevel;
     public LumberLevel nextLevel;
+    public LumberPlayer player;
     //ranges from 0.5 to 1.5, the rough amount of how much of each reasource your should be aquiring. ALso affects visuals 
     public float forestHealth;
     public float currentForestHealthChange;
@@ -50,17 +51,20 @@ public class LumberLevelManager : MonoBehaviour
     }
     private void Start()
     {
-        forestHealth= PlayerPrefs.GetFloat("ForestHealth", 100);
+        PlayRandomBGM();
+    }
+    public void PlayNextLevel()
+    {
+        forestHealth = PlayerPrefs.GetFloat("ForestHealth", 100);
         SetUpCurrentLevel();
         currentForestHealthChange = 0;
-        PlayRandomBGM();
     }
     private void SetUpCurrentLevel()
     {
         currentLevel.SpawnLootables(forestHealth);
         currentLevel.SpawnAllPuzzles(forestHealth);
         currentLevel.SetUpDecorations(forestHealth);
-
+        player.transform.position = currentLevel.playerStart.position;
     }
     public void TreeFall()
     {

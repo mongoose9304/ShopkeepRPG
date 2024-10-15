@@ -2,6 +2,7 @@ using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HoldLootBush : InteractableObject
 {
@@ -19,6 +20,7 @@ public class HoldLootBush : InteractableObject
     [SerializeField] AudioSource rustleAudio;
     float timeSinceInteration;
     float startVolume;
+    public UnityEvent lootEvent;
     private void Awake()
     {
         myDropper = GetComponent<LootDropper>();
@@ -70,6 +72,7 @@ public class HoldLootBush : InteractableObject
         myDropper.DropItems();
         gameObject.SetActive(false);
         lootableIndicator.SetActive(false);
+        lootEvent.Invoke();
         if (lootEffect)
             lootEffect.Play();
     }

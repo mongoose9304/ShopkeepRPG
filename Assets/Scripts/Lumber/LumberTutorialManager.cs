@@ -16,24 +16,22 @@ public class LumberTutorialManager : TutorialManager
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
                 break;
             case 1:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
-                break;
-            case 2:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
                 break;
+            case 2:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
+                break;
             case 3:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 4:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
                 break;
             case 5:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 4, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 6:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 6, true);
-                CombatPlayerManager.instance.EnableFamiliars(true);
-                CombatPlayerManager.instance.ReturnFamiliars();
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
                 break;
             case 7:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);

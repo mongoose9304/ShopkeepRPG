@@ -33,7 +33,7 @@ public class LumberLevel : MonoBehaviour
     public GameObject highDecorations;
     public GameObject lowDecorations;
     public GameObject minDecorations;
-
+    public Transform playerStart;
 
     public void SpawnAllPuzzles(float forestHP)
     {

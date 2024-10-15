@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
+using UnityEngine.Events;
 public class LootDigSpot : InteractableObject
 {
     public int myQuality;
@@ -18,6 +19,7 @@ public class LootDigSpot : InteractableObject
     float startVolume;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
+    public UnityEvent lootEvent;
     private void Awake()
     {
         myDropper = GetComponent<LootDropper>();
@@ -68,6 +70,7 @@ public class LootDigSpot : InteractableObject
         StartCoroutine(FadeAudio());
         myDropper.DropItems();
         gameObject.SetActive(false);
+        lootEvent.Invoke();
         lootableIndicator.SetActive(false);
         if (lootEffect)
             lootEffect.Play();

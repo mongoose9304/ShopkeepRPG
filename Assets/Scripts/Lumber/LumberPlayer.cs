@@ -458,8 +458,9 @@ public class LumberPlayer : MonoBehaviour
     {
 
     }
-    public void EnterPuzzle(LumberPuzzle puzzle_)
+    public void EnterPuzzle(LumberPuzzle puzzle_=null)
     {
+        if(puzzle_)
         myPuzzle = puzzle_;
         cameraObject.transform.DORotate(cameraRotationPuzzle,1,RotateMode.Fast);
     }

@@ -38,6 +38,7 @@ public class Tree : MonoBehaviour
     public AudioClip fallingCrashIntoOtherTree;
     public Color correctLineColor;
     public Color incorrectLineColor;
+    public UnityEvent choppingComplete;
     protected virtual void Start()
     {
         treeCurrentHealth = treeMaxHealth;
@@ -120,6 +121,7 @@ public class Tree : MonoBehaviour
         {
             // ChopInteraction.SetActive(false);
             FallInteraction.SetActive(true);
+            choppingComplete.Invoke();
         }
 
 

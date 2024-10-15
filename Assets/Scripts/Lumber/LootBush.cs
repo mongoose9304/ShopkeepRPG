@@ -2,6 +2,7 @@ using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LootBush : InteractableObject
 {
@@ -12,6 +13,7 @@ public class LootBush : InteractableObject
     public GameObject lootableIndicator;
     public ParticleSystem lootEffect;
     public AudioClip bushAudio;
+    public UnityEvent lootEvent;
     private void Awake()
     {
         myDropper = GetComponent<LootDropper>();
@@ -28,6 +30,7 @@ public class LootBush : InteractableObject
         lootableIndicator.SetActive(false);
         if(lootEffect)
         lootEffect.Play();
+        lootEvent.Invoke();
        if( interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer player_))
         {
             player_.RemoveObjectFromInteractableObjects(this.gameObject);
