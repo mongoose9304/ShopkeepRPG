@@ -45,7 +45,6 @@ public class Explosion : MonoBehaviour
           
             if (other.gameObject.TryGetComponent(out BasicMiningEnemy enemy))
             {
-                Debug.Log("RobHitEnemy");
                 enemy.TakeDamage();
             }
         }
@@ -54,7 +53,6 @@ public class Explosion : MonoBehaviour
 
             if (other.gameObject.TryGetComponent(out MiningPlayer player))
             {
-                Debug.Log("RobHitEnemy");
                 player.TakeDamage(damageToPlayer);
             }
         }

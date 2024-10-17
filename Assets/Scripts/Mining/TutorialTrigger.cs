@@ -9,12 +9,16 @@ public class TutorialTrigger : MonoBehaviour
 {
     [Tooltip("The state to enter")]
     public int tState;
+    public bool useAltState;
     private void OnTriggerEnter(Collider other)
     {
         
         if(other.tag=="Player")
         {
-            TutorialManager.instance_.SetTutorialState(tState);
+            if(!useAltState)
+                TutorialManager.instance_.SetTutorialState(tState);
+            else
+                TutorialManager.instance_.SetAltTutorialState(tState);
             gameObject.SetActive(false);
         }
     }

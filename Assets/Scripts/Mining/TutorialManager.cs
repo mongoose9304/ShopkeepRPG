@@ -85,6 +85,42 @@ public class TutorialManager : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
+    /// </summary>
+    public virtual void SetAltTutorialState(int tutorialState_)
+    {
+        tutorialState = tutorialState_;
+        switch (tutorialState_)
+        {
+            case 0:
+                tutUIManager.SetJoystickMessage(tutorialAlternateMessages[tutorialState]);
+                break;
+            case 1:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 0, true);
+                break;
+            case 2:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 2, true);
+                break;
+            case 3:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);
+                break;
+            case 4:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);
+                break;
+            case 5:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 1, true);
+                break;
+            case 6:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 3, true);
+                break;
+            case 7:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);
+                break;
+
+        }
+    }
     private void OnDisable()
     {
         if (isQuitting)
