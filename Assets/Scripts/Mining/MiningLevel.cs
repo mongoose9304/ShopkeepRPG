@@ -7,10 +7,19 @@ using UnityEngine;
 /// </summary>
 public class MiningLevel : MonoBehaviour
 {
+    public bool isTutLevel;
     [Tooltip("Min amount of stone that can be dropped")]
     public int minStoneValue=1;
     [Tooltip("Max amount of stone that can be dropped")]
     public int maxStoneValue = 1;
+    [Tooltip("Min amount of rocks")]
+    public int minRockAmount = 1;
+    [Tooltip("Max amount of rocks")]
+    public int maxRockAmount= 1;
+    [Tooltip("Min amount of treasure")]
+    public int minTreasureAmount = 1;
+    [Tooltip("Max amount of treasure")]
+    public int maxTreasureAmount = 1;
     [Tooltip("The location the player will start")]
     public Transform startLocation;
     [Tooltip("The next level a player will go to")]
@@ -21,6 +30,8 @@ public class MiningLevel : MonoBehaviour
     public GameObject nextLevelTunnel;
     [Tooltip("REFERENCE all the rocks that are children of this object, auto collected on play")]
     public List<Rock> allRocks = new List<Rock>();
+    [Tooltip("REFERENCE all the rocks that are children of this object, auto collected on play")]
+    public List<TreasureRock> allTreasureRocks = new List<TreasureRock>();
     [Tooltip("REFERENCE all the tiles that are children of this object, auto collected on play")]
     public List<Tile> allTiles = new List<Tile>();
     [Tooltip("REFERENCE all the walls that are children of this object, auto collected on play")]
@@ -31,12 +42,19 @@ public class MiningLevel : MonoBehaviour
     public Material tileMatA;
     [Tooltip("REFERENCE to what half the tiles should look like for this level")]
     public Material tileMatB;
-    private void Start()
+    private void OnEnable()
+    {
+        if (isTutLevel)
+            SetUpMiningLevel(1);
+    }
+    public void SetUpMiningLevel(float health_)
     {
         GetAllRocks();
+        GetAllTreasureRocks();
         GetAllTiles();
         GetAllWalls();
         SetMaterials();
+        RandomizeAllObjects(health_);
         DecideTunnelHolder();
     }
     /// <summary>
@@ -75,6 +93,14 @@ public class MiningLevel : MonoBehaviour
         RemoveInactiveRocks();
       tunnelHolder= allRocks[Random.Range(0, allRocks.Count)];
       tunnelHolder.SetTunnelHolder(true,this);
+    }
+    /// <summary>
+    /// Gets all the rock children at the start of the game
+    /// </summary>
+    private void GetAllTreasureRocks()
+    {
+        allTreasureRocks.Clear();
+        allTreasureRocks.AddRange(gameObject.GetComponentsInChildren<TreasureRock>());
     }
     /// <summary>
     /// Gets all the rock children at the start of the game
@@ -134,5 +160,44 @@ public class MiningLevel : MonoBehaviour
     public void StartLevel()
     {
         MiningManager.instance.currentLevel = this;
+        SetUpMiningLevel(MiningManager.instance.mineHealth);
+    }
+    private void RandomizeAllObjects(float health_)
+    {
+        List<GameObject> tempObjs = new List<GameObject>();
+        foreach(Rock rock_ in allRocks)
+        {
+            tempObjs.Add(rock_.gameObject);
+        }
+        RandomizeObjects(tempObjs, Mathf.RoundToInt(Random.Range(minRockAmount,maxRockAmount)*health_));
+        tempObjs.Clear();
+        foreach (TreasureRock rock_ in allTreasureRocks)
+        {
+            tempObjs.Add(rock_.gameObject);
+        }
+        RandomizeObjects(tempObjs, Mathf.RoundToInt(Random.Range(minTreasureAmount, maxTreasureAmount) * health_));
+    }
+    private void RandomizeObjects(List<GameObject> objList,int amountToSetActive_)
+    {
+        int randomIndex = 0;
+        List<int> usedObjects=new List<int>();
+        foreach (GameObject obj in objList)
+        {
+            obj.SetActive(false);
+        }
+        for (int i = 0; i < amountToSetActive_; i++)
+        {
+            randomIndex = Random.Range(0, objList.Count);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, objList.Count);
+                if (usedObjects.Count >= objList.Count)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            objList[randomIndex].SetActive(true);
+        }
     }
 }

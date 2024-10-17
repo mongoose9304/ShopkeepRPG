@@ -87,6 +87,7 @@ public class MiningPlayer : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         currentHealth = maxHealth;
+        dashStartPos = transform.position;
     }
     // Update is called once per frame
 
@@ -194,9 +195,8 @@ public class MiningPlayer : MonoBehaviour
     /// </summary>
     private void DashAction()
     {
-       
-        if (Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), transform.TransformDirection(Vector3.down), 10))
-            dashStartPos = transform.position;
+
+        dashStartPos = transform.position;
         SnapRotationToGrid(transform);
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;

@@ -40,6 +40,10 @@ public class Explosion : MonoBehaviour
         }
         else if (other.tag == "Rock")
         {
+            if (MiningManager.instance)
+            {
+                MiningManager.instance.SpawnStone(other.transform);
+            }
             GameObject.Instantiate(rockExplosionParticleEffect, other.transform.position,Quaternion.Euler(-90,0,0));
             other.gameObject.SetActive(false);
             MMSoundManager.Instance.PlaySound(rockExplosionAudios[Random.Range(0,rockExplosionAudios.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,

@@ -13,6 +13,8 @@ public class MiningManager : MonoBehaviour
     public static MiningManager instance;
     [Tooltip("What level we are on")]
     public MiningLevel currentLevel;
+    [Tooltip("What is the state of the mine")]
+    public float mineHealth;
     [Tooltip("A list of all the levels that will be spawned (prefabs)")]
     public List<MiningLevel> levelsReferences = new List<MiningLevel>();
     [Tooltip("A reference list of all the levels we have spawned in")]
