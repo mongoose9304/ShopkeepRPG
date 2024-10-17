@@ -17,7 +17,7 @@ public class Tile : MonoBehaviour
     {
         if (myBomb)
         {
-            if (!myBomb.gameObject.activeInHierarchy || Vector3.Distance(transform.position, myBomb.transform.position) > 1)
+            if (!myBomb.gameObject.activeInHierarchy || Vector3.Distance(transform.position, myBomb.transform.position) > 2)
                 myBomb = null;
         }
     }
