@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 /// <summary>
 /// The singleton class that will handle loading the mining levels and managing thier order
 /// </summary>
@@ -32,6 +33,8 @@ public class MiningManager : MonoBehaviour
     [SerializeField] GameObject victoryPlayerPos;
     [Tooltip("REFERNCE to the miningPlayer")]
     [SerializeField] MiningPlayer player;
+    [Tooltip("REFERENCE to BGMs available")]
+    public List<AudioClip> BGMs = new List<AudioClip>();
     private void Awake()
     {
         instance = this;
@@ -40,6 +43,7 @@ public class MiningManager : MonoBehaviour
     {
         InitLevels();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
+        PlayRandomBGM();
     }
     /// <summary>
     /// Set up all the levels and spawn them in
@@ -91,5 +95,10 @@ public class MiningManager : MonoBehaviour
         LootDisplayManager.instance.AddResources(x,y,resourceSprites);
         LootDisplayManager.instance.StartVictoryScreen();
 
+    }
+    public void PlayRandomBGM()
+    {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true, 0.75f);
     }
 }

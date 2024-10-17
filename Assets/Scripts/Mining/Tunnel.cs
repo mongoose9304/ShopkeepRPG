@@ -55,6 +55,7 @@ public class Tunnel : InteractableObject
     {
         if(tutEndTunnel)
         {
+            TutorialManager.instance_.EndTutorial();
             teleportLocation = MiningManager.instance.currentLevel.startLocation;
             Teleport(GameObject.FindGameObjectWithTag("Player"));
             objectToSetActive = MiningManager.instance.currentLevel.gameObject;
