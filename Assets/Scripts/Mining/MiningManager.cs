@@ -37,6 +37,8 @@ public class MiningManager : MonoBehaviour
     [SerializeField] MiningPlayer player;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
+    [Tooltip("REFERENCE to BGMs available")]
+    public List<MiningCosmeticZone> cosmeticZones = new List<MiningCosmeticZone>();
     private void Awake()
     {
         instance = this;
@@ -102,5 +104,14 @@ public class MiningManager : MonoBehaviour
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
         MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true, 0.75f);
+    }
+    public void UpdateMineHealth(float health_)
+    {
+        mineHealth = health_;
+        Mathf.Clamp(mineHealth, 0.5f, 1.5f); 
+        foreach(MiningCosmeticZone zone in cosmeticZones)
+        {
+            zone.SetUpCosmetics(mineHealth);
+        }
     }
 }
