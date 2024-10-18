@@ -565,7 +565,18 @@ public class MiningPlayer : MonoBehaviour
 
     }
    
-   
+   public void ApplyPowerUp(float amount_=1, MiningPowerType power = MiningPowerType.Heal)
+    {
+        switch(power)
+        {
+            case MiningPowerType.Heal:
+                currentHealth += maxHealth*amount_;
+                healthBar.UpdateBar01(currentHealth / maxHealth);
+                break;
+             default:
+                break;
+        }
+    }
   
    
 }

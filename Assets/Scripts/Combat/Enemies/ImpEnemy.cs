@@ -22,7 +22,6 @@ public class ImpEnemy : BasicEnemy
         //objB.GetComponent<LopProjectile>().target = target.transform.position;
         //var v = Projectile.VelocityByTime(myRigid.position, predictedPos, timeOfFlight);
         // myRigid.AddForce(v, ForceMode.VelocityChange);
-        Debug.Log("V+ " + Projectile.VelocityByA(objB.transform.position, target.transform.position, -0.01f));
         objB.GetComponent<EnemyProjectile>().damage = damage;
         objB.GetComponent<EnemyProjectile>().myTeam = GetTeam();
         objB.GetComponent<OnDisableEvent>().endEvent = endAttackEvent;
