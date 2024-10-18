@@ -55,7 +55,7 @@ public class LumberLevelManager : MonoBehaviour
     }
     public void PlayNextLevel()
     {
-        forestHealth = PlayerPrefs.GetFloat("ForestHealth", 100);
+        forestHealth = PlayerPrefs.GetFloat("ForestHealth", 1);
         SetUpCurrentLevel();
         currentForestHealthChange = 0;
     }

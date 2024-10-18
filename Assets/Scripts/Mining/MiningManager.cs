@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// The singleton class that will handle loading the mining levels and managing thier order
 /// </summary>
@@ -48,6 +49,7 @@ public class MiningManager : MonoBehaviour
         InitLevels();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
         PlayRandomBGM();
+        PlayNextLevel();
     }
     /// <summary>
     /// Set up all the levels and spawn them in
@@ -100,6 +102,10 @@ public class MiningManager : MonoBehaviour
         LootDisplayManager.instance.StartVictoryScreen();
 
     }
+    public void PlayNextLevel()
+    {
+        UpdateMineHealth(PlayerPrefs.GetFloat("MineHealth", 1));
+    }
     public void PlayRandomBGM()
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
@@ -113,5 +119,19 @@ public class MiningManager : MonoBehaviour
         {
             zone.SetUpCosmetics(mineHealth);
         }
+        PlayerPrefs.SetFloat("mineHealth", mineHealth);
+    }
+    public void DebugSetMineHealth(float newHP)
+    {
+        PlayerPrefs.SetFloat("mineHealth", newHP);
+        mineHealth = newHP;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+        Time.timeScale = 1;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

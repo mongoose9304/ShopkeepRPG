@@ -56,6 +56,7 @@ public class MiningLevel : MonoBehaviour
         SetMaterials();
         RandomizeAllObjects(health_);
         DecideTunnelHolder();
+        //Invoke("DecideTunnelHolder", 1.1f);
     }
     /// <summary>
     /// Moves the tunnel to whatever rock was holding it when it is revealed 
@@ -90,7 +91,7 @@ public class MiningLevel : MonoBehaviour
         {
             rock.SetTunnelHolder(false);
         }
-        RemoveInactiveRocks();
+      RemoveInactiveRocks();
       tunnelHolder= allRocks[Random.Range(0, allRocks.Count)];
       tunnelHolder.SetTunnelHolder(true,this);
     }
@@ -133,9 +134,10 @@ public class MiningLevel : MonoBehaviour
     {
         for(int i=0;i<allRocks.Count;i++)
         {
-            if (allRocks[i].gameObject.activeInHierarchy == false)
-                allRocks.RemoveAt(i);
+            if (!allRocks[i].gameObject.activeSelf)
+                allRocks[i] = null;
         }
+        allRocks.RemoveAll(item => item == null);
     }
     /// <summary>
     /// Sets the wall and tile materials to the ones defined by the level
