@@ -93,7 +93,8 @@ public class MiningPlayer : MonoBehaviour
 
     void Update()
     {
-       
+        if (TempPause.instance.isPaused)
+            return;
         
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);

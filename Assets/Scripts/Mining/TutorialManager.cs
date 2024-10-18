@@ -125,6 +125,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (isQuitting)
             return;
+        if(tutUIManager)
         tutUIManager.gameObject.SetActive(false);
     }
     private void OnApplicationQuit()

@@ -119,11 +119,11 @@ public class MiningManager : MonoBehaviour
         {
             zone.SetUpCosmetics(mineHealth);
         }
-        PlayerPrefs.SetFloat("mineHealth", mineHealth);
+        PlayerPrefs.SetFloat("MineHealth", mineHealth);
     }
     public void DebugSetMineHealth(float newHP)
     {
-        PlayerPrefs.SetFloat("mineHealth", newHP);
+        PlayerPrefs.SetFloat("MineHealth", newHP);
         mineHealth = newHP;
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
