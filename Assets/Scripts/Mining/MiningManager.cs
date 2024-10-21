@@ -93,7 +93,7 @@ public class MiningManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
-    public void WinLevel()
+    public void WinLevel(bool loss_=false)
     {
         player.enabled = false;
         victoryLevel.SetActive(true);
@@ -106,7 +106,7 @@ public class MiningManager : MonoBehaviour
         y.Add(1000);
         x.Add(LootManager.instance.currentResource);
         LootDisplayManager.instance.AddResources(x,y,resourceSprites);
-        LootDisplayManager.instance.StartVictoryScreen();
+        LootDisplayManager.instance.StartVictoryScreen(loss_);
 
     }
     public void PlayNextLevel()

@@ -76,7 +76,7 @@ public class MiningPlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip pickaxeAudio;
     [SerializeField] AudioClip dashAudio;
-
+    [SerializeField] bool isDead;
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     float currentHealth;
@@ -94,6 +94,8 @@ public class MiningPlayer : MonoBehaviour
     void Update()
     {
         if (TempPause.instance.isPaused)
+            return;
+        if (isDead)
             return;
         
         GetInput();
@@ -563,7 +565,10 @@ public class MiningPlayer : MonoBehaviour
     /// </summary>
     public void Death()
     {
-
+        if (isDead)
+            return;
+        isDead = true;
+        MiningManager.instance.WinLevel(true);
     }
    
    public void ApplyPowerUp(float amount_=1, MiningPowerType power = MiningPowerType.Heal)
