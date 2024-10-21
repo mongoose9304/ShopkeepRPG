@@ -40,7 +40,9 @@ public class MiningManager : MonoBehaviour
     [SerializeField] MiningPlayer player;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
-    [Tooltip("REFERENCE to BGMs available")]
+    [Tooltip("REFERENCE to MinefloorSpawner available")]
+    public ObjectRepeater mineFloorSpawner;
+    [Tooltip("REFERENCE to CosmeticZones available")]
     public List<MiningCosmeticZone> cosmeticZones = new List<MiningCosmeticZone>();
     private void Awake()
     {
@@ -52,6 +54,7 @@ public class MiningManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
         PlayRandomBGM();
         PlayNextLevel();
+        SpawnFloor();
     }
     /// <summary>
     /// Set up all the levels and spawn them in
@@ -139,5 +142,9 @@ public class MiningManager : MonoBehaviour
     public GameObject GetDeadRock()
     {
         return deadTreasureRocksObjectPooler.GetPooledGameObject();
+    }
+    private void SpawnFloor()
+    {
+        mineFloorSpawner.SpawnObjects();
     }
 }
