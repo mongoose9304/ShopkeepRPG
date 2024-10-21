@@ -14,7 +14,7 @@ public class MiningCosmeticZone : MonoBehaviour
             minDecorations.SetActive(false);
             maxDecorations.SetActive(false);
             lowDecorations.SetActive(false);
-            maxDecorations.SetActive(false);
+            highDecorations.SetActive(false);
             if (health_ < 0.6f)
             {
                 //Min

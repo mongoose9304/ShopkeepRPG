@@ -42,6 +42,8 @@ public class MiningManager : MonoBehaviour
     public List<AudioClip> BGMs = new List<AudioClip>();
     [Tooltip("REFERENCE to MinefloorSpawner available")]
     public ObjectRepeater mineFloorSpawner;
+    [Tooltip("REFERENCE to MinefloorSpawner available")]
+    public GameObject mineFloor;
     [Tooltip("REFERENCE to CosmeticZones available")]
     public List<MiningCosmeticZone> cosmeticZones = new List<MiningCosmeticZone>();
     private void Awake()
@@ -145,6 +147,8 @@ public class MiningManager : MonoBehaviour
     }
     private void SpawnFloor()
     {
+        mineFloorSpawner.objectToRepeat = mineFloor;
+        mineFloor.GetComponent<MiningCosmeticZone>().SetUpCosmetics(mineHealth);
         mineFloorSpawner.SpawnObjects();
     }
 }
