@@ -55,6 +55,7 @@ public class MiningLevel : MonoBehaviour
         GetAllWalls();
         SetMaterials();
         RandomizeAllObjects(health_);
+        SetDeadTreasureRocks(health_);
         DecideTunnelHolder();
         //Invoke("DecideTunnelHolder", 1.1f);
     }
@@ -200,6 +201,38 @@ public class MiningLevel : MonoBehaviour
             }
             usedObjects.Add(randomIndex);
             objList[randomIndex].SetActive(true);
+        }
+    }
+    private void SetDeadTreasureRocks(float health_)
+    {
+        GetAllTreasureRocks();
+        int amountToSetActive_ = 0;
+        if (health_<=0.6f)
+        {
+            amountToSetActive_ = 2;
+        }
+        else if(health_ <= 0.8f)
+        {
+            amountToSetActive_ = 1;
+        }
+        int randomIndex = 0;
+        List<int> usedObjects = new List<int>();
+        for (int i = 0; i < amountToSetActive_; i++)
+        {
+            randomIndex = Random.Range(0, allTreasureRocks.Count);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, allTreasureRocks.Count);
+                if (usedObjects.Count >= allTreasureRocks.Count)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            GameObject obj = MiningManager.instance.GetDeadRock();
+            obj.transform.position = allTreasureRocks[randomIndex].gameObject.transform.position;
+            obj.SetActive(true);
+            allTreasureRocks[randomIndex].gameObject.SetActive(false);
         }
     }
 }

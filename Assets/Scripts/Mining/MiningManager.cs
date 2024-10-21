@@ -26,6 +26,8 @@ public class MiningManager : MonoBehaviour
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
     [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;
+    [Tooltip("REFERNCE to the pool of dead treasure rocks")]
+    [SerializeField] MMMiniObjectPooler deadTreasureRocksObjectPooler;
     [Tooltip("REFERNCE to the decorative end level")]
     [SerializeField] GameObject victoryLevel;
     [Tooltip("REFERNCE to the checkpoint level where players can return or continue mining")]
@@ -133,5 +135,9 @@ public class MiningManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public GameObject GetDeadRock()
+    {
+        return deadTreasureRocksObjectPooler.GetPooledGameObject();
     }
 }
