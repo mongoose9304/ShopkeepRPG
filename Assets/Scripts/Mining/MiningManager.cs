@@ -55,6 +55,7 @@ public class MiningManager : MonoBehaviour
     public GameObject mineFloor;
     [Tooltip("REFERENCE to CosmeticZones available")]
     public List<MiningCosmeticZone> cosmeticZones = new List<MiningCosmeticZone>();
+    public CameraHelper myCamera;
     private void Awake()
     {
         instance = this;
@@ -186,6 +187,8 @@ public class MiningManager : MonoBehaviour
                 Destroy(lev.gameObject);
             }
             levels.Clear();
+            myCamera.gameObject.SetActive(false);
+            myCamera.Teleport();
             int randomIndex = Random.Range(0, specialLevelsReferences.Count);
             GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, specialLevelSpawn.transform.position, specialLevelSpawn.transform.rotation);
             levels.Add(obj.GetComponent<MiningLevel>());
@@ -193,6 +196,7 @@ public class MiningManager : MonoBehaviour
             player.transform.position = currentLevel.startLocation.position;
             currentLevel.gameObject.SetActive(true);
             currentLevel.StartLevel();
+            myCamera.gameObject.SetActive(true);
             return;
         }
         InitLevels();
