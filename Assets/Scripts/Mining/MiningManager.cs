@@ -22,6 +22,8 @@ public class MiningManager : MonoBehaviour
     public float mineHealth;
     [Tooltip("A list of all the levels that can be spawned (prefabs)")]
     public List<MiningLevel> levelsReferences = new List<MiningLevel>();
+    [Tooltip("A list of all the special levels that can be spawned (prefabs)")]
+    public List<MiningLevel> specialLevelsReferences = new List<MiningLevel>();
     [Tooltip("How many levels to spawn between checkpoints")]
     public int levelsPerCheckpoint;
     [Tooltip("A reference list of all the levels we have spawned in")]
@@ -178,6 +180,18 @@ public class MiningManager : MonoBehaviour
         sectionsCompleted += 1;
         if(sectionsCompleted>=maxSections)
         {
+            foreach (MiningLevel lev in levels)
+            {
+                Destroy(lev.gameObject);
+            }
+            levels.Clear();
+            int randomIndex = Random.Range(0, specialLevelsReferences.Count);
+            GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, levelsLocations[levels.Count].transform.position, levelsLocations[levels.Count].transform.rotation);
+            levels.Add(obj.GetComponent<MiningLevel>());
+            currentLevel = levels[0];
+            player.transform.position = currentLevel.startLocation.position;
+            currentLevel.gameObject.SetActive(true);
+            currentLevel.StartLevel();
             return;
         }
         InitLevels();
