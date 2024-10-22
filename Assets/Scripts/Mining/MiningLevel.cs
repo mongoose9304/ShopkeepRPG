@@ -180,7 +180,7 @@ public class MiningLevel : MonoBehaviour
         MiningManager.instance.currentLevel = this;
         SetUpMiningLevel(MiningManager.instance.mineHealth);
     }
-    private void RandomizeAllObjects(float health_,bool peaceful_=false)
+    private void RandomizeAllObjects(float health_)
     {
         List<GameObject> tempObjs = new List<GameObject>();
         foreach(Rock rock_ in allRocks)
@@ -195,7 +195,7 @@ public class MiningLevel : MonoBehaviour
         }
         RandomizeObjects(tempObjs, Mathf.RoundToInt(Random.Range(minTreasureAmount, maxTreasureAmount) * health_));
         tempObjs.Clear();
-        if (peaceful_)
+        if (MiningManager.instance.sectionsCompleted==0)
         {
             foreach (BasicMiningEnemy enemy_ in allEnemies)
             {

@@ -14,6 +14,10 @@ public class MiningManager : MonoBehaviour
     public static MiningManager instance;
     [Tooltip("What level we are on")]
     public MiningLevel currentLevel;
+    [Tooltip("How many Sections We have completed")]
+    public int sectionsCompleted;
+    [Tooltip("How many sections are there")]
+    public int maxSections;
     [Tooltip("What is the state of the mine")]
     public float mineHealth;
     [Tooltip("A list of all the levels that can be spawned (prefabs)")]
@@ -65,6 +69,10 @@ public class MiningManager : MonoBehaviour
     /// </summary>
     public void InitLevels()
     {
+        foreach(MiningLevel obj in levels)
+        {
+            Destroy(obj.gameObject);
+        }
         levels.Clear();
         int randomIndex = 0;
         List<int> usedObjects = new List<int>();
@@ -164,5 +172,16 @@ public class MiningManager : MonoBehaviour
         mineFloorSpawner.objectToRepeat = mineFloor;
         mineFloor.GetComponent<MiningCosmeticZone>().SetUpCosmetics(mineHealth);
         mineFloorSpawner.SpawnObjects();
+    }
+    public void ContinueGameFromCheckPoint()
+    {
+        sectionsCompleted += 1;
+        if(sectionsCompleted>=maxSections)
+        {
+            return;
+        }
+        InitLevels();
+        player.transform.position = currentLevel.startLocation.position;
+        currentLevel.StartLevel();
     }
 }
