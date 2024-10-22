@@ -182,6 +182,7 @@ public class MiningManager : MonoBehaviour
         }
         InitLevels();
         player.transform.position = currentLevel.startLocation.position;
+        currentLevel.gameObject.SetActive(true);
         currentLevel.StartLevel();
     }
 }
