@@ -16,8 +16,10 @@ public class MiningManager : MonoBehaviour
     public MiningLevel currentLevel;
     [Tooltip("What is the state of the mine")]
     public float mineHealth;
-    [Tooltip("A list of all the levels that will be spawned (prefabs)")]
+    [Tooltip("A list of all the levels that can be spawned (prefabs)")]
     public List<MiningLevel> levelsReferences = new List<MiningLevel>();
+    [Tooltip("How many levels to spawn between checkpoints")]
+    public int levelsPerCheckpoint;
     [Tooltip("A reference list of all the levels we have spawned in")]
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
@@ -64,9 +66,21 @@ public class MiningManager : MonoBehaviour
     public void InitLevels()
     {
         levels.Clear();
-        for(int i=0;i< levelsReferences.Count;i++)
+        int randomIndex = 0;
+        List<int> usedObjects = new List<int>();
+        for (int i = 0; i < levelsPerCheckpoint; i++)
         {
-           GameObject obj= GameObject.Instantiate(levelsReferences[i].gameObject,levelsLocations[i].transform.position, levelsLocations[i].transform.rotation);
+            randomIndex = Random.Range(0, levelsReferences.Count);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, levelsReferences.Count);
+                if (usedObjects.Count >= levelsReferences.Count)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            GameObject obj = GameObject.Instantiate(levelsReferences[randomIndex].gameObject, levelsLocations[levels.Count].transform.position, levelsLocations[levels.Count].transform.rotation);
             levels.Add(obj.GetComponent<MiningLevel>());
         }
         for (int i = 0; i < levels.Count-1; i++)
