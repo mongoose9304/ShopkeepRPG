@@ -53,7 +53,7 @@ public class MiningLevel : MonoBehaviour
         if (isTutLevel)
             SetUpMiningLevel(1);
     }
-    public void SetUpMiningLevel(float health_)
+    public virtual void SetUpMiningLevel(float health_)
     {
         GetAllRocks();
         GetAllTreasureRocks();
@@ -106,7 +106,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the rock children at the start of the game
     /// </summary>
-    private void GetAllTreasureRocks()
+    protected void GetAllTreasureRocks()
     {
         allTreasureRocks.Clear();
         allTreasureRocks.AddRange(gameObject.GetComponentsInChildren<TreasureRock>());
@@ -114,7 +114,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the rock children at the start of the game
     /// </summary>
-    private void GetAllRocks()
+    protected void GetAllRocks()
     {
         allRocks.Clear();
         allRocks.AddRange(gameObject.GetComponentsInChildren<Rock>());
@@ -122,7 +122,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the tile children at the start of the game
     /// </summary>
-    private void GetAllTiles()
+    protected void GetAllTiles()
     {
         allTiles.Clear();
         allTiles.AddRange(gameObject.GetComponentsInChildren<Tile>());
@@ -130,7 +130,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the wall children at the start of the game
     /// </summary>
-    private void GetAllWalls()
+    protected void GetAllWalls()
     {
         allWalls.Clear();
         allWalls.AddRange(gameObject.GetComponentsInChildren<Wall>());
@@ -138,7 +138,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the rock children at the start of the game
     /// </summary>
-    private void GetAllEnemies()
+    protected void GetAllEnemies()
     {
         allEnemies.Clear();
         allEnemies.AddRange(gameObject.GetComponentsInChildren<BasicMiningEnemy>());
@@ -146,7 +146,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Removes any inactive rocks
     /// </summary>
-    private void RemoveInactiveRocks()
+    protected void RemoveInactiveRocks()
     {
         for(int i=0;i<allRocks.Count;i++)
         {
@@ -180,7 +180,7 @@ public class MiningLevel : MonoBehaviour
         MiningManager.instance.currentLevel = this;
         SetUpMiningLevel(MiningManager.instance.mineHealth);
     }
-    private void RandomizeAllObjects(float health_)
+    protected void RandomizeAllObjects(float health_)
     {
         List<GameObject> tempObjs = new List<GameObject>();
         foreach(Rock rock_ in allRocks)
@@ -212,7 +212,7 @@ public class MiningLevel : MonoBehaviour
         }
        
     }
-    private void RandomizeObjects(List<GameObject> objList,int amountToSetActive_)
+    protected void RandomizeObjects(List<GameObject> objList,int amountToSetActive_)
     {
         int randomIndex = 0;
         List<int> usedObjects=new List<int>();
@@ -235,7 +235,7 @@ public class MiningLevel : MonoBehaviour
             objList[randomIndex].SetActive(true);
         }
     }
-    private void SetDeadTreasureRocks(float health_)
+    protected void SetDeadTreasureRocks(float health_)
     {
         GetAllTreasureRocks();
         int amountToSetActive_ = 0;

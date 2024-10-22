@@ -30,6 +30,7 @@ public class MiningManager : MonoBehaviour
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
+    public Transform specialLevelSpawn;
     [Tooltip("Sprites for the resources we collect")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
@@ -186,7 +187,7 @@ public class MiningManager : MonoBehaviour
             }
             levels.Clear();
             int randomIndex = Random.Range(0, specialLevelsReferences.Count);
-            GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, levelsLocations[levels.Count].transform.position, levelsLocations[levels.Count].transform.rotation);
+            GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, specialLevelSpawn.transform.position, specialLevelSpawn.transform.rotation);
             levels.Add(obj.GetComponent<MiningLevel>());
             currentLevel = levels[0];
             player.transform.position = currentLevel.startLocation.position;
