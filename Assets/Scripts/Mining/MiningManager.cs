@@ -46,6 +46,8 @@ public class MiningManager : MonoBehaviour
     public GameObject checkPointLevel;
     [Tooltip("REFERNCE to the checkpoint level spawn")]
     public GameObject checkPointPlayerPos;
+    [Tooltip("REFERNCE to the checkpoint continue object")]
+    public GameObject checkPointContinueTunnel;
     [Tooltip("REFERNCE to the location to put the player when the game is over for the victroy screen")]
     [SerializeField] GameObject victoryPlayerPos;
     [Tooltip("REFERNCE to the miningPlayer")]
@@ -207,6 +209,7 @@ public class MiningManager : MonoBehaviour
             currentLevel.gameObject.SetActive(true);
             currentLevel.StartLevel();
             myCamera.gameObject.SetActive(true);
+            checkPointContinueTunnel.SetActive(false);
             return;
         }
         InitLevels();

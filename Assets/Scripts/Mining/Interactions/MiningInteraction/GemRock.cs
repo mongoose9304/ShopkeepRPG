@@ -18,6 +18,7 @@ public class GemRock : MineableObject
         }
        GameObject temp = GameObject.Instantiate(myGem, transform.position, transform.rotation);
        temp.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(0, 0.25f), 4, Random.Range(0, 0.25f)), ForceMode.VelocityChange);
+        temp.gameObject.SetActive(true);
     }
    
     public override void MineInteraction()
