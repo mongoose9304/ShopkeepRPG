@@ -24,6 +24,8 @@ public class MiningManager : MonoBehaviour
     public List<MiningLevel> levelsReferences = new List<MiningLevel>();
     [Tooltip("A list of all the special levels that can be spawned (prefabs)")]
     public List<MiningLevel> specialLevelsReferences = new List<MiningLevel>();
+    [Tooltip("A list of all the special levels that can be spawned (prefabs)")]
+    public List<MiningLevel> treasureLevelsReferences = new List<MiningLevel>();
     [Tooltip("How many levels to spawn between checkpoints")]
     public int levelsPerCheckpoint;
     [Tooltip("A reference list of all the levels we have spawned in")]
@@ -31,6 +33,7 @@ public class MiningManager : MonoBehaviour
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
     public Transform specialLevelSpawn;
+    public Transform treasureLevelSpawn;
     [Tooltip("Sprites for the resources we collect")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
@@ -192,6 +195,13 @@ public class MiningManager : MonoBehaviour
             int randomIndex = Random.Range(0, specialLevelsReferences.Count);
             GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, specialLevelSpawn.transform.position, specialLevelSpawn.transform.rotation);
             levels.Add(obj.GetComponent<MiningLevel>());
+             randomIndex = Random.Range(0, treasureLevelsReferences.Count);
+             obj = GameObject.Instantiate(treasureLevelsReferences[randomIndex].gameObject, treasureLevelSpawn.transform.position, treasureLevelSpawn.transform.rotation);
+            levels.Add(obj.GetComponent<MiningLevel>());
+            for (int i = 0; i < levels.Count - 1; i++)
+            {
+                levels[i].nextLocation = levels[i + 1];
+            }
             currentLevel = levels[0];
             player.transform.position = currentLevel.startLocation.position;
             currentLevel.gameObject.SetActive(true);
