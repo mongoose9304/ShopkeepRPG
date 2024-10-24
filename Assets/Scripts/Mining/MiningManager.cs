@@ -216,9 +216,11 @@ public class MiningManager : MonoBehaviour
             return;
         }
         InitLevels();
+        StartCameraTeleport();
         player.transform.position = currentLevel.startLocation.position;
         currentLevel.gameObject.SetActive(true);
         currentLevel.StartLevel();
+        EndCameraTeleport();
     }
     public void StartCameraTeleport()
     {
