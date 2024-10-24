@@ -17,4 +17,5 @@ public class ChaseMiningLevel : MiningLevel
         SetDeadTreasureRocks(health_);
         CreateTunnel(tunnelPos);
     }
+   
 }

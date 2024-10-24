@@ -6,6 +6,7 @@ public class ChaseRock : MonoBehaviour
 {
     public float damage;
     public GameObject rockExplosionParticleEffect;
+    public AudioSource rockChaseAduio;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Player")
@@ -29,6 +30,14 @@ public class ChaseRock : MonoBehaviour
             //GetComponentInChildren<ConstantRotate>().enabled = false;
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().isKinematic = false;
+            StartChaseAduio(true);
         }
+    }
+    public void StartChaseAduio(bool stop = false)
+    {
+        if (stop)
+            rockChaseAduio.Stop();
+        else
+            rockChaseAduio.Play();
     }
 }
