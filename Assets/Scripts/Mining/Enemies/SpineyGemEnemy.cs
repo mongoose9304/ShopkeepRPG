@@ -11,6 +11,7 @@ public class SpineyGemEnemy : BasicMiningEnemy
     public float DirectionA;
     public float DirectionB;
     bool isGrounded=true;
+    float attackCooldown;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -34,6 +35,8 @@ public class SpineyGemEnemy : BasicMiningEnemy
             DetectObstacle();
         Rotate();
         Move();
+        if (attackCooldown > 0)
+            attackCooldown -= Time.deltaTime;
     }
     private void Move()
     {
@@ -94,6 +97,9 @@ public class SpineyGemEnemy : BasicMiningEnemy
     {
         if(other.tag=="Player")
         {
+            if (attackCooldown > 0)
+                return;
+            attackCooldown = 0.5f;
             other.gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
             if (attackAudio)
                 MMSoundManager.Instance.PlaySound(attackAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
