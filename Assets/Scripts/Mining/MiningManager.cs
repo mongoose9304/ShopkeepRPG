@@ -54,6 +54,8 @@ public class MiningManager : MonoBehaviour
     [SerializeField] MiningPlayer player;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
+    public AudioSource backgroundNoise;
+    public AudioSource backgroundNoiseCheckpoint;
     [Tooltip("REFERENCE to MinefloorSpawner available")]
     public ObjectRepeater mineFloorSpawner;
     [Tooltip("REFERENCE to MinefloorSpawner available")]
@@ -185,6 +187,7 @@ public class MiningManager : MonoBehaviour
     public void ContinueGameFromCheckPoint()
     {
         sectionsCompleted += 1;
+        PlayBackgroundNoise();
         if(sectionsCompleted>=maxSections)
         {
             foreach (MiningLevel lev in levels)
@@ -216,5 +219,24 @@ public class MiningManager : MonoBehaviour
         player.transform.position = currentLevel.startLocation.position;
         currentLevel.gameObject.SetActive(true);
         currentLevel.StartLevel();
+    }
+    public void StartCameraTeleport()
+    {
+        myCamera.gameObject.SetActive(false);
+        myCamera.Teleport();
+    }
+    public void EndCameraTeleport()
+    {
+        myCamera.gameObject.SetActive(true);
+    }
+    public void PlayBackgroundNoise()
+    {
+        backgroundNoise.Play();
+        backgroundNoiseCheckpoint.Stop();
+    }
+    public void PlayBackgroundNoiseCheckpoint()
+    {
+        backgroundNoise.Stop();
+        backgroundNoiseCheckpoint.Play();
     }
 }

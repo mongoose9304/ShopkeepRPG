@@ -55,6 +55,7 @@ public class Tunnel : InteractableObject
     public void Use()
     {
         PlayAudio();
+        MiningManager.instance.StartCameraTeleport();
         if(tutEndTunnel)
         {
             TutorialManager.instance_.EndTutorial();
@@ -71,6 +72,7 @@ public class Tunnel : InteractableObject
             }
             if (objectToSetInactive)
                 objectToSetInactive.SetActive(false);
+            MiningManager.instance.EndCameraTeleport();
             return;
         }
         Teleport(GameObject.FindGameObjectWithTag("Player"));
@@ -92,6 +94,7 @@ public class Tunnel : InteractableObject
         if (objectToSetInactive)
             objectToSetInactive.SetActive(false);
         Debug.Log("Interact");
+        MiningManager.instance.EndCameraTeleport();
     }
     /// <summary>
     /// Adjusts the UI bar based on how long you hold down for
