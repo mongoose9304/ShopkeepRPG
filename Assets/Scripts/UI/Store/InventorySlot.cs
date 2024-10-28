@@ -18,6 +18,13 @@ public class InventorySlot : MonoBehaviour
         myAmountText.text = amount.ToString();
         myItemImage.sprite = myItem.itemSprite;
     }
+    public void SetNullItem()
+    {
+        myItem = null;
+        amount = 0;
+        myAmountText.text = amount.ToString();
+        myItemImage.sprite = null;
+    }
     public void Clear()
     {
         myItem = null;

@@ -26,4 +26,15 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+    public InventorySlot GetSlotWithName(string name_)
+    {
+        foreach (InventorySlot slot_ in slots)
+        {
+            if (!slot_.myItem)
+                continue;
+            if (slot_.myItem.itemName == name_)
+                return slot_;
+        }
+        return null;
+    }
 }

@@ -60,6 +60,8 @@ public class StorePlayer : MonoBehaviour
             return;
         if (isDead)
             return;
+        if (ShopManager.instance.inMenu)
+            return;
         
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
