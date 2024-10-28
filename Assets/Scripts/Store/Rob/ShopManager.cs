@@ -20,5 +20,10 @@ public class ShopManager : MonoBehaviour
     public void CloseMenu()
     {
         inMenu = false;
+        pedScreen.gameObject.SetActive(false);
+    }
+    public void MenuBackButton()
+    {
+        CloseMenu();
     }
 }

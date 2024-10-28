@@ -61,7 +61,15 @@ public class StorePlayer : MonoBehaviour
         if (isDead)
             return;
         if (ShopManager.instance.inMenu)
+        {
+            if (Input.GetButtonDown("Fire2"))
+            {
+                ShopManager.instance.MenuBackButton();
+            }
             return;
+        }
+
+           
         
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);

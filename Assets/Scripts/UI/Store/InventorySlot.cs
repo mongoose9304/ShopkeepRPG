@@ -31,4 +31,9 @@ public class InventorySlot : MonoBehaviour
         amount = 0;
         gameObject.SetActive(false);
     }
+    public void UpdateAmount(int amount_)
+    {
+        amount = amount_;
+        myAmountText.text = amount.ToString();
+    }
 }

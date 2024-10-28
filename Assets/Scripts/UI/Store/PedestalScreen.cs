@@ -8,6 +8,7 @@ public class PedestalScreen : MonoBehaviour
     public InventoryUI  inventoryUI;
     public InventorySlot currentInventorySlot;
     public Pedestal openPedestal;
+    public GameObject buttons;
     public void OpenMenu(Pedestal p_)
     {
         openPedestal = p_;
@@ -18,17 +19,50 @@ public class PedestalScreen : MonoBehaviour
             if (inventoryUI.GetSlotWithName(p_.myItem.itemName)!=null)
             x = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             currentInventorySlot.SetItem(p_.myItem, x);
+            SetButtonsActive(true);
         }
         else if (p_.myItem != null && p_.amount == 0)
         {
             currentPedestalSlot.SetItem(p_.myItem, p_.amount);
             currentInventorySlot.myItem = p_.myItem;
             currentInventorySlot.amount = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
+            SetButtonsActive(true);
         }
         else
         {
             currentPedestalSlot.SetNullItem();
+            currentInventorySlot.SetNullItem();
+            SetButtonsActive(false);
         }
         
+    }
+    public void AddAmountOfCurrentItem(int amount_)
+    {
+       if (currentInventorySlot.amount >= amount_)
+        {
+            currentInventorySlot.UpdateAmount(currentInventorySlot.amount -= amount_);
+            currentPedestalSlot.UpdateAmount(currentPedestalSlot.amount += amount_);
+        }
+
+    }
+    public void AddMaxAmountOfCurrentItem()
+    {
+        AddAmountOfCurrentItem(currentInventorySlot.amount);
+
+    }
+    public void AddHalfAmountOfCurrentItem()
+    {
+        AddAmountOfCurrentItem(currentInventorySlot.amount/2);
+
+    }
+    public void ClearButton()
+    {
+        currentPedestalSlot.SetNullItem();
+        currentInventorySlot.SetNullItem();
+        SetButtonsActive(false);
+    }
+    public void SetButtonsActive(bool isActive_=true)
+    {
+        buttons.SetActive(isActive_);
     }
 }
