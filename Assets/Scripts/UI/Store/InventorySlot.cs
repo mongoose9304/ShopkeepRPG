@@ -10,7 +10,7 @@ public class InventorySlot : MonoBehaviour
     public int amount;
     [SerializeField] TextMeshProUGUI myAmountText;
     [SerializeField] Image myItemImage;
-
+    [SerializeField] InventoryUI myUI;
     public void SetItem(ItemData item_, int amount_)
     {
         myItem = item_;
@@ -35,5 +35,12 @@ public class InventorySlot : MonoBehaviour
     {
         amount = amount_;
         myAmountText.text = amount.ToString();
+    }
+    public void ClickedObject()
+    {
+        if(myUI)
+        {
+            myUI.InventoryButtonClicked(this);
+        }
     }
 }

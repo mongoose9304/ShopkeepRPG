@@ -6,6 +6,7 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
     public PedestalScreen pedScreen;
+    public InventoryUI invScreen;
     public bool inMenu;
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class ShopManager : MonoBehaviour
     {
         inMenu = false;
         pedScreen.gameObject.SetActive(false);
+        invScreen.OpenMenu(false);
     }
     public void MenuBackButton()
     {

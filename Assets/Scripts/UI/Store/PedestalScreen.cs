@@ -11,6 +11,7 @@ public class PedestalScreen : MonoBehaviour
     public GameObject buttons;
     public void OpenMenu(Pedestal p_)
     {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         openPedestal = p_;
         if (p_.myItem != null && p_.amount > 0)
         {
@@ -64,5 +65,20 @@ public class PedestalScreen : MonoBehaviour
     public void SetButtonsActive(bool isActive_=true)
     {
         buttons.SetActive(isActive_);
+    }
+    public void OpenInventorySection()
+    {
+        inventoryUI.OpenMenu(true);
+        inventoryUI.SetClickFunctionIndex(1);
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
+    }
+    public void ChangeItem(ItemData data_,int amount_)
+    {
+        currentPedestalSlot.SetItem(data_, 1);
+        currentInventorySlot.SetItem(data_, amount_ - 1);
+    }
+    public void ResetSelectedItem()
+    {
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
     }
 }

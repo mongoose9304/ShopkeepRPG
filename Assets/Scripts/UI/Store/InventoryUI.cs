@@ -5,6 +5,9 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     public List<InventorySlot> slots = new List<InventorySlot>();
+    public GameObject inventoryObject;
+    public PedestalScreen pedScreen;
+    [SerializeField] int clickFunctionIndex;
     private void Start()
     {
         LoadInventory();
@@ -36,5 +39,27 @@ public class InventoryUI : MonoBehaviour
                 return slot_;
         }
         return null;
+    }
+    public void OpenMenu(bool open_=true)
+    {
+        inventoryObject.SetActive(open_);
+    }
+    public void InventoryButtonClicked(InventorySlot slot_)
+    {
+        switch(clickFunctionIndex)
+        {
+            case 1:
+                pedScreen.ChangeItem(slot_.myItem, slot_.amount);
+                pedScreen.ResetSelectedItem();
+                OpenMenu(false);
+                pedScreen.SetButtonsActive(true);
+                break;
+            default:
+                break;
+        }
+    }
+    public void SetClickFunctionIndex(int index_)
+    {
+        clickFunctionIndex = index_;
     }
 }

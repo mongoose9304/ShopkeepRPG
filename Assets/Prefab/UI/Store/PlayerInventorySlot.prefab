@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -303,7 +303,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3246355593546128876}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4989042495718594183}
+        m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+        m_MethodName: ClickedObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5987246817943210737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +374,7 @@ MonoBehaviour:
   amount: 0
   myAmountText: {fileID: 6552766159634869903}
   myItemImage: {fileID: 25977212224193718}
+  myUI: {fileID: 0}
 --- !u!1 &1917034774467362072
 GameObject:
   m_ObjectHideFlags: 0
