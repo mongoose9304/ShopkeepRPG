@@ -29,4 +29,5 @@ public class Pedestal : InteractableObject
         amount = 0;
         myItemImage.sprite = null;
     }
+   
 }

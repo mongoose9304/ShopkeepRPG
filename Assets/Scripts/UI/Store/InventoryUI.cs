@@ -52,7 +52,6 @@ public class InventoryUI : MonoBehaviour
                 pedScreen.ChangeItem(slot_.myItem, slot_.amount);
                 pedScreen.ResetSelectedItem();
                 OpenMenu(false);
-                pedScreen.SetButtonsActive(true);
                 break;
             default:
                 break;
