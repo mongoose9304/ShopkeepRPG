@@ -8,6 +8,7 @@ public class Pedestal : InteractableObject
     public ItemData myItem;
     public int amount;
     public Image myItemImage;
+ 
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
@@ -28,6 +29,11 @@ public class Pedestal : InteractableObject
         myItem = null;
         amount = 0;
         myItemImage.sprite = null;
+    }
+    public void SetInUse(bool inUse)
+    {
+
+        GetComponent<Collider>().enabled = !inUse;
     }
    
 }

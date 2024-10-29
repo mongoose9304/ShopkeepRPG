@@ -67,6 +67,8 @@ public class BarginBinScreen : MonoBehaviour
             addingButtons.SetActive(false);
         }
         inventoryObject.SetActive(false);
+        SetItemName();
+        CalculateItemValue();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentlySelectedSlot.gameObject);
     }
     public void OpenInventorySection()
