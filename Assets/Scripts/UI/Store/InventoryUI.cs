@@ -7,6 +7,7 @@ public class InventoryUI : MonoBehaviour
     public List<InventorySlot> slots = new List<InventorySlot>();
     public GameObject inventoryObject;
     public PedestalScreen pedScreen;
+    public BarginBinScreen barginBinScreen;
     [SerializeField] int clickFunctionIndex;
     private void Start()
     {
@@ -51,6 +52,11 @@ public class InventoryUI : MonoBehaviour
             case 1:
                 pedScreen.ChangeItem(slot_.myItem, slot_.amount);
                 pedScreen.ResetSelectedItem();
+                OpenMenu(false);
+                break;
+            case 2:
+                barginBinScreen.ChangeItem(slot_.myItem, slot_.amount);
+                barginBinScreen.ResetSelectedItem();
                 OpenMenu(false);
                 break;
             default:
