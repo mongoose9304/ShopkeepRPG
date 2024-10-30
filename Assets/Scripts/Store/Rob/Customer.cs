@@ -63,6 +63,7 @@ public class Customer : MonoBehaviour
     public void SetTarget(GameObject location)
     {
         myAgent.SetDestination(location.transform.position);
+        tempTarget = location;
         if(location.TryGetComponent<Pedestal>(out Pedestal p))
         {
             hagglePedestal = p;
@@ -119,5 +120,23 @@ public class Customer : MonoBehaviour
     {
         mood += mood_;
         Mathf.Clamp(mood, 0.1f, 1.0f);
+    }
+    public void EndHaggle(int cost_)
+    {
+        cashOnHand -= cost_;
+        haggleInteraction.SetActive(false);
+        haggleIndicator.SetActive(false);
+        LeaveShop();
+    }
+    public void LeaveShop()
+    {
+        SetTarget(ShopManager.instance.GetRandomNPCExit());
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag=="EndZone")
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

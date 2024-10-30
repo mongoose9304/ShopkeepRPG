@@ -7,6 +7,7 @@ using MoreMountains.Feedbacks;
 public class ShopManager : MonoBehaviour
 {
     public TextMeshProUGUI cashEarnedText;
+    public GameObject[] exitSpots;
     public int currentCashEarned;
     public static ShopManager instance;
     public PedestalScreen pedScreen;
@@ -63,5 +64,9 @@ public class ShopManager : MonoBehaviour
         currentCashEarned += cash;
         cashCounter.CountTo = currentCashEarned;
         cashFeedback.PlayFeedbacks();
+    }
+    public GameObject GetRandomNPCExit()
+    {
+        return exitSpots[Random.Range(0, exitSpots.Length)];
     }
 }

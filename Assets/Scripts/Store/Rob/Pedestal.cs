@@ -35,5 +35,9 @@ public class Pedestal : InteractableObject
 
         gameObject.SetActive(!inUse);
     }
+    public void ItemSold()
+    {
+        ClearItem();
+    }
    
 }

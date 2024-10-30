@@ -47,6 +47,8 @@ public class HaggleUI : MonoBehaviour
         switch (currentCustomer.AttemptHaggle(currentSellValue, currentHaggleAmount))
         {
             case 0:
+                currentCustomer.EndHaggle(currentSellValue);
+                openPedestal.ItemSold();
                 ShopManager.instance.AddCash(currentSellValue);
                 ShopManager.instance.CloseMenu();
                 break;
