@@ -75,8 +75,9 @@ public class MiningPlayer : MonoBehaviour
     [Tooltip("The layermask for tiles and the floor")]
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip pickaxeAudio;
+    [SerializeField] AudioClip pickaxeWhiffAudio;
     [SerializeField] AudioClip dashAudio;
-
+    [SerializeField] bool isDead;
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     float currentHealth;
@@ -94,6 +95,8 @@ public class MiningPlayer : MonoBehaviour
     void Update()
     {
         if (TempPause.instance.isPaused)
+            return;
+        if (isDead)
             return;
         
         GetInput();
@@ -143,7 +146,8 @@ public class MiningPlayer : MonoBehaviour
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
                // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 transform.position =  PreventGoingThroughWalls(temp);
-
+                if(dashTime<=0.1f)
+                DashEdgeCheck();
 
             }
 
@@ -271,6 +275,9 @@ public class MiningPlayer : MonoBehaviour
         myPickaxe.SetActive(true);
         myPickaxe.transform.localEulerAngles = startRotation;
         isSwinging = true;
+        MMSoundManager.Instance.PlaySound(pickaxeWhiffAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     /// <summary>
     /// Calculates the nearest mining object and sets that as the minable target that will be used for lock ons
@@ -522,6 +529,20 @@ public class MiningPlayer : MonoBehaviour
         }
     }
     /// <summary>
+    /// Stop the player from going over the edge near the end of their dash to make the dash feel smoother.
+    /// </summary>
+    private void DashEdgeCheck()
+    {
+        if (!Physics.Raycast(transform.position+transform.forward, transform.TransformDirection(Vector3.down), 10))
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
+            {
+                dashTime = 0;
+                isDashing = false;
+            }
+        }
+    }
+    /// <summary>
     /// Returns the tile you are standing on if any
     /// </summary>
     /// <returns></returns>
@@ -563,7 +584,10 @@ public class MiningPlayer : MonoBehaviour
     /// </summary>
     public void Death()
     {
-
+        if (isDead)
+            return;
+        isDead = true;
+        MiningManager.instance.WinLevel(true);
     }
    
    public void ApplyPowerUp(float amount_=1, MiningPowerType power = MiningPowerType.Heal)

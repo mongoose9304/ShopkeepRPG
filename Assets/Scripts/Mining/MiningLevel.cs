@@ -20,6 +20,10 @@ public class MiningLevel : MonoBehaviour
     public int minTreasureAmount = 1;
     [Tooltip("Max amount of treasure")]
     public int maxTreasureAmount = 1;
+    [Tooltip("Min amount of enemies")]
+    public int minEnemiesAmount = 1;
+    [Tooltip("Max amount of enemies")]
+    public int maxEnemiesAmount = 1;
     [Tooltip("The location the player will start")]
     public Transform startLocation;
     [Tooltip("The next level a player will go to")]
@@ -36,6 +40,8 @@ public class MiningLevel : MonoBehaviour
     public List<Tile> allTiles = new List<Tile>();
     [Tooltip("REFERENCE all the walls that are children of this object, auto collected on play")]
     public List<Wall> allWalls = new List<Wall>();
+    [Tooltip("REFERENCE all the enemies that are children of this object, auto collected on play")]
+    public List<BasicMiningEnemy> allEnemies = new List<BasicMiningEnemy>();
     [Tooltip("REFERENCE to what the walls should look like for this level")]
     public Material wallMat;
     [Tooltip("REFERENCE to what half the tiles should look like for this level")]
@@ -47,14 +53,16 @@ public class MiningLevel : MonoBehaviour
         if (isTutLevel)
             SetUpMiningLevel(1);
     }
-    public void SetUpMiningLevel(float health_)
+    public virtual void SetUpMiningLevel(float health_)
     {
         GetAllRocks();
         GetAllTreasureRocks();
         GetAllTiles();
         GetAllWalls();
+        GetAllEnemies();
         SetMaterials();
         RandomizeAllObjects(health_);
+        SetDeadTreasureRocks(health_);
         DecideTunnelHolder();
         //Invoke("DecideTunnelHolder", 1.1f);
     }
@@ -98,7 +106,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the rock children at the start of the game
     /// </summary>
-    private void GetAllTreasureRocks()
+    protected void GetAllTreasureRocks()
     {
         allTreasureRocks.Clear();
         allTreasureRocks.AddRange(gameObject.GetComponentsInChildren<TreasureRock>());
@@ -106,7 +114,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the rock children at the start of the game
     /// </summary>
-    private void GetAllRocks()
+    protected void GetAllRocks()
     {
         allRocks.Clear();
         allRocks.AddRange(gameObject.GetComponentsInChildren<Rock>());
@@ -114,7 +122,7 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the tile children at the start of the game
     /// </summary>
-    private void GetAllTiles()
+    protected void GetAllTiles()
     {
         allTiles.Clear();
         allTiles.AddRange(gameObject.GetComponentsInChildren<Tile>());
@@ -122,15 +130,23 @@ public class MiningLevel : MonoBehaviour
     /// <summary>
     /// Gets all the wall children at the start of the game
     /// </summary>
-    private void GetAllWalls()
+    protected void GetAllWalls()
     {
         allWalls.Clear();
         allWalls.AddRange(gameObject.GetComponentsInChildren<Wall>());
     }
     /// <summary>
+    /// Gets all the rock children at the start of the game
+    /// </summary>
+    protected void GetAllEnemies()
+    {
+        allEnemies.Clear();
+        allEnemies.AddRange(gameObject.GetComponentsInChildren<BasicMiningEnemy>());
+    }
+    /// <summary>
     /// Removes any inactive rocks
     /// </summary>
-    private void RemoveInactiveRocks()
+    protected void RemoveInactiveRocks()
     {
         for(int i=0;i<allRocks.Count;i++)
         {
@@ -164,7 +180,7 @@ public class MiningLevel : MonoBehaviour
         MiningManager.instance.currentLevel = this;
         SetUpMiningLevel(MiningManager.instance.mineHealth);
     }
-    private void RandomizeAllObjects(float health_)
+    protected void RandomizeAllObjects(float health_)
     {
         List<GameObject> tempObjs = new List<GameObject>();
         foreach(Rock rock_ in allRocks)
@@ -178,8 +194,25 @@ public class MiningLevel : MonoBehaviour
             tempObjs.Add(rock_.gameObject);
         }
         RandomizeObjects(tempObjs, Mathf.RoundToInt(Random.Range(minTreasureAmount, maxTreasureAmount) * health_));
+        tempObjs.Clear();
+        if (MiningManager.instance.sectionsCompleted==0)
+        {
+            foreach (BasicMiningEnemy enemy_ in allEnemies)
+            {
+                enemy_.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            foreach (BasicMiningEnemy enemy_ in allEnemies)
+            {
+                tempObjs.Add(enemy_.gameObject);
+            }
+            RandomizeObjects(tempObjs, Mathf.RoundToInt(Random.Range(minEnemiesAmount, maxEnemiesAmount)));
+        }
+       
     }
-    private void RandomizeObjects(List<GameObject> objList,int amountToSetActive_)
+    protected void RandomizeObjects(List<GameObject> objList,int amountToSetActive_)
     {
         int randomIndex = 0;
         List<int> usedObjects=new List<int>();
@@ -200,6 +233,38 @@ public class MiningLevel : MonoBehaviour
             }
             usedObjects.Add(randomIndex);
             objList[randomIndex].SetActive(true);
+        }
+    }
+    protected void SetDeadTreasureRocks(float health_)
+    {
+        GetAllTreasureRocks();
+        int amountToSetActive_ = 0;
+        if (health_<=0.6f)
+        {
+            amountToSetActive_ = 2;
+        }
+        else if(health_ <= 0.8f)
+        {
+            amountToSetActive_ = 1;
+        }
+        int randomIndex = 0;
+        List<int> usedObjects = new List<int>();
+        for (int i = 0; i < amountToSetActive_; i++)
+        {
+            randomIndex = Random.Range(0, allTreasureRocks.Count);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, allTreasureRocks.Count);
+                if (usedObjects.Count >= allTreasureRocks.Count)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            GameObject obj = MiningManager.instance.GetDeadRock();
+            obj.transform.position = allTreasureRocks[randomIndex].gameObject.transform.position;
+            obj.SetActive(true);
+            allTreasureRocks[randomIndex].gameObject.SetActive(false);
         }
     }
 }

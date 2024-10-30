@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class SpineyGemEnemy : BasicMiningEnemy
     public float DirectionA;
     public float DirectionB;
     bool isGrounded=true;
+    float attackCooldown;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -33,6 +35,8 @@ public class SpineyGemEnemy : BasicMiningEnemy
             DetectObstacle();
         Rotate();
         Move();
+        if (attackCooldown > 0)
+            attackCooldown -= Time.deltaTime;
     }
     private void Move()
     {
@@ -93,7 +97,14 @@ public class SpineyGemEnemy : BasicMiningEnemy
     {
         if(other.tag=="Player")
         {
+            if (attackCooldown > 0)
+                return;
+            attackCooldown = 0.5f;
             other.gameObject.GetComponent<MiningPlayer>().TakeDamage(damage);
+            if (attackAudio)
+                MMSoundManager.Instance.PlaySound(attackAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+            false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+            1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         }
     }
 }

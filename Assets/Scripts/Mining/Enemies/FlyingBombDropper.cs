@@ -1,25 +1,26 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MoreMountains.Feedbacks;
+
 public class FlyingBombDropper : BasicMiningEnemy
 {
     Vector3 moveDirection;
-   [SerializeField] Vector3 tileTargetPos;
-    Vector3 landingTargetPos;
-    [SerializeField] int maxDistance;
-    [SerializeField] int minDistance;
-    [SerializeField] int tileSize=2;
-    [SerializeField] float maxLandingTime;
-    [SerializeField] float maxFlyingTime;
-    [SerializeField] float landingDistance;
+   [SerializeField] protected Vector3 tileTargetPos;
+    protected Vector3 landingTargetPos;
+    [SerializeField] protected int maxDistance;
+    [SerializeField] protected int minDistance;
+    [SerializeField] protected int tileSize=2;
+    [SerializeField] protected float maxLandingTime;
+    [SerializeField]protected float maxFlyingTime;
+    [SerializeField] protected float landingDistance;
     [SerializeField] GameObject bombPrefab;
-    [SerializeField] GameObject visualBomb;
+    [SerializeField]public GameObject visualBomb;
     public float flyingTime;
    public float landingTime;
    public float attackTime;
-    [SerializeField] LayerMask tileLayer;
-    bool isLanding=true;
+    [SerializeField]protected LayerMask tileLayer;
+    protected bool isLanding =true;
     GameObject myBomb;
 
     protected override void Start()
@@ -139,7 +140,7 @@ public class FlyingBombDropper : BasicMiningEnemy
             }
         }
     }
-    private void DropBomb()
+    protected virtual void DropBomb()
     {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 10, tileLayer))
@@ -153,6 +154,10 @@ public class FlyingBombDropper : BasicMiningEnemy
                 myBomb.GetComponent<MoveTowardsTarget>().target = transform.position - new Vector3(0, landingDistance, 0);
                 myBomb.SetActive(true);
                 attackTime = maxAttackCooldown;
+                if (attackAudio)
+                    MMSoundManager.Instance.PlaySound(attackAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+                false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(1.95f, 2.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+                1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
             }
         }
        

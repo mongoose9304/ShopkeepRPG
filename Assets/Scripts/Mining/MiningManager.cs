@@ -14,32 +14,55 @@ public class MiningManager : MonoBehaviour
     public static MiningManager instance;
     [Tooltip("What level we are on")]
     public MiningLevel currentLevel;
+    [Tooltip("How many Sections We have completed")]
+    public int sectionsCompleted;
+    [Tooltip("How many sections are there")]
+    public int maxSections;
     [Tooltip("What is the state of the mine")]
     public float mineHealth;
-    [Tooltip("A list of all the levels that will be spawned (prefabs)")]
+    [Tooltip("A list of all the levels that can be spawned (prefabs)")]
     public List<MiningLevel> levelsReferences = new List<MiningLevel>();
+    [Tooltip("A list of all the special levels that can be spawned (prefabs)")]
+    public List<MiningLevel> specialLevelsReferences = new List<MiningLevel>();
+    [Tooltip("A list of all the special levels that can be spawned (prefabs)")]
+    public List<MiningLevel> treasureLevelsReferences = new List<MiningLevel>();
+    [Tooltip("How many levels to spawn between checkpoints")]
+    public int levelsPerCheckpoint;
     [Tooltip("A reference list of all the levels we have spawned in")]
     public List<MiningLevel> levels = new List<MiningLevel>();
     [Tooltip("Transforms we can spawn levels at")]
     public List<Transform> levelsLocations = new List<Transform>();
+    public Transform specialLevelSpawn;
+    public Transform treasureLevelSpawn;
     [Tooltip("Sprites for the resources we collect")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the pool of stone world objects")]
     [SerializeField] MMMiniObjectPooler stoneWorldObjectPooler;
+    [Tooltip("REFERNCE to the pool of dead treasure rocks")]
+    [SerializeField] MMMiniObjectPooler deadTreasureRocksObjectPooler;
     [Tooltip("REFERNCE to the decorative end level")]
     [SerializeField] GameObject victoryLevel;
     [Tooltip("REFERNCE to the checkpoint level where players can return or continue mining")]
     public GameObject checkPointLevel;
     [Tooltip("REFERNCE to the checkpoint level spawn")]
     public GameObject checkPointPlayerPos;
+    [Tooltip("REFERNCE to the checkpoint continue object")]
+    public GameObject checkPointContinueTunnel;
     [Tooltip("REFERNCE to the location to put the player when the game is over for the victroy screen")]
     [SerializeField] GameObject victoryPlayerPos;
     [Tooltip("REFERNCE to the miningPlayer")]
     [SerializeField] MiningPlayer player;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
-    [Tooltip("REFERENCE to BGMs available")]
+    public AudioSource backgroundNoise;
+    public AudioSource backgroundNoiseCheckpoint;
+    [Tooltip("REFERENCE to MinefloorSpawner available")]
+    public ObjectRepeater mineFloorSpawner;
+    [Tooltip("REFERENCE to MinefloorSpawner available")]
+    public GameObject mineFloor;
+    [Tooltip("REFERENCE to CosmeticZones available")]
     public List<MiningCosmeticZone> cosmeticZones = new List<MiningCosmeticZone>();
+    public CameraHelper myCamera;
     private void Awake()
     {
         instance = this;
@@ -50,16 +73,33 @@ public class MiningManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
         PlayRandomBGM();
         PlayNextLevel();
+        SpawnFloor();
     }
     /// <summary>
     /// Set up all the levels and spawn them in
     /// </summary>
     public void InitLevels()
     {
-        levels.Clear();
-        for(int i=0;i< levelsReferences.Count;i++)
+        foreach(MiningLevel obj in levels)
         {
-           GameObject obj= GameObject.Instantiate(levelsReferences[i].gameObject,levelsLocations[i].transform.position, levelsLocations[i].transform.rotation);
+            Destroy(obj.gameObject);
+        }
+        levels.Clear();
+        int randomIndex = 0;
+        List<int> usedObjects = new List<int>();
+        for (int i = 0; i < levelsPerCheckpoint; i++)
+        {
+            randomIndex = Random.Range(0, levelsReferences.Count);
+            while (usedObjects.Contains(randomIndex))
+            {
+                randomIndex = Random.Range(0, levelsReferences.Count);
+                if (usedObjects.Count >= levelsReferences.Count)
+                {
+                    usedObjects.Clear();
+                }
+            }
+            usedObjects.Add(randomIndex);
+            GameObject obj = GameObject.Instantiate(levelsReferences[randomIndex].gameObject, levelsLocations[levels.Count].transform.position, levelsLocations[levels.Count].transform.rotation);
             levels.Add(obj.GetComponent<MiningLevel>());
         }
         for (int i = 0; i < levels.Count-1; i++)
@@ -86,7 +126,7 @@ public class MiningManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
-    public void WinLevel()
+    public void WinLevel(bool loss_=false)
     {
         player.enabled = false;
         victoryLevel.SetActive(true);
@@ -99,7 +139,7 @@ public class MiningManager : MonoBehaviour
         y.Add(1000);
         x.Add(LootManager.instance.currentResource);
         LootDisplayManager.instance.AddResources(x,y,resourceSprites);
-        LootDisplayManager.instance.StartVictoryScreen();
+        LootDisplayManager.instance.StartVictoryScreen(loss_);
 
     }
     public void PlayNextLevel()
@@ -133,5 +173,72 @@ public class MiningManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public GameObject GetDeadRock()
+    {
+        return deadTreasureRocksObjectPooler.GetPooledGameObject();
+    }
+    private void SpawnFloor()
+    {
+        mineFloorSpawner.objectToRepeat = mineFloor;
+        mineFloor.GetComponent<MiningCosmeticZone>().SetUpCosmetics(mineHealth);
+        mineFloorSpawner.SpawnObjects();
+    }
+    public void ContinueGameFromCheckPoint()
+    {
+        sectionsCompleted += 1;
+        PlayBackgroundNoise();
+        if(sectionsCompleted>=maxSections)
+        {
+            foreach (MiningLevel lev in levels)
+            {
+                Destroy(lev.gameObject);
+            }
+            levels.Clear();
+            myCamera.gameObject.SetActive(false);
+            myCamera.Teleport();
+            int randomIndex = Random.Range(0, specialLevelsReferences.Count);
+            GameObject obj = GameObject.Instantiate(specialLevelsReferences[randomIndex].gameObject, specialLevelSpawn.transform.position, specialLevelSpawn.transform.rotation);
+            levels.Add(obj.GetComponent<MiningLevel>());
+             randomIndex = Random.Range(0, treasureLevelsReferences.Count);
+             obj = GameObject.Instantiate(treasureLevelsReferences[randomIndex].gameObject, treasureLevelSpawn.transform.position, treasureLevelSpawn.transform.rotation);
+            levels.Add(obj.GetComponent<MiningLevel>());
+            for (int i = 0; i < levels.Count - 1; i++)
+            {
+                levels[i].nextLocation = levels[i + 1];
+            }
+            currentLevel = levels[0];
+            player.transform.position = currentLevel.startLocation.position;
+            currentLevel.gameObject.SetActive(true);
+            currentLevel.StartLevel();
+            myCamera.gameObject.SetActive(true);
+            checkPointContinueTunnel.SetActive(false);
+            return;
+        }
+        InitLevels();
+        StartCameraTeleport();
+        player.transform.position = currentLevel.startLocation.position;
+        currentLevel.gameObject.SetActive(true);
+        currentLevel.StartLevel();
+        EndCameraTeleport();
+    }
+    public void StartCameraTeleport()
+    {
+        myCamera.gameObject.SetActive(false);
+        myCamera.Teleport();
+    }
+    public void EndCameraTeleport()
+    {
+        myCamera.gameObject.SetActive(true);
+    }
+    public void PlayBackgroundNoise()
+    {
+        backgroundNoise.Play();
+        backgroundNoiseCheckpoint.Stop();
+    }
+    public void PlayBackgroundNoiseCheckpoint()
+    {
+        backgroundNoise.Stop();
+        backgroundNoiseCheckpoint.Play();
     }
 }
