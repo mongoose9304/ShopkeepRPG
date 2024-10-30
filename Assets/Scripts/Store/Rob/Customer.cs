@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     [SerializeField] GameObject tempTarget;
     public int cashOnHand;
     public float haggleValueMax;
+    public float mood;
     public Pedestal hagglePedestal;
     public GameObject haggleInteraction;
     private bool isMoving;
@@ -70,7 +71,47 @@ public class Customer : MonoBehaviour
     }
     public void BeginHaggle()
     {
-        haggleIndicator.SetActive(false);
+        //haggleIndicator.SetActive(false);
+        ShopManager.instance.OpenHaggleScreen(hagglePedestal,this,1);
+    }
+    //return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
+    public int AttemptHaggle(int itemCost_,float haggleAmount)
+    {
+        if(itemCost_>cashOnHand)
+        {
+            return 1;
+        }
+        if (haggleAmount > haggleValueMax)
+        {
+            ChangeMood(-0.05f);
+            //if they get a bad deal they should be unhappy
+            return 2;
+        }
+        if(haggleAmount > haggleValueMax*mood)
+        {
+            ChangeMood(-0.01f);
+            //if they get a slightly bad deal they should be slightly unhappy
+            return 2;
+        }
 
+        if (haggleAmount < haggleValueMax/1.25f)
+        {
+            ChangeMood(0.1f);
+            //if they get a good deal they should be happy
+        }
+        if(haggleAmount<=0.1f)
+        {
+            ChangeMood(0.3f);
+            //if they get a really good deal they should be really happy
+        }
+
+
+
+        return 0;
+    }
+    private void ChangeMood(float mood_)
+    {
+        mood += mood_;
+        Mathf.Clamp(mood, 0.1f, 1.0f);
     }
 }

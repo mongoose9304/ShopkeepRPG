@@ -11801,11 +11801,10 @@ GameObject:
   - component: {fileID: 700249448}
   - component: {fileID: 700249453}
   - component: {fileID: 700249452}
-  - component: {fileID: 700249451}
   - component: {fileID: 700249450}
   - component: {fileID: 700249449}
   m_Layer: 5
-  m_Name: CurrentHaggleSLot
+  m_Name: CurrentHaggleSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11896,50 +11895,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &700249451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700249447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 4
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1530406070}
-    m_SelectOnDown: {fileID: 1697692352}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 700249452}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &700249452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17453,7 +17408,7 @@ RectTransform:
   m_Father: {fileID: 1873066560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -20711,6 +20666,7 @@ MonoBehaviour:
   pedScreen: {fileID: 9201302716701393351}
   invScreen: {fileID: 1029262868}
   barginScreen: {fileID: 1521536848}
+  haggleScreen: {fileID: 1344148132}
   inMenu: 0
 --- !u!114 &1082197084
 MonoBehaviour:
@@ -20878,6 +20834,7 @@ MonoBehaviour:
   tempTarget: {fileID: 19575236}
   cashOnHand: 999999
   haggleValueMax: 2
+  mood: 0
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 1200420983}
   haggleIndicator: {fileID: 1732377508}
@@ -29758,14 +29715,14 @@ GameObject:
   - component: {fileID: 1344148128}
   - component: {fileID: 1344148131}
   - component: {fileID: 1344148130}
-  - component: {fileID: 1344148129}
+  - component: {fileID: 1344148132}
   m_Layer: 5
   m_Name: HaggleUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1344148128
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29788,43 +29745,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1344148129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344148127}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab4f11dcb8c22246ba5861654a6a86d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentlySelectedSlot: {fileID: 0}
-  inventoryUI: {fileID: 1029262868}
-  currentInventorySlot: {fileID: 0}
-  openBarginBin: {fileID: 0}
-  buttons: {fileID: 0}
-  inventoryObject: {fileID: 0}
-  addingButtons: {fileID: 0}
-  currentItemNameText: {fileID: 0}
-  currentItemValue: {fileID: 0}
-  slots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &1344148130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29870,6 +29790,32 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!114 &1344148132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344148127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1608d02bbd6a4842b217ac7f210d2ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHaggleSlot: {fileID: 700249449}
+  openPedestal: {fileID: 0}
+  currentCustomer: {fileID: 0}
+  haggleSlider: {fileID: 1697692352}
+  sellButton: {fileID: 1530406067}
+  currentItemNameText: {fileID: 546873137}
+  currentItemValue: {fileID: 783073711}
+  haggleItemValue: {fileID: 1408107338}
+  currentHaggleAmount: 1
+  currentSellValue: 0
+  dialogueText: {fileID: 1943509018}
+  greetings: []
+  wayTooHigh: []
+  bitTooHigh: []
 --- !u!1001 &1366865014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30754,8 +30700,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1584615392}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -32890,7 +32836,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
+    m_SelectOnUp: {fileID: 1697692352}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -36554,7 +36500,7 @@ GameObject:
   - component: {fileID: 1697692351}
   - component: {fileID: 1697692352}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: HaggleSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36595,10 +36541,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 1530406070}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -36626,13 +36572,25 @@ MonoBehaviour:
   m_FillRect: {fileID: 751449690}
   m_HandleRect: {fileID: 1402183699}
   m_Direction: 0
-  m_MinValue: 0.5
-  m_MaxValue: 1.5
+  m_MinValue: 0
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0.992
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1344148132}
+        m_TargetAssemblyTypeName: HaggleUI, Assembly-CSharp
+        m_MethodName: SetHaggleAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1702142123
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46134,7 +46092,7 @@ GameObject:
   - component: {fileID: 1943509019}
   - component: {fileID: 1943509018}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46179,7 +46137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: I'd like this please.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
