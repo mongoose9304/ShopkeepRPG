@@ -77,6 +77,12 @@ public class Customer : MonoBehaviour
     //return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
     public int AttemptHaggle(int itemCost_,float haggleAmount)
     {
+        if(itemCost_==0)
+        {
+            ChangeMood(0.3f);
+            //no one refuses free stuff
+            return 0;
+        }
         if(itemCost_>cashOnHand)
         {
             return 1;

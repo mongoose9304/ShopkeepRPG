@@ -10933,6 +10933,7 @@ MonoBehaviour:
   - rid: 201196578852831233
   - rid: 201196578852831235
   - rid: 201196578852831237
+  - rid: 2923330533129453568
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
@@ -11693,6 +11694,109 @@ MonoBehaviour:
           m_NumColorKeys: 3
           m_NumAlphaKeys: 2
         InstantColor: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 2923330533129453568
+      type: {class: MMF_TMPCountTo, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks.TextMeshPro}
+      data:
+        Active: 1
+        UniqueID: 1631342161
+        Label: TMP Count To
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        Owner: {fileID: 697964818}
+        DebugActive: 0
+        TargetTMPText: {fileID: 697964819}
+        CountFrom: 0
+        CountTo: 0
+        CountingCurve:
+          MMTweenDefinitionType: 1
+          MMTweenCurve: 4
+          Curve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 2
+              outSlope: 2
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          Initialized: 0
+        Duration: 1
+        Format: 00
+        FloorValues: 1
+        MinRefreshFrequency: 0
 --- !u!114 &697964819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20663,11 +20767,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5261eeb35478d0948b767f195e90b714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cashEarnedText: {fileID: 697964819}
+  currentCashEarned: 0
   pedScreen: {fileID: 9201302716701393351}
   invScreen: {fileID: 1029262868}
   barginScreen: {fileID: 1521536848}
   haggleScreen: {fileID: 1344148132}
   inMenu: 0
+  cashFeedback: {fileID: 0}
 --- !u!114 &1082197084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20834,7 +20941,7 @@ MonoBehaviour:
   tempTarget: {fileID: 19575236}
   cashOnHand: 999999
   haggleValueMax: 2
-  mood: 0
+  mood: 0.8
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 1200420983}
   haggleIndicator: {fileID: 1732377508}
@@ -22644,18 +22751,6 @@ MonoBehaviour:
   myEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200420983}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1097908087}
         m_TargetAssemblyTypeName: Customer, Assembly-CSharp
         m_MethodName: BeginHaggle
@@ -29813,9 +29908,16 @@ MonoBehaviour:
   currentHaggleAmount: 1
   currentSellValue: 0
   dialogueText: {fileID: 1943509018}
-  greetings: []
-  wayTooHigh: []
-  bitTooHigh: []
+  greetings:
+  - I would like this please
+  - Hey how are you, can I have this please?
+  wayTooHigh:
+  - That's outrageous!
+  - NO WAY!
+  - You're a crook! Lower that price this instant!
+  bitTooHigh:
+  - That's a little steep, can you go lower?
+  - That's a bit too much don't you think?
 --- !u!1001 &1366865014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32865,14 +32967,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9201302716701393351}
-        m_TargetAssemblyTypeName: PedestalScreen, Assembly-CSharp
-        m_MethodName: AddAmountOfCurrentItem
-        m_Mode: 3
+      - m_Target: {fileID: 1344148132}
+        m_TargetAssemblyTypeName: HaggleUI, Assembly-CSharp
+        m_MethodName: Sell
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -46091,6 +46193,7 @@ GameObject:
   - component: {fileID: 1943509017}
   - component: {fileID: 1943509019}
   - component: {fileID: 1943509018}
+  - component: {fileID: 1943509020}
   m_Layer: 5
   m_Name: DialogueText
   m_TagString: Untagged
@@ -46137,7 +46240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: thats a bit much dont you think? Can you go lower?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -46164,7 +46267,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 95.95
+  m_fontSize: 61.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -46214,6 +46317,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943509016}
   m_CullTransparentMesh: 1
+--- !u!114 &1943509020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943509016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1360375efe462cd4ab520d1661206035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightToLeft: 0
+  charactersPerSecond: 40
+  audioClip: {fileID: 0}
+  alternateAudioClips: []
+  audioSource: {fileID: 0}
+  usePlayOneShot: 0
+  interruptAudioClip: 0
+  stopAudioOnSilentCharacters: 0
+  stopAudioOnPauseCodes: 0
+  silentCharacters: 
+  fullPauseCharacters: '!'
+  quarterPauseCharacters: ',?.'
+  fullPauseDuration: 1
+  quarterPauseDuration: 0.25
+  removeDuplicateTypewriterEffects: 1
+  playOnEnable: 1
+  waitOneFrameBeforeStarting: 0
+  stopOnConversationEnd: 0
+  autoScrollSettings:
+    autoScrollEnabled: 0
+    scrollRect: {fileID: 0}
+    scrollbarEnabler: {fileID: 0}
+  onBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacter:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1953241318
 GameObject:
   m_ObjectHideFlags: 0

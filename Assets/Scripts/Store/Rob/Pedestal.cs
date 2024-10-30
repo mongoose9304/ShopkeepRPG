@@ -33,7 +33,7 @@ public class Pedestal : InteractableObject
     public void SetInUse(bool inUse)
     {
 
-        GetComponent<Collider>().enabled = !inUse;
+        gameObject.SetActive(!inUse);
     }
    
 }

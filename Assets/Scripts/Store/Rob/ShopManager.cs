@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using MoreMountains.Feedbacks;
 
 public class ShopManager : MonoBehaviour
 {
+    public TextMeshProUGUI cashEarnedText;
+    public int currentCashEarned;
     public static ShopManager instance;
     public PedestalScreen pedScreen;
     public InventoryUI invScreen;
     public BarginBinScreen barginScreen;
     public HaggleUI haggleScreen;
     public bool inMenu;
+    MMF_TMPCountTo cashCounter;
+    [SerializeField] MMF_Player cashFeedback;
     private void Awake()
     {
         instance = this;
+        if (cashFeedback)
+            cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
     }
     public void OpenPedestal(Pedestal p_)
     {
@@ -43,5 +51,17 @@ public class ShopManager : MonoBehaviour
     public void MenuBackButton()
     {
         CloseMenu();
+    }
+    public void ResetCashEarned()
+    {
+        currentCashEarned = 0;
+        cashEarnedText.text = currentCashEarned.ToString();
+    }
+    public void AddCash(int cash)
+    {
+        cashCounter.CountFrom = currentCashEarned;
+        currentCashEarned += cash;
+        cashCounter.CountTo = currentCashEarned;
+        cashFeedback.PlayFeedbacks();
     }
 }
