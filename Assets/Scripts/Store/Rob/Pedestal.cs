@@ -32,7 +32,7 @@ public class Pedestal : InteractableObject
     }
     public void SetInUse(bool inUse)
     {
-
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
         gameObject.SetActive(!inUse);
     }
     public void ItemSold()

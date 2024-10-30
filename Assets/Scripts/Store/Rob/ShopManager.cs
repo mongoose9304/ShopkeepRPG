@@ -7,6 +7,7 @@ using MoreMountains.Feedbacks;
 public class ShopManager : MonoBehaviour
 {
     public TextMeshProUGUI cashEarnedText;
+    public StorePlayer player;
     public GameObject[] exitSpots;
     public int currentCashEarned;
     public static ShopManager instance;
@@ -68,5 +69,10 @@ public class ShopManager : MonoBehaviour
     public GameObject GetRandomNPCExit()
     {
         return exitSpots[Random.Range(0, exitSpots.Length)];
+    }
+    public void RemoveInteractableObject(GameObject obj)
+    {
+        if (player.myInteractableObjects.Contains(obj))
+            player.RemoveInteractableObject(obj);
     }
 }

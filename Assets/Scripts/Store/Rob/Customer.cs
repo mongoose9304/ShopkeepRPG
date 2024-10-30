@@ -124,6 +124,7 @@ public class Customer : MonoBehaviour
     public void EndHaggle(int cost_)
     {
         cashOnHand -= cost_;
+        ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);
         haggleIndicator.SetActive(false);
         LeaveShop();

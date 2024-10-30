@@ -30,6 +30,8 @@ public class HaggleUI : MonoBehaviour
         CalculateHagglePrice();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(sellButton);
         RandomGreeting();
+        currentHaggleSlot.SetItem(openPedestal.myItem, openPedestal.amount);
+        currentItemNameText.text = openPedestal.myItem.itemName;
     }
     public void SetHaggleAmount(float amount_)
     {
@@ -62,14 +64,20 @@ public class HaggleUI : MonoBehaviour
     }
     private void RandomGreeting()
     {
+        dialogueText.gameObject.SetActive(false);
         dialogueText.text = greetings[Random.Range(0, greetings.Count)];
+        dialogueText.gameObject.SetActive(true);
     }
     private void RandomBitTooHigh()
     {
+        dialogueText.gameObject.SetActive(false);
         dialogueText.text = bitTooHigh[Random.Range(0, bitTooHigh.Count)];
+        dialogueText.gameObject.SetActive(true);
     }
     private void RandomWayTooHigh()
     {
+        dialogueText.gameObject.SetActive(false);
         dialogueText.text = wayTooHigh[Random.Range(0, wayTooHigh.Count)];
+        dialogueText.gameObject.SetActive(true);
     }
 }
