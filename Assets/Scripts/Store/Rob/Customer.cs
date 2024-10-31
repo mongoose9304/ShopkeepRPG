@@ -8,14 +8,19 @@ public class Customer : MonoBehaviour
     [SerializeField] NavMeshAgent myAgent;
     [SerializeField] GameObject tempTarget;
     public int cashOnHand;
+    public float waitTimePerPedestalMax;
+    public float waitTimePerEmptyPedestalMax;
+    public float currentWaitTime;
     public float haggleValueMax;
     public float mood;
     public Pedestal hagglePedestal;
     public GameObject haggleInteraction;
+    public float stopDistance;
     public int maxBrowseChances;
     public int currentBrowseChances;
     private bool isMoving;
     [SerializeField]GameObject haggleIndicator;
+    [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     private void Update()
     {
         //SetTarget(tempTarget);
@@ -23,26 +28,49 @@ public class Customer : MonoBehaviour
         {
             if (!myAgent.pathPending)
             {
-                if (myAgent.remainingDistance <= myAgent.stoppingDistance)
+                if (myAgent.remainingDistance <= stopDistance)
                 {
-                    if (!myAgent.hasPath || myAgent.velocity.sqrMagnitude == 0f)
-                    {
+                    
                         if(hagglePedestal)
                         {
                             ObservePedestal(hagglePedestal);
-                            isMoving = false;
+                            
                         }
+                    else
+                    {
+                        Debug.Log("No hagglePedestal");
                     }
+                    
+                }
+            }
+        }
+        else
+        {
+            if(currentWaitTime>0)
+            {
+                currentWaitTime -= Time.deltaTime;
+                if(currentWaitTime<=0)
+                {
+                    EndWait();
                 }
             }
         }
     }
     public void ObservePedestal(Pedestal p_)
     {
-        if(p_.myItem)
+        if (p_.inUse)
+        {
+            Debug.Log("P in use");
+            pedestalsSeen.Add(p_.gameObject);
+            GetNewTarget();
+            return;
+        }
+        pedestalsSeen.Add(p_.gameObject);
+        if (p_.myItem)
         {
             if(p_.amount>0)
             {
+                
                 if(p_.myItem.basePrice*p_.amount<=cashOnHand)
                 {
                     RequestHaggle(p_);
@@ -54,16 +82,27 @@ public class Customer : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            currentWaitTime = waitTimePerEmptyPedestalMax;
+        }
     }
     public virtual void RequestHaggle(Pedestal p_)
     {
         hagglePedestal = p_;
         haggleInteraction.SetActive(true);
+        isMoving = false;
         p_.SetInUse(true);
+        currentWaitTime = waitTimePerPedestalMax;
     }
 
     public void SetTarget(GameObject location)
     {
+        if(pedestalsSeen.Contains(location))
+        {
+            TargetHasAlreadyBeenSeen();
+            return;
+        }
         myAgent.SetDestination(location.transform.position);
         tempTarget = location;
         if(location.TryGetComponent<Pedestal>(out Pedestal p))
@@ -131,9 +170,21 @@ public class Customer : MonoBehaviour
         haggleIndicator.SetActive(false);
         LeaveShop();
     }
+    public void EndWait()
+    {
+        ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
+        haggleInteraction.SetActive(false);
+        haggleIndicator.SetActive(false);
+        if(hagglePedestal)
+        {
+            hagglePedestal.SetInUse(false);
+        }
+        GetNewTarget();
+    }
     public void StartShopping()
     {
         currentBrowseChances = maxBrowseChances;
+        pedestalsSeen.Clear();
     }
     public void LeaveShop()
     {
@@ -154,5 +205,27 @@ public class Customer : MonoBehaviour
             LeaveShop();
         }
         CustomerManager.instance.NPCGetNewTarget(this);
+    }
+    private void TargetHasAlreadyBeenSeen()
+    {
+        Debug.Log("TargetSeenAlready");
+        GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem();
+        int x = 0;
+        while(pedestalsSeen.Contains(target_))
+        {
+            x += 1;
+            target_ = CustomerManager.instance.GenerateTargetPedestalWithItem();
+            if (x>=6)
+            {
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f);
+            }
+        }
+        myAgent.SetDestination(target_.transform.position);
+        tempTarget = target_;
+        if (target_.TryGetComponent<Pedestal>(out Pedestal p))
+        {
+            hagglePedestal = p;
+        }
+        isMoving = true;
     }
 }

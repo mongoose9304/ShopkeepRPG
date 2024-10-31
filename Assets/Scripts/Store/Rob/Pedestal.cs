@@ -8,6 +8,7 @@ public class Pedestal : InteractableObject
     public ItemData myItem;
     public int amount;
     public Image myItemImage;
+    public bool inUse;
  
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
@@ -30,10 +31,11 @@ public class Pedestal : InteractableObject
         amount = 0;
         myItemImage.sprite = null;
     }
-    public void SetInUse(bool inUse)
+    public void SetInUse(bool inUse_)
     {
         ShopManager.instance.RemoveInteractableObject(this.gameObject);
-        gameObject.SetActive(!inUse);
+        gameObject.SetActive(!inUse_);
+        inUse = inUse_;
     }
     public void ItemSold()
     {

@@ -61,7 +61,7 @@ public class CustomerManager : MonoBehaviour
         c.SetTarget(target);
         c.StartShopping();
     }
-    private GameObject GenerateTargetPedestalWithItem()
+    public GameObject GenerateTargetPedestalWithItem()
     {
         if(windowPedestalsWithItems.Count>=0)
         {

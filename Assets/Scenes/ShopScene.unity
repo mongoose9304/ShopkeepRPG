@@ -4953,7 +4953,6 @@ GameObject:
   - component: {fileID: 315159345}
   - component: {fileID: 315159348}
   - component: {fileID: 315159347}
-  - component: {fileID: 315159346}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -4976,29 +4975,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1097908086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.953}
---- !u!136 &315159346
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 315159344}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &315159347
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5417,7 +5393,6 @@ GameObject:
   - component: {fileID: 322600994}
   - component: {fileID: 322600997}
   - component: {fileID: 322600996}
-  - component: {fileID: 322600995}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -5440,27 +5415,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1097908086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.953}
---- !u!135 &322600995
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322600993}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &322600996
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8853,7 +8807,6 @@ GameObject:
   - component: {fileID: 503194254}
   - component: {fileID: 503194257}
   - component: {fileID: 503194256}
-  - component: {fileID: 503194255}
   m_Layer: 0
   m_Name: Cylinder (1)
   m_TagString: Untagged
@@ -8876,29 +8829,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1097908086}
   m_LocalEulerAnglesHint: {x: 21.129, y: 0, z: 0}
---- !u!136 &503194255
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 503194253}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!23 &503194256
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -23718,7 +23648,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -23816,13 +23746,18 @@ MonoBehaviour:
   myAgent: {fileID: 1097908088}
   tempTarget: {fileID: 19575236}
   cashOnHand: 500
+  waitTimePerPedestalMax: 8
+  waitTimePerEmptyPedestalMax: 20
+  currentWaitTime: 0
   haggleValueMax: 1.8
   mood: 0.8
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 1200420983}
-  maxBrowseChances: 0
+  stopDistance: 2
+  maxBrowseChances: 5
   currentBrowseChances: 0
   haggleIndicator: {fileID: 1732377508}
+  pedestalsSeen: []
 --- !u!195 &1097908088
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -23832,12 +23767,12 @@ NavMeshAgent:
   m_GameObject: {fileID: 1097908082}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -33740,7 +33675,6 @@ GameObject:
   - component: {fileID: 1382264610}
   - component: {fileID: 1382264613}
   - component: {fileID: 1382264612}
-  - component: {fileID: 1382264611}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -33763,27 +33697,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1097908086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1382264611
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382264609}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1382264612
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -33948,7 +33861,6 @@ GameObject:
   - component: {fileID: 1388520811}
   - component: {fileID: 1388520814}
   - component: {fileID: 1388520813}
-  - component: {fileID: 1388520812}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -33971,27 +33883,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1097908086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 32.854}
---- !u!65 &1388520812
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388520810}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1388520813
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -42648,13 +42539,18 @@ MonoBehaviour:
   myAgent: {fileID: 1802831243}
   tempTarget: {fileID: 1487788053}
   cashOnHand: 100
+  waitTimePerPedestalMax: 0
+  waitTimePerEmptyPedestalMax: 0
+  currentWaitTime: 0
   haggleValueMax: 1.3
   mood: 0.2
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 2054220977}
+  stopDistance: 0
   maxBrowseChances: 0
   currentBrowseChances: 0
   haggleIndicator: {fileID: 1660601636}
+  pedestalsSeen: []
 --- !u!195 &1802831243
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -42897,13 +42793,18 @@ MonoBehaviour:
   myAgent: {fileID: 1823342140}
   tempTarget: {fileID: 547683600}
   cashOnHand: 400
+  waitTimePerPedestalMax: 0
+  waitTimePerEmptyPedestalMax: 0
+  currentWaitTime: 0
   haggleValueMax: 1.5
   mood: 0.7
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 555622003}
+  stopDistance: 0
   maxBrowseChances: 0
   currentBrowseChances: 0
   haggleIndicator: {fileID: 966906840}
+  pedestalsSeen: []
 --- !u!195 &1823342140
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -52912,7 +52813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   averageCustomerCash: 400
   averageCustomerMood: 0.8
-  chanceToCheckWindowsFirst: 50
+  chanceToCheckWindowsFirst: 0.5
   minTimeBetweenCustomerSpawns: 3
   maxTimeBetweenCustomerSpawns: 6
   currentTimeBetweenCustomerSpawns: 0
