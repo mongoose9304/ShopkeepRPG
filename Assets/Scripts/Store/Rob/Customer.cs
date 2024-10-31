@@ -12,12 +12,10 @@ public class Customer : MonoBehaviour
     public float mood;
     public Pedestal hagglePedestal;
     public GameObject haggleInteraction;
+    public int maxBrowseChances;
+    public int currentBrowseChances;
     private bool isMoving;
     [SerializeField]GameObject haggleIndicator;
-    private void Start()
-    {
-        SetTarget(tempTarget);
-    }
     private void Update()
     {
         //SetTarget(tempTarget);
@@ -49,6 +47,10 @@ public class Customer : MonoBehaviour
                 {
                     RequestHaggle(p_);
                     haggleIndicator.SetActive(true);
+                }
+                else
+                {
+                    GetNewTarget();
                 }
             }
         }
@@ -129,6 +131,10 @@ public class Customer : MonoBehaviour
         haggleIndicator.SetActive(false);
         LeaveShop();
     }
+    public void StartShopping()
+    {
+        currentBrowseChances = maxBrowseChances;
+    }
     public void LeaveShop()
     {
         SetTarget(ShopManager.instance.GetRandomNPCExit());
@@ -139,5 +145,14 @@ public class Customer : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+    private void GetNewTarget()
+    {
+        currentBrowseChances -= 1;
+        if(currentBrowseChances<=0)
+        {
+            LeaveShop();
+        }
+        CustomerManager.instance.NPCGetNewTarget(this);
     }
 }

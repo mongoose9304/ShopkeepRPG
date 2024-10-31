@@ -18,6 +18,8 @@ public class ShopManager : MonoBehaviour
     public bool inMenu;
     MMF_TMPCountTo cashCounter;
     [SerializeField] MMF_Player cashFeedback;
+    public List<Pedestal> regularPedestals = new List<Pedestal>();
+    public List<Pedestal> windowPedestals = new List<Pedestal>();
     private void Awake()
     {
         instance = this;
@@ -74,5 +76,22 @@ public class ShopManager : MonoBehaviour
     {
         if (player.myInteractableObjects.Contains(obj))
             player.RemoveInteractableObject(obj);
+    }
+    public GameObject GetRandomTargetPedestal(float chanceToTargetWindows)
+    {
+        if (windowPedestals.Count >= 0)
+        {
+            if (Random.Range(0, 1.0f) < chanceToTargetWindows)
+                return windowPedestals[Random.Range(0, windowPedestals.Count)].gameObject;
+        }
+        if (regularPedestals.Count >= 0)
+        {
+            return regularPedestals[Random.Range(0, regularPedestals.Count)].gameObject;
+        }
+        return null;
+    }
+    public void OpenShop()
+    {
+        CustomerManager.instance.OpenShop(15,4);
     }
 }
