@@ -21,6 +21,7 @@ public class Customer : MonoBehaviour
     private bool isMoving;
     [SerializeField]GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
+    public bool isInUse;
     private void Update()
     {
         //SetTarget(tempTarget);
@@ -46,6 +47,8 @@ public class Customer : MonoBehaviour
         }
         else
         {
+            if (isInUse)
+                return;
             if(currentWaitTime>0)
             {
                 currentWaitTime -= Time.deltaTime;
@@ -115,6 +118,7 @@ public class Customer : MonoBehaviour
     {
         //haggleIndicator.SetActive(false);
         ShopManager.instance.OpenHaggleScreen(hagglePedestal,this,1);
+        isInUse = true;
     }
     //return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
     public int AttemptHaggle(int itemCost_,float haggleAmount)
@@ -169,6 +173,7 @@ public class Customer : MonoBehaviour
         haggleInteraction.SetActive(false);
         haggleIndicator.SetActive(false);
         LeaveShop();
+        isInUse = false ;
     }
     public void EndWait()
     {
@@ -184,6 +189,7 @@ public class Customer : MonoBehaviour
     public void StartShopping()
     {
         currentBrowseChances = maxBrowseChances;
+        isInUse = false;
         pedestalsSeen.Clear();
     }
     public void LeaveShop()

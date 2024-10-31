@@ -80,4 +80,10 @@ public class HaggleUI : MonoBehaviour
         dialogueText.text = wayTooHigh[Random.Range(0, wayTooHigh.Count)];
         dialogueText.gameObject.SetActive(true);
     }
+    public void CloseMenu()
+    {
+        if (currentCustomer)
+            currentCustomer.isInUse = false;
+        currentCustomer = null;
+    }
 }

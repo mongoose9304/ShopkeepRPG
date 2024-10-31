@@ -50,6 +50,7 @@ public class ShopManager : MonoBehaviour
         pedScreen.gameObject.SetActive(false);
         barginScreen.gameObject.SetActive(false);
         haggleScreen.gameObject.SetActive(false);
+        haggleScreen.CloseMenu();
         invScreen.OpenMenu(false);
     }
     public void MenuBackButton()
