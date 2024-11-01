@@ -135,17 +135,18 @@ public class Customer : MonoBehaviour
         }
         if(itemCost_>cashOnHand)
         {
+            ChangeMood(-0.1f);
             return 1;
         }
         if (haggleAmount > haggleValueMax)
         {
-            ChangeMood(-0.05f);
+            ChangeMood(-0.1f);
             //if they get a bad deal they should be unhappy
             return 2;
         }
         if(haggleAmount > haggleValueMax*mood)
         {
-            ChangeMood(-0.01f);
+            ChangeMood(-0.05f);
             //if they get a slightly bad deal they should be slightly unhappy
             return 2;
         }
@@ -164,6 +165,38 @@ public class Customer : MonoBehaviour
 
 
         return 0;
+    }
+    public int CheckHaggle(int itemCost_, float haggleAmount)
+    {
+        if (itemCost_ == 0)
+        {
+            //no one refuses free stuff
+            return 0;
+        }
+        if (itemCost_ > cashOnHand)
+        {
+            return 1;
+        }
+        if (haggleAmount > haggleValueMax)
+        {
+            //if they get a bad deal they should be unhappy
+            return 2;
+        }
+        if (haggleAmount > haggleValueMax * mood*1.15f)
+        {
+            //+15% should be frowny face
+            return 2;
+        }
+        if (haggleAmount < haggleValueMax * mood*0.85f)
+        {
+            //-15% should be happy face
+            return 3;
+        }
+
+
+
+
+        return 4;
     }
     private void ChangeMood(float mood_)
     {

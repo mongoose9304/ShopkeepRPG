@@ -20,6 +20,8 @@ public class HaggleUI : MonoBehaviour
     public List<string> greetings =new List<string>();
     public List<string> wayTooHigh = new List<string>();
     public List<string> bitTooHigh = new List<string>();
+    public List<Sprite> emojis = new List<Sprite>();
+    public Image SliderEmoji;
     public void OpenMenu(Pedestal p_,Customer c_,float haggleStart_)
     {
         openPedestal = p_;
@@ -32,11 +34,13 @@ public class HaggleUI : MonoBehaviour
         RandomGreeting();
         currentHaggleSlot.SetItem(openPedestal.myItem, openPedestal.amount);
         currentItemNameText.text = openPedestal.myItem.itemName;
+        ChangeHaggleSliderEmotion(haggleStart_);
     }
     public void SetHaggleAmount(float amount_)
     {
         currentHaggleAmount = amount_;
         CalculateHagglePrice();
+        ChangeHaggleSliderEmotion(amount_);
     }
     private void CalculateHagglePrice()
     {
@@ -86,5 +90,27 @@ public class HaggleUI : MonoBehaviour
         if (currentCustomer)
             currentCustomer.isInUse = false;
         currentCustomer = null;
+    }
+    private void ChangeHaggleSliderEmotion(float haggleAmount)
+    {
+        //0 = superHappy, 1= super pissed, 2 = little pissed,3 little happy, 4 normal
+        switch (currentCustomer.CheckHaggle(currentSellValue, haggleAmount))
+        {
+            case 0:
+                SliderEmoji.sprite = emojis[0];
+                break;
+            case 1:
+                SliderEmoji.sprite = emojis[1];
+                break;
+            case 2:
+                SliderEmoji.sprite = emojis[2];
+                break;
+            case 3:
+                SliderEmoji.sprite = emojis[3];
+                break;
+            case 4:
+                SliderEmoji.sprite = emojis[4];
+                break;
+        }
     }
 }

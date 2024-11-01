@@ -54,8 +54,8 @@ public class CustomerManager : MonoBehaviour
     private void SpawnBasicCustomer()
     {
         Customer c = basicCustomerPool.GetPooledGameObject().GetComponent<Customer>();
-        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.8f, 1.2f)));
-        c.mood = averageCustomerMood * Random.Range(0.8f, 1.2f);
+        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+        c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
         c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
         lastNPCSpawnIndex += 1;
         if(lastNPCSpawnIndex>=customerSpawns.Length)
