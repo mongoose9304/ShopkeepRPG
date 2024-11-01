@@ -23835,7 +23835,7 @@ MonoBehaviour:
   hagglePedestal: {fileID: 0}
   haggleInteraction: {fileID: 1200420983}
   stopDistance: 2
-  maxBrowseChances: 3
+  maxBrowseChances: 4
   currentBrowseChances: 0
   haggleIndicator: {fileID: 1732377508}
   pedestalsSeen: []
@@ -41163,6 +41163,7 @@ GameObject:
   - component: {fileID: 1732377511}
   - component: {fileID: 1732377510}
   - component: {fileID: 1732377509}
+  - component: {fileID: 1732377513}
   m_Layer: 5
   m_Name: Canvas (3)
   m_TagString: Untagged
@@ -41241,7 +41242,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732377508}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -0.124}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -41253,6 +41254,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 5, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1732377513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732377508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daa6cb7825d05f04bbb53a7e77ecea90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_yAxisOnly: 1
+  m_rotate180: 0
 --- !u!1001 &1733865597
 PrefabInstance:
   m_ObjectHideFlags: 0
