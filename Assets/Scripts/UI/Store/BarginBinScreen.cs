@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 public class BarginBinScreen : MonoBehaviour
 {
     // This ones the big displayed Icon in the middle
@@ -17,12 +19,17 @@ public class BarginBinScreen : MonoBehaviour
     public TextMeshProUGUI currentItemValue;
     public List<InventorySlot> slots = new List<InventorySlot>();
     int currentSlotIndex;
+    public TextMeshProUGUI discountUIText;
+    public Slider discountSlider;
     public void OpenMenu(BarginBin bin_)
     {
         openBarginBin = bin_;
         LoadInventory(bin_);
         SetButtonsActive(false);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(slots[0].gameObject);
+        discountSlider.value = openBarginBin.itemDiscount;
+        SetDiscountAmount(openBarginBin.itemDiscount);
+
     }
     public void LoadInventory(BarginBin bin_)
     {
@@ -105,7 +112,10 @@ public class BarginBinScreen : MonoBehaviour
     {
         if (currentlySelectedSlot.myItem)
         {
-            currentItemValue.text = (currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount).ToString();
+            Debug.Log(openBarginBin.itemDiscount.ToString());
+            // currentItemValue.text = (Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount / (1-openBarginBin.itemDiscount))).ToString();
+            int x = Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount * (1 - openBarginBin.itemDiscount));
+            currentItemValue.text = x.ToString();
         }
         else
         {
@@ -131,6 +141,7 @@ public class BarginBinScreen : MonoBehaviour
                 openBarginBin.ClearSlot(currentSlotIndex);
             }
             UpdateInventoryAmount();
+            openBarginBin.UpdateSlotsWithItems();
         }
         else
         {
@@ -188,5 +199,11 @@ public class BarginBinScreen : MonoBehaviour
         {
             inventoryUI.GetSlotWithName(currentlySelectedSlot.myItem.itemName).UpdateAmount(currentInventorySlot.amount);
         }
+    }
+    public void SetDiscountAmount(float amount_)
+    {
+
+        discountUIText.text = (Mathf.Round(amount_ * 100.0f)).ToString();
+        openBarginBin.SetBinDiscountAmount(amount_);
     }
 }

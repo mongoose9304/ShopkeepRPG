@@ -15,6 +15,7 @@ public class Customer : MonoBehaviour
     public float haggleValueMax;
     public float mood;
     public Pedestal hagglePedestal;
+    public BarginBin currentBarginBin;
     public GameObject haggleInteraction;
     public float stopDistance;
     public int maxBrowseChances;

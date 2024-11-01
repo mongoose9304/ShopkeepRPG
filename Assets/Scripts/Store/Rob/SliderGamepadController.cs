@@ -18,13 +18,14 @@ public class SliderGamepadController : MonoBehaviour
     }
     private void Update()
     {
-        
-            Debug.Log("Slidin");
+        if (buttonObject == EventSystem.current.currentSelectedGameObject)
+        {
             sliderChange = Input.GetAxis(SliderInputString) * sliderRange / SliderMovement;
             float sliderValue = mySlider.value;
             float tempValue = sliderValue + sliderChange;
             Mathf.Clamp(tempValue, mySlider.minValue, mySlider.maxValue);
             mySlider.value = tempValue;
+        }
         
     }
 }
