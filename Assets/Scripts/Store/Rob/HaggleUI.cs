@@ -53,6 +53,7 @@ public class HaggleUI : MonoBehaviour
                 openPedestal.ItemSold();
                 ShopManager.instance.AddCash(currentSellValue);
                 ShopManager.instance.CloseMenu();
+                
                 break;
             case 1:
                 RandomWayTooHigh();

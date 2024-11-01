@@ -18,6 +18,7 @@ public class CustomerManager : MonoBehaviour
     public Transform[] customerSpawns;
     public List<Pedestal> regularPedestalsWithItems = new List<Pedestal>();
     public List<Pedestal> windowPedestalsWithItems = new List<Pedestal>();
+    private int lastNPCSpawnIndex=0;
     private void Awake()
     {
         instance = this;
@@ -35,6 +36,10 @@ public class CustomerManager : MonoBehaviour
         CheckPedestalsforItems();
         maxCustomers = maxCustomers_;
         customerCount = 0;
+        for(int i=0;i<burstCustomers_;i++)
+        {
+            SpawnRandomCustomer();
+        }
     }
     public void SpawnRandomCustomer()
     {
@@ -49,9 +54,14 @@ public class CustomerManager : MonoBehaviour
     private void SpawnBasicCustomer()
     {
         Customer c = basicCustomerPool.GetPooledGameObject().GetComponent<Customer>();
-        c.cashOnHand = Mathf.RoundToInt(averageCustomerCash * Random.Range(0.8f, 1.2f));
+        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.8f, 1.2f)));
         c.mood = averageCustomerMood * Random.Range(0.8f, 1.2f);
-        c.transform.position = customerSpawns[Random.Range(0, customerSpawns.Length)].position;
+        c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+        lastNPCSpawnIndex += 1;
+        if(lastNPCSpawnIndex>=customerSpawns.Length)
+        {
+            lastNPCSpawnIndex = 0;
+        }
         GameObject target = GenerateTargetPedestalWithItem();
         if(target==null)
         {
@@ -63,12 +73,12 @@ public class CustomerManager : MonoBehaviour
     }
     public GameObject GenerateTargetPedestalWithItem()
     {
-        if(windowPedestalsWithItems.Count>=0)
+        if(windowPedestalsWithItems.Count>0)
         {
             if(Random.Range(0,1.0f)<chanceToCheckWindowsFirst)
             return windowPedestalsWithItems[Random.Range(0, windowPedestalsWithItems.Count)].gameObject;
         }
-        if (regularPedestalsWithItems.Count >= 0)
+        if (regularPedestalsWithItems.Count > 0)
         {
             return regularPedestalsWithItems[Random.Range(0, regularPedestalsWithItems.Count)].gameObject;
         }
@@ -76,6 +86,8 @@ public class CustomerManager : MonoBehaviour
     }
     public void CheckPedestalsforItems()
     {
+        windowPedestalsWithItems.Clear();
+        regularPedestalsWithItems.Clear();
         foreach (Pedestal p in ShopManager.instance.windowPedestals)
         {
             if(p.myItem!=null&&p.amount>0)

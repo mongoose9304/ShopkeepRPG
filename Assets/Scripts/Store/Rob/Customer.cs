@@ -8,6 +8,7 @@ public class Customer : MonoBehaviour
     [SerializeField] NavMeshAgent myAgent;
     [SerializeField] GameObject tempTarget;
     public int cashOnHand;
+    public int startingCash;
     public float waitTimePerPedestalMax;
     public float waitTimePerEmptyPedestalMax;
     public float currentWaitTime;
@@ -64,11 +65,13 @@ public class Customer : MonoBehaviour
         if (p_.inUse)
         {
             Debug.Log("P in use");
+            if(!pedestalsSeen.Contains(p_.gameObject))
             pedestalsSeen.Add(p_.gameObject);
             GetNewTarget();
             return;
         }
-        pedestalsSeen.Add(p_.gameObject);
+        if (!pedestalsSeen.Contains(p_.gameObject))
+            pedestalsSeen.Add(p_.gameObject);
         if (p_.myItem)
         {
             if(p_.amount>0)
@@ -88,6 +91,7 @@ public class Customer : MonoBehaviour
         else
         {
             currentWaitTime = waitTimePerEmptyPedestalMax;
+            isMoving = false;
         }
     }
     public virtual void RequestHaggle(Pedestal p_)
@@ -172,8 +176,15 @@ public class Customer : MonoBehaviour
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);
         haggleIndicator.SetActive(false);
-        LeaveShop();
         isInUse = false ;
+        if(cashOnHand<=startingCash/2)
+        {
+            LeaveShop();
+        }
+        else
+        {
+            GetNewTarget();
+        }
     }
     public void EndWait()
     {
@@ -209,6 +220,7 @@ public class Customer : MonoBehaviour
         if(currentBrowseChances<=0)
         {
             LeaveShop();
+            return;
         }
         CustomerManager.instance.NPCGetNewTarget(this);
     }
@@ -226,6 +238,8 @@ public class Customer : MonoBehaviour
                 target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f);
             }
         }
+        if(target_==null)
+            target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f);
         myAgent.SetDestination(target_.transform.position);
         tempTarget = target_;
         if (target_.TryGetComponent<Pedestal>(out Pedestal p))
@@ -233,5 +247,10 @@ public class Customer : MonoBehaviour
             hagglePedestal = p;
         }
         isMoving = true;
+    }
+    public void GiveStartingCash(int cash_)
+    {
+        startingCash = cash_;
+        cashOnHand = cash_;
     }
 }

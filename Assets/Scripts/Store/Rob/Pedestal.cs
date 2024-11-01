@@ -40,6 +40,8 @@ public class Pedestal : InteractableObject
     public void ItemSold()
     {
         ClearItem();
+        CustomerManager.instance.CheckPedestalsforItems();
+        SetInUse(false);
     }
    
 }

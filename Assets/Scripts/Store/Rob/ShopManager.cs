@@ -80,12 +80,12 @@ public class ShopManager : MonoBehaviour
     }
     public GameObject GetRandomTargetPedestal(float chanceToTargetWindows)
     {
-        if (windowPedestals.Count >= 0)
+        if (windowPedestals.Count > 0)
         {
             if (Random.Range(0, 1.0f) < chanceToTargetWindows)
                 return windowPedestals[Random.Range(0, windowPedestals.Count)].gameObject;
         }
-        if (regularPedestals.Count >= 0)
+        if (regularPedestals.Count > 0)
         {
             return regularPedestals[Random.Range(0, regularPedestals.Count)].gameObject;
         }
