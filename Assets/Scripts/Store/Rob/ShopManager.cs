@@ -20,6 +20,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] MMF_Player cashFeedback;
     public List<Pedestal> regularPedestals = new List<Pedestal>();
     public List<Pedestal> windowPedestals = new List<Pedestal>();
+    public List<ShopDoor> mydoors = new List<ShopDoor>();
     private void Awake()
     {
         instance = this;
@@ -94,5 +95,9 @@ public class ShopManager : MonoBehaviour
     public void OpenShop()
     {
         CustomerManager.instance.OpenShop(15,4);
+        foreach(ShopDoor door_ in mydoors)
+        {
+            door_.RotateDoor();
+        }
     }
 }
