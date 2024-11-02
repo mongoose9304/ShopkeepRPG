@@ -58600,7 +58600,7 @@ MonoBehaviour:
   currentHaggleSlot: {fileID: 700249449}
   openPedestal: {fileID: 0}
   currentCustomer: {fileID: 0}
-  haggleSlider: {fileID: 1697692352}
+  haggleSlider: {fileID: 1697692354}
   sellButton: {fileID: 1530406067}
   currentItemNameText: {fileID: 546873137}
   currentItemValue: {fileID: 783073711}
@@ -63353,7 +63353,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1697692352}
+    m_SelectOnUp: {fileID: 1697692354}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -68082,8 +68082,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1697692351}
-  - component: {fileID: 1697692352}
   - component: {fileID: 1697692353}
+  - component: {fileID: 1697692354}
   m_Layer: 5
   m_Name: HaggleSlider
   m_TagString: Untagged
@@ -68113,7 +68113,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 1000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1697692352
+--- !u!114 &1697692353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68122,7 +68122,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 1697692350}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7721200c050d81d46bef77b916034237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mySlider: {fileID: 1697692354}
+  buttonObject: {fileID: 1697692350}
+  SliderMovement: 500
+  SliderInputString: Horizontal
+--- !u!114 &1697692354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697692350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5551a8adb25fd4c81f191837574a8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -68153,7 +68169,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1402183700}
+  m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 751449690}
   m_HandleRect: {fileID: 1402183699}
   m_Direction: 0
@@ -68176,22 +68192,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1697692353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697692350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7721200c050d81d46bef77b916034237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mySlider: {fileID: 1697692352}
-  buttonObject: {fileID: 1697692350}
-  SliderMovement: 500
-  SliderInputString: Horizontal
+  objectToSelectOnDown: {fileID: 0}
 --- !u!1001 &1701696912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72664,8 +72665,8 @@ RectTransform:
   - {fileID: 751449690}
   m_Father: {fileID: 1697692351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
