@@ -15,9 +15,13 @@ public class CustomerManager : MonoBehaviour
     [SerializeField]int customerCount;
     [SerializeField]int maxCustomers;
     [SerializeField]protected MMMiniObjectPooler basicCustomerPool;
+    [SerializeField]protected MMMiniObjectPooler basicCustomerPoolHell;
     public Transform[] customerSpawns;
+    public Transform[] customerSpawnsHell;
     public List<Pedestal> regularPedestalsWithItems = new List<Pedestal>();
+    public List<Pedestal> regularPedestalsWithItemsHell = new List<Pedestal>();
     public List<Pedestal> windowPedestalsWithItems = new List<Pedestal>();
+    public List<Pedestal> windowPedestalsWithItemsHell = new List<Pedestal>();
     private int lastNPCSpawnIndex=0;
     private void Awake()
     {
@@ -31,7 +35,7 @@ public class CustomerManager : MonoBehaviour
             SpawnRandomCustomer();
         }
     }
-    public void OpenShop(int maxCustomers_,int burstCustomers_)
+    public void OpenShop(int maxCustomers_,int burstCustomers_,bool inHell=false)
     {
         CheckPedestalsforItems();
         maxCustomers = maxCustomers_;
@@ -71,45 +75,97 @@ public class CustomerManager : MonoBehaviour
         c.SetTarget(target);
         c.StartShopping();
     }
-    public GameObject GenerateTargetPedestalWithItem()
+    public GameObject GenerateTargetPedestalWithItem(bool inHell=false)
     {
-        if(windowPedestalsWithItems.Count>0)
+        if (!inHell)
         {
-            if(Random.Range(0,1.0f)<chanceToCheckWindowsFirst)
-            return windowPedestalsWithItems[Random.Range(0, windowPedestalsWithItems.Count)].gameObject;
-        }
-        if (regularPedestalsWithItems.Count > 0)
-        {
-            return regularPedestalsWithItems[Random.Range(0, regularPedestalsWithItems.Count)].gameObject;
-        }
-        return null;
-    }
-    public void CheckPedestalsforItems()
-    {
-        windowPedestalsWithItems.Clear();
-        regularPedestalsWithItems.Clear();
-        foreach (Pedestal p in ShopManager.instance.windowPedestals)
-        {
-            if(p.myItem!=null&&p.amount>0)
+
+
+            if (windowPedestalsWithItems.Count > 0)
             {
-                windowPedestalsWithItems.Add(p);
+                if (Random.Range(0, 1.0f) < chanceToCheckWindowsFirst)
+                    return windowPedestalsWithItems[Random.Range(0, windowPedestalsWithItems.Count)].gameObject;
+            }
+            if (regularPedestalsWithItems.Count > 0)
+            {
+                return regularPedestalsWithItems[Random.Range(0, regularPedestalsWithItems.Count)].gameObject;
+            }
+            return null;
+        }
+        else
+        {
+            if (windowPedestalsWithItemsHell.Count > 0)
+            {
+                if (Random.Range(0, 1.0f) < chanceToCheckWindowsFirst)
+                    return windowPedestalsWithItemsHell[Random.Range(0, windowPedestalsWithItemsHell.Count)].gameObject;
+            }
+            if (regularPedestalsWithItemsHell.Count > 0)
+            {
+                return regularPedestalsWithItemsHell[Random.Range(0, regularPedestalsWithItemsHell.Count)].gameObject;
+            }
+            return null;
+        }
+    }
+    public void CheckPedestalsforItems(bool inHell=false)
+    {
+        if (!inHell)
+        {
+            windowPedestalsWithItems.Clear();
+            regularPedestalsWithItems.Clear();
+            foreach (Pedestal p in ShopManager.instance.windowPedestals)
+            {
+                if (p.myItem != null && p.amount > 0)
+                {
+                    windowPedestalsWithItems.Add(p);
+                }
+            }
+            foreach (Pedestal p in ShopManager.instance.regularPedestals)
+            {
+                if (p.myItem != null && p.amount > 0)
+                {
+                    regularPedestalsWithItems.Add(p);
+                }
             }
         }
-        foreach (Pedestal p in ShopManager.instance.regularPedestals)
+        else
         {
-            if (p.myItem != null && p.amount > 0)
+            windowPedestalsWithItemsHell.Clear();
+            regularPedestalsWithItemsHell.Clear();
+            foreach (Pedestal p in ShopManager.instance.windowPedestalsHell)
             {
-                regularPedestalsWithItems.Add(p);
+                if (p.myItem != null && p.amount > 0)
+                {
+                    windowPedestalsWithItemsHell.Add(p);
+                }
+            }
+            foreach (Pedestal p in ShopManager.instance.regularPedestalsHell)
+            {
+                if (p.myItem != null && p.amount > 0)
+                {
+                    regularPedestalsWithItemsHell.Add(p);
+                }
             }
         }
     }
-    public void NPCGetNewTarget(Customer c_)
+    public void NPCGetNewTarget(Customer c_,bool inHell=false)
     {
-        GameObject target = GenerateTargetPedestalWithItem();
-        if (target == null)
+        if (!inHell)
         {
-            target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            GameObject target = GenerateTargetPedestalWithItem();
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            }
+            c_.SetTarget(target);
         }
-        c_.SetTarget(target);
+        else
+        {
+            GameObject target = GenerateTargetPedestalWithItem(true);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst,true);
+            }
+            c_.SetTarget(target);
+        }
     }
 }
