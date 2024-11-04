@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     [SerializeField] NavMeshAgent myAgent;
     [SerializeField] GameObject tempTarget;
     public float chanceToLookAtBArginBin;
+    public float chanceToStealItem;
     public int cashOnHand;
     public int cashOwed;
     public int startingCash;
@@ -83,7 +84,13 @@ public class Customer : MonoBehaviour
         {
             if(p_.amount>0)
             {
-                
+                if(Random.Range(0,1.0f)<chanceToStealItem)
+                {
+                    CustomerManager.instance.CreateItemThief(transform,p_.myItem,p_.amount);
+                    p_.ItemSold();
+                    gameObject.SetActive(false);
+                    return;
+                }
                 if(p_.myItem.basePrice*p_.amount<=cashOnHand)
                 {
                     RequestHaggle(p_);

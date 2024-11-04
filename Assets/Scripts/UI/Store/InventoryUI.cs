@@ -67,4 +67,22 @@ public class InventoryUI : MonoBehaviour
     {
         clickFunctionIndex = index_;
     }
+    public void AddItemToInventory(ItemData item_,int amount_)
+    {
+        bool hasFoundItem = false;
+        foreach (InventorySlot slot_ in slots)
+        {
+            if(slot_.myItem==item_)
+            {
+                slot_.amount += amount_;
+                hasFoundItem = true;
+            }
+        }
+        if(!hasFoundItem)
+        {
+            //add to inventory
+           // slots[slots.Count].SetItem(item_, amount_);
+           // slots[slots.Count].gameObject.SetActive(true);
+        }
+    }
 }

@@ -184,4 +184,11 @@ public class ShopManager : MonoBehaviour
             door_.RotateDoor();
         }
     }
+    public void ReturnItemToInventory(ItemData item_,int amount)
+    {
+        if(amount>0)
+        {
+            invScreen.AddItemToInventory(item_, amount);
+        }
+    }
 }
