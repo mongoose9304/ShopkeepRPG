@@ -7,10 +7,15 @@ public class CashRegister : InteractableObject
     public GameObject[] waitingLocations;
     public List<Customer> customersWaiting = new List<Customer>();
     public float timeBetweenUses = 0;
+    public bool hasEmployee;
     private void Update()
     {
         if(timeBetweenUses>0)
         timeBetweenUses -= Time.deltaTime;
+        if(hasEmployee&& customersWaiting.Count>0)
+        {
+            Interact();
+        }
     }
     public override void Interact(GameObject interactingObject_ = null)
     {

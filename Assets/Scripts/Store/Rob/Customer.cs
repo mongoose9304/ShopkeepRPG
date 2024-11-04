@@ -311,7 +311,7 @@ public class Customer : MonoBehaviour
             LeaveShop();
             return;
         }
-        CustomerManager.instance.NPCGetNewTarget(this);
+        CustomerManager.instance.NPCGetNewTarget(this,isInHell);
     }
     private void TargetHasAlreadyBeenSeen()
     {

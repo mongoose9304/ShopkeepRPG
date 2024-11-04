@@ -171,12 +171,14 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
+            cashRegisterHell.AddCustomer(C_);
+            cashRegisterHell.SetCustomerTargets();
         }
     }
     public void OpenShop()
     {
         CustomerManager.instance.OpenShop(8,4);
-        //CustomerManager.instance.OpenShop(8,0,true);
+        CustomerManager.instance.OpenShop(8,0,true);
         foreach(ShopDoor door_ in mydoors)
         {
             door_.RotateDoor();
