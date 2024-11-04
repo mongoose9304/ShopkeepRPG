@@ -61,6 +61,7 @@ public class ShopManager : MonoBehaviour
         inMenu = false;
         pedScreen.gameObject.SetActive(false);
         barginScreen.gameObject.SetActive(false);
+        barginScreen.CloseMenu();
         haggleScreen.gameObject.SetActive(false);
         haggleScreen.CloseMenu();
         invScreen.OpenMenu(false);

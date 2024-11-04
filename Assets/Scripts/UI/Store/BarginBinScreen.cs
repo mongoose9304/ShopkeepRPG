@@ -78,6 +78,14 @@ public class BarginBinScreen : MonoBehaviour
         CalculateItemValue();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentlySelectedSlot.gameObject);
     }
+    public void CloseMenu()
+    {
+        if(openBarginBin)
+        {
+            openBarginBin.ApplyDiscountToAllItems();
+        }
+        openBarginBin = null;
+    }
     public void OpenInventorySection()
     {
         inventoryUI.OpenMenu(true);
@@ -112,7 +120,6 @@ public class BarginBinScreen : MonoBehaviour
     {
         if (currentlySelectedSlot.myItem)
         {
-            Debug.Log(openBarginBin.itemDiscount.ToString());
             // currentItemValue.text = (Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount / (1-openBarginBin.itemDiscount))).ToString();
             int x = Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount * (1 - openBarginBin.itemDiscount));
             currentItemValue.text = x.ToString();

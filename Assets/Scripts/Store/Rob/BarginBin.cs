@@ -52,4 +52,14 @@ public class BarginBin : InteractableObject
         itemDiscount = Mathf.Round(itemDiscount * 100.0f) * 0.01f;
         discountText.text = Mathf.Round(itemDiscount * 100.0f).ToString();
     }
+    public void ApplyDiscountToAllItems()
+    {
+        foreach (BarginBinSlot slot_ in binSlotsWithItems)
+        {
+            if (slot_.myItem && slot_.amount > 0)
+            {
+                slot_.discountedCost = Mathf.RoundToInt(slot_.myItem.basePrice * slot_.amount * (1 - itemDiscount));
+            }
+        }
+    }
 }
