@@ -12,8 +12,13 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] float minTimeBetweenCustomerSpawns;
     [SerializeField] float maxTimeBetweenCustomerSpawns;
     [SerializeField] float currentTimeBetweenCustomerSpawns;
+    [SerializeField] float minTimeBetweenCustomerSpawnsHell;
+    [SerializeField] float maxTimeBetweenCustomerSpawnsHell;
+    [SerializeField] float currentTimeBetweenCustomerSpawnsHell;
     [SerializeField]int customerCount;
     [SerializeField]int maxCustomers;
+    [SerializeField] int customerCountHell;
+    [SerializeField] int maxCustomersHell;
     [SerializeField]protected MMMiniObjectPooler basicCustomerPool;
     [SerializeField]protected MMMiniObjectPooler basicCustomerPoolHell;
     public Transform[] customerSpawns;
@@ -23,6 +28,7 @@ public class CustomerManager : MonoBehaviour
     public List<Pedestal> windowPedestalsWithItems = new List<Pedestal>();
     public List<Pedestal> windowPedestalsWithItemsHell = new List<Pedestal>();
     private int lastNPCSpawnIndex=0;
+    private int lastNPCSpawnIndexHell=0;
     private void Awake()
     {
         instance = this;
@@ -30,50 +36,104 @@ public class CustomerManager : MonoBehaviour
     private void Update()
     {
         currentTimeBetweenCustomerSpawns -= Time.deltaTime;
+        currentTimeBetweenCustomerSpawnsHell -= Time.deltaTime;
         if(currentTimeBetweenCustomerSpawns<=0)
         {
             SpawnRandomCustomer();
         }
+        if (currentTimeBetweenCustomerSpawnsHell <= 0)
+        {
+            SpawnRandomCustomer(true);
+        }
     }
     public void OpenShop(int maxCustomers_,int burstCustomers_,bool inHell=false)
     {
-        CheckPedestalsforItems();
-        maxCustomers = maxCustomers_;
-        customerCount = 0;
-        for(int i=0;i<burstCustomers_;i++)
+        if (!inHell)
         {
-            SpawnRandomCustomer();
+            CheckPedestalsforItems();
+            maxCustomers = maxCustomers_;
+            customerCount = 0;
+            for (int i = 0; i < burstCustomers_; i++)
+            {
+                SpawnRandomCustomer();
+            }
+        }
+        else
+        {
+            CheckPedestalsforItems(true);
+            maxCustomersHell = maxCustomers_;
+            customerCountHell = 0;
+            for (int i = 0; i < burstCustomers_; i++)
+            {
+                SpawnRandomCustomer(true);
+            }
         }
     }
-    public void SpawnRandomCustomer()
+    public void SpawnRandomCustomer(bool inHell = false)
     {
-        currentTimeBetweenCustomerSpawns = maxTimeBetweenCustomerSpawns;
-        if(customerCount>=maxCustomers)
+        if (!inHell)
         {
-            return;
+            currentTimeBetweenCustomerSpawns = Random.Range(minTimeBetweenCustomerSpawns, maxTimeBetweenCustomerSpawns);
+            if (customerCount >= maxCustomers)
+            {
+                return;
+            }
+            customerCount += 1;
+            SpawnBasicCustomer();
         }
-        customerCount += 1;
-        SpawnBasicCustomer();
+        else
+        {
+            currentTimeBetweenCustomerSpawnsHell = Random.Range(minTimeBetweenCustomerSpawnsHell,maxTimeBetweenCustomerSpawnsHell);
+            if (customerCountHell >= maxCustomersHell)
+            {
+                return;
+            }
+            customerCountHell += 1;
+            SpawnBasicCustomer(true);
+        }
     }
-    private void SpawnBasicCustomer()
+    private void SpawnBasicCustomer(bool inHell=false)
     {
-        Customer c = basicCustomerPool.GetPooledGameObject().GetComponent<Customer>();
-        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
-        c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
-        c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
-        lastNPCSpawnIndex += 1;
-        if(lastNPCSpawnIndex>=customerSpawns.Length)
+        if (!inHell)
         {
-            lastNPCSpawnIndex = 0;
+            Customer c = basicCustomerPool.GetPooledGameObject().GetComponent<Customer>();
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+            lastNPCSpawnIndex += 1;
+            if (lastNPCSpawnIndex >= customerSpawns.Length)
+            {
+                lastNPCSpawnIndex = 0;
+            }
+            GameObject target = GenerateTargetPedestalWithItem();
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
         }
-        GameObject target = GenerateTargetPedestalWithItem();
-        if(target==null)
+        else
         {
-            target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            Customer c = basicCustomerPoolHell.GetPooledGameObject().GetComponent<Customer>();
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.transform.position = customerSpawnsHell[lastNPCSpawnIndexHell].position;
+            lastNPCSpawnIndexHell += 1;
+            if (lastNPCSpawnIndexHell >= customerSpawnsHell.Length)
+            {
+                lastNPCSpawnIndexHell = 0;
+            }
+            GameObject target = GenerateTargetPedestalWithItem(true);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst,true);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
         }
-        c.gameObject.SetActive(true);
-        c.SetTarget(target);
-        c.StartShopping();
     }
     public GameObject GenerateTargetPedestalWithItem(bool inHell=false)
     {
