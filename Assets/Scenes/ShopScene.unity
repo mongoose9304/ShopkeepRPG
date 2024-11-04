@@ -1558,6 +1558,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34922112}
   m_Mesh: {fileID: 4300000, guid: f5f76ccdfb5475149bc5298d2b842a34, type: 3}
+--- !u!114 &36662219 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1703110226987693579, guid: 62c05943b545f9b48a2440a9fefbc4a6, type: 3}
+  m_PrefabInstance: {fileID: 1773877352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ee0646e37cc454da83b3dcb9d51976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &41128393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2467,6 +2478,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4047972025199878, guid: 928a1377c1cd4515b208fef3a396b8ea, type: 3}
   m_PrefabInstance: {fileID: 74887386}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &75134156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1703110226987693579, guid: 62c05943b545f9b48a2440a9fefbc4a6, type: 3}
+  m_PrefabInstance: {fileID: 4889830102914347700}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ee0646e37cc454da83b3dcb9d51976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &77932789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33018,6 +33040,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
   m_PrefabInstance: {fileID: 708231688}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &711352023 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1703110226987693579, guid: 62c05943b545f9b48a2440a9fefbc4a6, type: 3}
+  m_PrefabInstance: {fileID: 1548468838}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26ee0646e37cc454da83b3dcb9d51976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &715758885
 GameObject:
   m_ObjectHideFlags: 0
@@ -46396,7 +46429,10 @@ MonoBehaviour:
   - {fileID: 141354581}
   - {fileID: 909551351}
   - {fileID: 706150215}
-  barginBins: []
+  barginBins:
+  - {fileID: 75134156}
+  - {fileID: 711352023}
+  - {fileID: 36662219}
   barginBinsHell: []
   mydoors:
   - {fileID: 81771288}
@@ -46404,7 +46440,7 @@ MonoBehaviour:
   - {fileID: 961545463}
   - {fileID: 2089818543}
   cashRegister: {fileID: 2141299061}
-  cashRegisterHell: {fileID: 2141299061}
+  cashRegisterHell: {fileID: 0}
 --- !u!114 &1082197084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91283,9 +91319,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2141299060}
   - component: {fileID: 2141299061}
-  m_Layer: 0
+  - component: {fileID: 2141299062}
+  m_Layer: 10
   m_Name: CashRegister
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91345,6 +91382,28 @@ MonoBehaviour:
   - {fileID: 831738324}
   - {fileID: 2063169800}
   customersWaiting: []
+  timeBetweenUses: 0
+--- !u!65 &2141299062
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141299059}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 1.25, y: 0, z: 0}
 --- !u!1 &2142529716
 GameObject:
   m_ObjectHideFlags: 0

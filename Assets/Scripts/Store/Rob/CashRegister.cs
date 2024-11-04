@@ -2,16 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CashRegister : MonoBehaviour
+public class CashRegister : InteractableObject
 {
     public GameObject[] waitingLocations;
     public List<Customer> customersWaiting = new List<Customer>();
-
+    public float timeBetweenUses = 0;
+    private void Update()
+    {
+        if(timeBetweenUses>0)
+        timeBetweenUses -= Time.deltaTime;
+    }
+    public override void Interact(GameObject interactingObject_ = null)
+    {
+        if(timeBetweenUses<=0)
+        Use();
+    }
     public void Use()
     {
         if(customersWaiting.Count>0)
         {
-            customersWaiting.RemoveAt(0);
+            if (customersWaiting[0].GetDistanceToTarget() < 0.5f)
+            {
+                customersWaiting[0].SellHeldItems();
+                customersWaiting[0].LeaveShop();
+                customersWaiting.RemoveAt(0);
+                SetCustomerTargets();
+                timeBetweenUses = 1;
+            }
         }
     }
     public void AddCustomer(Customer c_)

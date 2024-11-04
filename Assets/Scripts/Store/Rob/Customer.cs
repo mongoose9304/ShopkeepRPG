@@ -121,6 +121,7 @@ public class Customer : MonoBehaviour
                 //purchase item
                 PurchaseBarginItem(bSlot.discountedCost);
                 currentBarginBin.SellItem(bSlot);
+                GetNewTarget();
             }
             else
             {
@@ -347,5 +348,18 @@ public class Customer : MonoBehaviour
         cashOwed = 0;
         currentBarginBin = null;
         hagglePedestal = null;
+    }
+    public void SellHeldItems()
+    {
+        ShopManager.instance.AddCash(cashOwed,isInHell);
+        cashOwed = 0;
+    }
+    public float GetDistanceToTarget()
+    {
+        if(tempTarget)
+        {
+            return Vector3.Distance(transform.position, tempTarget.transform.position);
+        }
+        return 0;
     }
 }
