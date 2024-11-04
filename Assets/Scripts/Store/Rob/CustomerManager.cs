@@ -60,7 +60,7 @@ public class CustomerManager : MonoBehaviour
         }
         else
         {
-            CheckPedestalsforItems(true);
+            CheckPedestalsforItems();
             maxCustomersHell = maxCustomers_;
             customerCountHell = 0;
             for (int i = 0; i < burstCustomers_; i++)
@@ -97,6 +97,7 @@ public class CustomerManager : MonoBehaviour
         if (!inHell)
         {
             Customer c = basicCustomerPool.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = false;
             c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
             c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
             c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
@@ -117,6 +118,7 @@ public class CustomerManager : MonoBehaviour
         else
         {
             Customer c = basicCustomerPoolHell.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = true;
             c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
             c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
             c.transform.position = customerSpawnsHell[lastNPCSpawnIndexHell].position;
@@ -166,10 +168,9 @@ public class CustomerManager : MonoBehaviour
             return null;
         }
     }
-    public void CheckPedestalsforItems(bool inHell=false)
+    public void CheckPedestalsforItems()
     {
-        if (!inHell)
-        {
+       
             windowPedestalsWithItems.Clear();
             regularPedestalsWithItems.Clear();
             foreach (Pedestal p in ShopManager.instance.windowPedestals)
@@ -186,9 +187,8 @@ public class CustomerManager : MonoBehaviour
                     regularPedestalsWithItems.Add(p);
                 }
             }
-        }
-        else
-        {
+        
+       
             windowPedestalsWithItemsHell.Clear();
             regularPedestalsWithItemsHell.Clear();
             foreach (Pedestal p in ShopManager.instance.windowPedestalsHell)
@@ -205,7 +205,7 @@ public class CustomerManager : MonoBehaviour
                     regularPedestalsWithItemsHell.Add(p);
                 }
             }
-        }
+        
     }
     public void NPCGetNewTarget(Customer c_,bool inHell=false)
     {

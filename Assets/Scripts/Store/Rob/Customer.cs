@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Customer : MonoBehaviour
 {
+    public bool isInHell;
     [SerializeField] NavMeshAgent myAgent;
     [SerializeField] GameObject tempTarget;
     public int cashOnHand;
@@ -239,7 +240,7 @@ public class Customer : MonoBehaviour
     }
     public void LeaveShop()
     {
-        SetTarget(ShopManager.instance.GetRandomNPCExit());
+        SetTarget(ShopManager.instance.GetRandomNPCExit(isInHell));
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -261,19 +262,19 @@ public class Customer : MonoBehaviour
     private void TargetHasAlreadyBeenSeen()
     {
         Debug.Log("TargetSeenAlready");
-        GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem();
+        GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
         int x = 0;
         while(pedestalsSeen.Contains(target_))
         {
             x += 1;
-            target_ = CustomerManager.instance.GenerateTargetPedestalWithItem();
+            target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
             if (x>=6)
             {
-                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f);
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
             }
         }
         if(target_==null)
-            target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f);
+            target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
         myAgent.SetDestination(target_.transform.position);
         tempTarget = target_;
         if (target_.TryGetComponent<Pedestal>(out Pedestal p))

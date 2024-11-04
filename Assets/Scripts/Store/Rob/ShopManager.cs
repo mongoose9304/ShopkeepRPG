@@ -34,6 +34,9 @@ public class ShopManager : MonoBehaviour
         instance = this;
         if (cashFeedback)
             cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
+
+        if (cashFeedbackHell)
+            cashCounterHell = cashFeedbackHell.GetFeedbackOfType<MMF_TMPCountTo>();
     }
     public void OpenPedestal(Pedestal p_)
     {
