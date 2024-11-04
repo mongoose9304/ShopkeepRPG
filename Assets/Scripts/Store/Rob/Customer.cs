@@ -8,7 +8,9 @@ public class Customer : MonoBehaviour
     public bool isInHell;
     [SerializeField] NavMeshAgent myAgent;
     [SerializeField] GameObject tempTarget;
+    public float chanceToLookAtBArginBin;
     public int cashOnHand;
+    public int cashOwed;
     public int startingCash;
     public float waitTimePerPedestalMax;
     public float waitTimePerEmptyPedestalMax;
@@ -40,10 +42,14 @@ public class Customer : MonoBehaviour
                             ObservePedestal(hagglePedestal);
                             
                         }
-                    else
-                    {
+                        else if(currentBarginBin)
+                        {
+                        ObserveBarginBin(currentBarginBin);
+                        }
+                        else
+                        {
                         Debug.Log("No hagglePedestal");
-                    }
+                        }
                     
                 }
             }
@@ -66,7 +72,6 @@ public class Customer : MonoBehaviour
     {
         if (p_.inUse)
         {
-            Debug.Log("P in use");
             if(!pedestalsSeen.Contains(p_.gameObject))
             pedestalsSeen.Add(p_.gameObject);
             GetNewTarget();
@@ -96,6 +101,38 @@ public class Customer : MonoBehaviour
             isMoving = false;
         }
     }
+    public void ObserveBarginBin(BarginBin b_)
+    {
+        if (b_.inUse)
+        {
+            Debug.Log("B in use");
+            if (!pedestalsSeen.Contains(b_.gameObject))
+                pedestalsSeen.Add(b_.gameObject);
+            GetNewTarget();
+            return;
+        }
+        if (!pedestalsSeen.Contains(b_.gameObject))
+            pedestalsSeen.Add(b_.gameObject);
+        if (b_.binSlotsWithItems.Count>0)
+        {
+            BarginBinSlot bSlot = b_.binSlotsWithItems[Random.Range(0, b_.binSlotsWithItems.Count)];
+            if (bSlot.discountedCost<=cashOnHand)
+            {
+                //purchase item
+                PurchaseBarginItem(bSlot.discountedCost);
+                currentBarginBin.SellItem(bSlot);
+            }
+            else
+            {
+                GetNewTarget();
+            }
+        }
+        else
+        {
+            currentWaitTime = waitTimePerEmptyPedestalMax;
+            isMoving = false;
+        }
+    }
     public virtual void RequestHaggle(Pedestal p_)
     {
         hagglePedestal = p_;
@@ -117,6 +154,10 @@ public class Customer : MonoBehaviour
         if(location.TryGetComponent<Pedestal>(out Pedestal p))
         {
             hagglePedestal = p;
+        }
+        if (location.TryGetComponent<BarginBin>(out BarginBin b))
+        {
+            currentBarginBin = b;
         }
         isMoving = true;
     }
@@ -221,6 +262,11 @@ public class Customer : MonoBehaviour
             GetNewTarget();
         }
     }
+    private void PurchaseBarginItem(int cost_)
+    {
+        cashOnHand -= cost_;
+        cashOwed += cost_;
+    }
     public void EndWait()
     {
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
@@ -240,6 +286,11 @@ public class Customer : MonoBehaviour
     }
     public void LeaveShop()
     {
+        if(cashOwed>0)
+        {
+            ShopManager.instance.HeadToCashRegister(this,isInHell);
+            return;
+        }
         SetTarget(ShopManager.instance.GetRandomNPCExit(isInHell));
     }
     private void OnTriggerEnter(Collider other)
@@ -251,6 +302,8 @@ public class Customer : MonoBehaviour
     }
     private void GetNewTarget()
     {
+        hagglePedestal = null;
+        currentBarginBin = null;
         currentBrowseChances -= 1;
         if(currentBrowseChances<=0)
         {
@@ -281,11 +334,18 @@ public class Customer : MonoBehaviour
         {
             hagglePedestal = p;
         }
+        if (target_.TryGetComponent<BarginBin>(out BarginBin b))
+        {
+            currentBarginBin = b;
+        }
         isMoving = true;
     }
     public void GiveStartingCash(int cash_)
     {
         startingCash = cash_;
         cashOnHand = cash_;
+        cashOwed = 0;
+        currentBarginBin = null;
+        hagglePedestal = null;
     }
 }

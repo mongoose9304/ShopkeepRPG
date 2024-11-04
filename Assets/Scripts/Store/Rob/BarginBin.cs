@@ -17,6 +17,7 @@ public class BarginBin : InteractableObject
     public List<Image> binImages = new List<Image>();
     public float itemDiscount;
     public TextMeshProUGUI discountText;
+    public bool inUse;
     public override void Interact(GameObject interactingObject_ = null)
     {
         ShopManager.instance.OpenBarginBin(this);
@@ -61,5 +62,12 @@ public class BarginBin : InteractableObject
                 slot_.discountedCost = Mathf.RoundToInt(slot_.myItem.basePrice * slot_.amount * (1 - itemDiscount));
             }
         }
+    }
+    public void SellItem(BarginBinSlot slot_)
+    {
+        ClearSlot(binSlots.IndexOf(slot_));
+        UpdateSlotsWithItems();
+        ApplyDiscountToAllItems();
+        CustomerManager.instance.CheckBarginBinsForItems();
     }
 }

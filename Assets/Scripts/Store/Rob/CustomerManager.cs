@@ -27,6 +27,8 @@ public class CustomerManager : MonoBehaviour
     public List<Pedestal> regularPedestalsWithItemsHell = new List<Pedestal>();
     public List<Pedestal> windowPedestalsWithItems = new List<Pedestal>();
     public List<Pedestal> windowPedestalsWithItemsHell = new List<Pedestal>();
+    public List<BarginBin> barginBinsWithItems = new List<BarginBin>();
+    public List<BarginBin> barginBinsWithItemsHell = new List<BarginBin>();
     private int lastNPCSpawnIndex=0;
     private int lastNPCSpawnIndexHell=0;
     private void Awake()
@@ -48,9 +50,11 @@ public class CustomerManager : MonoBehaviour
     }
     public void OpenShop(int maxCustomers_,int burstCustomers_,bool inHell=false)
     {
+        CheckPedestalsforItems();
+        CheckBarginBinsForItems();
         if (!inHell)
         {
-            CheckPedestalsforItems();
+
             maxCustomers = maxCustomers_;
             customerCount = 0;
             for (int i = 0; i < burstCustomers_; i++)
@@ -60,7 +64,6 @@ public class CustomerManager : MonoBehaviour
         }
         else
         {
-            CheckPedestalsforItems();
             maxCustomersHell = maxCustomers_;
             customerCountHell = 0;
             for (int i = 0; i < burstCustomers_; i++)
@@ -168,6 +171,25 @@ public class CustomerManager : MonoBehaviour
             return null;
         }
     }
+    public GameObject GenerateTargetBarginBinWithItem(bool inHell = false)
+    {
+        if (!inHell)
+        {
+            if (barginBinsWithItems.Count > 0)
+            {
+                return barginBinsWithItems[Random.Range(0, barginBinsWithItems.Count)].gameObject;
+            }
+            return null;
+        }
+        else
+        {
+            if (barginBinsWithItemsHell.Count > 0)
+            {
+                return barginBinsWithItemsHell[Random.Range(0, barginBinsWithItemsHell.Count)].gameObject;
+            }
+            return null;
+        }
+    }
     public void CheckPedestalsforItems()
     {
        
@@ -207,10 +229,40 @@ public class CustomerManager : MonoBehaviour
             }
         
     }
+    public void CheckBarginBinsForItems()
+    {
+
+        barginBinsWithItems.Clear();
+        
+        foreach (BarginBin b in ShopManager.instance.barginBins)
+        {
+            if (b.binSlotsWithItems.Count > 0)
+                barginBinsWithItems.Add(b);
+        }
+        barginBinsWithItemsHell.Clear();
+        foreach (BarginBin b in ShopManager.instance.barginBinsHell)
+        {
+            if (b.binSlotsWithItems.Count > 0)
+                barginBinsWithItemsHell.Add(b);
+        }
+
+    }
     public void NPCGetNewTarget(Customer c_,bool inHell=false)
     {
         if (!inHell)
         {
+            if (Random.Range(0, 1.0f) < c_.chanceToLookAtBArginBin)
+            {
+                //look at bargin bin and return
+                GameObject targetBin = GenerateTargetBarginBinWithItem();
+                if (targetBin == null)
+                {
+                    targetBin = ShopManager.instance.GetRandomTargetBarginBin();
+                }
+                c_.SetTarget(targetBin);
+                return;
+
+            }
             GameObject target = GenerateTargetPedestalWithItem();
             if (target == null)
             {
@@ -220,6 +272,18 @@ public class CustomerManager : MonoBehaviour
         }
         else
         {
+            if (Random.Range(0, 1.0f) < c_.chanceToLookAtBArginBin)
+            {
+                //look at bargin bin and return
+                GameObject targetBin = GenerateTargetBarginBinWithItem(true);
+                if (targetBin == null)
+                {
+                    targetBin = ShopManager.instance.GetRandomTargetBarginBin(true);
+                }
+                c_.SetTarget(targetBin);
+                return;
+
+            }
             GameObject target = GenerateTargetPedestalWithItem(true);
             if (target == null)
             {

@@ -83,6 +83,7 @@ public class BarginBinScreen : MonoBehaviour
         if(openBarginBin)
         {
             openBarginBin.ApplyDiscountToAllItems();
+            CustomerManager.instance.CheckBarginBinsForItems();
         }
         openBarginBin = null;
     }

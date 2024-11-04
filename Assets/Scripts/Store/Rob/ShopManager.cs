@@ -28,7 +28,11 @@ public class ShopManager : MonoBehaviour
     public List<Pedestal> windowPedestals = new List<Pedestal>();
     public List<Pedestal> regularPedestalsHell = new List<Pedestal>();
     public List<Pedestal> windowPedestalsHell = new List<Pedestal>();
+    public List<BarginBin> barginBins = new List<BarginBin>();
+    public List<BarginBin> barginBinsHell = new List<BarginBin>();
     public List<ShopDoor> mydoors = new List<ShopDoor>();
+    public CashRegister cashRegister;
+    public CashRegister cashRegisterHell;
     private void Awake()
     {
         instance = this;
@@ -139,10 +143,40 @@ public class ShopManager : MonoBehaviour
             return null;
         }
     }
+    public GameObject GetRandomTargetBarginBin( bool inHell = false)
+    {
+        if (!inHell)
+        {
+            if (barginBins.Count > 0)
+            {
+             return barginBins[Random.Range(0, barginBins.Count)].gameObject;
+            }
+            return null;
+        }
+        else
+        {
+            if (barginBinsHell.Count > 0)
+            {
+                return barginBinsHell[Random.Range(0, barginBinsHell.Count)].gameObject;
+            }
+            return null;
+        }
+    }
+    public void HeadToCashRegister(Customer C_,bool inHell=false)
+    {
+        if(!inHell)
+        {
+            cashRegister.AddCustomer(C_);
+            cashRegister.SetCustomerTargets();
+        }
+        else
+        {
+        }
+    }
     public void OpenShop()
     {
         CustomerManager.instance.OpenShop(8,4);
-        CustomerManager.instance.OpenShop(8,0,true);
+        //CustomerManager.instance.OpenShop(8,0,true);
         foreach(ShopDoor door_ in mydoors)
         {
             door_.RotateDoor();
