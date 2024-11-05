@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Theif : MonoBehaviour
+public class Thief : MonoBehaviour
 {
     public bool isInHell;
     public NavMeshAgent myAgent;

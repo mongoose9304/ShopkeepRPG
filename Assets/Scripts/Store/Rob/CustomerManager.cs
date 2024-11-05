@@ -298,6 +298,6 @@ public class CustomerManager : MonoBehaviour
         GameObject obj = basicTheifPool.GetPooledGameObject();
         obj.transform.position = location_.position;
         obj.SetActive(true);
-        obj.GetComponent<Theif>().StealItem(item_,amount_);
+        obj.GetComponent<Thief>().StealItem(item_,amount_);
     }
 }

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TheifInteraction : InteractableObject
+public class ThiefInteraction : InteractableObject
 {
-    public Theif myTheif;
+    public Thief myThief;
 
     public override void Interact(GameObject interactingObject_ = null)
     {
-        myTheif.Caught();
+        myThief.Caught();
         ShopManager.instance.RemoveInteractableObject(gameObject);
     }
 }

@@ -72,10 +72,13 @@ public class InventoryUI : MonoBehaviour
         bool hasFoundItem = false;
         foreach (InventorySlot slot_ in slots)
         {
-            if(slot_.myItem==item_)
+            if (!slot_.myItem)
+                continue;
+            if(slot_.myItem.itemName==item_.itemName)
             {
-                slot_.amount += amount_;
+                slot_.UpdateAmount(slot_.amount + amount_);
                 hasFoundItem = true;
+                Debug.Log("ReturnedItem");
             }
         }
         if(!hasFoundItem)
