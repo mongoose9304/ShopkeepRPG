@@ -324,6 +324,7 @@ public class CustomerManager : MonoBehaviour
         obj.GetComponent<Thief>().StealItem(item_,amount_);
         if(heldItems!=null)
         obj.GetComponent<Thief>().SetHeldItems(heldItems);
+        ShopManager.instance.currentThieves.Add(obj.GetComponent<Thief>());
     }
     public bool CheckStealLimit()
     {

@@ -798,6 +798,7 @@ GameObject:
   - component: {fileID: 20339818}
   - component: {fileID: 20339817}
   - component: {fileID: 20339816}
+  - component: {fileID: 20339820}
   m_Layer: 0
   m_Name: Teleporter
   m_TagString: Untagged
@@ -906,6 +907,39 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20339814}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &20339820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20339814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79c7719e6566674b8c4d70a6fc32d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagMask:
+    m_tags:
+    - Player
+  m_onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1082197083}
+        m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
+        m_MethodName: ExitHell
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &20561449
 GameObject:
   m_ObjectHideFlags: 0
@@ -9573,6 +9607,7 @@ GameObject:
   - component: {fileID: 265114603}
   - component: {fileID: 265114602}
   - component: {fileID: 265114605}
+  - component: {fileID: 265114606}
   m_Layer: 0
   m_Name: Teleporter
   m_TagString: Untagged
@@ -9681,6 +9716,39 @@ MonoBehaviour:
   destination: {fileID: 983235901}
   previewImage: {fileID: 0}
   roomType: 
+--- !u!114 &265114606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265114600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79c7719e6566674b8c4d70a6fc32d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagMask:
+    m_tags:
+    - Player
+  m_onTriggerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1082197083}
+        m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
+        m_MethodName: EnterHell
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_onTriggerExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &266758420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24290,6 +24358,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInHell: 1
+  speed: 2.5
+  slowSpeed: 0.5
   chanceToGoForStoreCash: 0.5
   myAgent: {fileID: 434150559}
   stolenItem: {fileID: 0}
@@ -24307,10 +24377,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2.5
+  m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 90
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -45638,10 +45708,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2.5
+  m_Acceleration: 5
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 90
   m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -45762,6 +45832,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInHell: 0
+  speed: 2.5
+  slowSpeed: 0.5
   chanceToGoForStoreCash: 0.5
   myAgent: {fileID: 935745864}
   stolenItem: {fileID: 0}
@@ -49536,6 +49608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5261eeb35478d0948b767f195e90b714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInHell: 0
   hellShopEnabled: 0
   cashEarnedText: {fileID: 697964819}
   cashSymbol: {fileID: 1921408130}
@@ -49612,6 +49685,7 @@ MonoBehaviour:
   - {fileID: 2089818543}
   cashRegister: {fileID: 2141299061}
   cashRegisterHell: {fileID: 1443856707}
+  currentThieves: []
 --- !u!114 &1082197084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99677,6 +99751,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSteals: 3
   currentSteals: 0
+  currentThieves: 0
+  currentThievesInHell: 0
   averageCustomerCash: 500
   averageCustomerMood: 0.6
   chanceToCheckWindowsFirst: 0.5

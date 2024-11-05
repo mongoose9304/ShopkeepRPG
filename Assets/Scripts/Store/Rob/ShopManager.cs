@@ -7,6 +7,7 @@ using MoreMountains.Feedbacks;
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
+    public bool playerInHell;
     public bool hellShopEnabled;
     public TextMeshProUGUI cashEarnedText;
     public MMF_Player cashSymbol;
@@ -39,6 +40,7 @@ public class ShopManager : MonoBehaviour
     public List<ShopDoor> mydoors = new List<ShopDoor>();
     public CashRegister cashRegister;
     public CashRegister cashRegisterHell;
+    public List<Thief> currentThieves=new List<Thief>();
     private void Awake()
     {
         instance = this;
@@ -235,6 +237,22 @@ public class ShopManager : MonoBehaviour
                 cashSymbolHell.gameObject.SetActive(true);
                 stealAlertHell.gameObject.SetActive(false);
             }
+        }
+    }
+    public void EnterHell()
+    {
+        playerInHell = true;
+        foreach(Thief t_ in currentThieves)
+        {
+            t_.CheckSpeed();
+        }
+    }
+    public void ExitHell()
+    {
+        playerInHell = false;
+        foreach (Thief t_ in currentThieves)
+        {
+            t_.CheckSpeed();
         }
     }
 }

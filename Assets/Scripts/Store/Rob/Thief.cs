@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class Thief : MonoBehaviour
 {
     public bool isInHell;
+    [SerializeField] float speed;
+    [SerializeField] float slowSpeed;
     private bool hasStolenMoney;
     public float chanceToGoForStoreCash;
     public NavMeshAgent myAgent;
@@ -17,6 +19,18 @@ public class Thief : MonoBehaviour
     public void Flee()
     {
         myAgent.SetDestination(ShopManager.instance.GetRandomNPCExit(isInHell).transform.position);
+        CheckSpeed();
+    }
+    public void CheckSpeed()
+    {
+        if (isInHell != ShopManager.instance.playerInHell)
+        {
+            myAgent.speed = slowSpeed;
+        }
+        else
+        {
+            myAgent.speed = speed;
+        }
     }
     public void HeadToStoreRoom()
     {
@@ -76,6 +90,7 @@ public class Thief : MonoBehaviour
         }
 
         CustomerManager.instance.CaughtThief(isInHell);
+        ShopManager.instance.currentThieves.Remove(this);
         gameObject.SetActive(false);
     }
     private void OnTriggerEnter(Collider other)
@@ -83,6 +98,7 @@ public class Thief : MonoBehaviour
         if (other.tag == "EndZone")
         {
             gameObject.SetActive(false);
+            ShopManager.instance.currentThieves.Remove(this);
             CustomerManager.instance.CaughtThief(isInHell);
         }
         if (other.tag == "StoreRoom")
