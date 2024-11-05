@@ -90,6 +90,7 @@ public class Thief : MonoBehaviour
         }
 
         CustomerManager.instance.CaughtThief(isInHell);
+        CustomerManager.instance.PlayEmote(2, transform);
         ShopManager.instance.currentThieves.Remove(this);
         gameObject.SetActive(false);
     }

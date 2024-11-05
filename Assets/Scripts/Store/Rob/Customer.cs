@@ -34,6 +34,7 @@ public class Customer : MonoBehaviour
     [SerializeField]GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
+    [SerializeField] GameObject waitingObject;
     public bool isInUse;
     private void Update()
     {
@@ -162,6 +163,8 @@ public class Customer : MonoBehaviour
         isMoving = false;
         p_.SetInUse(true);
         currentWaitTime = waitTimePerPedestalMax;
+        if (waitingObject)
+            waitingObject.SetActive(true);
     }
 
     public void SetTarget(GameObject location)
@@ -270,6 +273,9 @@ public class Customer : MonoBehaviour
     }
     public void EndHaggle(int cost_)
     {
+        if (waitingObject)
+            waitingObject.SetActive(false);
+        CustomerManager.instance.PlayEmote(0, transform);
         cashOnHand -= cost_;
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);
@@ -288,15 +294,19 @@ public class Customer : MonoBehaviour
     {
         cashOnHand -= cost_;
         cashOwed += cost_;
+        CustomerManager.instance.PlayEmote(0, transform);
     }
     public void EndWait()
     {
+        if (waitingObject)
+            waitingObject.SetActive(false);
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);
         haggleIndicator.SetActive(false);
         if(hagglePedestal)
         {
             hagglePedestal.SetInUse(false);
+            CustomerManager.instance.PlayEmote(1, transform);
         }
         GetNewTarget();
     }
@@ -305,6 +315,8 @@ public class Customer : MonoBehaviour
         currentBrowseChances = maxBrowseChances;
         isInUse = false;
         pedestalsSeen.Clear();
+        if (waitingObject)
+            waitingObject.SetActive(false);
     }
     public void LeaveShop()
     {

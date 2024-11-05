@@ -4500,8 +4500,8 @@ MonoBehaviour:
   isInHell: 0
   myAgent: {fileID: 134067524}
   tempTarget: {fileID: 19575236}
-  chanceToLookAtBArginBin: 0.5
-  chanceToStealItem: 0.5
+  chanceToLookAtBArginBin: 0.35
+  chanceToStealItem: 0.05
   cashOnHand: 500
   cashOwed: 0
   startingCash: 0
@@ -4519,6 +4519,7 @@ MonoBehaviour:
   haggleIndicator: {fileID: 1989157914}
   pedestalsSeen: []
   heldItems: []
+  waitingObject: {fileID: 1221345144}
   isInUse: 0
 --- !u!195 &134067524
 NavMeshAgent:
@@ -4631,6 +4632,7 @@ Transform:
   - {fileID: 64941736}
   - {fileID: 1989157919}
   - {fileID: 1678396785}
+  - {fileID: 1221345145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &135747912
@@ -28858,6 +28860,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4682952893640444, guid: f274f0fb5e5bc294ca9a0ff4cf1f0ff7, type: 3}
   m_PrefabInstance: {fileID: 565162330}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &565530529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565530530}
+  - component: {fileID: 565530531}
+  m_Layer: 0
+  m_Name: ThiefCaughtEffectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &565530530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565530529}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1262200251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &565530531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565530529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 4340210899133047228, guid: 33918b141dd578b4d98d52ecd3e755df, type: 3}
+  PoolSize: 3
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
 --- !u!1 &569967849
 GameObject:
   m_ObjectHideFlags: 0
@@ -32913,6 +32964,73 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 674522485}
   m_CullTransparentMesh: 0
+--- !u!1001 &682222043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1097908086}
+    m_Modifications:
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907359499331085245, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_Name
+      value: CustomerWaiting
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+--- !u!1 &682222044 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3907359499331085245, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+  m_PrefabInstance: {fileID: 682222043}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &682222045 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+  m_PrefabInstance: {fileID: 682222043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &684015989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49990,6 +50108,7 @@ Transform:
   - {fileID: 503194254}
   - {fileID: 1200420988}
   - {fileID: 1732377512}
+  - {fileID: 682222045}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1097908087
@@ -50007,8 +50126,8 @@ MonoBehaviour:
   isInHell: 0
   myAgent: {fileID: 1097908088}
   tempTarget: {fileID: 19575236}
-  chanceToLookAtBArginBin: 0.5
-  chanceToStealItem: 0.5
+  chanceToLookAtBArginBin: 0.3
+  chanceToStealItem: 0.05
   cashOnHand: 500
   cashOwed: 0
   startingCash: 0
@@ -50026,6 +50145,7 @@ MonoBehaviour:
   haggleIndicator: {fileID: 1732377508}
   pedestalsSeen: []
   heldItems: []
+  waitingObject: {fileID: 682222044}
   isInUse: 0
 --- !u!195 &1097908088
 NavMeshAgent:
@@ -58610,6 +58730,77 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &1221345143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 134067528}
+    m_Modifications:
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907359499331085245, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_Name
+      value: CustomerWaiting (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907359499331085245, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+--- !u!1 &1221345144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3907359499331085245, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+  m_PrefabInstance: {fileID: 1221345143}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1221345145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1662060774710289946, guid: a63ddc881de09ea47a46400976b6c34d, type: 3}
+  m_PrefabInstance: {fileID: 1221345143}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1224406033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64263,6 +64454,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4508691648621678, guid: a25996a7d0674de40a8273b54b50aa7b, type: 3}
   m_PrefabInstance: {fileID: 734526395}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1262200250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262200251}
+  m_Layer: 0
+  m_Name: EmotePools
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1262200251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262200250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 565530530}
+  - {fileID: 1701441801}
+  - {fileID: 1895580308}
+  m_Father: {fileID: 2080735984}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1262202348
 GameObject:
   m_ObjectHideFlags: 0
@@ -78320,6 +78545,55 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   objectToSelectOnDown: {fileID: 0}
+--- !u!1 &1701441800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1701441801}
+  - component: {fileID: 1701441802}
+  m_Layer: 0
+  m_Name: AngerPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1701441801
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701441800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1262200251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1701441802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701441800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 4557884813678265182, guid: 87c39bb2e86e7e544b8a329ad2abe464, type: 3}
+  PoolSize: 3
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
 --- !u!1001 &1701696912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81911,6 +82185,7 @@ MonoBehaviour:
   haggleIndicator: {fileID: 1660601636}
   pedestalsSeen: []
   heldItems: []
+  waitingObject: {fileID: 0}
   isInUse: 0
 --- !u!195 &1802831243
 NavMeshAgent:
@@ -82301,6 +82576,7 @@ MonoBehaviour:
   haggleIndicator: {fileID: 966906840}
   pedestalsSeen: []
   heldItems: []
+  waitingObject: {fileID: 0}
   isInUse: 0
 --- !u!195 &1823342140
 NavMeshAgent:
@@ -84546,6 +84822,55 @@ Transform:
   - {fileID: 651938455}
   m_Father: {fileID: 1863388630}
   m_LocalEulerAnglesHint: {x: -10, y: 0, z: 0}
+--- !u!1 &1895580307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1895580308}
+  - component: {fileID: 1895580309}
+  m_Layer: 0
+  m_Name: HappyPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1895580308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895580307}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1262200251}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1895580309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895580307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 2831633722857443057, guid: ea740ea0177ee284594036151196e446, type: 3}
+  PoolSize: 3
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 1
 --- !u!1 &1897771517
 GameObject:
   m_ObjectHideFlags: 0
@@ -99735,6 +100060,7 @@ Transform:
   - {fileID: 1981983150}
   - {fileID: 469850816}
   - {fileID: 1609948459}
+  - {fileID: 1262200251}
   m_Father: {fileID: 1953241319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2080735985
@@ -99770,6 +100096,9 @@ MonoBehaviour:
   basicCustomerPoolHell: {fileID: 1981983151}
   basicThiefPool: {fileID: 1654482398}
   basicThiefPoolHell: {fileID: 1287174972}
+  happyEmotePool: {fileID: 1895580309}
+  angerEmotePool: {fileID: 1701441802}
+  ThiefCaughtPool: {fileID: 565530531}
   customerSpawns:
   - {fileID: 1327914628}
   - {fileID: 439712940}

@@ -27,6 +27,9 @@ public class CustomerManager : MonoBehaviour
     [SerializeField]protected MMMiniObjectPooler basicCustomerPoolHell;
     [SerializeField]protected MMMiniObjectPooler basicThiefPool;
     [SerializeField]protected MMMiniObjectPooler basicThiefPoolHell;
+    [SerializeField] protected MMMiniObjectPooler happyEmotePool;
+    [SerializeField] protected MMMiniObjectPooler angerEmotePool;
+    [SerializeField] protected MMMiniObjectPooler ThiefCaughtPool;
     public Transform[] customerSpawns;
     public Transform[] customerSpawnsHell;
     public List<Pedestal> regularPedestalsWithItems = new List<Pedestal>();
@@ -352,6 +355,31 @@ public class CustomerManager : MonoBehaviour
                 currentThievesInHell = 0;
                 ShopManager.instance.SetStealAlert(false, true);
             }
+        }
+    }
+    public void PlayEmote(int emote_,Transform location_)
+    {//0=happy, 1=anger,2= thief caught
+        GameObject obj = null;
+        switch (emote_)
+        {
+           
+            case 0:
+                obj = happyEmotePool.GetPooledGameObject();
+                obj.transform.position = location_.position;
+                obj.transform.position += new Vector3(0, 1, 0);
+                obj.SetActive(true);
+                break;
+            case 1:
+                obj = angerEmotePool.GetPooledGameObject();
+                obj.transform.position = location_.position;
+                obj.transform.position += new Vector3(0, 1, 0);
+                obj.SetActive(true);
+                break;
+            case 2:
+                obj = ThiefCaughtPool.GetPooledGameObject();
+                obj.transform.position = location_.position;
+                obj.SetActive(true);
+                break;
         }
     }
 }
