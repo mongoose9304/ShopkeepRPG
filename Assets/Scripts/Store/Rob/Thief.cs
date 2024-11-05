@@ -11,6 +11,7 @@ public class Thief : MonoBehaviour
     public int stolenItemAmount;
     public int stolenCash;
     public ParticleSystem startStealEffect;
+    [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     public void Flee()
     {
         myAgent.SetDestination(ShopManager.instance.GetRandomNPCExit(isInHell).transform.position);
@@ -47,6 +48,15 @@ public class Thief : MonoBehaviour
         {
             ShopManager.instance.AddCash(stolenCash,isInHell);
         }
+        if(heldItems.Count>0)
+        {
+            foreach(TempItem item_ in heldItems)
+            {
+                ShopManager.instance.ReturnItemToInventory(item_.myItem, item_.amount);
+            }
+            
+        }
+
         gameObject.SetActive(false);
     }
     private void OnTriggerEnter(Collider other)
@@ -55,5 +65,9 @@ public class Thief : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+    public void SetHeldItems(List<TempItem> heldItems_)
+    {
+        heldItems = heldItems_;
     }
 }

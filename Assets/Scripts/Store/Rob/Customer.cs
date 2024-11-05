@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class TempItem
+{
+    public ItemData myItem;
+    public int amount;
+}
 public class Customer : MonoBehaviour
 {
     public bool isInHell;
@@ -27,6 +33,7 @@ public class Customer : MonoBehaviour
     private bool isMoving;
     [SerializeField]GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
+    [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     public bool isInUse;
     private void Update()
     {
@@ -86,7 +93,7 @@ public class Customer : MonoBehaviour
             {
                 if(Random.Range(0,1.0f)<chanceToStealItem)
                 {
-                    CustomerManager.instance.CreateItemThief(transform,p_.myItem,p_.amount);
+                    CustomerManager.instance.CreateItemThief(transform,p_.myItem,p_.amount,heldItems);
                     p_.ItemSold();
                     gameObject.SetActive(false);
                     return;
@@ -127,6 +134,10 @@ public class Customer : MonoBehaviour
             {
                 //purchase item
                 PurchaseBarginItem(bSlot.discountedCost);
+                TempItem item_=new TempItem();
+                item_.amount = bSlot.amount;
+                item_.myItem = bSlot.myItem;
+                heldItems.Add(item_);
                 currentBarginBin.SellItem(bSlot);
                 GetNewTarget();
             }
@@ -355,6 +366,7 @@ public class Customer : MonoBehaviour
         cashOwed = 0;
         currentBarginBin = null;
         hagglePedestal = null;
+        heldItems.Clear();
     }
     public void SellHeldItems()
     {

@@ -293,11 +293,13 @@ public class CustomerManager : MonoBehaviour
             c_.SetTarget(target);
         }
     }
-    public void CreateItemThief(Transform location_,ItemData item_,int amount_)
+    public void CreateItemThief(Transform location_,ItemData item_,int amount_,List<TempItem> heldItems=null)
     {
         GameObject obj = basicTheifPool.GetPooledGameObject();
         obj.transform.position = location_.position;
         obj.SetActive(true);
         obj.GetComponent<Thief>().StealItem(item_,amount_);
+        if(heldItems!=null)
+        obj.GetComponent<Thief>().SetHeldItems(heldItems);
     }
 }
