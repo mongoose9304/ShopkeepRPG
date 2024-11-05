@@ -21,7 +21,8 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] int maxCustomersHell;
     [SerializeField]protected MMMiniObjectPooler basicCustomerPool;
     [SerializeField]protected MMMiniObjectPooler basicCustomerPoolHell;
-    [SerializeField]protected MMMiniObjectPooler basicTheifPool;
+    [SerializeField]protected MMMiniObjectPooler basicThiefPool;
+    [SerializeField]protected MMMiniObjectPooler basicThiefPoolHell;
     public Transform[] customerSpawns;
     public Transform[] customerSpawnsHell;
     public List<Pedestal> regularPedestalsWithItems = new List<Pedestal>();
@@ -293,9 +294,17 @@ public class CustomerManager : MonoBehaviour
             c_.SetTarget(target);
         }
     }
-    public void CreateItemThief(Transform location_,ItemData item_,int amount_,List<TempItem> heldItems=null)
+    public void CreateItemThief(Transform location_,ItemData item_,int amount_,List<TempItem> heldItems=null,bool inHell=false)
     {
-        GameObject obj = basicTheifPool.GetPooledGameObject();
+        GameObject obj = null;
+        if (!inHell)
+        {
+             obj = basicThiefPool.GetPooledGameObject();
+        }
+        else
+        {
+             obj = basicThiefPoolHell.GetPooledGameObject();
+        }
         obj.transform.position = location_.position;
         obj.SetActive(true);
         obj.GetComponent<Thief>().StealItem(item_,amount_);

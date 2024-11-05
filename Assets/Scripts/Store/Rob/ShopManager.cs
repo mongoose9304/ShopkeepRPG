@@ -11,6 +11,8 @@ public class ShopManager : MonoBehaviour
     public TextMeshProUGUI cashEarnedText;
     public TextMeshProUGUI cashEarnedTextHell;
     public StorePlayer player;
+    public GameObject storeRoom;
+    public GameObject storeRoomHell;
     public GameObject[] exitSpots;
     public GameObject[] exitSpotsHell;
     public int currentCashEarned;
@@ -107,6 +109,17 @@ public class ShopManager : MonoBehaviour
         else
         {
         return exitSpotsHell[Random.Range(0, exitSpotsHell.Length)];
+        }
+    }
+    public GameObject GetStoreRoom(bool inHell = false)
+    {
+        if (!inHell)
+        {
+            return storeRoom;
+        }
+        else
+        {
+            return storeRoomHell;
         }
     }
     public void RemoveInteractableObject(GameObject obj)
