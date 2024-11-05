@@ -6,6 +6,10 @@ using MoreMountains.Feedbacks;
 public class CustomerManager : MonoBehaviour
 {
     public static CustomerManager instance;
+    public int maxSteals;
+    public int currentSteals;
+   [SerializeField] private int currentThieves;
+   [SerializeField] private int currentThievesInHell;
     public int averageCustomerCash;
     public float averageCustomerMood;
     public float chanceToCheckWindowsFirst;
@@ -54,6 +58,7 @@ public class CustomerManager : MonoBehaviour
     {
         CheckPedestalsforItems();
         CheckBarginBinsForItems();
+        currentSteals = 0;
         if (!inHell)
         {
 
@@ -296,6 +301,15 @@ public class CustomerManager : MonoBehaviour
     }
     public void CreateItemThief(Transform location_,ItemData item_,int amount_,List<TempItem> heldItems=null,bool inHell=false)
     {
+        currentSteals += 1;
+        if(inHell)
+        {
+            currentThievesInHell += 1;
+        }
+        else
+        {
+            currentThieves += 1;
+        }
         GameObject obj = null;
         if (!inHell)
         {
@@ -310,5 +324,33 @@ public class CustomerManager : MonoBehaviour
         obj.GetComponent<Thief>().StealItem(item_,amount_);
         if(heldItems!=null)
         obj.GetComponent<Thief>().SetHeldItems(heldItems);
+    }
+    public bool CheckStealLimit()
+    {
+        if (currentSteals < maxSteals)
+            return true;
+
+        return false;
+    }
+    public void CaughtThief(bool inHell=false)
+    {
+        if (!inHell)
+        {
+            currentThieves -= 1;
+            if(currentThieves<=0)
+            {
+                currentThieves = 0;
+                ShopManager.instance.SetStealAlert(false, false);
+            }
+        }
+        else
+        {
+            currentThievesInHell -= 1;
+            if (currentThievesInHell <= 0)
+            {
+                currentThievesInHell = 0;
+                ShopManager.instance.SetStealAlert(false, true);
+            }
+        }
     }
 }

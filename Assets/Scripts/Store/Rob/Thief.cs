@@ -36,6 +36,7 @@ public class Thief : MonoBehaviour
         {
             HeadToStoreRoom();
         }
+        ShopManager.instance.SetStealAlert(true, isInHell);
     }
     public void StealMoney()
     {
@@ -71,9 +72,10 @@ public class Thief : MonoBehaviour
             {
                 ShopManager.instance.ReturnItemToInventory(item_.myItem, item_.amount);
             }
-            
+
         }
 
+        CustomerManager.instance.CaughtThief(isInHell);
         gameObject.SetActive(false);
     }
     private void OnTriggerEnter(Collider other)
@@ -81,6 +83,7 @@ public class Thief : MonoBehaviour
         if (other.tag == "EndZone")
         {
             gameObject.SetActive(false);
+            CustomerManager.instance.CaughtThief(isInHell);
         }
         if (other.tag == "StoreRoom")
         {

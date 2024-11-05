@@ -9,6 +9,10 @@ public class ShopManager : MonoBehaviour
     public static ShopManager instance;
     public bool hellShopEnabled;
     public TextMeshProUGUI cashEarnedText;
+    public MMF_Player cashSymbol;
+    public MMF_Player stealAlert;
+    public MMF_Player cashSymbolHell;
+    public MMF_Player stealAlertHell;
     public TextMeshProUGUI cashEarnedTextHell;
     public StorePlayer player;
     public GameObject storeRoom;
@@ -202,6 +206,35 @@ public class ShopManager : MonoBehaviour
         if(amount>0)
         {
             invScreen.AddItemToInventory(item_, amount);
+        }
+    }
+    public void SetStealAlert(bool isStealing,bool inHell=false)
+    {
+        if(isStealing)
+        {
+            if(!inHell)
+            {
+                cashSymbol.gameObject.SetActive(false);
+                stealAlert.gameObject.SetActive(true);
+            }
+            else
+            {
+                cashSymbolHell.gameObject.SetActive(false);
+                stealAlertHell.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (!inHell)
+            {
+                cashSymbol.gameObject.SetActive(true);
+                stealAlert.gameObject.SetActive(false);
+            }
+            else
+            {
+                cashSymbolHell.gameObject.SetActive(true);
+                stealAlertHell.gameObject.SetActive(false);
+            }
         }
     }
 }

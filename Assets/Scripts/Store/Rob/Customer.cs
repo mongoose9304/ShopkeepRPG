@@ -93,10 +93,13 @@ public class Customer : MonoBehaviour
             {
                 if(Random.Range(0,1.0f)<chanceToStealItem)
                 {
-                    CustomerManager.instance.CreateItemThief(transform,p_.myItem,p_.amount,heldItems,isInHell);
-                    p_.ItemSold();
-                    gameObject.SetActive(false);
-                    return;
+                    if (CustomerManager.instance.CheckStealLimit())
+                    {
+                        CustomerManager.instance.CreateItemThief(transform, p_.myItem, p_.amount, heldItems, isInHell);
+                        p_.ItemSold();
+                        gameObject.SetActive(false);
+                        return;
+                    }
                 }
                 if(p_.myItem.basePrice*p_.amount<=cashOnHand)
                 {
