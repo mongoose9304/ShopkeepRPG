@@ -132,6 +132,7 @@ public class PedestalScreen : MonoBehaviour
             openPedestal.ClearItem();
         }
         ShopManager.instance.CloseMenu();
+        CustomerManager.instance.CheckPedestalsforItems();
     }
     private void PutItemBackInInventory()
     {

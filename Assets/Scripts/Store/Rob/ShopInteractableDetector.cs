@@ -23,7 +23,6 @@ public class ShopInteractableDetector : MonoBehaviour
     {
         if (other.tag == "Interactable")
         {
-            Debug.Log("lost Object");
             if (Player.myInteractableObjects.Contains(other.gameObject))
                 Player.myInteractableObjects.Remove(other.gameObject);
 

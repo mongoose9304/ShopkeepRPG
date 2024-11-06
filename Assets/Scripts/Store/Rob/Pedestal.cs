@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Pedestal : InteractableObject
 {
     public ItemData myItem;
     public int amount;
     public Image myItemImage;
+    public bool inUse;
+    public TextMeshProUGUI basePriceText;
  
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
@@ -22,6 +25,8 @@ public class Pedestal : InteractableObject
         amount = amount_;
         myItemImage.sprite = myItem.itemSprite;
         myItemImage.gameObject.SetActive(true);
+        basePriceText.text = (myItem_.basePrice * amount_).ToString();
+        basePriceText.gameObject.SetActive(true);
     }
     public void ClearItem()
     {
@@ -29,11 +34,19 @@ public class Pedestal : InteractableObject
         myItem = null;
         amount = 0;
         myItemImage.sprite = null;
+        basePriceText.gameObject.SetActive(false);
     }
-    public void SetInUse(bool inUse)
+    public void SetInUse(bool inUse_)
     {
-
-        GetComponent<Collider>().enabled = !inUse;
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
+        gameObject.SetActive(!inUse_);
+        inUse = inUse_;
+    }
+    public void ItemSold()
+    {
+        ClearItem();
+        CustomerManager.instance.CheckPedestalsforItems();
+        SetInUse(false);
     }
    
 }

@@ -399,7 +399,15 @@ public class StorePlayer : MonoBehaviour
             return;
         isDead = true;
     }
-   
+   public void RemoveInteractableObject(GameObject obj_)
+    {
+        myInteractableObjects.Remove(obj_);
+        if (interactableObjectTarget = obj_)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+        }
+    }
   
    
 }
