@@ -42,9 +42,12 @@ public class ShopManager : MonoBehaviour
     public CashRegister cashRegisterHell;
     public List<Thief> currentThieves=new List<Thief>();
     public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
+    [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
     private void Awake()
     {
         instance = this;
+        InitPedestalList();
+        LoadAllPedestals();
         if (cashFeedback)
             cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
@@ -260,11 +263,60 @@ public class ShopManager : MonoBehaviour
     {
         PlayerInventory.instance.UpdateItems(invScreen.slots);
         PlayerInventory.instance.SaveItems();
+        SaveAllPedestals();
         
     }
     public void DebugAddItems()
     {
         foreach(InventoryItem item_ in debugItemsToAdd)
         invScreen.AddItemToInventory(item_.myItem, item_.amount);
+    }
+    private void InitPedestalList()
+    {
+        allPedestals.Clear();
+        allPedestals.AddRange(windowPedestals);
+        allPedestals.AddRange(regularPedestals);
+        allPedestals.AddRange(windowPedestalsHell);
+        allPedestals.AddRange(regularPedestalsHell);
+    }
+    private void SaveAllPedestals()
+    {
+        List<InventoryItem> masterItemList_=new List<InventoryItem>();
+        for (int i = 0; i < allPedestals.Count; i++)
+        {
+            InventoryItem item_ = new InventoryItem();
+            if (allPedestals[i].myItem)
+            {
+                
+                item_.myItem = allPedestals[i].myItem;
+                item_.amount = allPedestals[i].amount;
+
+
+                masterItemList_.Add(item_);
+            }
+            else
+            {
+                item_.myItem = null;
+                item_.amount = 0;
+
+
+                masterItemList_.Add(item_);
+            }
+        }
+        FileHandler.SaveToJSON(masterItemList_, "PedestalInventory");
+    }
+    private void LoadAllPedestals()
+    {
+        List<InventoryItem> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItem>("PedestalInventory");
+        if (masterItemList_ != null)
+        {
+           for(int i=0;i<masterItemList_.Count;i++)
+            {
+                if(masterItemList_[i].myItem)
+                {
+                    allPedestals[i].SetItem(masterItemList_[i].myItem, masterItemList_[i].amount);
+                }
+            }
+        }
     }
 }
