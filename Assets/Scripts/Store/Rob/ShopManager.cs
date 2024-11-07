@@ -332,6 +332,7 @@ public class ShopManager : MonoBehaviour
     private void SaveAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = new List<InventoryItemList>();
+        List<float> discounts = new List<float>();
         for (int i = 0; i < allBarginBins.Count; i++)
         {
             InventoryItemList listX = new InventoryItemList();
@@ -358,13 +359,16 @@ public class ShopManager : MonoBehaviour
                 }
                 masterItemList_[i].myList.Add(item_);
             }
+            discounts.Add(allBarginBins[i].itemDiscount);
         }
         FileHandler.SaveToJSON(masterItemList_, "BarginBinInventory");
+        FileHandler.SaveToJSON(discounts, "BarginBinDiscounts");
     }
    
     private void LoadAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItemList>("BarginBinInventory");
+        List<float> discounts = FileHandler.ReadListFromJSON<float>("BarginBinDiscounts");
         if (masterItemList_ != null)
         {
             for (int i = 0; i < masterItemList_.Count; i++)
@@ -373,6 +377,11 @@ public class ShopManager : MonoBehaviour
                 {
                     if(masterItemList_[i].myList[x].myItem)
                     allBarginBins[i].SetSlot(x, masterItemList_[i].myList[x].myItem, masterItemList_[i].myList[x].amount);
+                }
+                if (discounts.Count > i)
+                {
+                    allBarginBins[i].itemDiscount = discounts[i];
+                    allBarginBins[i].ApplyDiscountToAllItems();
                 }
             }
         }

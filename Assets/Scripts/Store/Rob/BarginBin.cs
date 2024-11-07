@@ -77,6 +77,7 @@ public class BarginBin : InteractableObject
                 slot_.discountedCost = Mathf.RoundToInt(slot_.myItem.basePrice * slot_.amount * (1 - itemDiscount));
             }
         }
+        discountText.text = Mathf.Round(itemDiscount * 100.0f).ToString();
     }
     public void SellItem(BarginBinSlot slot_)
     {
