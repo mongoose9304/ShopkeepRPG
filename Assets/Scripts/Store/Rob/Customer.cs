@@ -92,7 +92,7 @@ public class Customer : MonoBehaviour
         {
             if(p_.amount>0)
             {
-                if(Random.Range(0,1.0f)<chanceToStealItem)
+                if(Random.Range(0.0f,1.0f)<chanceToStealItem)
                 {
                     if (CustomerManager.instance.CheckStealLimit())
                     {

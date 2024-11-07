@@ -8,6 +8,8 @@ public class Pedestal : InteractableObject
 {
     public ItemData myItem;
     public int amount;
+    public ItemData myItemPrevious;
+    public int amountPrevious;
     public Image myItemImage;
     public bool inUse;
     public TextMeshProUGUI basePriceText;
@@ -27,6 +29,11 @@ public class Pedestal : InteractableObject
         myItemImage.gameObject.SetActive(true);
         basePriceText.text = (myItem_.basePrice * amount_).ToString();
         basePriceText.gameObject.SetActive(true);
+    }
+    public void SetPreviousItem(ItemData myItem_, int amount_)
+    {
+        myItemPrevious = myItem_;
+        amountPrevious = amount_;
     }
     public void ClearItem()
     {

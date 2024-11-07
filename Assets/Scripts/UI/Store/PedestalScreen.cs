@@ -8,13 +8,25 @@ public class PedestalScreen : MonoBehaviour
     public InventorySlot currentPedestalSlot;
     public InventoryUI  inventoryUI;
     public InventorySlot currentInventorySlot;
+    public InventorySlot previousItemSlot;
     public Pedestal openPedestal;
     public GameObject buttons;
+    public GameObject refillButtons;
     public TextMeshProUGUI currentItemNameText;
+    public TextMeshProUGUI previousItemNameText;
     public TextMeshProUGUI currentItemValue;
     public void OpenMenu(Pedestal p_)
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
+        if (p_.myItemPrevious)
+        {
+            previousItemSlot.SetItem(p_.myItemPrevious, p_.amountPrevious);
+            previousItemNameText.text = previousItemSlot.myItem.itemName;
+        }
+        else
+        {
+            previousItemSlot.SetNullItem();
+        }
         openPedestal = p_;
         if (p_.myItem != null && p_.amount > 0)
         {
@@ -24,6 +36,7 @@ public class PedestalScreen : MonoBehaviour
             x = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             currentInventorySlot.SetItem(p_.myItem, x);
             SetButtonsActive(true);
+            refillButtons.SetActive(false);
 
         }
         else if (p_.myItem != null && p_.amount == 0)
@@ -32,12 +45,17 @@ public class PedestalScreen : MonoBehaviour
             currentInventorySlot.myItem = p_.myItem;
             currentInventorySlot.amount = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             SetButtonsActive(true);
+            refillButtons.SetActive(false);
         }
         else
         {
             currentPedestalSlot.SetNullItem();
             currentInventorySlot.SetNullItem();
             SetButtonsActive(false);
+            if(previousItemSlot.myItem!=null)
+            refillButtons.SetActive(true);
+            else
+                refillButtons.SetActive(false);
         }
         SetItemName();
         CalculateItemValue();
@@ -88,6 +106,7 @@ public class PedestalScreen : MonoBehaviour
         inventoryUI.OpenMenu(true);
         inventoryUI.SetClickFunctionIndex(1);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
+        refillButtons.SetActive(false);
     }
     public void ChangeItem(ItemData data_,int amount_)
     {
@@ -106,6 +125,22 @@ public class PedestalScreen : MonoBehaviour
             SetItemName();
         CalculateItemValue();
     }
+    public void RefillItem()
+    {
+        if(previousItemSlot.myItem)
+        {
+            int x = inventoryUI.GetSlotWithName(previousItemSlot.myItem.itemName).amount;
+           if (x >=previousItemSlot.amount)
+            {
+                PutItemBackInInventory();
+                currentPedestalSlot.SetItem(previousItemSlot.myItem, previousItemSlot.amount);
+                currentInventorySlot.SetItem(previousItemSlot.myItem, inventoryUI.GetSlotWithName(previousItemSlot.myItem.itemName).amount - previousItemSlot.amount);
+                SetItemName();
+                CalculateItemValue();
+                Save();
+            }
+        }
+    }
     public void ResetSelectedItem()
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
@@ -121,11 +156,15 @@ public class PedestalScreen : MonoBehaviour
     {
         if(currentPedestalSlot.myItem)
         {
-            if(currentPedestalSlot.amount>0)
+            if (currentPedestalSlot.amount > 0)
+            {
                 openPedestal.SetItem(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+                openPedestal.SetPreviousItem(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+            }
             else
                 openPedestal.ClearItem();
             UpdateInventoryAmount();
+
         }
         else
         {
