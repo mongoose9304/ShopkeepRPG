@@ -10,6 +10,7 @@ public class BarginBinSlot
     public ItemData myItem;
     public int discountedCost;
 }
+
 public class BarginBin : InteractableObject
 {
     public List<BarginBinSlot> binSlots = new List<BarginBinSlot>();

@@ -43,11 +43,14 @@ public class ShopManager : MonoBehaviour
     public List<Thief> currentThieves=new List<Thief>();
     public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
     [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
+    [SerializeField] private List<BarginBin> allBarginBins = new List<BarginBin>();
     private void Awake()
     {
         instance = this;
         InitPedestalList();
+        InitBarginBinList();
         LoadAllPedestals();
+        LoadAllBarginBins();
         if (cashFeedback)
             cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
@@ -264,6 +267,7 @@ public class ShopManager : MonoBehaviour
         PlayerInventory.instance.UpdateItems(invScreen.slots);
         PlayerInventory.instance.SaveItems();
         SaveAllPedestals();
+        SaveAllBarginBins();
         
     }
     public void DebugAddItems()
@@ -278,6 +282,12 @@ public class ShopManager : MonoBehaviour
         allPedestals.AddRange(regularPedestals);
         allPedestals.AddRange(windowPedestalsHell);
         allPedestals.AddRange(regularPedestalsHell);
+    }
+    private void InitBarginBinList()
+    {
+        allBarginBins.Clear();
+        allBarginBins.AddRange(barginBins);
+        allBarginBins.AddRange(barginBinsHell);
     }
     private void SaveAllPedestals()
     {
@@ -315,6 +325,54 @@ public class ShopManager : MonoBehaviour
                 if(masterItemList_[i].myItem)
                 {
                     allPedestals[i].SetItem(masterItemList_[i].myItem, masterItemList_[i].amount);
+                }
+            }
+        }
+    }
+    private void SaveAllBarginBins()
+    {
+        List<InventoryItemList> masterItemList_ = new List<InventoryItemList>();
+        for (int i = 0; i < allBarginBins.Count; i++)
+        {
+            InventoryItemList listX = new InventoryItemList();
+            masterItemList_.Add(listX);
+            for (int x = 0; x < allBarginBins[i].binSlots.Count; x++)
+            {
+                InventoryItem item_ = new InventoryItem();
+                if (allBarginBins[i].binSlots[x].myItem)
+                {
+
+                    item_.myItem = allBarginBins[i].binSlots[x].myItem;
+                    item_.amount = allBarginBins[i].binSlots[x].amount;
+
+
+                    
+                }
+                else
+                {
+                    item_.myItem = null;
+                    item_.amount = 0;
+
+
+                    
+                }
+                masterItemList_[i].myList.Add(item_);
+            }
+        }
+        FileHandler.SaveToJSON(masterItemList_, "BarginBinInventory");
+    }
+   
+    private void LoadAllBarginBins()
+    {
+        List<InventoryItemList> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItemList>("BarginBinInventory");
+        if (masterItemList_ != null)
+        {
+            for (int i = 0; i < masterItemList_.Count; i++)
+            {
+                for (int x = 0; x < masterItemList_[i].myList.Count; x++)
+                {
+                    if(masterItemList_[i].myList[x].myItem)
+                    allBarginBins[i].SetSlot(x, masterItemList_[i].myList[x].myItem, masterItemList_[i].myList[x].amount);
                 }
             }
         }

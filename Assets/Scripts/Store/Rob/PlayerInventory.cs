@@ -7,6 +7,11 @@ public class InventoryItem
     public ItemData myItem;
     public int amount;
 }
+[System.Serializable]
+public class InventoryItemList
+{
+    public List<InventoryItem> myList = new List<InventoryItem>();
+}
 public class PlayerInventory : MonoBehaviour
 {
     public List<InventoryItem> masterItemList = new List<InventoryItem>();
@@ -29,7 +34,6 @@ public class PlayerInventory : MonoBehaviour
                     if (masterItem_.myItem.itemName == slot_.myItem.itemName)
                     {
                         masterItem_.amount = slot_.amount;
-                        Debug.Log("FoundItem");
                     }
                 }
             }
