@@ -96,6 +96,10 @@ public class PedestalScreen : MonoBehaviour
         openPedestal.ClearItem();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         CalculateItemValue();
+        if (previousItemSlot.myItem != null)
+            refillButtons.SetActive(true);
+        else
+            refillButtons.SetActive(false);
     }
     public void SetButtonsActive(bool isActive_=true)
     {
@@ -176,7 +180,14 @@ public class PedestalScreen : MonoBehaviour
     private void PutItemBackInInventory()
     {
         if (currentPedestalSlot.myItem)
+        {
+            if(inventoryUI.GetSlotWithName(currentPedestalSlot.myItem.itemName))
             inventoryUI.GetSlotWithName(currentPedestalSlot.myItem.itemName).UpdateAmount(currentInventorySlot.amount + currentPedestalSlot.amount);
+            else
+            {
+                inventoryUI.AddItemToInventory(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+            }
+        }
     }
     private void UpdateInventoryAmount()
     {
