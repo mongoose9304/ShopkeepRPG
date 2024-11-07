@@ -15,4 +15,23 @@ public class PlayerInventory : MonoBehaviour
     {
         instance = this;
     }
+    public void UpdateItems(List<InventorySlot> items_)
+    {
+        Debug.Log("UpdateItems");
+        foreach (InventorySlot slot_ in items_)
+        {
+            if (slot_.myItem)
+            {
+                foreach (InventoryItem masterItem_ in masterItemList)
+                {
+
+                    if (masterItem_.myItem.itemName == slot_.myItem.itemName)
+                    {
+                        masterItem_.amount = slot_.amount;
+                        Debug.Log("FOundItem");
+                    }
+                }
+            }
+        }
+    }
 }

@@ -41,6 +41,7 @@ public class ShopManager : MonoBehaviour
     public CashRegister cashRegister;
     public CashRegister cashRegisterHell;
     public List<Thief> currentThieves=new List<Thief>();
+    public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
     private void Awake()
     {
         instance = this;
@@ -254,5 +255,14 @@ public class ShopManager : MonoBehaviour
         {
             t_.CheckSpeed();
         }
+    }
+    public void DebugSaveItems()
+    {
+        PlayerInventory.instance.UpdateItems(invScreen.slots);
+    }
+    public void DebugAddItems()
+    {
+        foreach(InventoryItem item_ in debugItemsToAdd)
+        invScreen.AddItemToInventory(item_.myItem, item_.amount);
     }
 }
