@@ -83,6 +83,15 @@ public class InventoryUI : MonoBehaviour
         }
         if(!hasFoundItem)
         {
+            for(int i=0;i<slots.Count;i++)
+            {
+                if(slots[i].myItem==null)
+                {
+                    slots[i].SetItem(item_, amount_);
+                    slots[i].gameObject.SetActive(true);
+                    break;
+                }
+            }
             //add to inventory
            // slots[slots.Count].SetItem(item_, amount_);
            // slots[slots.Count].gameObject.SetActive(true);
