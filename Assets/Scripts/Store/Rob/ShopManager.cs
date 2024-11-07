@@ -259,6 +259,8 @@ public class ShopManager : MonoBehaviour
     public void DebugSaveItems()
     {
         PlayerInventory.instance.UpdateItems(invScreen.slots);
+        PlayerInventory.instance.SaveItems();
+        
     }
     public void DebugAddItems()
     {

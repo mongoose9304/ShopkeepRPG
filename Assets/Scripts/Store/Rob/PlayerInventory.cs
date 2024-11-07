@@ -14,6 +14,7 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        LoadItems();
     }
     public void UpdateItems(List<InventorySlot> items_)
     {
@@ -28,10 +29,24 @@ public class PlayerInventory : MonoBehaviour
                     if (masterItem_.myItem.itemName == slot_.myItem.itemName)
                     {
                         masterItem_.amount = slot_.amount;
-                        Debug.Log("FOundItem");
+                        Debug.Log("FoundItem");
                     }
                 }
             }
+        }
+    }
+    public void SaveItems()
+    {
+        FileHandler.SaveToJSON(masterItemList,"PlayerInventory");
+    }
+    public void LoadItems()
+    {
+        List<InventoryItem> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItem>("PlayerInventory");
+        if(masterItemList_!=null)
+        {
+            if (masterItemList_.Count == 0)
+                return;
+            masterItemList = masterItemList_;
         }
     }
 }
