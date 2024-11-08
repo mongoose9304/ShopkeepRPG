@@ -455,4 +455,11 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
+    public void EndShopEvent()
+    {
+        foreach (ShopDoor door_ in mydoors)
+        {
+            door_.ResetDoor();
+        }
+    }
 }
