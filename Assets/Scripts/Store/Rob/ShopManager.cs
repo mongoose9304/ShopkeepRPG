@@ -359,6 +359,7 @@ public class ShopManager : MonoBehaviour
     private void SaveAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = new List<InventoryItemList>();
+        List<InventoryItemList> masterItemListPrevious_ = new List<InventoryItemList>();
         List<float> discounts = new List<float>();
         for (int i = 0; i < allBarginBins.Count; i++)
         {
@@ -388,13 +389,42 @@ public class ShopManager : MonoBehaviour
             }
             discounts.Add(allBarginBins[i].itemDiscount);
         }
+        for (int i = 0; i < allBarginBins.Count; i++)
+        {
+            InventoryItemList listY = new InventoryItemList();
+            masterItemListPrevious_.Add(listY);
+            for (int x = 0; x < allBarginBins[i].binSlotsPrevious.Count; x++)
+            {
+                InventoryItem item_ = new InventoryItem();
+                if (allBarginBins[i].binSlotsPrevious[x].myItem)
+                {
+
+                    item_.myItem = allBarginBins[i].binSlotsPrevious[x].myItem;
+                    item_.amount = allBarginBins[i].binSlotsPrevious[x].amount;
+
+
+
+                }
+                else
+                {
+                    item_.myItem = null;
+                    item_.amount = 0;
+
+
+
+                }
+                masterItemListPrevious_[i].myList.Add(item_);
+            }
+        }
         FileHandler.SaveToJSON(masterItemList_, "BarginBinInventory");
+        FileHandler.SaveToJSON(masterItemListPrevious_, "BarginBinInventoryPrevious");
         FileHandler.SaveToJSON(discounts, "BarginBinDiscounts");
     }
    
     private void LoadAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItemList>("BarginBinInventory");
+        List<InventoryItemList> masterItemListPrevious_ = FileHandler.ReadListFromJSON<InventoryItemList>("BarginBinInventoryPrevious");
         List<float> discounts = FileHandler.ReadListFromJSON<float>("BarginBinDiscounts");
         if (masterItemList_ != null)
         {
@@ -410,6 +440,17 @@ public class ShopManager : MonoBehaviour
                     allBarginBins[i].itemDiscount = discounts[i];
                     allBarginBins[i].UpdateSlotsWithItems();
                     allBarginBins[i].ApplyDiscountToAllItems();
+                }
+            }
+        }
+        if (masterItemListPrevious_ != null)
+        {
+            for (int i = 0; i < masterItemListPrevious_.Count; i++)
+            {
+                for (int x = 0; x < masterItemListPrevious_[i].myList.Count; x++)
+                {
+                    if (masterItemListPrevious_[i].myList[x].myItem)
+                        allBarginBins[i].SetPreviousSlot(x, masterItemListPrevious_[i].myList[x].myItem, masterItemListPrevious_[i].myList[x].amount);
                 }
             }
         }
