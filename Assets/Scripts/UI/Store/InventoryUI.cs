@@ -22,8 +22,10 @@ public class InventoryUI : MonoBehaviour
         }
         foreach (InventoryItem item_ in PlayerInventory.instance.masterItemList)
         {
-            if(item_.amount>0)
+            if(item_.myItem)
             {
+                if (item_.amount == 0)
+                    continue;
                 slots[index].SetItem(item_.myItem, item_.amount);
                 slots[index].gameObject.SetActive(true);
                 index += 1;
