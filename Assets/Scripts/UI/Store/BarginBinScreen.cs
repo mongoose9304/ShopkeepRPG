@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using MoreMountains.Tools;
 
 public class BarginBinScreen : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class BarginBinScreen : MonoBehaviour
     int currentSlotIndex;
     public TextMeshProUGUI discountUIText;
     public Slider discountSlider;
+    [SerializeField] AudioClip placeItemAudio;
+    [SerializeField] AudioClip takeItemAudio;
     public void OpenMenu(BarginBin bin_)
     {
         openBarginBin = bin_;
@@ -154,6 +157,9 @@ public class BarginBinScreen : MonoBehaviour
             }
             UpdateInventoryAmount();
             openBarginBin.UpdateSlotsWithItems();
+            MMSoundManager.Instance.PlaySound(placeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         }
         else
         {
@@ -199,6 +205,9 @@ public class BarginBinScreen : MonoBehaviour
             openBarginBin.ClearSlot(i);
         }
         openBarginBin.UpdateSlotsWithItems();
+        MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void AddAmountOfCurrentItem(int amount_)
     {
@@ -236,6 +245,9 @@ public class BarginBinScreen : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(slots[currentSlotIndex].gameObject);
         CalculateItemValue();
         openBarginBin.ClearSlot(currentSlotIndex);
+        MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     private void PutItemBackInInventory()
     {

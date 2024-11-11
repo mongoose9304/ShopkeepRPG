@@ -276,6 +276,7 @@ public class Customer : MonoBehaviour
         if (waitingObject)
             waitingObject.SetActive(false);
         CustomerManager.instance.PlayEmote(0, transform);
+        CustomerManager.instance.PlayCustomerAudio(0);
         cashOnHand -= cost_;
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 public class ShopManager : MonoBehaviour
 {
@@ -50,6 +51,9 @@ public class ShopManager : MonoBehaviour
     public ParticleSystem[] teleportEffectsHuman;
     public Transform teleportLocationHell;
     public ParticleSystem[] teleportEffectsHell;
+    public AudioClip[] cashAudios;
+    public List<AudioClip> BGMs = new List<AudioClip>();
+    public List<AudioClip> ShopActiveBGMs = new List<AudioClip>();
     private void Awake()
     {
         instance = this;
@@ -62,6 +66,11 @@ public class ShopManager : MonoBehaviour
 
         if (cashFeedbackHell)
             cashCounterHell = cashFeedbackHell.GetFeedbackOfType<MMF_TMPCountTo>();
+      
+    }
+    private void Start()
+    {
+        PlayRandomBGM();
     }
     public void OpenPedestal(Pedestal p_)
     {
@@ -118,6 +127,9 @@ public class ShopManager : MonoBehaviour
             cashCounterHell.CountTo = currentCashEarnedHell;
             cashFeedbackHell.PlayFeedbacks();
         }
+        MMSoundManager.Instance.PlaySound(cashAudios[Random.Range(0,cashAudios.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public GameObject GetRandomNPCExit(bool inHell = false)
     {
@@ -233,7 +245,8 @@ public class ShopManager : MonoBehaviour
                 door_.RotateDoor();
             }
         }
-      
+        PlayRandomShopActiveBGM();
+
     }
     public void ReturnItemToInventory(ItemData item_,int amount)
     {
@@ -529,5 +542,15 @@ public class ShopManager : MonoBehaviour
             EnterHell();
             player.gameObject.transform.position = teleportLocationHell.position;
         }
+    }
+    public void PlayRandomBGM()
+    {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true,0.6f);
+    }
+    public void PlayRandomShopActiveBGM()
+    {
+        MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
+        MMSoundManager.Instance.PlaySound(ShopActiveBGMs[Random.Range(0, ShopActiveBGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
     }
 }

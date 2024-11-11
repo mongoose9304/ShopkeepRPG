@@ -53680,6 +53680,12 @@ MonoBehaviour:
   teleportEffectsHell:
   - {fileID: 6099937378719819834}
   - {fileID: 1490301825}
+  cashAudios:
+  - {fileID: 8300000, guid: 5ed69a48fdb137a49bc347c70bf1472e, type: 3}
+  BGMs:
+  - {fileID: 8300000, guid: 2f9c9721648bbb5479e395f478f5b46e, type: 3}
+  ShopActiveBGMs:
+  - {fileID: 8300000, guid: 761cc3bdce91b434cbeac5704e8afa5c, type: 3}
 --- !u!114 &1082197084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74520,6 +74526,54 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436239155}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1441903821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1441903822}
+  - component: {fileID: 1441903823}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1441903822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441903821}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1953241319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1441903823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441903821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614edb33c38bcf949846d5675f29f9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AutomaticallyUnparentOnAwake: 1
+  settingsSo: {fileID: 11400000, guid: 07ea3ff88e1ecb84d91f58aa804badc6, type: 2}
+  AudioSourcePoolSize: 10
+  PoolCanExpand: 1
 --- !u!1 &1443856704
 GameObject:
   m_ObjectHideFlags: 0
@@ -74616,6 +74670,9 @@ MonoBehaviour:
   customersWaiting: []
   timeBetweenUses: 0
   hasEmployee: 1
+  cashRegisterAudio:
+  - {fileID: 8300000, guid: f0abc982fd59208498534c959c3fcb4b, type: 3}
+  - {fileID: 8300000, guid: f3de04dde107c0941b3fd7bc19f4590b, type: 3}
 --- !u!1 &1448749636
 GameObject:
   m_ObjectHideFlags: 0
@@ -77891,6 +77948,8 @@ MonoBehaviour:
   - {fileID: 1600591667}
   discountUIText: {fileID: 1372039415}
   discountSlider: {fileID: 1055592987}
+  placeItemAudio: {fileID: 8300000, guid: 85aee6e9849c3304f8afa73e12d70639, type: 3}
+  takeItemAudio: {fileID: 8300000, guid: bf604a29b52c2f543b3abcc7d0e7173e, type: 3}
 --- !u!1 &1527770273
 GameObject:
   m_ObjectHideFlags: 0
@@ -99495,6 +99554,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1441903822}
   - {fileID: 650952030}
   - {fileID: 1082197082}
   - {fileID: 2080735984}
@@ -108320,6 +108380,9 @@ MonoBehaviour:
   windowPedestalsWithItemsHell: []
   barginBinsWithItems: []
   barginBinsWithItemsHell: []
+  stealAudio: {fileID: 8300000, guid: 2ec0209accd99b54fb053c99e42db248, type: 3}
+  thiefCaughtAudio: {fileID: 8300000, guid: bf06089d20334444eb8452c0e12a56c5, type: 3}
+  haggleAudio: {fileID: 8300000, guid: 18d04e3f1bd33d64a9a7aeac7d548c3c, type: 3}
 --- !u!1001 &2082163992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109763,6 +109826,9 @@ MonoBehaviour:
   customersWaiting: []
   timeBetweenUses: 0
   hasEmployee: 0
+  cashRegisterAudio:
+  - {fileID: 8300000, guid: f0abc982fd59208498534c959c3fcb4b, type: 3}
+  - {fileID: 8300000, guid: f3de04dde107c0941b3fd7bc19f4590b, type: 3}
 --- !u!65 &2141299062
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -130824,6 +130890,8 @@ MonoBehaviour:
   currentItemNameText: {fileID: 1148050223}
   previousItemNameText: {fileID: 998894515}
   currentItemValue: {fileID: 1858528801}
+  placeItemAudio: {fileID: 8300000, guid: 20a29efcce61b594d963dbc92c644ca2, type: 3}
+  takeItemAudio: {fileID: 8300000, guid: fe9c4c6a70f8f114281aa8b28ced356a, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

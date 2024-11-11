@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using MoreMountains.Tools;
 
 public class PedestalScreen : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PedestalScreen : MonoBehaviour
     public TextMeshProUGUI currentItemNameText;
     public TextMeshProUGUI previousItemNameText;
     public TextMeshProUGUI currentItemValue;
+    [SerializeField] AudioClip placeItemAudio;
+    [SerializeField] AudioClip takeItemAudio;
     public void OpenMenu(Pedestal p_)
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
@@ -176,6 +179,9 @@ public class PedestalScreen : MonoBehaviour
         }
         ShopManager.instance.CloseMenu();
         CustomerManager.instance.CheckPedestalsforItems();
+        MMSoundManager.Instance.PlaySound(placeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     private void PutItemBackInInventory()
     {
@@ -187,6 +193,9 @@ public class PedestalScreen : MonoBehaviour
             {
                 inventoryUI.AddItemToInventory(currentPedestalSlot.myItem, currentPedestalSlot.amount);
             }
+            MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         }
     }
     private void UpdateInventoryAmount()

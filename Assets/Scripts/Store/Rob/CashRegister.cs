@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class CashRegister : InteractableObject
     public List<Customer> customersWaiting = new List<Customer>();
     public float timeBetweenUses = 0;
     public bool hasEmployee;
+    public AudioClip[] cashRegisterAudio;
     private void Update()
     {
         if(timeBetweenUses>0)
@@ -33,6 +35,9 @@ public class CashRegister : InteractableObject
                 customersWaiting.RemoveAt(0);
                 SetCustomerTargets();
                 timeBetweenUses = 1;
+                MMSoundManager.Instance.PlaySound(cashRegisterAudio[Random.Range(0,cashRegisterAudio.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
             }
         }
     }

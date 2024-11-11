@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 public class CustomerManager : MonoBehaviour
 {
@@ -40,6 +41,9 @@ public class CustomerManager : MonoBehaviour
     public List<BarginBin> barginBinsWithItemsHell = new List<BarginBin>();
     private int lastNPCSpawnIndex=0;
     private int lastNPCSpawnIndexHell=0;
+    [SerializeField] AudioClip stealAudio;
+    [SerializeField] AudioClip thiefCaughtAudio;
+    [SerializeField] AudioClip haggleAudio;
     private void Awake()
     {
         instance = this;
@@ -332,6 +336,9 @@ public class CustomerManager : MonoBehaviour
         if(heldItems!=null)
         obj.GetComponent<Thief>().SetHeldItems(heldItems);
         ShopManager.instance.currentThieves.Add(obj.GetComponent<Thief>());
+        MMSoundManager.Instance.PlaySound(stealAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public bool CheckStealLimit()
     {
@@ -360,6 +367,9 @@ public class CustomerManager : MonoBehaviour
                 ShopManager.instance.SetStealAlert(false, true);
             }
         }
+        MMSoundManager.Instance.PlaySound(thiefCaughtAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void PlayEmote(int emote_,Transform location_)
     {//0=happy, 1=anger,2= thief caught
@@ -383,6 +393,22 @@ public class CustomerManager : MonoBehaviour
                 obj = ThiefCaughtPool.GetPooledGameObject();
                 obj.transform.position = location_.position;
                 obj.SetActive(true);
+                break;
+        }
+    }
+    public void PlayCustomerAudio(int emote_)
+    {
+        switch (emote_)
+        {
+
+            case 0:
+                MMSoundManager.Instance.PlaySound(haggleAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+  false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+  1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                break;
+            case 1:
+                break;
+            case 2:
                 break;
         }
     }
