@@ -9,6 +9,7 @@ public class ShopManager : MonoBehaviour
     public static ShopManager instance;
     public bool playerInHell;
     public bool hellShopEnabled;
+    public bool humanShopEnabled;
     public TextMeshProUGUI cashEarnedText;
     public MMF_Player cashSymbol;
     public MMF_Player stealAlert;
@@ -203,8 +204,18 @@ public class ShopManager : MonoBehaviour
     }
     public void OpenShop()
     {
-        CustomerManager.instance.OpenShop(8,4);
-        CustomerManager.instance.OpenShop(8,0,true);
+        if (!humanShopEnabled && !hellShopEnabled)
+        {
+            foreach (ShopDoor door_ in mydoors)
+            {
+                door_.ResetDoor();
+            }
+            return;
+        }
+        if(humanShopEnabled)
+            CustomerManager.instance.OpenShop(8,4);
+        if (hellShopEnabled)
+            CustomerManager.instance.OpenShop(8,0,true);
         foreach(ShopDoor door_ in mydoors)
         {
             door_.RotateDoor();
@@ -460,6 +471,17 @@ public class ShopManager : MonoBehaviour
         foreach (ShopDoor door_ in mydoors)
         {
             door_.ResetDoor();
+        }
+    }
+    public void ToggleShopOpen(bool enabled_,bool inHell_)
+    {
+        if(!inHell_)
+        {
+            humanShopEnabled = enabled_;
+        }
+        else
+        {
+            hellShopEnabled = enabled_;
         }
     }
 }
