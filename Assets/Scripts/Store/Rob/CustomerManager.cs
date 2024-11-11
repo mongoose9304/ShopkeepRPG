@@ -84,6 +84,10 @@ public class CustomerManager : MonoBehaviour
     }
     public void SpawnRandomCustomer(bool inHell = false)
     {
+        if(!ShopManager.instance.CheckIfShopIsOpen(inHell))
+        {
+            return;
+        }
         if (!inHell)
         {
             currentTimeBetweenCustomerSpawns = Random.Range(minTimeBetweenCustomerSpawns, maxTimeBetweenCustomerSpawns);

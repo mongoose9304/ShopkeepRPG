@@ -339,7 +339,14 @@ public class Customer : MonoBehaviour
         hagglePedestal = null;
         currentBarginBin = null;
         currentBrowseChances -= 1;
+        //NPCs should have a limit on how much they can browse
         if(currentBrowseChances<=0)
+        {
+            LeaveShop();
+            return;
+        }
+        //leave if the player closes the shop early
+        if (!ShopManager.instance.CheckIfShopIsOpen(isInHell))
         {
             LeaveShop();
             return;

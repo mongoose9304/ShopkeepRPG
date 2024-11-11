@@ -39,6 +39,7 @@ public class ShopManager : MonoBehaviour
     public List<BarginBin> barginBins = new List<BarginBin>();
     public List<BarginBin> barginBinsHell = new List<BarginBin>();
     public List<ShopDoor> mydoors = new List<ShopDoor>();
+    public List<ShopDoor> mydoorsHell = new List<ShopDoor>();
     public CashRegister cashRegister;
     public CashRegister cashRegisterHell;
     public List<Thief> currentThieves=new List<Thief>();
@@ -212,14 +213,23 @@ public class ShopManager : MonoBehaviour
             }
             return;
         }
-        if(humanShopEnabled)
-            CustomerManager.instance.OpenShop(8,4);
-        if (hellShopEnabled)
-            CustomerManager.instance.OpenShop(8,0,true);
-        foreach(ShopDoor door_ in mydoors)
+        if (humanShopEnabled)
         {
-            door_.RotateDoor();
+            CustomerManager.instance.OpenShop(8, 4);
+            foreach (ShopDoor door_ in mydoors)
+            {
+                door_.RotateDoor();
+            }
         }
+        if (hellShopEnabled)
+        {
+            CustomerManager.instance.OpenShop(8, 0, true);
+            foreach (ShopDoor door_ in mydoorsHell)
+            {
+                door_.RotateDoor();
+            }
+        }
+      
     }
     public void ReturnItemToInventory(ItemData item_,int amount)
     {
@@ -482,6 +492,17 @@ public class ShopManager : MonoBehaviour
         else
         {
             hellShopEnabled = enabled_;
+        }
+    }
+    public bool CheckIfShopIsOpen(bool inHell_)
+    {
+        if(!inHell_)
+        {
+            return humanShopEnabled;
+        }
+        else
+        {
+            return hellShopEnabled;
         }
     }
 }
