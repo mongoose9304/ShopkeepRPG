@@ -46,6 +46,8 @@ public class ShopManager : MonoBehaviour
     public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
     [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
     [SerializeField] private List<BarginBin> allBarginBins = new List<BarginBin>();
+    public Transform teleportLocationHuman;
+    public Transform teleportLocationHell;
     private void Awake()
     {
         instance = this;
@@ -503,6 +505,19 @@ public class ShopManager : MonoBehaviour
         else
         {
             return hellShopEnabled;
+        }
+    }
+    public void WarpPlayerToOtherStore()
+    {
+        if(playerInHell)
+        {
+            ExitHell();
+            player.gameObject.transform.position = teleportLocationHuman.position;
+        }
+        else
+        {
+            EnterHell();
+            player.gameObject.transform.position = teleportLocationHell.position;
         }
     }
 }

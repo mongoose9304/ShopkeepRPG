@@ -16,6 +16,9 @@ public class StorePlayer : MonoBehaviour
     public float dashDistance;
     [Tooltip("If the Player is currently dashing")]
     public bool isDashing;
+    [Tooltip("Timebefore Player can warp to other store again")]
+    public float teleportCooldownMax;
+    private float teleportCooldown;
     float dashTime;
     float dashCoolDown;
 
@@ -144,22 +147,23 @@ public class StorePlayer : MonoBehaviour
     {
        
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        if (Input.GetButtonDown("Fire3"))
-        {
-            
-        }
+        if(teleportCooldown>0)
+        teleportCooldown -= Time.deltaTime;
         if (Input.GetButtonDown("Fire2"))
         {
             OnDash();
         }
-        if (Input.GetButton("Fire4"))
+        else if (Input.GetButton("Fire4"))
         {
             InteractAction();
         }
-        if (Input.GetButtonDown("Fire1"))
+        else if (Input.GetButton("Special3"))
         {
-        
+            WarpToOtherShop();
+        }
+        else if (Input.GetAxis("Special3") == 1)
+        {
+            WarpToOtherShop();
         }
 
     }
@@ -407,6 +411,13 @@ public class StorePlayer : MonoBehaviour
             interactableObjectTarget = null;
             interactableObjectLockOnObject.SetActive(false);
         }
+    }
+    public void WarpToOtherShop()
+    {
+        if (teleportCooldown > 0)
+            return;
+        teleportCooldown = teleportCooldownMax;
+        ShopManager.instance.WarpPlayerToOtherStore();
     }
   
    
