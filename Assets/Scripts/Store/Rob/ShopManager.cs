@@ -47,7 +47,9 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
     [SerializeField] private List<BarginBin> allBarginBins = new List<BarginBin>();
     public Transform teleportLocationHuman;
+    public ParticleSystem[] teleportEffectsHuman;
     public Transform teleportLocationHell;
+    public ParticleSystem[] teleportEffectsHell;
     private void Awake()
     {
         instance = this;
@@ -276,6 +278,10 @@ public class ShopManager : MonoBehaviour
         {
             t_.CheckSpeed();
         }
+        foreach (ParticleSystem sys in teleportEffectsHell)
+        {
+            sys.Play();
+        }
     }
     public void ExitHell()
     {
@@ -283,6 +289,10 @@ public class ShopManager : MonoBehaviour
         foreach (Thief t_ in currentThieves)
         {
             t_.CheckSpeed();
+        }
+        foreach(ParticleSystem sys in teleportEffectsHuman)
+        {
+            sys.Play();
         }
     }
     public void DebugSaveItems()
