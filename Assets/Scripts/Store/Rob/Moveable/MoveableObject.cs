@@ -5,4 +5,5 @@ using UnityEngine;
 public class MoveableObject : MonoBehaviour
 {
     public GameObject myPrefab;
+    public GameObject myHeldVisualPrefab;
 }

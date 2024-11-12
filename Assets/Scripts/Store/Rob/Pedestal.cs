@@ -55,5 +55,9 @@ public class Pedestal : InteractableObject
         CustomerManager.instance.CheckPedestalsforItems();
         SetInUse(false);
     }
+    public void ObjectBeingDestroyed()
+    {
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
+    }
    
 }

@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myItem: {fileID: 0}
   amount: 0
+  myItemPrevious: {fileID: 0}
+  amountPrevious: 0
   myItemImage: {fileID: 3394205906072324112}
   inUse: 0
   basePriceText: {fileID: 7308941264545673652}
@@ -83,6 +85,7 @@ GameObject:
   - component: {fileID: 4330518194107185590}
   - component: {fileID: 4703929265383519070}
   - component: {fileID: 8892575392917373606}
+  - component: {fileID: 7488150927252684948}
   m_Layer: 6
   m_Name: Pedestal
   m_TagString: Pedestal
@@ -178,6 +181,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7488150927252684948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311026154604705361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e190e57d3b6fe344af523c6acda5f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2882184197194423501}
+        m_TargetAssemblyTypeName: Pedestal, Assembly-CSharp
+        m_MethodName: ObjectBeingDestroyed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4120564229996140612
 GameObject:
   m_ObjectHideFlags: 0

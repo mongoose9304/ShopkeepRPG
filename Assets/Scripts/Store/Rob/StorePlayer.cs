@@ -40,6 +40,9 @@ public class StorePlayer : MonoBehaviour
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject moveableObjectSlotLockOnObject;
     [SerializeField] MoveableObject heldObject;
+    public bool isInMovingMode;
+    public GameObject heldObjectSpawn;
+    public GameObject heldObjectVisual;
 
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
@@ -58,7 +61,7 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
-    public bool isInMovingMode;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -228,7 +231,7 @@ public class StorePlayer : MonoBehaviour
             {
                 if (moveableObjectSlotTarget.CheckForObject())
                 {
-                    heldObject = moveableObjectSlotTarget.placedObject;
+                    SetHeldObject(moveableObjectSlotTarget.placedObject);
                     moveableObjectSlotTarget.PickUpObject();
                 }
             }
@@ -241,9 +244,28 @@ public class StorePlayer : MonoBehaviour
                 else
                 {
                     moveableObjectSlotTarget.PlaceObject(heldObject);
-                    heldObject = null;
+                    ClearHeldObject();
                 }
             }
+        }
+    }
+    private void SetHeldObject(MoveableObject obj_)
+    {
+        heldObject = obj_;
+        if(heldObjectVisual)
+        {
+            Destroy(heldObjectVisual);
+        }
+      heldObjectVisual=  GameObject.Instantiate(heldObject.myHeldVisualPrefab, heldObjectSpawn.transform);
+        heldObjectVisual.transform.position = heldObjectSpawn.transform.position;
+
+    }
+    private void ClearHeldObject()
+    {
+        heldObject = null;
+        if (heldObjectVisual)
+        {
+            Destroy(heldObjectVisual);
         }
     }
 
