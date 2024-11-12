@@ -2223,6 +2223,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &50874086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,6 +2290,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Select
           m_BoolArgument: 1
         m_CallState: 2
   deselectEvent:
@@ -5289,19 +5313,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -5309,8 +5357,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 135747914}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -5692,19 +5752,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -5712,8 +5796,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 143642252}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -7103,19 +7199,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -7123,8 +7243,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 198802321}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -9242,6 +9374,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 952648810}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -9309,6 +9453,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Select
           m_BoolArgument: 1
         m_CallState: 2
   deselectEvent:
@@ -24722,19 +24878,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -24742,8 +24922,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 408559365}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -26996,19 +27188,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -27016,8 +27232,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 460609325}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -28152,6 +28380,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 489413606}
+        m_TargetAssemblyTypeName: InventorySlot, Assembly-CSharp
+        m_MethodName: OnSelectEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   deselectEvent:
     m_PersistentCalls:
       m_Calls:
@@ -28259,6 +28499,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!224 &489413611
@@ -31087,19 +31339,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -31107,8 +31383,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 575421062}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -37629,19 +37917,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -37649,8 +37961,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 708171867}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -52635,6 +52959,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlaySliderAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Slider
+          m_BoolArgument: 0
+        m_CallState: 2
   objectToSelectOnDown: {fileID: 0}
 --- !u!1 &1057057932
 GameObject:
@@ -55311,19 +55647,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -55331,8 +55691,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1135857650}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -56119,6 +56491,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hover
+          m_BoolArgument: 1
+        m_CallState: 2
   deselectEvent:
     m_PersistentCalls:
       m_Calls:
@@ -56188,6 +56572,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!225 &1164236692
@@ -57657,19 +58053,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -57677,8 +58097,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1195385041}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -69937,6 +70369,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1311388318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69992,6 +70436,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Select
           m_BoolArgument: 1
         m_CallState: 2
   deselectEvent:
@@ -75514,19 +75970,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -75534,8 +76014,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1460557902}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -78062,6 +78554,8 @@ MonoBehaviour:
   discountSlider: {fileID: 1055592987}
   placeItemAudio: {fileID: 8300000, guid: 85aee6e9849c3304f8afa73e12d70639, type: 3}
   takeItemAudio: {fileID: 8300000, guid: bf604a29b52c2f543b3abcc7d0e7173e, type: 3}
+  maxTimebetweenSliderAudios: 0
+  currentTimebetweenSliderAudios: 0
 --- !u!1 &1527770273
 GameObject:
   m_ObjectHideFlags: 0
@@ -78585,19 +79079,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -78605,8 +79123,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1535219439}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -79079,19 +79609,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -79099,8 +79653,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1555605517}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -79454,6 +80020,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hover
+          m_BoolArgument: 1
+        m_CallState: 2
   deselectEvent:
     m_PersistentCalls:
       m_Calls:
@@ -79523,6 +80101,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!225 &1572804727
@@ -79989,19 +80579,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -80009,8 +80623,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1587618014}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -80822,19 +81448,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -80842,8 +81492,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1600591667}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -83996,19 +84658,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1521536848}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1521536848}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BarginSlotSelected
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlayAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BarginBinScreen, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: BarginBinScreen, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -84016,8 +84702,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1679037417}
     - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: InventorySlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749064801075716111, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
       propertyPath: myUI
@@ -90330,6 +91028,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Select
+          m_BoolArgument: 1
+        m_CallState: 2
   deselectEvent:
     m_PersistentCalls:
       m_Calls:
@@ -90399,6 +91109,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1376115884}
@@ -107066,6 +107788,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Click
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2029090534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107121,6 +107855,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1521536848}
+        m_TargetAssemblyTypeName: BarginBinScreen, Assembly-CSharp
+        m_MethodName: PlayAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Select
           m_BoolArgument: 1
         m_CallState: 2
   deselectEvent:

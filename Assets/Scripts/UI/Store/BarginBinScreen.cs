@@ -25,6 +25,13 @@ public class BarginBinScreen : MonoBehaviour
     public Slider discountSlider;
     [SerializeField] AudioClip placeItemAudio;
     [SerializeField] AudioClip takeItemAudio;
+    [SerializeField] private float maxTimebetweenSliderAudios;
+    [SerializeField] private float currentTimebetweenSliderAudios;
+    private void Update()
+    {
+        if (currentTimebetweenSliderAudios > 0)
+            currentTimebetweenSliderAudios -= Time.deltaTime;
+    }
     public void OpenMenu(BarginBin bin_)
     {
         openBarginBin = bin_;
@@ -34,6 +41,7 @@ public class BarginBinScreen : MonoBehaviour
         discountSlider.value = openBarginBin.itemDiscount;
         SetDiscountAmount(openBarginBin.itemDiscount);
         refillButtons.SetActive(true);
+        currentTimebetweenSliderAudios = 0;
 
     }
     public void LoadInventory(BarginBin bin_)
@@ -266,5 +274,22 @@ public class BarginBinScreen : MonoBehaviour
 
         discountUIText.text = (Mathf.Round(amount_ * 100.0f)).ToString();
         openBarginBin.SetBinDiscountAmount(amount_);
+    }
+    public void PlayAudio(string audio_)
+    {
+        if (ShopManager.instance)
+        {
+            ShopManager.instance.PlayUIAudio(audio_);
+        }
+    }
+    public void PlaySliderAudio(string audio_)
+    {
+        if (ShopManager.instance)
+        {
+            if (currentTimebetweenSliderAudios > 0)
+                return;
+            ShopManager.instance.PlayUIAudio(audio_);
+            currentTimebetweenSliderAudios = maxTimebetweenSliderAudios;
+        }
     }
 }
