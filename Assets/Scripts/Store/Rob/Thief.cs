@@ -101,7 +101,7 @@ public class Thief : MonoBehaviour
         {
             gameObject.SetActive(false);
             ShopManager.instance.currentThieves.Remove(this);
-            CustomerManager.instance.CaughtThief(isInHell);
+            CustomerManager.instance.CaughtThief(isInHell,true);
         }
         if (other.tag == "StoreRoom")
         {
