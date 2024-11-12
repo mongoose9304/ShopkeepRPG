@@ -32,6 +32,15 @@ public class StorePlayer : MonoBehaviour
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject interactableObjectLockOnObject;
 
+    [Header("Moveable")]
+    [Tooltip("All the objects the player is currently in range to interact with")]
+    public List<MoveableObjectSlot> myMoveableObjectSlots = new List<MoveableObjectSlot>();
+    [Tooltip("The object the player is currently locked onto")]
+    [SerializeField] MoveableObjectSlot moveableObjectSlotTarget;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject moveableObjectSlotLockOnObject;
+    [SerializeField] MoveableObject heldObject;
+
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
     Vector3 moveInput;
@@ -49,7 +58,7 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
-
+    public bool isInMovingMode;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -81,6 +90,7 @@ public class StorePlayer : MonoBehaviour
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
         GetClosestInteractableObject();
+        GetClosestMoveableObject();
 
 
         if (!isDashing)
@@ -161,6 +171,11 @@ public class StorePlayer : MonoBehaviour
         {
             InteractAction();
         }
+        else if (Input.GetButtonDown("Fire3"))
+        {
+            if(isInMovingMode)
+            MoveItemAction();
+        }
         else if (Input.GetButton("Special3"))
         {
             WarpToOtherShop();
@@ -202,7 +217,36 @@ public class StorePlayer : MonoBehaviour
             }
         }
     }
-    
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void MoveItemAction()
+    {
+        if (moveableObjectSlotTarget)
+        {
+            if (!heldObject)
+            {
+                if (moveableObjectSlotTarget.CheckForObject())
+                {
+                    heldObject = moveableObjectSlotTarget.placedObject;
+                    moveableObjectSlotTarget.PickUpObject();
+                }
+            }
+            else
+            {
+                if (moveableObjectSlotTarget.CheckForObject())
+                {
+
+                }
+                else
+                {
+                    moveableObjectSlotTarget.PlaceObject(heldObject);
+                    heldObject = null;
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Calculates the nearest interactable object and sets that as the interactable target that will be used for lock ons
     /// </summary>
@@ -236,6 +280,41 @@ public class StorePlayer : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = obj;
+        }
+    }
+    /// <summary>
+    /// Calculates the nearest moveable object and sets that as the moveable target that will be used for lock ons
+    /// </summary>
+    private void GetClosestMoveableObject()
+    {
+        if (myMoveableObjectSlots.Count == 0)
+        {
+            moveableObjectSlotTarget = null;
+            moveableObjectSlotLockOnObject.SetActive(false);
+            return;
+        }
+        for (int i = 0; i < myMoveableObjectSlots.Count; i++)
+        {
+            if (!myMoveableObjectSlots[i].gameObject.activeInHierarchy)
+            {
+                if (moveableObjectSlotTarget == myMoveableObjectSlots[i])
+                    moveableObjectSlotTarget = null;
+                myMoveableObjectSlots.RemoveAt(i);
+                continue;
+            }
+            if (!moveableObjectSlotTarget)
+            {
+                moveableObjectSlotTarget = myMoveableObjectSlots[i];
+            }
+            if (Vector3.Distance(transform.position, myMoveableObjectSlots[i].transform.position) < Vector3.Distance(transform.position, moveableObjectSlotTarget.transform.position))
+                moveableObjectSlotTarget = myMoveableObjectSlots[i];
+            moveableObjectSlotLockOnObject.SetActive(true);
+            moveableObjectSlotLockOnObject.transform.position = moveableObjectSlotTarget.transform.position;
+        }
+        foreach (MoveableObjectSlot obj in myMoveableObjectSlots)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, moveableObjectSlotTarget.transform.position))
+                moveableObjectSlotTarget = obj;
         }
     }
     /// <summary>
