@@ -275,11 +275,13 @@ public class ShopManager : MonoBehaviour
             {
                 cashSymbol.gameObject.SetActive(false);
                 stealAlert.gameObject.SetActive(true);
+                stealAlert.GetComponent<MMF_Player>().PlayFeedbacks();
             }
             else
             {
                 cashSymbolHell.gameObject.SetActive(false);
                 stealAlertHell.gameObject.SetActive(true);
+                stealAlertHell.GetComponent<MMF_Player>().PlayFeedbacks();
             }
         }
         else
