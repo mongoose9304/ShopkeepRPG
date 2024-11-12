@@ -58,6 +58,8 @@ public class ShopManager : MonoBehaviour
     public AudioClip clickUIAudio;
     public AudioClip sliderUIAudio;
     public AudioClip closeUIAudio;
+    public AudioClip enterHellAudio;
+    public AudioClip openShopAudio;
     private void Awake()
     {
         instance = this;
@@ -253,6 +255,9 @@ public class ShopManager : MonoBehaviour
             }
         }
         PlayRandomShopActiveBGM();
+        MMSoundManager.Instance.PlaySound(openShopAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
 
     }
     public void ReturnItemToInventory(ItemData item_,int amount)
@@ -302,6 +307,9 @@ public class ShopManager : MonoBehaviour
         {
             sys.Play();
         }
+        MMSoundManager.Instance.PlaySound(enterHellAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void ExitHell()
     {
@@ -314,6 +322,9 @@ public class ShopManager : MonoBehaviour
         {
             sys.Play();
         }
+        MMSoundManager.Instance.PlaySound(enterHellAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void DebugSaveItems()
     {

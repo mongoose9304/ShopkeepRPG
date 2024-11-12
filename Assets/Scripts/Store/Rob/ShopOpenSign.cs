@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using MoreMountains.Tools;
 
 public class ShopOpenSign : InteractableObject
 {
@@ -13,6 +14,7 @@ public class ShopOpenSign : InteractableObject
     public Sprite[] signSprites;
     bool isSwapping;
     float swapTime;
+    public AudioClip flipSignAudio;
     private void Update()
     {
         if(swapTime>0)
@@ -42,6 +44,9 @@ public class ShopOpenSign : InteractableObject
         swapTime = 0.1f;
         isOpen = !isOpen;
         ShopManager.instance.ToggleShopOpen(isOpen,isInHell);
+        MMSoundManager.Instance.PlaySound(flipSignAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+  false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+  1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public override void Interact(GameObject interactingObject_ = null)
     {

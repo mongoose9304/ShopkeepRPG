@@ -22,6 +22,13 @@ public class HaggleUI : MonoBehaviour
     public List<string> bitTooHigh = new List<string>();
     public List<Sprite> emojis = new List<Sprite>();
     public Image SliderEmoji;
+    private float currentTimebetweenSliderAudios;
+    [SerializeField] float maxTimebetweenSliderAudios;
+    private void Update()
+    {
+        if (currentTimebetweenSliderAudios > 0)
+            currentTimebetweenSliderAudios -= Time.deltaTime;
+    }
     public void OpenMenu(Pedestal p_,Customer c_,float haggleStart_)
     {
         openPedestal = p_;
@@ -35,6 +42,7 @@ public class HaggleUI : MonoBehaviour
         currentHaggleSlot.SetItem(openPedestal.myItem, openPedestal.amount);
         currentItemNameText.text = openPedestal.myItem.itemName;
         ChangeHaggleSliderEmotion(haggleStart_);
+        currentTimebetweenSliderAudios = 0;
     }
     public void SetHaggleAmount(float amount_)
     {
@@ -110,6 +118,16 @@ public class HaggleUI : MonoBehaviour
             case 4:
                 SliderEmoji.sprite = emojis[4];
                 break;
+        }
+    }
+    public void PlaySliderAudio(string audio_)
+    {
+        if (ShopManager.instance)
+        {
+            if (currentTimebetweenSliderAudios > 0)
+                return;
+            ShopManager.instance.PlayUIAudio(audio_);
+            currentTimebetweenSliderAudios = maxTimebetweenSliderAudios;
         }
     }
 }

@@ -24471,6 +24471,7 @@ MonoBehaviour:
   signSprites:
   - {fileID: 21300000, guid: f50d60f696de23d449e02dcbd1e13213, type: 3}
   - {fileID: 21300000, guid: a386f70478471b8459ca34b2ba47eb7b, type: 3}
+  flipSignAudio: {fileID: 8300000, guid: 20a29efcce61b594d963dbc92c644ca2, type: 3}
 --- !u!65 &394330176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54050,6 +54051,8 @@ MonoBehaviour:
   clickUIAudio: {fileID: 8300000, guid: 2e291b5d640046048b58e8873e6c617e, type: 3}
   sliderUIAudio: {fileID: 8300000, guid: 09cf6327c3dd3624eba36cc05130dcaf, type: 3}
   closeUIAudio: {fileID: 8300000, guid: 555525a564cd8b34f803f27c00c949e1, type: 3}
+  enterHellAudio: {fileID: 8300000, guid: 10fc882509d94534da85328962e56d40, type: 3}
+  openShopAudio: {fileID: 8300000, guid: e6c45a4f90ad80f4d981036b9a36c65d, type: 3}
 --- !u!114 &1082197084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71954,6 +71957,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8b4749af879cf574ba2a6330c3de3bb1, type: 3}
   - {fileID: 21300000, guid: 79e3b4b75bb307c43b9d66ce1b423962, type: 3}
   SliderEmoji: {fileID: 1883422306}
+  maxTimebetweenSliderAudios: 0.175
 --- !u!1 &1352667774
 GameObject:
   m_ObjectHideFlags: 0
@@ -78554,7 +78558,7 @@ MonoBehaviour:
   discountSlider: {fileID: 1055592987}
   placeItemAudio: {fileID: 8300000, guid: 85aee6e9849c3304f8afa73e12d70639, type: 3}
   takeItemAudio: {fileID: 8300000, guid: bf604a29b52c2f543b3abcc7d0e7173e, type: 3}
-  maxTimebetweenSliderAudios: 0
+  maxTimebetweenSliderAudios: 0.175
   currentTimebetweenSliderAudios: 0
 --- !u!1 &1527770273
 GameObject:
@@ -85614,6 +85618,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1344148132}
+        m_TargetAssemblyTypeName: HaggleUI, Assembly-CSharp
+        m_MethodName: PlaySliderAudio
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Slider
           m_BoolArgument: 0
         m_CallState: 2
   objectToSelectOnDown: {fileID: 0}
@@ -100453,6 +100469,7 @@ MonoBehaviour:
   signSprites:
   - {fileID: 21300000, guid: f50d60f696de23d449e02dcbd1e13213, type: 3}
   - {fileID: 21300000, guid: a386f70478471b8459ca34b2ba47eb7b, type: 3}
+  flipSignAudio: {fileID: 8300000, guid: 20a29efcce61b594d963dbc92c644ca2, type: 3}
 --- !u!65 &1953306071
 BoxCollider:
   m_ObjectHideFlags: 0
