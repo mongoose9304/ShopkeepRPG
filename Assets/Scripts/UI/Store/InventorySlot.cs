@@ -41,6 +41,17 @@ public class InventorySlot : MonoBehaviour
         if(myUI)
         {
             myUI.InventoryButtonClicked(this);
+            if (ShopManager.instance)
+            {
+                ShopManager.instance.PlayUIAudio("Click");
+            }
+        }
+    }
+    public void OnSelectEvent()
+    {
+        if(ShopManager.instance)
+        {
+            ShopManager.instance.PlayUIAudio("Hover");
         }
     }
 }

@@ -54,6 +54,10 @@ public class ShopManager : MonoBehaviour
     public AudioClip[] cashAudios;
     public List<AudioClip> BGMs = new List<AudioClip>();
     public List<AudioClip> ShopActiveBGMs = new List<AudioClip>();
+    public AudioClip hoverUIAudio;
+    public AudioClip clickUIAudio;
+    public AudioClip sliderUIAudio;
+    public AudioClip closeUIAudio;
     private void Awake()
     {
         instance = this;
@@ -99,6 +103,9 @@ public class ShopManager : MonoBehaviour
         haggleScreen.gameObject.SetActive(false);
         haggleScreen.CloseMenu();
         invScreen.OpenMenu(false);
+
+         
+        
     }
     public void MenuBackButton()
     {
@@ -552,5 +559,31 @@ public class ShopManager : MonoBehaviour
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
         MMSoundManager.Instance.PlaySound(ShopActiveBGMs[Random.Range(0, ShopActiveBGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
+    }
+    public void PlayUIAudio(string Audio)
+    {
+        switch(Audio)
+        {
+            case "Hover":
+                MMSoundManager.Instance.PlaySound(hoverUIAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                break;
+            case "Close":
+                MMSoundManager.Instance.PlaySound(closeUIAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                break;
+            case "Slider":
+                MMSoundManager.Instance.PlaySound(sliderUIAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                break;
+            case "Click":
+                MMSoundManager.Instance.PlaySound(clickUIAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                break;
+        }
     }
 }

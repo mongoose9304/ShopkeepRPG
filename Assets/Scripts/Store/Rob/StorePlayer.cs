@@ -68,6 +68,10 @@ public class StorePlayer : MonoBehaviour
             if (Input.GetButtonDown("Fire2"))
             {
                 ShopManager.instance.MenuBackButton();
+                if (ShopManager.instance)
+                {
+                    ShopManager.instance.PlayUIAudio("Close");
+                }
             }
             return;
         }

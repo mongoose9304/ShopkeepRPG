@@ -216,4 +216,11 @@ public class PedestalScreen : MonoBehaviour
             currentItemValue.text = "Worthless";
         }
     }
+    public void PlayAudio(string audio_)
+    {
+        if(ShopManager.instance)
+        {
+            ShopManager.instance.PlayUIAudio(audio_);
+        }
+    }
 }
