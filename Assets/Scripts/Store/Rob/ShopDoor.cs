@@ -20,6 +20,9 @@ public class ShopDoor : MonoBehaviour
         transform.DORotate(endPos, 2, RotateMode.Fast);
         wallObject.SetActive(false);
         if (interactableObject)
+        {
+            ShopManager.instance.RemoveInteractableObject(interactableObject);
             interactableObject.SetActive(false);
+        }
     }
 }

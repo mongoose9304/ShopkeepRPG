@@ -16,6 +16,9 @@ public class StorePlayer : MonoBehaviour
     public float dashDistance;
     [Tooltip("If the Player is currently dashing")]
     public bool isDashing;
+    [Tooltip("Timebefore Player can warp to other store again")]
+    public float teleportCooldownMax;
+    private float teleportCooldown;
     float dashTime;
     float dashCoolDown;
 
@@ -28,6 +31,18 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] GameObject interactableObjectTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject interactableObjectLockOnObject;
+
+    [Header("Moveable")]
+    [Tooltip("All the objects the player is currently in range to interact with")]
+    public List<MoveableObjectSlot> myMoveableObjectSlots = new List<MoveableObjectSlot>();
+    [Tooltip("The object the player is currently locked onto")]
+    [SerializeField] MoveableObjectSlot moveableObjectSlotTarget;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject moveableObjectSlotLockOnObject;
+    [SerializeField] MoveableObject heldObject;
+    public bool isInMovingMode;
+    public GameObject heldObjectSpawn;
+    public GameObject heldObjectVisual;
 
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
@@ -65,6 +80,10 @@ public class StorePlayer : MonoBehaviour
             if (Input.GetButtonDown("Fire2"))
             {
                 ShopManager.instance.MenuBackButton();
+                if (ShopManager.instance)
+                {
+                    ShopManager.instance.PlayUIAudio("Close");
+                }
             }
             return;
         }
@@ -74,6 +93,7 @@ public class StorePlayer : MonoBehaviour
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
         GetClosestInteractableObject();
+        GetClosestMoveableObject();
 
 
         if (!isDashing)
@@ -144,22 +164,28 @@ public class StorePlayer : MonoBehaviour
     {
        
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        if (Input.GetButtonDown("Fire3"))
-        {
-            
-        }
+        if(teleportCooldown>0)
+        teleportCooldown -= Time.deltaTime;
         if (Input.GetButtonDown("Fire2"))
         {
             OnDash();
         }
-        if (Input.GetButton("Fire4"))
+        else if (Input.GetButton("Fire4"))
         {
             InteractAction();
         }
-        if (Input.GetButtonDown("Fire1"))
+        else if (Input.GetButtonDown("Fire3"))
         {
-        
+            if(isInMovingMode)
+            MoveItemAction();
+        }
+        else if (Input.GetButton("Special3"))
+        {
+            WarpToOtherShop();
+        }
+        else if (Input.GetAxis("Special3") == 1)
+        {
+            WarpToOtherShop();
         }
 
     }
@@ -194,7 +220,55 @@ public class StorePlayer : MonoBehaviour
             }
         }
     }
-    
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void MoveItemAction()
+    {
+        if (moveableObjectSlotTarget)
+        {
+            if (!heldObject)
+            {
+                if (moveableObjectSlotTarget.CheckForObject())
+                {
+                    SetHeldObject(moveableObjectSlotTarget.placedObject);
+                    moveableObjectSlotTarget.PickUpObject();
+                }
+            }
+            else
+            {
+                if (moveableObjectSlotTarget.CheckForObject())
+                {
+
+                }
+                else
+                {
+                    moveableObjectSlotTarget.PlaceObject(heldObject);
+                    ClearHeldObject();
+                }
+            }
+        }
+    }
+    private void SetHeldObject(MoveableObject obj_)
+    {
+        heldObject = obj_;
+        if(heldObjectVisual)
+        {
+            Destroy(heldObjectVisual);
+        }
+      heldObjectVisual=  GameObject.Instantiate(heldObject.myHeldVisualPrefab, heldObjectSpawn.transform);
+        heldObjectVisual.transform.position = heldObjectSpawn.transform.position;
+
+    }
+    private void ClearHeldObject()
+    {
+        heldObject = null;
+        if (heldObjectVisual)
+        {
+            Destroy(heldObjectVisual);
+        }
+    }
+
     /// <summary>
     /// Calculates the nearest interactable object and sets that as the interactable target that will be used for lock ons
     /// </summary>
@@ -228,6 +302,41 @@ public class StorePlayer : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = obj;
+        }
+    }
+    /// <summary>
+    /// Calculates the nearest moveable object and sets that as the moveable target that will be used for lock ons
+    /// </summary>
+    private void GetClosestMoveableObject()
+    {
+        if (myMoveableObjectSlots.Count == 0)
+        {
+            moveableObjectSlotTarget = null;
+            moveableObjectSlotLockOnObject.SetActive(false);
+            return;
+        }
+        for (int i = 0; i < myMoveableObjectSlots.Count; i++)
+        {
+            if (!myMoveableObjectSlots[i].gameObject.activeInHierarchy)
+            {
+                if (moveableObjectSlotTarget == myMoveableObjectSlots[i])
+                    moveableObjectSlotTarget = null;
+                myMoveableObjectSlots.RemoveAt(i);
+                continue;
+            }
+            if (!moveableObjectSlotTarget)
+            {
+                moveableObjectSlotTarget = myMoveableObjectSlots[i];
+            }
+            if (Vector3.Distance(transform.position, myMoveableObjectSlots[i].transform.position) < Vector3.Distance(transform.position, moveableObjectSlotTarget.transform.position))
+                moveableObjectSlotTarget = myMoveableObjectSlots[i];
+            moveableObjectSlotLockOnObject.SetActive(true);
+            moveableObjectSlotLockOnObject.transform.position = moveableObjectSlotTarget.transform.position;
+        }
+        foreach (MoveableObjectSlot obj in myMoveableObjectSlots)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, moveableObjectSlotTarget.transform.position))
+                moveableObjectSlotTarget = obj;
         }
     }
     /// <summary>
@@ -407,6 +516,13 @@ public class StorePlayer : MonoBehaviour
             interactableObjectTarget = null;
             interactableObjectLockOnObject.SetActive(false);
         }
+    }
+    public void WarpToOtherShop()
+    {
+        if (teleportCooldown > 0)
+            return;
+        teleportCooldown = teleportCooldownMax;
+        ShopManager.instance.WarpPlayerToOtherStore();
     }
   
    

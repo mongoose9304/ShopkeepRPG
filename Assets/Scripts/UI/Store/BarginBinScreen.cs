@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using MoreMountains.Tools;
 
 public class BarginBinScreen : MonoBehaviour
 {
@@ -15,12 +16,22 @@ public class BarginBinScreen : MonoBehaviour
     public GameObject buttons;
     public GameObject inventoryObject;
     public GameObject addingButtons;
+    public GameObject refillButtons;
     public TextMeshProUGUI currentItemNameText;
     public TextMeshProUGUI currentItemValue;
     public List<InventorySlot> slots = new List<InventorySlot>();
     int currentSlotIndex;
     public TextMeshProUGUI discountUIText;
     public Slider discountSlider;
+    [SerializeField] AudioClip placeItemAudio;
+    [SerializeField] AudioClip takeItemAudio;
+    [SerializeField] private float maxTimebetweenSliderAudios;
+    [SerializeField] private float currentTimebetweenSliderAudios;
+    private void Update()
+    {
+        if (currentTimebetweenSliderAudios > 0)
+            currentTimebetweenSliderAudios -= Time.deltaTime;
+    }
     public void OpenMenu(BarginBin bin_)
     {
         openBarginBin = bin_;
@@ -29,6 +40,8 @@ public class BarginBinScreen : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(slots[0].gameObject);
         discountSlider.value = openBarginBin.itemDiscount;
         SetDiscountAmount(openBarginBin.itemDiscount);
+        refillButtons.SetActive(true);
+        currentTimebetweenSliderAudios = 0;
 
     }
     public void LoadInventory(BarginBin bin_)
@@ -58,7 +71,8 @@ public class BarginBinScreen : MonoBehaviour
     {
         currentSlotIndex = slots.IndexOf(slot_);
         buttons.SetActive(true);
-        if(slot_.myItem)
+        refillButtons.SetActive(false);
+        if (slot_.myItem)
         {
             currentlySelectedSlot.SetItem(slot_.myItem,slot_.amount);
             int x = 0;
@@ -142,6 +156,7 @@ public class BarginBinScreen : MonoBehaviour
             {
                 slots[currentSlotIndex].SetItem(currentlySelectedSlot.myItem, currentlySelectedSlot.amount);
                 openBarginBin.SetSlot(currentSlotIndex, currentlySelectedSlot.myItem, currentlySelectedSlot.amount);
+                openBarginBin.SetPreviousSlot(currentSlotIndex, currentlySelectedSlot.myItem, currentlySelectedSlot.amount);
             }
             else
             {
@@ -150,6 +165,9 @@ public class BarginBinScreen : MonoBehaviour
             }
             UpdateInventoryAmount();
             openBarginBin.UpdateSlotsWithItems();
+            MMSoundManager.Instance.PlaySound(placeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         }
         else
         {
@@ -158,6 +176,46 @@ public class BarginBinScreen : MonoBehaviour
         inventoryObject.SetActive(true);
         SetButtonsActive(false);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(slots[currentSlotIndex].gameObject);
+    }
+    public void RefillItems()
+    {
+        for(int i=0;i<slots.Count;i++)
+        {
+            if(openBarginBin.binSlotsPrevious[i].myItem)
+            {
+                int x = inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName).amount;
+                if (x >= openBarginBin.binSlotsPrevious[i].amount)
+                {
+                    if(slots[i].amount>0)
+                    {
+                        Debug.Log("Return Item: " + inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                        inventoryUI.GetSlotWithName(slots[i].myItem.itemName).UpdateAmount(inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                    }
+                    slots[i].SetItem(openBarginBin.binSlotsPrevious[i].myItem, openBarginBin.binSlotsPrevious[i].amount);
+                    inventoryUI.GetSlotWithName(slots[i].myItem.itemName).UpdateAmount(inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount - slots[i].amount);
+                    openBarginBin.SetSlot(i, slots[i].myItem, slots[i].amount);
+                }
+            }
+        }
+        openBarginBin.UpdateSlotsWithItems();
+
+    }
+    public void ClearAllItems()
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].amount > 0)
+            {
+                Debug.Log("Return Item: " + inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                inventoryUI.GetSlotWithName(slots[i].myItem.itemName).UpdateAmount(inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+            }
+            slots[i].SetNullItem();
+            openBarginBin.ClearSlot(i);
+        }
+        openBarginBin.UpdateSlotsWithItems();
+        MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void AddAmountOfCurrentItem(int amount_)
     {
@@ -195,6 +253,9 @@ public class BarginBinScreen : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(slots[currentSlotIndex].gameObject);
         CalculateItemValue();
         openBarginBin.ClearSlot(currentSlotIndex);
+        MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+   false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     private void PutItemBackInInventory()
     {
@@ -213,5 +274,22 @@ public class BarginBinScreen : MonoBehaviour
 
         discountUIText.text = (Mathf.Round(amount_ * 100.0f)).ToString();
         openBarginBin.SetBinDiscountAmount(amount_);
+    }
+    public void PlayAudio(string audio_)
+    {
+        if (ShopManager.instance)
+        {
+            ShopManager.instance.PlayUIAudio(audio_);
+        }
+    }
+    public void PlaySliderAudio(string audio_)
+    {
+        if (ShopManager.instance)
+        {
+            if (currentTimebetweenSliderAudios > 0)
+                return;
+            ShopManager.instance.PlayUIAudio(audio_);
+            currentTimebetweenSliderAudios = maxTimebetweenSliderAudios;
+        }
     }
 }

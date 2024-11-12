@@ -10,9 +10,11 @@ public class BarginBinSlot
     public ItemData myItem;
     public int discountedCost;
 }
+
 public class BarginBin : InteractableObject
 {
     public List<BarginBinSlot> binSlots = new List<BarginBinSlot>();
+    public List<BarginBinSlot> binSlotsPrevious = new List<BarginBinSlot>();
     public List<BarginBinSlot> binSlotsWithItems = new List<BarginBinSlot>();
     public List<Image> binImages = new List<Image>();
     public float itemDiscount;
@@ -28,6 +30,19 @@ public class BarginBin : InteractableObject
         binSlots[index].amount = amount_;
         binImages[index].sprite = item_.itemSprite;
         binImages[index].gameObject.SetActive(true);
+    }
+    public void SetPreviousSlot(int index, ItemData item_, int amount_)
+    {
+        binSlotsPrevious[index].myItem = item_;
+        binSlotsPrevious[index].amount = amount_;
+    }
+    public void ClearPreviousSlots()
+    {
+        foreach (BarginBinSlot slot_ in binSlotsPrevious)
+        {
+            slot_.amount = 0;
+            slot_.myItem = null;
+        }
     }
     public void ClearSlot(int index)
     {
@@ -62,6 +77,7 @@ public class BarginBin : InteractableObject
                 slot_.discountedCost = Mathf.RoundToInt(slot_.myItem.basePrice * slot_.amount * (1 - itemDiscount));
             }
         }
+        discountText.text = Mathf.Round(itemDiscount * 100.0f).ToString();
     }
     public void SellItem(BarginBinSlot slot_)
     {

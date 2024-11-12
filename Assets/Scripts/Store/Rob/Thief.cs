@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -100,7 +101,7 @@ public class Thief : MonoBehaviour
         {
             gameObject.SetActive(false);
             ShopManager.instance.currentThieves.Remove(this);
-            CustomerManager.instance.CaughtThief(isInHell);
+            CustomerManager.instance.CaughtThief(isInHell,true);
         }
         if (other.tag == "StoreRoom")
         {

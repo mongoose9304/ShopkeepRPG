@@ -92,7 +92,7 @@ public class Customer : MonoBehaviour
         {
             if(p_.amount>0)
             {
-                if(Random.Range(0,1.0f)<chanceToStealItem)
+                if(Random.Range(0.0f,1.0f)<chanceToStealItem)
                 {
                     if (CustomerManager.instance.CheckStealLimit())
                     {
@@ -276,6 +276,7 @@ public class Customer : MonoBehaviour
         if (waitingObject)
             waitingObject.SetActive(false);
         CustomerManager.instance.PlayEmote(0, transform);
+        CustomerManager.instance.PlayCustomerAudio(0);
         cashOnHand -= cost_;
         ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
         haggleInteraction.SetActive(false);
@@ -339,7 +340,14 @@ public class Customer : MonoBehaviour
         hagglePedestal = null;
         currentBarginBin = null;
         currentBrowseChances -= 1;
+        //NPCs should have a limit on how much they can browse
         if(currentBrowseChances<=0)
+        {
+            LeaveShop();
+            return;
+        }
+        //leave if the player closes the shop early
+        if (!ShopManager.instance.CheckIfShopIsOpen(isInHell))
         {
             LeaveShop();
             return;

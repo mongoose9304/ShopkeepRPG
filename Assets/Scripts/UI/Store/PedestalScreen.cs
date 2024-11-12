@@ -2,19 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using MoreMountains.Tools;
 
 public class PedestalScreen : MonoBehaviour
 {
     public InventorySlot currentPedestalSlot;
     public InventoryUI  inventoryUI;
     public InventorySlot currentInventorySlot;
+    public InventorySlot previousItemSlot;
     public Pedestal openPedestal;
     public GameObject buttons;
+    public GameObject refillButtons;
     public TextMeshProUGUI currentItemNameText;
+    public TextMeshProUGUI previousItemNameText;
     public TextMeshProUGUI currentItemValue;
+    [SerializeField] AudioClip placeItemAudio;
+    [SerializeField] AudioClip takeItemAudio;
     public void OpenMenu(Pedestal p_)
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
+        if (p_.myItemPrevious)
+        {
+            previousItemSlot.SetItem(p_.myItemPrevious, p_.amountPrevious);
+            previousItemNameText.text = previousItemSlot.myItem.itemName;
+        }
+        else
+        {
+            previousItemSlot.SetNullItem();
+        }
         openPedestal = p_;
         if (p_.myItem != null && p_.amount > 0)
         {
@@ -24,6 +39,7 @@ public class PedestalScreen : MonoBehaviour
             x = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             currentInventorySlot.SetItem(p_.myItem, x);
             SetButtonsActive(true);
+            refillButtons.SetActive(false);
 
         }
         else if (p_.myItem != null && p_.amount == 0)
@@ -32,12 +48,17 @@ public class PedestalScreen : MonoBehaviour
             currentInventorySlot.myItem = p_.myItem;
             currentInventorySlot.amount = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             SetButtonsActive(true);
+            refillButtons.SetActive(false);
         }
         else
         {
             currentPedestalSlot.SetNullItem();
             currentInventorySlot.SetNullItem();
             SetButtonsActive(false);
+            if(previousItemSlot.myItem!=null)
+            refillButtons.SetActive(true);
+            else
+                refillButtons.SetActive(false);
         }
         SetItemName();
         CalculateItemValue();
@@ -78,6 +99,10 @@ public class PedestalScreen : MonoBehaviour
         openPedestal.ClearItem();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         CalculateItemValue();
+        if (previousItemSlot.myItem != null)
+            refillButtons.SetActive(true);
+        else
+            refillButtons.SetActive(false);
     }
     public void SetButtonsActive(bool isActive_=true)
     {
@@ -88,6 +113,7 @@ public class PedestalScreen : MonoBehaviour
         inventoryUI.OpenMenu(true);
         inventoryUI.SetClickFunctionIndex(1);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
+        refillButtons.SetActive(false);
     }
     public void ChangeItem(ItemData data_,int amount_)
     {
@@ -106,6 +132,22 @@ public class PedestalScreen : MonoBehaviour
             SetItemName();
         CalculateItemValue();
     }
+    public void RefillItem()
+    {
+        if(previousItemSlot.myItem)
+        {
+            int x = inventoryUI.GetSlotWithName(previousItemSlot.myItem.itemName).amount;
+           if (x >=previousItemSlot.amount)
+            {
+                PutItemBackInInventory();
+                currentPedestalSlot.SetItem(previousItemSlot.myItem, previousItemSlot.amount);
+                currentInventorySlot.SetItem(previousItemSlot.myItem, inventoryUI.GetSlotWithName(previousItemSlot.myItem.itemName).amount - previousItemSlot.amount);
+                SetItemName();
+                CalculateItemValue();
+                Save();
+            }
+        }
+    }
     public void ResetSelectedItem()
     {
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
@@ -121,11 +163,15 @@ public class PedestalScreen : MonoBehaviour
     {
         if(currentPedestalSlot.myItem)
         {
-            if(currentPedestalSlot.amount>0)
+            if (currentPedestalSlot.amount > 0)
+            {
                 openPedestal.SetItem(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+                openPedestal.SetPreviousItem(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+            }
             else
                 openPedestal.ClearItem();
             UpdateInventoryAmount();
+
         }
         else
         {
@@ -133,11 +179,24 @@ public class PedestalScreen : MonoBehaviour
         }
         ShopManager.instance.CloseMenu();
         CustomerManager.instance.CheckPedestalsforItems();
+        MMSoundManager.Instance.PlaySound(placeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     private void PutItemBackInInventory()
     {
         if (currentPedestalSlot.myItem)
+        {
+            if(inventoryUI.GetSlotWithName(currentPedestalSlot.myItem.itemName))
             inventoryUI.GetSlotWithName(currentPedestalSlot.myItem.itemName).UpdateAmount(currentInventorySlot.amount + currentPedestalSlot.amount);
+            else
+            {
+                inventoryUI.AddItemToInventory(currentPedestalSlot.myItem, currentPedestalSlot.amount);
+            }
+            MMSoundManager.Instance.PlaySound(takeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+        }
     }
     private void UpdateInventoryAmount()
     {
@@ -155,6 +214,13 @@ public class PedestalScreen : MonoBehaviour
         else
         {
             currentItemValue.text = "Worthless";
+        }
+    }
+    public void PlayAudio(string audio_)
+    {
+        if(ShopManager.instance)
+        {
+            ShopManager.instance.PlayUIAudio(audio_);
         }
     }
 }
