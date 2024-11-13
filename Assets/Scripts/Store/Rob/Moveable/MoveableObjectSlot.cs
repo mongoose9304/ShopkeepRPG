@@ -42,5 +42,14 @@ public class MoveableObjectSlot : MonoBehaviour
             return false;
         }
     }
+    public void InitObject(MoveableObject object_)
+    {
+        if(worldObject)
+        {
+            Destroy(worldObject);
+        }
+        PlaceObject(object_);
+
+    }
 
 }
