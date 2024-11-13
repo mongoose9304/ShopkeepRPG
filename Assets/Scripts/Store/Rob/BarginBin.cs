@@ -86,4 +86,8 @@ public class BarginBin : InteractableObject
         ApplyDiscountToAllItems();
         CustomerManager.instance.CheckBarginBinsForItems();
     }
+    public void ObjectBeingDestroyed()
+    {
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
+    }
 }

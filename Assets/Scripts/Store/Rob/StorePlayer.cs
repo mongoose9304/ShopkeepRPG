@@ -534,6 +534,7 @@ public class StorePlayer : MonoBehaviour
             myMoveableObjectSlots.Clear();
             isInMovingMode = false;
             ShopManager.instance.SetPedestalList();
+            ShopManager.instance.SetBarginBinList();
             ShopManager.instance.RedoNavMesh();
         }
         else

@@ -76,6 +76,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         SetPedestalList();
+        SetBarginBinList();
         LoadAllPedestals();
         LoadAllBarginBins();
         PlayRandomBGM();
@@ -368,6 +369,22 @@ public class ShopManager : MonoBehaviour
             }
         }
         InitPedestalList();
+    }
+    //grabs all the bins from the moveable object list
+    public void SetBarginBinList()
+    {
+        //need to add hell
+        barginBins.Clear();
+        for (int i = 0; i < MoveableObjectManager.instance.humanSlots.Count; i++)
+        {
+            if (MoveableObjectManager.instance.humanSlots[i].worldObject)
+            {
+                if (MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<BarginBin>())
+                {
+                  barginBins.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<BarginBin>());
+                }
+            }
+        }
         InitBarginBinList();
     }
     private void InitPedestalList()
