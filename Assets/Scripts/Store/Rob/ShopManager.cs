@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using Unity.AI.Navigation;
 
 public class ShopManager : MonoBehaviour
 {
@@ -60,13 +61,11 @@ public class ShopManager : MonoBehaviour
     public AudioClip closeUIAudio;
     public AudioClip enterHellAudio;
     public AudioClip openShopAudio;
+    public NavMeshSurface surface;
     private void Awake()
     {
         instance = this;
-        InitPedestalList();
-        InitBarginBinList();
-        LoadAllPedestals();
-        LoadAllBarginBins();
+
         if (cashFeedback)
             cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
@@ -76,7 +75,11 @@ public class ShopManager : MonoBehaviour
     }
     private void Start()
     {
+        SetPedestalList();
+        LoadAllPedestals();
+        LoadAllBarginBins();
         PlayRandomBGM();
+        RedoNavMesh();
     }
     public void OpenPedestal(Pedestal p_)
     {
@@ -196,7 +199,7 @@ public class ShopManager : MonoBehaviour
             return null;
         }
     }
-    public GameObject GetRandomTargetBarginBin( bool inHell = false)
+    public GameObject GetRandomTargetBarginBin(bool inHell = false)
     {
         if (!inHell)
         {
@@ -340,6 +343,32 @@ public class ShopManager : MonoBehaviour
     {
         foreach(InventoryItem item_ in debugItemsToAdd)
         invScreen.AddItemToInventory(item_.myItem, item_.amount);
+    }
+    //grabs all the pedestals from the moveable object list
+    public void SetPedestalList()
+    {
+        //need to add hell
+        windowPedestals.Clear();
+        regularPedestals.Clear();
+        for(int i=0;i<MoveableObjectManager.instance.humanSlots.Count;i++)
+        {
+            if(MoveableObjectManager.instance.humanSlots[i].worldObject)
+            {
+                if (MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>())
+                {
+                    if(MoveableObjectManager.instance.humanSlots[i].isWindow)
+                    {
+                        windowPedestals.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>());
+                    }
+                    else
+                    {
+                        regularPedestals.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>());
+                    }
+                }
+            }
+        }
+        InitPedestalList();
+        InitBarginBinList();
     }
     private void InitPedestalList()
     {
@@ -598,5 +627,13 @@ public class ShopManager : MonoBehaviour
     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
                 break;
         }
+    }
+    public void ToggleMoveMode()
+    {
+        player.ToggleMoveMode();
+    }
+    public void RedoNavMesh()
+    {
+        surface.BuildNavMesh();
     }
 }

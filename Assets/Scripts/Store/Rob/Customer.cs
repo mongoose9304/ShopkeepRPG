@@ -366,6 +366,7 @@ public class Customer : MonoBehaviour
             if (x>=6)
             {
                 target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                break;
             }
         }
         if(target_==null)

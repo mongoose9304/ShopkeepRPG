@@ -5,6 +5,7 @@ using UnityEngine;
 public class MoveableObjectSlot : MonoBehaviour
 {
     public bool hasObject;
+    public bool isWindow;
     public MoveableObject placedObject;
     public GameObject worldObject;
 

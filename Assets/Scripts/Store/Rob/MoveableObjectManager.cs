@@ -6,6 +6,8 @@ public class MoveableObjectManager : MonoBehaviour
 {
     public static MoveableObjectManager instance;
     public List<MoveableObjectSlot> allSlots = new List<MoveableObjectSlot>();
+    public List<MoveableObjectSlot> humanSlots = new List<MoveableObjectSlot>();
+    public List<MoveableObjectSlot> hellSlots = new List<MoveableObjectSlot>();
     private void Awake()
     {
         instance = this;

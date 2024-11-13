@@ -43,6 +43,7 @@ public class StorePlayer : MonoBehaviour
     public bool isInMovingMode;
     public GameObject heldObjectSpawn;
     public GameObject heldObjectVisual;
+    public GameObject moveDetector;
 
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
@@ -523,6 +524,23 @@ public class StorePlayer : MonoBehaviour
             return;
         teleportCooldown = teleportCooldownMax;
         ShopManager.instance.WarpPlayerToOtherStore();
+    }
+    public void ToggleMoveMode()
+    {
+        if(isInMovingMode)
+        {
+            moveDetector.SetActive(false);
+            moveableObjectSlotLockOnObject.SetActive(false);
+            myMoveableObjectSlots.Clear();
+            isInMovingMode = false;
+            ShopManager.instance.SetPedestalList();
+            ShopManager.instance.RedoNavMesh();
+        }
+        else
+        {
+            moveDetector.SetActive(true);
+            isInMovingMode = true;
+        }
     }
   
    
