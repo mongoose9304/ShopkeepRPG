@@ -350,7 +350,9 @@ public class ShopManager : MonoBehaviour
     {
         //need to add hell
         windowPedestals.Clear();
+        windowPedestalsHell.Clear();
         regularPedestals.Clear();
+        regularPedestalsHell.Clear();
         for(int i=0;i<MoveableObjectManager.instance.humanSlots.Count;i++)
         {
             if(MoveableObjectManager.instance.humanSlots[i].worldObject)
@@ -368,6 +370,23 @@ public class ShopManager : MonoBehaviour
                 }
             }
         }
+        for (int i = 0; i < MoveableObjectManager.instance.hellSlots.Count; i++)
+        {
+            if (MoveableObjectManager.instance.hellSlots[i].worldObject)
+            {
+                if (MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>())
+                {
+                    if (MoveableObjectManager.instance.hellSlots[i].isWindow)
+                    {
+                        windowPedestalsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>());
+                    }
+                    else
+                    {
+                        regularPedestalsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>());
+                    }
+                }
+            }
+        }
         InitPedestalList();
     }
     //grabs all the bins from the moveable object list
@@ -375,6 +394,7 @@ public class ShopManager : MonoBehaviour
     {
         //need to add hell
         barginBins.Clear();
+        barginBinsHell.Clear();
         for (int i = 0; i < MoveableObjectManager.instance.humanSlots.Count; i++)
         {
             if (MoveableObjectManager.instance.humanSlots[i].worldObject)
@@ -382,6 +402,16 @@ public class ShopManager : MonoBehaviour
                 if (MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<BarginBin>())
                 {
                   barginBins.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<BarginBin>());
+                }
+            }
+        }
+        for (int i = 0; i < MoveableObjectManager.instance.hellSlots.Count; i++)
+        {
+            if (MoveableObjectManager.instance.hellSlots[i].worldObject)
+            {
+                if (MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<BarginBin>())
+                {
+                    barginBinsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<BarginBin>());
                 }
             }
         }
