@@ -7,16 +7,25 @@ using TMPro;
 public class InventorySlot : MonoBehaviour
 {
     public ItemData myItem;
+    public MoveableObject myMoveableObject;
     public int amount;
     [SerializeField] TextMeshProUGUI myAmountText;
     [SerializeField] Image myItemImage;
     [SerializeField] InventoryUI myUI;
+    [SerializeField] MoveableInventoryUI myMoveableObjectUI;
     public void SetItem(ItemData item_, int amount_)
     {
         myItem = item_;
         amount = amount_;
         myAmountText.text = amount.ToString();
         myItemImage.sprite = myItem.itemSprite;
+    }
+    public void SetMoveableItem(MoveableObject item_, int amount_)
+    {
+        myMoveableObject = item_;
+        amount = amount_;
+        myAmountText.text = amount.ToString();
+        myItemImage.sprite = item_.mySprite;
     }
     public void SetNullItem()
     {
@@ -41,6 +50,14 @@ public class InventorySlot : MonoBehaviour
         if(myUI)
         {
             myUI.InventoryButtonClicked(this);
+            if (ShopManager.instance)
+            {
+                ShopManager.instance.PlayUIAudio("Click");
+            }
+        }
+        else if(myMoveableObjectUI)
+        {
+            myMoveableObjectUI.InventoryButtonClicked(this);
             if (ShopManager.instance)
             {
                 ShopManager.instance.PlayUIAudio("Click");

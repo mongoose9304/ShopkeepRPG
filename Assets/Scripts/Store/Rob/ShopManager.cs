@@ -46,6 +46,7 @@ public class ShopManager : MonoBehaviour
     public CashRegister cashRegisterHell;
     public List<Thief> currentThieves=new List<Thief>();
     public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
+    public List<InventoryItem> debugItemsToAdd2=new List<InventoryItem>();
     [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
     [SerializeField] private List<BarginBin> allBarginBins = new List<BarginBin>();
     public Transform teleportLocationHuman;
@@ -344,6 +345,11 @@ public class ShopManager : MonoBehaviour
     {
         foreach(InventoryItem item_ in debugItemsToAdd)
         invScreen.AddItemToInventory(item_.myItem, item_.amount);
+    }
+    public void DebugAddItems2()
+    {
+        foreach (InventoryItem item_ in debugItemsToAdd2)
+            invScreen.AddItemToInventory(item_.myItem, item_.amount);
     }
     //grabs all the pedestals from the moveable object list
     public void SetPedestalList()
