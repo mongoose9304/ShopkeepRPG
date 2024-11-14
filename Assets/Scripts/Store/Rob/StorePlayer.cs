@@ -190,6 +190,7 @@ public class StorePlayer : MonoBehaviour
         }
         else if (Input.GetButtonDown("Special2"))
         {
+            if(isInMovingMode)
             ShopManager.instance.OpenMoveableObjectScreen();
         }
 

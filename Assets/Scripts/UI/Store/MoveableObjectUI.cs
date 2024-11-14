@@ -32,7 +32,7 @@ public class MoveableObjectUI : MonoBehaviour
     }
     public void CloseMenu()
     {
-
+        invUI.inventoryObject.SetActive(false);
     }
     public void PutItemAway()
     {
@@ -41,6 +41,7 @@ public class MoveableObjectUI : MonoBehaviour
             invUI.AddItemToInventory(currentItemSlot.myMoveableObject, 1);
             currentItemSlot.myMoveableObject = null;
             currentItemSlot.SetNullItem();
+            SaveItem();
         }
     }
     public void SaveItem()
@@ -57,5 +58,6 @@ public class MoveableObjectUI : MonoBehaviour
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentItemSlot.gameObject);
         currentItemSlot.SetMoveableItem(obj, 1);
         invUI.inventoryObject.SetActive(false);
+        SaveItem();
     }
 }
