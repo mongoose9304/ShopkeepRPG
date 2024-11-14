@@ -94,9 +94,7 @@ public class InventoryUI : MonoBehaviour
                     break;
                 }
             }
-            //add to inventory
-           // slots[slots.Count].SetItem(item_, amount_);
-           // slots[slots.Count].gameObject.SetActive(true);
+
         }
     }
 }

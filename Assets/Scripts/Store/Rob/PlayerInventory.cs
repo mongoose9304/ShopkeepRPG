@@ -71,7 +71,7 @@ public class PlayerInventory : MonoBehaviour
                 foreach (MoveableItem masterItem_ in masterMoveableItemList)
                 {
 
-                    if (masterItem_.myItem == slot_.myItem)
+                    if (masterItem_.myItem.myName == slot_.myItem.myName)
                     {
                         masterItem_.amount = slot_.amount;
                         hasFoundItem = true;

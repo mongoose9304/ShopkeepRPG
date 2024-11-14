@@ -254,8 +254,17 @@ public class StorePlayer : MonoBehaviour
             }
         }
     }
-    private void SetHeldObject(MoveableObject obj_)
+    public void SetHeldObject(MoveableObject obj_)
     {
+        if(obj_ == null)
+        {
+            heldObject = obj_;
+            if (heldObjectVisual)
+            {
+                Destroy(heldObjectVisual);
+            }
+            return;
+        }
         heldObject = obj_;
         if(heldObjectVisual)
         {
@@ -264,6 +273,10 @@ public class StorePlayer : MonoBehaviour
       heldObjectVisual=  GameObject.Instantiate(heldObject.myHeldVisualPrefab, heldObjectSpawn.transform);
         heldObjectVisual.transform.position = heldObjectSpawn.transform.position;
 
+    }
+    public MoveableObject GetHeldObject()
+    {
+        return heldObject;
     }
     private void ClearHeldObject()
     {

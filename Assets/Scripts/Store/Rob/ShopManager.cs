@@ -698,4 +698,12 @@ public class ShopManager : MonoBehaviour
     {
         surface.BuildNavMesh();
     }
+    public MoveableObject GetPlayerHeldMoveableItem()
+    {
+       return player.GetHeldObject();
+    }
+    public void SetPlayerHeldMoveableItem(MoveableObject obj_)
+    {
+        player.SetHeldObject(obj_);
+    }
 }

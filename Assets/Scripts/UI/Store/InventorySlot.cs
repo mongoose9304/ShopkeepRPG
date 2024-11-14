@@ -33,6 +33,7 @@ public class InventorySlot : MonoBehaviour
         amount = 0;
         myAmountText.text = amount.ToString();
         myItemImage.sprite = null;
+        myMoveableObject = null;
     }
     public void Clear()
     {
