@@ -29,6 +29,7 @@ public class ShopManager : MonoBehaviour
     public InventoryUI invScreen;
     public BarginBinScreen barginScreen;
     public HaggleUI haggleScreen;
+    public MoveableObjectUI moveableObjectScreen;
     public bool inMenu;
     MMF_TMPCountTo cashCounter;
     MMF_TMPCountTo cashCounterHell;
@@ -101,6 +102,12 @@ public class ShopManager : MonoBehaviour
         haggleScreen.OpenMenu(p_,c_,haggleStart_);
         inMenu = true;
     }
+    public void OpenMoveableObjectScreen()
+    {
+        moveableObjectScreen.gameObject.SetActive(true);
+        moveableObjectScreen.OpenMenu();
+        inMenu = true;
+    }
     public void CloseMenu()
     {
         inMenu = false;
@@ -109,6 +116,8 @@ public class ShopManager : MonoBehaviour
         barginScreen.CloseMenu();
         haggleScreen.gameObject.SetActive(false);
         haggleScreen.CloseMenu();
+        moveableObjectScreen.gameObject.SetActive(false);
+        moveableObjectScreen.CloseMenu();
         invScreen.OpenMenu(false);
 
          

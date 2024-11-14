@@ -188,6 +188,10 @@ public class StorePlayer : MonoBehaviour
         {
             WarpToOtherShop();
         }
+        else if (Input.GetButtonDown("Special2"))
+        {
+            ShopManager.instance.OpenMoveableObjectScreen();
+        }
 
     }
     /// <summary>

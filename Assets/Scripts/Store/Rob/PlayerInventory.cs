@@ -7,6 +7,7 @@ public class InventoryItem
     public ItemData myItem;
     public int amount;
 }
+[System.Serializable]
 public class MoveableItem
 {
     public MoveableObject myItem;
@@ -17,6 +18,7 @@ public class InventoryItemList
 {
     public List<InventoryItem> myList = new List<InventoryItem>();
 }
+[System.Serializable]
 public class MoveableItemList
 {
     public List<MoveableItem> myList = new List<MoveableItem>();
