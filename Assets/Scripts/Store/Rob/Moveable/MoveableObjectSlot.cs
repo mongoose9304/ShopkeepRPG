@@ -11,10 +11,32 @@ public class MoveableObjectSlot : MonoBehaviour
 
     public void PickUpObject()
     {
-        if(worldObject)
+        if(worldObject.GetComponentInChildren<Pedestal>())
+        {
+            Pedestal p = worldObject.GetComponentInChildren<Pedestal>();
+            if (p.amount>0&&p.myItem!=null)
+            {
+                ShopManager.instance.invScreen.AddItemToInventory(p.myItem, p.amount);
+            }
+        }
+        if (worldObject.GetComponentInChildren<BarginBin>())
+        {
+            BarginBin b = worldObject.GetComponentInChildren<BarginBin>();
+            foreach(BarginBinSlot slot in b.binSlotsWithItems)
+            {
+                if(slot.amount>0&&slot.myItem)
+                {
+                    ShopManager.instance.invScreen.AddItemToInventory(slot.myItem, slot.amount);
+                }
+            }
+        }
+        if (worldObject)
         {
             Destroy(worldObject);
         }
+       
+
+
         placedObject = null;
     }
     public void PlaceObject(MoveableObject object_)
