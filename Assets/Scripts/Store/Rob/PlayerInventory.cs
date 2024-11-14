@@ -18,11 +18,7 @@ public class InventoryItemList
 {
     public List<InventoryItem> myList = new List<InventoryItem>();
 }
-[System.Serializable]
-public class MoveableItemList
-{
-    public List<MoveableItem> myList = new List<MoveableItem>();
-}
+
 public class PlayerInventory : MonoBehaviour
 {
     public List<InventoryItem> masterItemList = new List<InventoryItem>();
@@ -61,17 +57,17 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    public void UpdateMoveableItems(MoveableItemList itemsList)
+    public void UpdateMoveableItems(List<InventorySlot> items_)
     {
-        foreach (MoveableItem slot_ in itemsList.myList)
+        foreach (InventorySlot slot_ in items_)
         {
-            if (slot_.myItem)
+            if (slot_.myMoveableObject)
             {
                 bool hasFoundItem = false;
                 foreach (MoveableItem masterItem_ in masterMoveableItemList)
                 {
 
-                    if (masterItem_.myItem.myName == slot_.myItem.myName)
+                    if (masterItem_.myItem.myName == slot_.myMoveableObject.myName)
                     {
                         masterItem_.amount = slot_.amount;
                         hasFoundItem = true;
@@ -81,7 +77,7 @@ public class PlayerInventory : MonoBehaviour
                 if (!hasFoundItem)
                 {
                     MoveableItem itemX = new MoveableItem();
-                    itemX.myItem = slot_.myItem;
+                    itemX.myItem = slot_.myMoveableObject;
                     itemX.amount = slot_.amount;
                     masterMoveableItemList.Add(itemX);
                 }
