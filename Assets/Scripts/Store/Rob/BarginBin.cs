@@ -88,6 +88,7 @@ public class BarginBin : InteractableObject
     }
     public void ObjectBeingDestroyed()
     {
-        ShopManager.instance.RemoveInteractableObject(this.gameObject);
+        if (ShopManager.instance)
+            ShopManager.instance.RemoveInteractableObject(this.gameObject);
     }
 }

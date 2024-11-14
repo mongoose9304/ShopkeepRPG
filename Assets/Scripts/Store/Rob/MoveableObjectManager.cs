@@ -40,6 +40,7 @@ public class MoveableObjectManager : MonoBehaviour
         {
             for (int i = 0; i < masterItemList_.Count; i++)
             {
+                allSlots[i].ClearItem();
                 if (masterItemList_[i]!=null)
                 {
                     allSlots[i].InitObject(masterItemList_[i]);

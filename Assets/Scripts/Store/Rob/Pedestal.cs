@@ -57,6 +57,7 @@ public class Pedestal : InteractableObject
     }
     public void ObjectBeingDestroyed()
     {
+        if(ShopManager.instance)
         ShopManager.instance.RemoveInteractableObject(this.gameObject);
     }
    

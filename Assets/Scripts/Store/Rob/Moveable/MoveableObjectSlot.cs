@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveableObjectSlot : MonoBehaviour
 {
-    public bool hasObject;
     public bool isWindow;
     public MoveableObject placedObject;
     public GameObject worldObject;
@@ -73,6 +72,14 @@ public class MoveableObjectSlot : MonoBehaviour
         }
         PlaceObject(object_);
 
+    }
+    public void ClearItem()
+    {
+        if (worldObject)
+        {
+            Destroy(worldObject);
+        }
+        placedObject = null;
     }
 
 }
