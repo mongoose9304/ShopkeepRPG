@@ -44,6 +44,7 @@ public class StorePlayer : MonoBehaviour
     public GameObject heldObjectSpawn;
     public GameObject heldObjectVisual;
     public GameObject moveDetector;
+    public GameObject moveModeUIObject;
 
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
@@ -554,11 +555,14 @@ public class StorePlayer : MonoBehaviour
             ShopManager.instance.SetPedestalList();
             ShopManager.instance.SetBarginBinList();
             ShopManager.instance.RedoNavMesh();
+            if (moveModeUIObject)
+                moveModeUIObject.SetActive(false);
         }
         else
         {
             moveDetector.SetActive(true);
             isInMovingMode = true;
+            moveModeUIObject.SetActive(true);
         }
     }
   
