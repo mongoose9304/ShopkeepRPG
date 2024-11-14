@@ -82,7 +82,7 @@ public class ShopManager : MonoBehaviour
         LoadAllPedestals();
         LoadAllBarginBins();
         PlayRandomBGM();
-        RedoNavMesh();
+        StartCoroutine(WaitAFrameBeforeRedoingNavmesh());
     }
     public void OpenPedestal(Pedestal p_)
     {
@@ -698,6 +698,11 @@ public class ShopManager : MonoBehaviour
     public void RedoNavMesh()
     {
         surface.BuildNavMesh();
+    }
+    IEnumerator WaitAFrameBeforeRedoingNavmesh()
+    {
+        yield return new WaitForSeconds(0.001f);
+        RedoNavMesh();
     }
     public MoveableObject GetPlayerHeldMoveableItem()
     {
