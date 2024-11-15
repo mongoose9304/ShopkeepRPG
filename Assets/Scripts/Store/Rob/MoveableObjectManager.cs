@@ -5,29 +5,29 @@ using UnityEngine;
 public class MoveableObjectManager : MonoBehaviour
 {
     public static MoveableObjectManager instance;
+    public List<MoveableObject> masterItemList = new List<MoveableObject>();
     public List<MoveableObjectSlot> allSlots = new List<MoveableObjectSlot>();
     public List<MoveableObjectSlot> humanSlots = new List<MoveableObjectSlot>();
     public List<MoveableObjectSlot> hellSlots = new List<MoveableObjectSlot>();
     private void Awake()
     {
         instance = this;
+        GetMasterList();
         LoadAllSlots();
     }
 
     public void SaveAllSlots()
     {
-        List<MoveableObject> masterItemList_ = new List<MoveableObject>();
+        List<string> masterItemList_ = new List<string>();
         for (int i = 0; i < allSlots.Count; i++)
         {
-            MoveableObject item_ = new MoveableObject();
             if (allSlots[i].placedObject)
             {
-                item_ = allSlots[i].placedObject;
-                masterItemList_.Add(item_);
+                masterItemList_.Add(MoveableObjectIndex.instance.GetItemIndex(allSlots[i].placedObject));
             }
             else
             {
-                masterItemList_.Add(item_);
+                masterItemList_.Add("");
             }
            
         }
@@ -35,15 +35,49 @@ public class MoveableObjectManager : MonoBehaviour
     }
     private void LoadAllSlots()
     {
-        List<MoveableObject> masterItemList_ = FileHandler.ReadListFromJSON<MoveableObject>("MoveableObjectInventory");
-        if (masterItemList_ != null)
+        
+        if (masterItemList != null)
         {
+            for (int i = 0; i < masterItemList.Count; i++)
+            {
+                if (masterItemList[i]!=null)
+                {
+                    Debug.Log("FoundMasterListItem");
+                    allSlots[i].InitObject(masterItemList[i]);
+                }
+                else
+                {
+                    allSlots[i].ClearItem();
+                }
+            }
+        }
+       
+    }
+    private void GetMasterList()
+    {
+        List<string> masterItemList_ = FileHandler.ReadListFromJSON<string>("MoveableObjectInventory");
+        if(masterItemList_!=null)
+        {
+            if (masterItemList_.Count == 0)
+                return;
             for (int i = 0; i < masterItemList_.Count; i++)
             {
-                allSlots[i].ClearItem();
-                if (masterItemList_[i]!=null)
+                if(masterItemList_[i]=="")
                 {
-                    allSlots[i].InitObject(masterItemList_[i]);
+                    masterItemList.Add(null);
+                }
+                else
+                {
+
+                    MoveableObject obj = MoveableObjectIndex.instance.GetItemFromIndex(masterItemList_[i]);
+                    if(obj)
+                    {
+                        masterItemList.Add(obj);
+                    }
+                    else
+                    {
+                        masterItemList.Add(null);
+                    }
                 }
             }
         }

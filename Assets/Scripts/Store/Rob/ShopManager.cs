@@ -77,6 +77,10 @@ public class ShopManager : MonoBehaviour
     }
     private void Start()
     {
+        SetUpLevel();
+    }
+    public void SetUpLevel()
+    {
         SetPedestalList();
         SetBarginBinList();
         LoadAllPedestals();
