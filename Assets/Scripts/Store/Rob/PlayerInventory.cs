@@ -4,13 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class InventoryItem
 {
-    public ItemData myItem;
+    public string myItemName;
     public int amount;
 }
 [System.Serializable]
 public class MoveableItem
 {
-    public MoveableObject myItem;
+    public string myItemName;
     public int amount;
 }
 [System.Serializable]
@@ -21,13 +21,22 @@ public class InventoryItemList
 
 public class PlayerInventory : MonoBehaviour
 {
+    public  List<ItemData> allItems = new List<ItemData>();
     public List<InventoryItem> masterItemList = new List<InventoryItem>();
     public List<MoveableItem> masterMoveableItemList = new List<MoveableItem>();
     public static PlayerInventory instance;
     private void Awake()
     {
-        instance = this;
-        LoadItems();
+        if (!instance)
+        {
+            instance = this;
+            LoadItems();
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     public void UpdateItems(List<InventorySlot> items_)
     {
@@ -40,7 +49,7 @@ public class PlayerInventory : MonoBehaviour
                 foreach (InventoryItem masterItem_ in masterItemList)
                 {
 
-                    if (masterItem_.myItem.itemName == slot_.myItem.itemName)
+                    if (masterItem_.myItemName == slot_.myItem.itemName)
                     {
                         masterItem_.amount = slot_.amount;
                         hasFoundItem = true;
@@ -49,10 +58,10 @@ public class PlayerInventory : MonoBehaviour
                 }
                 if(!hasFoundItem)
                 {
-                    InventoryItem itemX = new InventoryItem();
-                    itemX.myItem = slot_.myItem;
+                    MoveableItem itemX = new MoveableItem();
+                    itemX.myItemName = slot_.myItem.itemName;
                     itemX.amount = slot_.amount;
-                    masterItemList.Add(itemX);
+                    masterMoveableItemList.Add(itemX);
                 }
             }
         }
@@ -67,7 +76,7 @@ public class PlayerInventory : MonoBehaviour
                 foreach (MoveableItem masterItem_ in masterMoveableItemList)
                 {
 
-                    if (masterItem_.myItem.myName == slot_.myMoveableObject.myName)
+                    if (masterItem_.myItemName == slot_.myMoveableObject.myName)
                     {
                         masterItem_.amount = slot_.amount;
                         hasFoundItem = true;
@@ -76,10 +85,10 @@ public class PlayerInventory : MonoBehaviour
                 }
                 if (!hasFoundItem)
                 {
-                    MoveableItem itemX = new MoveableItem();
-                    itemX.myItem = slot_.myMoveableObject;
+                    InventoryItem itemX = new InventoryItem();
+                    itemX.myItemName = slot_.myItem.itemName;
                     itemX.amount = slot_.amount;
-                    masterMoveableItemList.Add(itemX);
+                    masterItemList.Add(itemX);
                 }
             }
         }
@@ -113,5 +122,14 @@ public class PlayerInventory : MonoBehaviour
                 return;
             masterMoveableItemList = masterItemList_;
         }
+    }
+    public ItemData GetItem(string name_)
+    {
+        foreach(ItemData data in allItems)
+        {
+            if (data.itemName == name_)
+                return data;
+        }
+        return null;
     }
 }

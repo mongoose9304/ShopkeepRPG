@@ -23,7 +23,7 @@ public class MoveableObjectManager : MonoBehaviour
         {
             if (allSlots[i].placedObject)
             {
-                masterItemList_.Add(MoveableObjectIndex.instance.GetItemIndex(allSlots[i].placedObject));
+                masterItemList_.Add(allSlots[i].placedObject.myName);
             }
             else
             {
@@ -36,8 +36,7 @@ public class MoveableObjectManager : MonoBehaviour
     private void LoadAllSlots()
     {
         
-        if (masterItemList != null)
-        {
+
             for (int i = 0; i < masterItemList.Count; i++)
             {
                 if (masterItemList[i]!=null)
@@ -50,11 +49,11 @@ public class MoveableObjectManager : MonoBehaviour
                     allSlots[i].ClearItem();
                 }
             }
-        }
        
     }
     private void GetMasterList()
     {
+        masterItemList.Clear();
         List<string> masterItemList_ = FileHandler.ReadListFromJSON<string>("MoveableObjectInventory");
         if(masterItemList_!=null)
         {

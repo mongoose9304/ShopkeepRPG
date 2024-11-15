@@ -2,16 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class MoveableObjectReference
-{
-    public string myIndex;
-    public MoveableObject myObject;
-}
+
 public class MoveableObjectIndex : MonoBehaviour
 {
    public static MoveableObjectIndex instance;
-    public List<MoveableObjectReference> allMoveableObjects = new List<MoveableObjectReference>();
+    public List<MoveableObject> allMoveableObjects = new List<MoveableObject>();
     private void Awake()
     {
         if(!instance)
@@ -24,7 +19,7 @@ public class MoveableObjectIndex : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public string GetItemIndex(MoveableObject obj_)
+  /*  public string GetItemIndex(MoveableObject obj_)
     {
         foreach(MoveableObjectReference obj in allMoveableObjects)
         {
@@ -34,12 +29,13 @@ public class MoveableObjectIndex : MonoBehaviour
 
         return "";
     }
+  */
     public MoveableObject GetItemFromIndex(string index)
     {
-        foreach (MoveableObjectReference obj in allMoveableObjects)
+        foreach (MoveableObject obj in allMoveableObjects)
         {
-            if (obj.myIndex == index)
-                return obj.myObject;
+            if (obj.myName == index)
+                return obj;
         }
        return null;
     }

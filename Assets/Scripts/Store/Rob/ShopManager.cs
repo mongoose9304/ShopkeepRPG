@@ -357,13 +357,13 @@ public class ShopManager : MonoBehaviour
     }
     public void DebugAddItems()
     {
-        foreach(InventoryItem item_ in debugItemsToAdd)
-        invScreen.AddItemToInventory(item_.myItem, item_.amount);
+        //foreach(InventoryItem item_ in debugItemsToAdd)
+        //invScreen.AddItemToInventory(item_.myItem, item_.amount);
     }
     public void DebugAddItems2()
     {
-        foreach (InventoryItem item_ in debugItemsToAdd2)
-            invScreen.AddItemToInventory(item_.myItem, item_.amount);
+       // foreach (InventoryItem item_ in debugItemsToAdd2)
+        //    invScreen.AddItemToInventory(item_.myItem, item_.amount);
     }
     //grabs all the pedestals from the moveable object list
     public void SetPedestalList()
@@ -461,7 +461,7 @@ public class ShopManager : MonoBehaviour
             if (allPedestals[i].myItem)
             {
                 
-                item_.myItem = allPedestals[i].myItem;
+                item_.myItemName = allPedestals[i].myItem.itemName;
                 item_.amount = allPedestals[i].amount;
 
 
@@ -469,7 +469,7 @@ public class ShopManager : MonoBehaviour
             }
             else
             {
-                item_.myItem = null;
+                item_.myItemName = null;
                 item_.amount = 0;
 
 
@@ -478,7 +478,7 @@ public class ShopManager : MonoBehaviour
             if (allPedestals[i].myItemPrevious)
             {
 
-                item_.myItem = allPedestals[i].myItemPrevious;
+                item_.myItemName = allPedestals[i].myItemPrevious.itemName;
                 item_.amount = allPedestals[i].amountPrevious;
 
 
@@ -486,7 +486,7 @@ public class ShopManager : MonoBehaviour
             }
             else
             {
-                item_.myItem = null;
+                item_.myItemName = null;
                 item_.amount = 0;
 
 
@@ -504,16 +504,16 @@ public class ShopManager : MonoBehaviour
         {
            for(int i=0;i<masterItemList_.Count;i++)
             {
-                if(masterItemList_[i].myItem)
+                if(masterItemList_[i].myItemName!="")
                 {
-                    allPedestals[i].SetItem(masterItemList_[i].myItem, masterItemList_[i].amount);
+                    allPedestals[i].SetItem(PlayerInventory.instance.GetItem(masterItemList_[i].myItemName), masterItemList_[i].amount);
                 }
             }
             for (int i = 0; i < masterItemListPrevious_.Count; i++)
             {
-                if (masterItemListPrevious_[i].myItem)
+                if (masterItemListPrevious_[i].myItemName != "")
                 {
-                    allPedestals[i].SetPreviousItem(masterItemListPrevious_[i].myItem, masterItemListPrevious_[i].amount);
+                    allPedestals[i].SetPreviousItem(PlayerInventory.instance.GetItem(masterItemListPrevious_[i].myItemName), masterItemListPrevious_[i].amount);
                 }
             }
         }
@@ -533,7 +533,7 @@ public class ShopManager : MonoBehaviour
                 if (allBarginBins[i].binSlots[x].myItem)
                 {
 
-                    item_.myItem = allBarginBins[i].binSlots[x].myItem;
+                    item_.myItemName = allBarginBins[i].binSlots[x].myItem.itemName;
                     item_.amount = allBarginBins[i].binSlots[x].amount;
 
 
@@ -541,7 +541,7 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    item_.myItem = null;
+                    item_.myItemName = null;
                     item_.amount = 0;
 
 
@@ -561,7 +561,7 @@ public class ShopManager : MonoBehaviour
                 if (allBarginBins[i].binSlotsPrevious[x].myItem)
                 {
 
-                    item_.myItem = allBarginBins[i].binSlotsPrevious[x].myItem;
+                    item_.myItemName = allBarginBins[i].binSlotsPrevious[x].myItem.itemName;
                     item_.amount = allBarginBins[i].binSlotsPrevious[x].amount;
 
 
@@ -569,7 +569,7 @@ public class ShopManager : MonoBehaviour
                 }
                 else
                 {
-                    item_.myItem = null;
+                    item_.myItemName = null;
                     item_.amount = 0;
 
 
@@ -594,8 +594,10 @@ public class ShopManager : MonoBehaviour
             {
                 for (int x = 0; x < masterItemList_[i].myList.Count; x++)
                 {
-                    if(masterItemList_[i].myList[x].myItem)
-                    allBarginBins[i].SetSlot(x, masterItemList_[i].myList[x].myItem, masterItemList_[i].myList[x].amount);
+                    if (masterItemList_[i].myList[x].myItemName != "")
+                    {
+                        allBarginBins[i].SetSlot(x, PlayerInventory.instance.GetItem(masterItemList_[i].myList[x].myItemName), masterItemList_[i].myList[x].amount);
+                    }
                 }
                 if (discounts.Count > i)
                 {
@@ -611,8 +613,8 @@ public class ShopManager : MonoBehaviour
             {
                 for (int x = 0; x < masterItemListPrevious_[i].myList.Count; x++)
                 {
-                    if (masterItemListPrevious_[i].myList[x].myItem)
-                        allBarginBins[i].SetPreviousSlot(x, masterItemListPrevious_[i].myList[x].myItem, masterItemListPrevious_[i].myList[x].amount);
+                    if (masterItemListPrevious_[i].myList[x].myItemName!="")
+                        allBarginBins[i].SetPreviousSlot(x, PlayerInventory.instance.GetItem(masterItemListPrevious_[i].myList[x].myItemName), masterItemListPrevious_[i].myList[x].amount);
                 }
             }
         }

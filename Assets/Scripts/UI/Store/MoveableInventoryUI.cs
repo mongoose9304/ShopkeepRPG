@@ -21,11 +21,11 @@ public class MoveableInventoryUI : MonoBehaviour
         }
         foreach (MoveableItem item_ in PlayerInventory.instance.masterMoveableItemList)
         {
-            if (item_.myItem)
+            if (item_.myItemName!=null)
             {
                 if (item_.amount == 0)
                     continue;
-                slots[index].SetMoveableItem(item_.myItem, item_.amount);
+                slots[index].SetMoveableItem(MoveableObjectIndex.instance.GetItemFromIndex(item_.myItemName), item_.amount);
                 slots[index].gameObject.SetActive(true);
                 index += 1;
             }
