@@ -181,9 +181,14 @@ public class BarginBinScreen : MonoBehaviour
     {
         for(int i=0;i<slots.Count;i++)
         {
-            if(openBarginBin.binSlotsPrevious[i].myItem)
+            if(openBarginBin.binSlotsPrevious[i].myItem!=null)
             {
-                int x = inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName).amount;
+                int x = 0;
+                if(inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName))
+                {
+                    x = inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName).amount;
+                }
+                 
                 if (x >= openBarginBin.binSlotsPrevious[i].amount)
                 {
                     if(slots[i].amount>0)
@@ -206,8 +211,12 @@ public class BarginBinScreen : MonoBehaviour
         {
             if (slots[i].amount > 0)
             {
-                Debug.Log("Return Item: " + inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                if (inventoryUI.GetSlotWithName(slots[i].myItem.itemName))
                 inventoryUI.GetSlotWithName(slots[i].myItem.itemName).UpdateAmount(inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                else
+                {
+                    inventoryUI.AddItemToInventory(slots[i].myItem, slots[i].amount);
+                }
             }
             slots[i].SetNullItem();
             openBarginBin.ClearSlot(i);

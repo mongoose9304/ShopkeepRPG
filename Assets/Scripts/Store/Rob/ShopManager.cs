@@ -357,13 +357,13 @@ public class ShopManager : MonoBehaviour
     }
     public void DebugAddItems()
     {
-        //foreach(InventoryItem item_ in debugItemsToAdd)
-        //invScreen.AddItemToInventory(item_.myItem, item_.amount);
+        foreach(InventoryItem item_ in debugItemsToAdd)
+        invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
     }
     public void DebugAddItems2()
     {
-       // foreach (InventoryItem item_ in debugItemsToAdd2)
-        //    invScreen.AddItemToInventory(item_.myItem, item_.amount);
+        foreach (InventoryItem item_ in debugItemsToAdd2)
+            invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
     }
     //grabs all the pedestals from the moveable object list
     public void SetPedestalList()

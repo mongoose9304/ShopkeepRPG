@@ -71,6 +71,10 @@ public class InventoryUI : MonoBehaviour
     }
     public void AddItemToInventory(ItemData item_,int amount_)
     {
+        if(item_==null)
+        {
+            return;
+        }
         bool hasFoundItem = false;
         foreach (InventorySlot slot_ in slots)
         {
