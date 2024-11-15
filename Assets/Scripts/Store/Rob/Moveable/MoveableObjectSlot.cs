@@ -79,6 +79,7 @@ public class MoveableObjectSlot : MonoBehaviour
         {
             Destroy(worldObject);
         }
+        worldObject = null;
         placedObject = null;
     }
 

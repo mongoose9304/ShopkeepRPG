@@ -375,7 +375,7 @@ public class ShopManager : MonoBehaviour
         regularPedestalsHell.Clear();
         for(int i=0;i<MoveableObjectManager.instance.humanSlots.Count;i++)
         {
-            if(MoveableObjectManager.instance.humanSlots[i].worldObject)
+            if(MoveableObjectManager.instance.humanSlots[i].worldObject!=null)
             {
                 if (MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>())
                 {
@@ -392,7 +392,7 @@ public class ShopManager : MonoBehaviour
         }
         for (int i = 0; i < MoveableObjectManager.instance.hellSlots.Count; i++)
         {
-            if (MoveableObjectManager.instance.hellSlots[i].worldObject)
+            if (MoveableObjectManager.instance.hellSlots[i].worldObject!=null)
             {
                 if (MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>())
                 {
