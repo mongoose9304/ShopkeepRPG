@@ -781,4 +781,12 @@ public class ShopManager : MonoBehaviour
             return 0;
         }
     }
+    public float GetColdItemMultiplier()
+    {
+        return 0.6f;
+    }
+    public float GetHotItemMultiplier()
+    {
+        return 1.3f;
+    }
 }

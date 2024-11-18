@@ -15,7 +15,8 @@ public class Pedestal : InteractableObject
     public TextMeshProUGUI basePriceText;
     public GameObject hotEffect;
     public GameObject coldEffect;
- 
+    public bool hotItem;
+    public bool coldItem;
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
@@ -32,15 +33,19 @@ public class Pedestal : InteractableObject
         basePriceText.text = (myItem_.basePrice * amount_).ToString();
         basePriceText.gameObject.SetActive(true);
         hotEffect.SetActive(false);
+        hotItem = false;
+        coldItem = false;
         coldEffect.SetActive(false);
         switch (ShopManager.instance.CheckIfItemIsHot(myItem))
         {
             case 0://normal
                 break;
             case 1://hot
+                hotItem = true;
                 hotEffect.SetActive(true);
                 break;
             case 2://cold
+                coldItem = true;
                 coldEffect.SetActive(true);
                 break;
         }
@@ -57,6 +62,8 @@ public class Pedestal : InteractableObject
         amount = 0;
         myItemImage.sprite = null;
         basePriceText.gameObject.SetActive(false);
+        coldItem = false;
+        hotItem = false;
     }
     public void SetInUse(bool inUse_)
     {
@@ -71,11 +78,28 @@ public class Pedestal : InteractableObject
         SetInUse(false);
         coldEffect.SetActive(false);
         hotEffect.SetActive(false);
+        coldItem = false;
+        hotItem = false;
     }
     public void ObjectBeingDestroyed()
     {
         if(ShopManager.instance)
         ShopManager.instance.RemoveInteractableObject(this.gameObject);
     }
-   
+    public float GetItemCost()
+    {
+        if (hotItem)
+        {
+            return myItem.basePrice * amount*ShopManager.instance.GetHotItemMultiplier();
+        }
+        else if (coldItem)
+        {
+            return myItem.basePrice * amount*ShopManager.instance.GetColdItemMultiplier();
+        }
+        else
+        {
+            return myItem.basePrice * amount;
+        }
+    }
+
 }

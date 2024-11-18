@@ -52,13 +52,13 @@ public class HaggleUI : MonoBehaviour
     }
     private void CalculateHagglePrice()
     {
-        currentSellValue = Mathf.RoundToInt(openPedestal.myItem.basePrice * openPedestal.amount * currentHaggleAmount);
+        currentSellValue = Mathf.RoundToInt(openPedestal.GetItemCost() * currentHaggleAmount);
         haggleItemValue.text = currentSellValue.ToString();
     }
     public void Sell()
     {
         //0 = deal accepted, 1= way too high, 2 = mood too low
-        switch (currentCustomer.AttemptHaggle(currentSellValue, currentHaggleAmount))
+        switch (currentCustomer.AttemptHaggle(currentSellValue, currentHaggleAmount,openPedestal.hotItem,openPedestal.coldItem))
         {
             case 0:
                 currentCustomer.EndHaggle(currentSellValue);
@@ -130,4 +130,5 @@ public class HaggleUI : MonoBehaviour
             currentTimebetweenSliderAudios = maxTimebetweenSliderAudios;
         }
     }
+    
 }

@@ -207,46 +207,71 @@ public class Customer : MonoBehaviour
         isInUse = true;
     }
     //return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
-    public int AttemptHaggle(int itemCost_,float haggleAmount)
+    public int AttemptHaggle(int itemCost_,float haggleAmount,bool itemHot=false,bool itemCold=false)
     {
-        if(itemCost_==0)
+        //the customer should spend more to buy hot items and less for cold items
+        if (itemHot)
         {
-            ChangeMood(0.3f);
-            //no one refuses free stuff
+            if (itemCost_ > cashOnHand * ShopManager.instance.GetHotItemMultiplier())
+            {
+                ChangeMood(-0.1f);
+                return 1;
+            }
+            if (haggleAmount < haggleValueMax*ShopManager.instance.GetHotItemMultiplier()*mood)
+            {
+                ChangeMood(0.1f);
+                return 0;
+                //if they get a good deal they should be happy
+            }
+        }
+        else if (itemCold)
+        {
+            if (haggleAmount > haggleValueMax* ShopManager.instance.GetColdItemMultiplier())
+            {
+                ChangeMood(-0.1f);
+                return 1;
+            }
+        }
+
+            if (itemCost_ == 0)
+            {
+                ChangeMood(0.3f);
+                //no one refuses free stuff
+                return 0;
+            }
+            if (itemCost_ > cashOnHand)
+            {
+                ChangeMood(-0.1f);
+                return 1;
+            }
+            if (haggleAmount > haggleValueMax)
+            {
+                ChangeMood(-0.1f);
+                //if they get a bad deal they should be unhappy
+                return 2;
+            }
+            if (haggleAmount > haggleValueMax * mood)
+            {
+                ChangeMood(-0.05f);
+                //if they get a slightly bad deal they should be slightly unhappy
+                return 2;
+            }
+
+            if (haggleAmount < haggleValueMax / 1.25f)
+            {
+                ChangeMood(0.1f);
+                //if they get a good deal they should be happy
+            }
+            if (haggleAmount <= 0.1f)
+            {
+                ChangeMood(0.3f);
+                //if they get a really good deal they should be really happy
+            }
+
+
+
             return 0;
-        }
-        if(itemCost_>cashOnHand)
-        {
-            ChangeMood(-0.1f);
-            return 1;
-        }
-        if (haggleAmount > haggleValueMax)
-        {
-            ChangeMood(-0.1f);
-            //if they get a bad deal they should be unhappy
-            return 2;
-        }
-        if(haggleAmount > haggleValueMax*mood)
-        {
-            ChangeMood(-0.05f);
-            //if they get a slightly bad deal they should be slightly unhappy
-            return 2;
-        }
-
-        if (haggleAmount < haggleValueMax/1.25f)
-        {
-            ChangeMood(0.1f);
-            //if they get a good deal they should be happy
-        }
-        if(haggleAmount<=0.1f)
-        {
-            ChangeMood(0.3f);
-            //if they get a really good deal they should be really happy
-        }
-
-
-
-        return 0;
+        
     }
     public int CheckHaggle(int itemCost_, float haggleAmount)
     {
@@ -283,7 +308,10 @@ public class Customer : MonoBehaviour
     private void ChangeMood(float mood_)
     {
         mood += mood_;
-        Mathf.Clamp(mood, 0.1f, 1.0f);
+        if (mood < 0.1f)
+            mood = 0.1f;
+        if (mood > 1.0f)
+            mood = 1.0f;
     }
     public void EndHaggle(int cost_)
     {
