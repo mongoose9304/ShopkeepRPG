@@ -13,6 +13,8 @@ public class Pedestal : InteractableObject
     public Image myItemImage;
     public bool inUse;
     public TextMeshProUGUI basePriceText;
+    public GameObject hotEffect;
+    public GameObject coldEffect;
  
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
@@ -29,6 +31,19 @@ public class Pedestal : InteractableObject
         myItemImage.gameObject.SetActive(true);
         basePriceText.text = (myItem_.basePrice * amount_).ToString();
         basePriceText.gameObject.SetActive(true);
+        hotEffect.SetActive(false);
+        coldEffect.SetActive(false);
+        switch (ShopManager.instance.CheckIfItemIsHot(myItem))
+        {
+            case 0://normal
+                break;
+            case 1://hot
+                hotEffect.SetActive(true);
+                break;
+            case 2://cold
+                coldEffect.SetActive(true);
+                break;
+        }
     }
     public void SetPreviousItem(ItemData myItem_, int amount_)
     {
@@ -54,6 +69,8 @@ public class Pedestal : InteractableObject
         ClearItem();
         CustomerManager.instance.CheckPedestalsforItems();
         SetInUse(false);
+        coldEffect.SetActive(false);
+        hotEffect.SetActive(false);
     }
     public void ObjectBeingDestroyed()
     {

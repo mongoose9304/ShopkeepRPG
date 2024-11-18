@@ -9,6 +9,10 @@ using Unity.AI.Navigation;
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
+    public List<ItemData> hotItems=new List<ItemData>();
+    public List<ItemData> hotItemsHell=new List<ItemData>();
+    public List<ItemData> coldItems=new List<ItemData>();
+    public List<ItemData> coldItemsHell=new List<ItemData>();
     public bool playerInHell;
     public bool hellShopEnabled;
     public bool humanShopEnabled;
@@ -745,5 +749,36 @@ public class ShopManager : MonoBehaviour
     public void SetPlayerHeldMoveableItem(MoveableObject obj_)
     {
         player.SetHeldObject(obj_);
+    }
+    public int CheckIfItemIsHot(ItemData itemToCheck,bool inHell=false)
+    {
+        if (!inHell)
+        {
+            foreach (ItemData data in hotItems)
+            {
+                if (itemToCheck.itemName == data.itemName)
+                    return 1;
+            }
+            foreach (ItemData data in coldItems)
+            {
+                if (itemToCheck.itemName == data.itemName)
+                    return 2;
+            }
+            return 0;
+        }
+        else
+        {
+            foreach (ItemData data in hotItemsHell)
+            {
+                if (itemToCheck.itemName == data.itemName)
+                    return 1;
+            }
+            foreach (ItemData data in coldItemsHell)
+            {
+                if (itemToCheck.itemName == data.itemName)
+                    return 2;
+            }
+            return 0;
+        }
     }
 }
