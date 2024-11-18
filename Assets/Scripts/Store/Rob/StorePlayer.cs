@@ -174,7 +174,7 @@ public class StorePlayer : MonoBehaviour
         }
         else if (Input.GetButton("Fire4"))
         {
-            InteractAction();
+                InteractAction();
         }
         else if (Input.GetButtonDown("Fire3"))
         {

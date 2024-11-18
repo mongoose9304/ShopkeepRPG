@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
     public bool playerInHell;
     public bool hellShopEnabled;
     public bool humanShopEnabled;
+    public bool shopRunning;
     public TextMeshProUGUI cashEarnedText;
     public MMF_Player cashSymbol;
     public MMF_Player stealAlert;
@@ -248,6 +249,14 @@ public class ShopManager : MonoBehaviour
     }
     public void OpenShop()
     {
+        if(player.isInMovingMode)
+        {
+            foreach (ShopDoor door_ in mydoors)
+            {
+                door_.ResetDoor();
+            }
+            return;
+        }
         if (!humanShopEnabled && !hellShopEnabled)
         {
             foreach (ShopDoor door_ in mydoors)
@@ -272,6 +281,7 @@ public class ShopManager : MonoBehaviour
                 door_.RotateDoor();
             }
         }
+        shopRunning = true;
         PlayRandomShopActiveBGM();
         MMSoundManager.Instance.PlaySound(openShopAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
    false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
@@ -628,14 +638,31 @@ public class ShopManager : MonoBehaviour
     }
     public void ToggleShopOpen(bool enabled_,bool inHell_)
     {
-        if(!inHell_)
+       
+            if (!inHell_)
+            {
+                humanShopEnabled = enabled_;
+            }
+            else
+            {
+                hellShopEnabled = enabled_;
+            }
+
+    }
+    public void CloseShop()
+    {
+        if (currentThieves.Count > 0)
+            return;
+        shopRunning = false;
+        foreach (ShopDoor door_ in mydoors)
         {
-            humanShopEnabled = enabled_;
+            door_.ResetDoor();
         }
-        else
+        foreach (ShopDoor door_ in mydoorsHell)
         {
-            hellShopEnabled = enabled_;
+            door_.RotateDoor();
         }
+        CustomerManager.instance.CloseShop();
     }
     public bool CheckIfShopIsOpen(bool inHell_)
     {
@@ -699,6 +726,7 @@ public class ShopManager : MonoBehaviour
     }
     public void ToggleMoveMode()
     {
+        if(!shopRunning)
         player.ToggleMoveMode();
     }
     public void RedoNavMesh()

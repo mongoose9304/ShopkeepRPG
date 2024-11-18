@@ -110,6 +110,7 @@ public class Customer : MonoBehaviour
                     {
                         CustomerManager.instance.CreateItemThief(transform, p_.myItem, p_.amount, heldItems, isInHell);
                         p_.ItemSold();
+                        CustomerManager.instance.RemoveCustomer(this);
                         gameObject.SetActive(false);
                         return;
                     }
@@ -347,6 +348,7 @@ public class Customer : MonoBehaviour
     {
         if(other.tag=="EndZone")
         {
+            CustomerManager.instance.RemoveCustomer(this);
             gameObject.SetActive(false);
         }
     }

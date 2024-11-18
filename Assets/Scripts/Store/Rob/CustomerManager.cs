@@ -7,6 +7,7 @@ using MoreMountains.Tools;
 public class CustomerManager : MonoBehaviour
 {
     public static CustomerManager instance;
+    [SerializeField] List<Customer> currentCustomersInStore;
     public int maxSteals;
     public int currentSteals;
    [SerializeField] private int currentThieves;
@@ -135,6 +136,7 @@ public class CustomerManager : MonoBehaviour
             c.gameObject.SetActive(true);
             c.SetTarget(target);
             c.StartShopping();
+            currentCustomersInStore.Add(c);
         }
         else
         {
@@ -156,6 +158,7 @@ public class CustomerManager : MonoBehaviour
             c.gameObject.SetActive(true);
             c.SetTarget(target);
             c.StartShopping();
+            currentCustomersInStore.Add(c);
         }
     }
     public GameObject GenerateTargetPedestalWithItem(bool inHell=false)
@@ -356,6 +359,7 @@ public class CustomerManager : MonoBehaviour
             {
                 currentThieves = 0;
                 ShopManager.instance.SetStealAlert(false, false);
+                CheckToCloseShop();
             }
         }
         else
@@ -365,6 +369,7 @@ public class CustomerManager : MonoBehaviour
             {
                 currentThievesInHell = 0;
                 ShopManager.instance.SetStealAlert(false, true);
+                CheckToCloseShop();
             }
         }
         if(!gotAway)
@@ -411,6 +416,39 @@ public class CustomerManager : MonoBehaviour
                 break;
             case 2:
                 break;
+        }
+    }
+    public void RemoveCustomer(Customer c_)
+    {
+        if(currentCustomersInStore.Contains(c_))
+        {
+            currentCustomersInStore.Remove(c_);
+            CheckToCloseShop();
+        }
+        
+    }
+    private void CheckToCloseShop()
+    {
+        if (currentCustomersInStore.Count == 0)
+        {
+            if (customerCountHell < maxCustomersHell && ShopManager.instance.hellShopEnabled)
+            {
+                return;
+            }
+            if (customerCount < maxCustomers && ShopManager.instance.humanShopEnabled)
+            {
+                return;
+            }
+            ShopManager.instance.CloseShop();
+        }
+    }
+
+    public void CloseShop()
+    {
+        for(int i=0;i<currentCustomersInStore.Count;i++)
+        {
+            currentCustomersInStore[i].gameObject.SetActive(false);
+            currentCustomersInStore.RemoveAt(i);
         }
     }
 }
