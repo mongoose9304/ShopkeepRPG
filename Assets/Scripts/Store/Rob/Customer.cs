@@ -36,11 +36,24 @@ public class Customer : MonoBehaviour
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     [SerializeField] GameObject waitingObject;
     public bool isInUse;
+    private bool isLeavingShop;
     private void Update()
     {
         //SetTarget(tempTarget);
        if(isMoving)
         {
+            if (!isLeavingShop)
+            {
+                if (currentWaitTime > 0)
+                {
+                    currentWaitTime -= Time.deltaTime;
+                    if (currentWaitTime <= 0)
+                    {
+                        EndWait();
+                        return;
+                    }
+                }
+            }
             if (!myAgent.pathPending)
             {
                 if (myAgent.remainingDistance <= stopDistance)
@@ -57,7 +70,6 @@ public class Customer : MonoBehaviour
                         }
                         else
                         {
-                        Debug.Log("No hagglePedestal");
                         }
                     
                 }
@@ -185,6 +197,7 @@ public class Customer : MonoBehaviour
             currentBarginBin = b;
         }
         isMoving = true;
+        currentWaitTime = waitTimePerPedestalMax * 2;
     }
     public void BeginHaggle()
     {
@@ -315,12 +328,14 @@ public class Customer : MonoBehaviour
     {
         currentBrowseChances = maxBrowseChances;
         isInUse = false;
+        isLeavingShop = false;
         pedestalsSeen.Clear();
         if (waitingObject)
             waitingObject.SetActive(false);
     }
     public void LeaveShop()
     {
+        isLeavingShop = true;
         if(cashOwed>0)
         {
             ShopManager.instance.HeadToCashRegister(this,isInHell);
@@ -356,7 +371,6 @@ public class Customer : MonoBehaviour
     }
     private void TargetHasAlreadyBeenSeen()
     {
-        Debug.Log("TargetSeenAlready");
         GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
         int x = 0;
         while(pedestalsSeen.Contains(target_))
