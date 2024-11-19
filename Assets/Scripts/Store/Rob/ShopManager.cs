@@ -750,6 +750,7 @@ public class ShopManager : MonoBehaviour
     {
         player.SetHeldObject(obj_);
     }
+    //1=hot, 2=cold 0= neutral;
     public int CheckIfItemIsHot(ItemData itemToCheck,bool inHell=false)
     {
         if (!inHell)

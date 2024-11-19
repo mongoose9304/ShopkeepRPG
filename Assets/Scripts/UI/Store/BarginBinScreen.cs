@@ -137,6 +137,17 @@ public class BarginBinScreen : MonoBehaviour
         {
             // currentItemValue.text = (Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount / (1-openBarginBin.itemDiscount))).ToString();
             int x = Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount * (1 - openBarginBin.itemDiscount));
+            switch(ShopManager.instance.CheckIfItemIsHot(currentlySelectedSlot.myItem))
+            {
+                case 0:
+                    break;
+                case 1:
+                    x = Mathf.RoundToInt(x * ShopManager.instance.GetHotItemMultiplier());
+                    break;
+                case 2:
+                    x = Mathf.RoundToInt(x * ShopManager.instance.GetColdItemMultiplier());
+                    break;
+            }
             currentItemValue.text = x.ToString();
         }
         else

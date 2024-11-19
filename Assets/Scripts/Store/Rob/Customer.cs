@@ -150,7 +150,20 @@ public class Customer : MonoBehaviour
             if (bSlot.discountedCost<=cashOnHand)
             {
                 //purchase item
-                PurchaseBarginItem(bSlot.discountedCost);
+                switch(ShopManager.instance.CheckIfItemIsHot(bSlot.myItem))
+                {
+                    case 0:
+                        PurchaseBarginItem(bSlot.discountedCost);
+                        break;
+                    case 1:
+                        PurchaseBarginItem(Mathf.RoundToInt(bSlot.discountedCost * ShopManager.instance.GetHotItemMultiplier()));
+                        break;
+                        break;
+                    case 2:
+                        PurchaseBarginItem(Mathf.RoundToInt(bSlot.discountedCost * ShopManager.instance.GetColdItemMultiplier()));
+                        break;
+                }
+              
                 TempItem item_=new TempItem();
                 item_.amount = bSlot.amount;
                 item_.myItem = bSlot.myItem;

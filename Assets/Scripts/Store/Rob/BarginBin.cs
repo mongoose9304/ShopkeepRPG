@@ -17,6 +17,8 @@ public class BarginBin : InteractableObject
     public List<BarginBinSlot> binSlotsPrevious = new List<BarginBinSlot>();
     public List<BarginBinSlot> binSlotsWithItems = new List<BarginBinSlot>();
     public List<Image> binImages = new List<Image>();
+    public List<GameObject> hotEffects = new List<GameObject>();
+    public List<GameObject> coldEffects = new List<GameObject>();
     public float itemDiscount;
     public TextMeshProUGUI discountText;
     public bool inUse;
@@ -30,6 +32,19 @@ public class BarginBin : InteractableObject
         binSlots[index].amount = amount_;
         binImages[index].sprite = item_.itemSprite;
         binImages[index].gameObject.SetActive(true);
+        switch(ShopManager.instance.CheckIfItemIsHot(item_))
+        {
+            case 0:
+                hotEffects[index].SetActive(false);
+                coldEffects[index].SetActive(false);
+                break;
+            case 1:
+                hotEffects[index].SetActive(true);
+                break;
+            case 2:
+                coldEffects[index].SetActive(true);
+                break;
+        }
     }
     public void SetPreviousSlot(int index, ItemData item_, int amount_)
     {
@@ -50,6 +65,8 @@ public class BarginBin : InteractableObject
         binSlots[index].amount = 0;
         binImages[index].sprite = null;
         binImages[index].gameObject.SetActive(false);
+        hotEffects[index].SetActive(false);
+        coldEffects[index].SetActive(false);
     }
     public void UpdateSlotsWithItems()
     {

@@ -64,6 +64,8 @@ public class Pedestal : InteractableObject
         basePriceText.gameObject.SetActive(false);
         coldItem = false;
         hotItem = false;
+        coldEffect.SetActive(false);
+        hotEffect.SetActive(false);
     }
     public void SetInUse(bool inUse_)
     {
