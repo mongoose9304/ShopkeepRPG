@@ -150,7 +150,7 @@ public class Customer : MonoBehaviour
             if (bSlot.discountedCost<=cashOnHand)
             {
                 //purchase item
-                switch(ShopManager.instance.CheckIfItemIsHot(bSlot.myItem))
+                switch(ShopManager.instance.CheckIfItemIsHot(bSlot.myItem,isInHell))
                 {
                     case 0:
                         PurchaseBarginItem(bSlot.discountedCost);

@@ -7,7 +7,7 @@ public class MoveableObjectSlot : MonoBehaviour
     public bool isWindow;
     public MoveableObject placedObject;
     public GameObject worldObject;
-
+    public bool inHell;
     public void PickUpObject()
     {
         if(worldObject.GetComponentInChildren<Pedestal>())
@@ -51,6 +51,14 @@ public class MoveableObjectSlot : MonoBehaviour
         if(placedObject)
         {
             worldObject = GameObject.Instantiate(placedObject.myPrefab, transform.position, transform.rotation);
+            if(worldObject.GetComponentInChildren<Pedestal>())
+            {
+                worldObject.GetComponentInChildren<Pedestal>().inHell = inHell;
+            }
+            if (worldObject.GetComponentInChildren<BarginBin>())
+            {
+                worldObject.GetComponentInChildren<BarginBin>().inHell = inHell;
+            }
         }
     }
     public bool CheckForObject()

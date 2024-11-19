@@ -209,7 +209,19 @@ public class PedestalScreen : MonoBehaviour
     {
         if (currentPedestalSlot.myItem)
         {
-            currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount).ToString();
+            switch (ShopManager.instance.CheckIfItemIsHot(currentPedestalSlot.myItem, openPedestal.inHell))
+            {
+                case 0://normal
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount).ToString();
+                    break;
+                case 1://hot
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount*ShopManager.instance.GetHotItemMultiplier()).ToString();
+                    break;
+                case 2://cold
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount * ShopManager.instance.GetColdItemMultiplier()).ToString();
+                    break;
+            }
+            
         }
         else
         {

@@ -13,6 +13,7 @@ public class BarginBinSlot
 
 public class BarginBin : InteractableObject
 {
+    public bool inHell;
     public List<BarginBinSlot> binSlots = new List<BarginBinSlot>();
     public List<BarginBinSlot> binSlotsPrevious = new List<BarginBinSlot>();
     public List<BarginBinSlot> binSlotsWithItems = new List<BarginBinSlot>();
@@ -32,7 +33,7 @@ public class BarginBin : InteractableObject
         binSlots[index].amount = amount_;
         binImages[index].sprite = item_.itemSprite;
         binImages[index].gameObject.SetActive(true);
-        switch(ShopManager.instance.CheckIfItemIsHot(item_))
+        switch(ShopManager.instance.CheckIfItemIsHot(item_,inHell))
         {
             case 0:
                 hotEffects[index].SetActive(false);

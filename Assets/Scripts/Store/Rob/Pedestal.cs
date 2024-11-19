@@ -6,6 +6,7 @@ using TMPro;
 
 public class Pedestal : InteractableObject
 {
+    public bool inHell;
     public ItemData myItem;
     public int amount;
     public ItemData myItemPrevious;
@@ -36,17 +37,19 @@ public class Pedestal : InteractableObject
         hotItem = false;
         coldItem = false;
         coldEffect.SetActive(false);
-        switch (ShopManager.instance.CheckIfItemIsHot(myItem))
+        switch (ShopManager.instance.CheckIfItemIsHot(myItem,inHell))
         {
             case 0://normal
                 break;
             case 1://hot
                 hotItem = true;
                 hotEffect.SetActive(true);
+                basePriceText.text = (myItem_.basePrice * amount_*ShopManager.instance.GetHotItemMultiplier()).ToString();
                 break;
             case 2://cold
                 coldItem = true;
                 coldEffect.SetActive(true);
+                basePriceText.text = (myItem_.basePrice * amount_*ShopManager.instance.GetColdItemMultiplier()).ToString();
                 break;
         }
     }

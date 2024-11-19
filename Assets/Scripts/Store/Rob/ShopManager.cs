@@ -9,10 +9,25 @@ using Unity.AI.Navigation;
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
+
+    //hot and cold items lists combined
     public List<ItemData> hotItems=new List<ItemData>();
     public List<ItemData> hotItemsHell=new List<ItemData>();
     public List<ItemData> coldItems=new List<ItemData>();
     public List<ItemData> coldItemsHell=new List<ItemData>();
+    //hot and cold items lists weekly
+    public List<ItemData> hotItemsWeekly = new List<ItemData>();
+    public List<ItemData> hotItemsHellWeekly = new List<ItemData>();
+    public List<ItemData> coldItemsWeekly = new List<ItemData>();
+    public List<ItemData> coldItemsHellWeekly = new List<ItemData>();
+
+    //hot and cold items lists Universal
+    public List<ItemData> hotItemsUniversal = new List<ItemData>();
+    public List<ItemData> hotItemsHellUniversal = new List<ItemData>();
+    public List<ItemData> coldItemsUniversal = new List<ItemData>();
+    public List<ItemData> coldItemsHellUniversal = new List<ItemData>();
+
+
     public bool playerInHell;
     public bool hellShopEnabled;
     public bool humanShopEnabled;
@@ -72,7 +87,7 @@ public class ShopManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
+        CalculateHotItems();
         if (cashFeedback)
             cashCounter = cashFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
@@ -781,6 +796,25 @@ public class ShopManager : MonoBehaviour
             }
             return 0;
         }
+    }
+    private void CalculateHotItems()
+    {
+        hotItems.Clear();
+        coldItems.Clear();
+        hotItemsHell.Clear();
+        coldItemsHell.Clear();
+
+        hotItems.AddRange(hotItemsUniversal);
+        hotItems.AddRange(hotItemsWeekly);
+
+        coldItems.AddRange(coldItemsUniversal);
+        coldItems.AddRange(coldItemsWeekly);
+
+        hotItemsHell.AddRange(hotItemsHellUniversal);
+        hotItemsHell.AddRange(hotItemsHellWeekly);
+
+        coldItemsHell.AddRange(coldItemsHellUniversal);
+        coldItemsHell.AddRange(coldItemsHellWeekly);
     }
     public float GetColdItemMultiplier()
     {
