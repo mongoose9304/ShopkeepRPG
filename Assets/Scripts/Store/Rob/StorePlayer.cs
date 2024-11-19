@@ -552,11 +552,13 @@ public class StorePlayer : MonoBehaviour
             moveableObjectSlotLockOnObject.SetActive(false);
             myMoveableObjectSlots.Clear();
             isInMovingMode = false;
+            MoveableObjectManager.instance.SaveAllSlots();
             ShopManager.instance.SetPedestalList();
             ShopManager.instance.SetBarginBinList();
             ShopManager.instance.RedoNavMesh();
             if (moveModeUIObject)
                 moveModeUIObject.SetActive(false);
+            ShopManager.instance.DebugSaveItems();
         }
         else
         {
