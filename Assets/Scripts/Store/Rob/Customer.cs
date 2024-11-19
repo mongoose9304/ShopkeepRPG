@@ -31,12 +31,18 @@ public class Customer : MonoBehaviour
     public int maxBrowseChances;
     public int currentBrowseChances;
     private bool isMoving;
+    private bool hasBeenSmallTalked;
     [SerializeField]GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     [SerializeField] GameObject waitingObject;
     public bool isInUse;
     private bool isLeavingShop;
+    //Haggle Dialogues 
+    public List<string> greetings = new List<string>();
+    public List<string> wayTooHigh = new List<string>();
+    public List<string> bitTooHigh = new List<string>();
+    public List<string> smallTalks = new List<string>();
     private void Update()
     {
         //SetTarget(tempTarget);
@@ -346,6 +352,31 @@ public class Customer : MonoBehaviour
             GetNewTarget();
         }
     }
+    public void ForceEndHaggle()
+    {
+        if (waitingObject)
+            waitingObject.SetActive(false);
+        CustomerManager.instance.PlayEmote(1, transform);
+        ShopManager.instance.RemoveInteractableObject(haggleInteraction.gameObject);
+        haggleInteraction.SetActive(false);
+        haggleIndicator.SetActive(false);
+        isInUse = false;
+        if (cashOnHand <= startingCash / 2)
+        {
+            LeaveShop();
+        }
+        else
+        {
+            GetNewTarget();
+        }
+    }
+    public void SmallTalk()
+    {
+        if (hasBeenSmallTalked)
+            return;
+        hasBeenSmallTalked = true;
+        ChangeMood(0.1f);
+    }
     private void PurchaseBarginItem(int cost_)
     {
         cashOnHand -= cost_;
@@ -447,6 +478,7 @@ public class Customer : MonoBehaviour
         cashOwed = 0;
         currentBarginBin = null;
         hagglePedestal = null;
+        hasBeenSmallTalked = false;
         heldItems.Clear();
     }
     public void SellHeldItems()

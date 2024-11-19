@@ -17,9 +17,7 @@ public class HaggleUI : MonoBehaviour
     public float currentHaggleAmount;
     public int currentSellValue;
     public TextMeshProUGUI dialogueText;
-    public List<string> greetings =new List<string>();
-    public List<string> wayTooHigh = new List<string>();
-    public List<string> bitTooHigh = new List<string>();
+
     public List<Sprite> emojis = new List<Sprite>();
     public Image SliderEmoji;
     private float currentTimebetweenSliderAudios;
@@ -74,22 +72,35 @@ public class HaggleUI : MonoBehaviour
                 break;
         }
     }
+    public void NoDeal()
+    {
+        currentCustomer.ForceEndHaggle();
+        openPedestal.SetInUse(false);
+        ShopManager.instance.CloseMenu();
+    }
+    public void SmallTalk()
+    {
+        currentCustomer.SmallTalk();
+        dialogueText.gameObject.SetActive(false);
+        dialogueText.text = currentCustomer.smallTalks[Random.Range(0, currentCustomer.smallTalks.Count)];
+        dialogueText.gameObject.SetActive(true);
+    }
     private void RandomGreeting()
     {
         dialogueText.gameObject.SetActive(false);
-        dialogueText.text = greetings[Random.Range(0, greetings.Count)];
+        dialogueText.text = currentCustomer.greetings[Random.Range(0, currentCustomer.greetings.Count)];
         dialogueText.gameObject.SetActive(true);
     }
     private void RandomBitTooHigh()
     {
         dialogueText.gameObject.SetActive(false);
-        dialogueText.text = bitTooHigh[Random.Range(0, bitTooHigh.Count)];
+        dialogueText.text = currentCustomer.bitTooHigh[Random.Range(0, currentCustomer.bitTooHigh.Count)];
         dialogueText.gameObject.SetActive(true);
     }
     private void RandomWayTooHigh()
     {
         dialogueText.gameObject.SetActive(false);
-        dialogueText.text = wayTooHigh[Random.Range(0, wayTooHigh.Count)];
+        dialogueText.text = currentCustomer.wayTooHigh[Random.Range(0, currentCustomer.wayTooHigh.Count)];
         dialogueText.gameObject.SetActive(true);
     }
     public void CloseMenu()
