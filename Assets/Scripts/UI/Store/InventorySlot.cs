@@ -72,4 +72,21 @@ public class InventorySlot : MonoBehaviour
             ShopManager.instance.PlayUIAudio("Hover");
         }
     }
+    //0=normal, 1=hot, 2=cold
+    public void SetItemHotness(int hotness_)
+    {
+        switch(hotness_)
+        {
+            case 0:
+                myItemImage.color = Color.white;
+                break;
+            case 1:
+                myItemImage.color = Color.red;
+                break;
+            case 2:
+                myItemImage.color = Color.blue;
+                break;
+
+        }
+    }
 }

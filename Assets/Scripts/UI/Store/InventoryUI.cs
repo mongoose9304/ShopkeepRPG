@@ -32,6 +32,28 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+    private void SetHotColdItems(bool inHell)
+    {
+        foreach (InventorySlot slot_ in slots)
+        {
+            if (!slot_.myItem)
+                continue;
+            switch (ShopManager.instance.CheckIfItemIsHot(slot_.myItem,inHell))
+            {
+                case 0:
+                    slot_.SetItemHotness(0);
+                    break;
+                case 1:
+                    slot_.SetItemHotness(1);
+                    break;
+                case 2:
+                    slot_.SetItemHotness(2);
+                    break;
+            }
+                
+        }
+    }
+
     public InventorySlot GetSlotWithName(string name_)
     {
         foreach (InventorySlot slot_ in slots)
@@ -43,9 +65,11 @@ public class InventoryUI : MonoBehaviour
         }
         return null;
     }
-    public void OpenMenu(bool open_=true)
+    public void OpenMenu(bool open_=true,bool inHell_=false)
     {
         inventoryObject.SetActive(open_);
+        if(open_)
+        SetHotColdItems(inHell_);
     }
     public void InventoryButtonClicked(InventorySlot slot_)
     {

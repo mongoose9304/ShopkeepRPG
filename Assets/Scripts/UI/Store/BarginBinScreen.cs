@@ -103,7 +103,7 @@ public class BarginBinScreen : MonoBehaviour
     }
     public void OpenInventorySection()
     {
-        inventoryUI.OpenMenu(true);
+        inventoryUI.OpenMenu(true,openBarginBin.inHell);
         inventoryUI.SetClickFunctionIndex(2);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
     }

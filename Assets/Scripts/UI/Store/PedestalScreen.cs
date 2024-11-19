@@ -110,7 +110,7 @@ public class PedestalScreen : MonoBehaviour
     }
     public void OpenInventorySection()
     {
-        inventoryUI.OpenMenu(true);
+        inventoryUI.OpenMenu(true,openPedestal.inHell);
         inventoryUI.SetClickFunctionIndex(1);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
         refillButtons.SetActive(false);
