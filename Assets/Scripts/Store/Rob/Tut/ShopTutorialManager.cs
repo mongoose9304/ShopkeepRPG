@@ -10,6 +10,7 @@ public class ShopTutorialManager : TutorialManager
     public TutCustomer customerB;
     public Thief tutThief;
     public GameObject doorA;
+    public GameObject moveModeToggle;
     public Transform thiefExit;
     public List<ShopDoor> doorAPivots = new List<ShopDoor>();
     public ItemData coldItem;
@@ -52,27 +53,27 @@ public class ShopTutorialManager : TutorialManager
                 break;
             case 2:
                 //allow door to open
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 doorA.SetActive(true);
                 break;
             case 3:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 customerA.gameObject.SetActive(true);
                 break;
             case 4:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 tutRemovableWalls[0].SetActive(false);
                 customerA.gameObject.SetActive(false);
                 break;
             case 5:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 6:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 tutRemovableWalls[1].SetActive(false);
                 break;
             case 7:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState],3,true);
                 customerB.gameObject.SetActive(true);
                 break;
             case 8:
@@ -81,10 +82,16 @@ public class ShopTutorialManager : TutorialManager
                 break;
             case 9:
                 AddTutItemsB();
-                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState],3,true);
                 break;
             case 10:
                 tutRemovableWalls[3].SetActive(false);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
+                break;
+            case 11:
+                tutRemovableWalls[4].SetActive(false);
+                moveModeToggle.SetActive(false);
+                ShopManager.instance.ToggleMoveMode();
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 break;
 
@@ -153,5 +160,18 @@ public class ShopTutorialManager : TutorialManager
         tutThief.gameObject.SetActive(true);
         tutThief.transform.position = tansform_.position;
         tutThief.SetTarget(thiefExit);
+    }
+    public override void EndTutorial()
+    {
+        foreach (GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(true);
+        }
+        foreach (GameObject obj in objectsToDisablePostTut)
+        {
+            obj.SetActive(false);
+        }
+        inTut = false;
+        invScreen.LoadInventory();
     }
 }

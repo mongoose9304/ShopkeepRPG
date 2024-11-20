@@ -183,11 +183,13 @@ public class StorePlayer : MonoBehaviour
         }
         else if (Input.GetButton("Special3"))
         {
+            if(!ShopTutorialManager.instance.inTut)
             WarpToOtherShop();
         }
         else if (Input.GetAxis("Special3") == 1)
         {
-            WarpToOtherShop();
+            if (!ShopTutorialManager.instance.inTut)
+                WarpToOtherShop();
         }
         else if (Input.GetButtonDown("Special2"))
         {

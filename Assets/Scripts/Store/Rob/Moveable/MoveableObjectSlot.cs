@@ -90,5 +90,6 @@ public class MoveableObjectSlot : MonoBehaviour
         worldObject = null;
         placedObject = null;
     }
+   
 
 }
