@@ -332,7 +332,7 @@ public class Customer : MonoBehaviour
         if (mood > 1.0f)
             mood = 1.0f;
     }
-    public void EndHaggle(int cost_)
+    public  virtual void EndHaggle(int cost_)
     {
         if (waitingObject)
             waitingObject.SetActive(false);

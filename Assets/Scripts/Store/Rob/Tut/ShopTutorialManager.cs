@@ -37,7 +37,7 @@ public class ShopTutorialManager : TutorialManager
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
                 break;
             case 1:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 AddTutItems();
                 break;
             case 2:
@@ -46,9 +46,11 @@ public class ShopTutorialManager : TutorialManager
                 doorA.SetActive(true);
                 break;
             case 3:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
                 customerA.gameObject.SetActive(true);
                 break;
             case 4:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
                 customerA.gameObject.SetActive(false);
                 break;
             case 5:

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutCustomer : Customer
 {
+    public GameObject leaveEffect;
+    public int tutState;
     private void OnEnable()
     {
         SetTarget(tempTarget);
@@ -84,5 +86,14 @@ public class TutCustomer : Customer
         }
         isMoving = true;
         currentWaitTime = waitTimePerPedestalMax * 2;
+    }
+    public override void EndHaggle(int cost_)
+    {
+        GameObject.Instantiate(leaveEffect, transform.position, transform.rotation);
+        gameObject.SetActive(false);
+        if(tutState>0)
+        {
+            ShopTutorialManager.instance_.SetAltTutorialState(tutState);
+        }
     }
 }
