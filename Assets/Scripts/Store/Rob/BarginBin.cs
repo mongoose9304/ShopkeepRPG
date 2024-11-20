@@ -27,7 +27,7 @@ public class BarginBin : InteractableObject
     {
         ShopManager.instance.OpenBarginBin(this);
     }
-    public void SetSlot(int index,ItemData item_,int amount_)
+    public virtual void SetSlot(int index,ItemData item_,int amount_)
     {
         binSlots[index].myItem = item_;
         binSlots[index].amount = amount_;

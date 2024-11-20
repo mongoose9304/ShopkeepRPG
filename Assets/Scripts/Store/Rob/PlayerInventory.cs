@@ -85,10 +85,10 @@ public class PlayerInventory : MonoBehaviour
                 }
                 if (!hasFoundItem)
                 {
-                    InventoryItem itemX = new InventoryItem();
-                    itemX.myItemName = slot_.myItem.itemName;
+                    MoveableItem itemX = new MoveableItem();
+                    itemX.myItemName = slot_.myMoveableObject.myName;
                     itemX.amount = slot_.amount;
-                    masterItemList.Add(itemX);
+                    masterMoveableItemList.Add(itemX);
                 }
             }
         }

@@ -22,6 +22,10 @@ public class Thief : MonoBehaviour
         myAgent.SetDestination(ShopManager.instance.GetRandomNPCExit(isInHell).transform.position);
         CheckSpeed();
     }
+    public void SetTarget(Transform target_)
+    {
+        myAgent.SetDestination(target_.position);
+    }
     public void CheckSpeed()
     {
         if (isInHell != ShopManager.instance.playerInHell)
@@ -73,7 +77,13 @@ public class Thief : MonoBehaviour
     }
     public void Caught()
     {
-        if(stolenItem)
+        if (ShopTutorialManager.instance.inTut)
+        {
+            ShopTutorialManager.instance.SetTutorialState(8);
+            gameObject.SetActive(false);
+            return;
+        }
+        if (stolenItem)
         {
             ShopManager.instance.ReturnItemToInventory(stolenItem, stolenItemAmount);
         }
@@ -100,8 +110,15 @@ public class Thief : MonoBehaviour
         if (other.tag == "EndZone")
         {
             gameObject.SetActive(false);
-            ShopManager.instance.currentThieves.Remove(this);
-            CustomerManager.instance.CaughtThief(isInHell,true);
+            if (!ShopTutorialManager.instance.inTut)
+            {
+                ShopManager.instance.currentThieves.Remove(this);
+                CustomerManager.instance.CaughtThief(isInHell, true);
+            }
+            else
+            {
+                ShopTutorialManager.instance.SetAltTutorialState(8);
+            }
         }
         if (other.tag == "StoreRoom")
         {

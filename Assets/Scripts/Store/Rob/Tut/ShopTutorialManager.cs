@@ -7,11 +7,15 @@ public class ShopTutorialManager : TutorialManager
     public static ShopTutorialManager instance;
     public ItemData hotItem;
     public TutCustomer customerA;
+    public TutCustomer customerB;
+    public Thief tutThief;
     public GameObject doorA;
+    public Transform thiefExit;
     public List<ShopDoor> doorAPivots = new List<ShopDoor>();
     public ItemData coldItem;
     public List<InventoryItem> tutItemsA = new List<InventoryItem>();
     public List<InventoryItem> tutItemsB = new List<InventoryItem>();
+    public List<GameObject> tutRemovableWalls = new List<GameObject>();
     public InventoryUI invScreen;
     protected override void Awake()
     {
@@ -51,17 +55,70 @@ public class ShopTutorialManager : TutorialManager
                 break;
             case 4:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutRemovableWalls[0].SetActive(false);
                 customerA.gameObject.SetActive(false);
                 break;
             case 5:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
                 break;
             case 6:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutRemovableWalls[1].SetActive(false);
                 break;
             case 7:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                customerB.gameObject.SetActive(true);
+                break;
+            case 8:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutRemovableWalls[2].SetActive(false);
+                break;
+
+        }
+    }
+    /// <summary>
+    /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
+    /// </summary>
+    public override void SetAltTutorialState(int tutorialState_)
+    {
+        tutorialState = tutorialState_;
+        switch (tutorialState_)
+        {
+            case 0:
+                tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
+                break;
+            case 1:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
+                AddTutItems();
+                break;
+            case 2:
+                //allow door to open
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                doorA.SetActive(true);
+                break;
+            case 3:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                customerA.gameObject.SetActive(true);
+                break;
+            case 4:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutRemovableWalls[0].SetActive(false);
+                customerA.gameObject.SetActive(false);
+                break;
+            case 5:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
+                break;
+            case 6:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
+                tutRemovableWalls[1].SetActive(false);
+                break;
+            case 7:
+                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                customerB.gameObject.SetActive(true);
+                break;
+            case 8:
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);
+                tutRemovableWalls[2].SetActive(false);
                 break;
 
         }
@@ -76,5 +133,11 @@ public class ShopTutorialManager : TutorialManager
             }
             SetTutorialState(3);
         }
+    }
+    public void StartSteal(Transform tansform_)
+    {
+        tutThief.gameObject.SetActive(true);
+        tutThief.transform.position = tansform_.position;
+        tutThief.SetTarget(thiefExit);
     }
 }

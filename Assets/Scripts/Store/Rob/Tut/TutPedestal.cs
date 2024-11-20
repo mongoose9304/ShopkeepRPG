@@ -46,4 +46,10 @@ public class TutPedestal : Pedestal
         coldItem = false;
         hotItem = false;
     }
+    public override void SetInUse(bool inUse_)
+    {
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
+        gameObject.SetActive(!inUse_);
+        inUse = inUse_;
+    }
 }

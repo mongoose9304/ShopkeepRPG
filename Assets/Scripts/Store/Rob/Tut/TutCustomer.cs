@@ -58,7 +58,12 @@ public class TutCustomer : Customer
             {
                 if (Random.Range(0.0f, 1.0f) < chanceToStealItem)
                 {
-                  //Steal
+                    //Steal
+                    GameObject.Instantiate(leaveEffect, transform.position, transform.rotation);
+                    ShopTutorialManager.instance.StartSteal(transform);
+                    p_.ItemSold();
+                    gameObject.SetActive(false);
+                    return;
                 }
                 RequestHaggle(p_);
                 haggleIndicator.SetActive(true);
@@ -90,10 +95,15 @@ public class TutCustomer : Customer
     public override void EndHaggle(int cost_)
     {
         GameObject.Instantiate(leaveEffect, transform.position, transform.rotation);
+        ShopManager.instance.RemoveInteractableObject(this.gameObject);
         gameObject.SetActive(false);
-        if(tutState>0)
+        if (tutState>0)
         {
-            ShopTutorialManager.instance_.SetAltTutorialState(tutState);
+            ShopTutorialManager.instance_.SetTutorialState(tutState);
         }
+    }
+    public override void ForceEndHaggle()
+    {
+        CustomerManager.instance.PlayEmote(1, transform);
     }
 }

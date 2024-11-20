@@ -35,7 +35,7 @@ public class Customer : MonoBehaviour
     [SerializeField]protected GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
-    [SerializeField] GameObject waitingObject;
+    [SerializeField]protected GameObject waitingObject;
     public bool isInUse;
     protected bool isLeavingShop;
     //Haggle Dialogues 
@@ -352,7 +352,7 @@ public class Customer : MonoBehaviour
             GetNewTarget();
         }
     }
-    public void ForceEndHaggle()
+    public virtual void ForceEndHaggle()
     {
         if (waitingObject)
             waitingObject.SetActive(false);

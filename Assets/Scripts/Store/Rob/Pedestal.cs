@@ -70,7 +70,7 @@ public class Pedestal : InteractableObject
         coldEffect.SetActive(false);
         hotEffect.SetActive(false);
     }
-    public void SetInUse(bool inUse_)
+    public virtual void SetInUse(bool inUse_)
     {
         ShopManager.instance.RemoveInteractableObject(this.gameObject);
         gameObject.SetActive(!inUse_);

@@ -73,10 +73,17 @@ public class HaggleUI : MonoBehaviour
         }
     }
     public void NoDeal()
-    {
-        currentCustomer.ForceEndHaggle();
-        openPedestal.SetInUse(false);
-        ShopManager.instance.CloseMenu();
+    {if (!ShopTutorialManager.instance.inTut)
+        {
+            currentCustomer.ForceEndHaggle();
+            openPedestal.SetInUse(false);
+            ShopManager.instance.CloseMenu();
+        }
+        else
+        {
+            currentCustomer.ForceEndHaggle();
+            ShopManager.instance.CloseMenu();
+        }
     }
     public void SmallTalk()
     {
