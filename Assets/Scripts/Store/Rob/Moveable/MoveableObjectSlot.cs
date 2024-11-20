@@ -38,7 +38,7 @@ public class MoveableObjectSlot : MonoBehaviour
 
         placedObject = null;
     }
-    public void PlaceObject(MoveableObject object_)
+    public virtual void PlaceObject(MoveableObject object_)
     {
         if (object_)
         {
@@ -46,7 +46,7 @@ public class MoveableObjectSlot : MonoBehaviour
             SpawnPlacedObject();
         }
     }
-    private void SpawnPlacedObject()
+    protected void SpawnPlacedObject()
     {
         if(placedObject)
         {

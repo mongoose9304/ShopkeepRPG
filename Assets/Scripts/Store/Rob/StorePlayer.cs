@@ -546,6 +546,25 @@ public class StorePlayer : MonoBehaviour
     }
     public void ToggleMoveMode()
     {
+        if(ShopTutorialManager.instance.inTut)
+        {
+            if (isInMovingMode)
+            {
+                moveDetector.SetActive(false);
+                moveableObjectSlotLockOnObject.SetActive(false);
+                myMoveableObjectSlots.Clear();
+                isInMovingMode = false;
+                if (moveModeUIObject)
+                    moveModeUIObject.SetActive(false);
+            }
+            else
+            {
+                moveDetector.SetActive(true);
+                isInMovingMode = true;
+                moveModeUIObject.SetActive(true);
+            }
+            return;
+        }
         if(isInMovingMode)
         {
             moveDetector.SetActive(false);

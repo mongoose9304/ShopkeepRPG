@@ -29,6 +29,12 @@ public class ShopTutorialManager : TutorialManager
         foreach (InventoryItem item_ in tutItemsA)
             invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
     }
+    public void AddTutItemsB()
+    {
+        invScreen.ClearAllSlots();
+        foreach (InventoryItem item_ in tutItemsB)
+            invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
+    }
     /// <summary>
     /// Set the tutorial to a new state and each state can have its own seperate logic depending on what's needed
     /// </summary>
@@ -72,6 +78,14 @@ public class ShopTutorialManager : TutorialManager
             case 8:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 tutRemovableWalls[2].SetActive(false);
+                break;
+            case 9:
+                AddTutItemsB();
+                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                break;
+            case 10:
+                tutRemovableWalls[3].SetActive(false);
+                tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 break;
 
         }

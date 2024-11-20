@@ -33,6 +33,15 @@ public class TutPedestal : Pedestal
         }
         if (tutState > 0)
         {
+            if(tutState==10)
+            {
+                if(myItem.itemName == tutHotItem.itemName)
+                {
+                    ShopTutorialManager.instance_.SetTutorialState(tutState);
+                    tutState = 0;
+                }
+                return;
+            }
             ShopTutorialManager.instance_.SetTutorialState(tutState);
             tutState = 0;
         }
