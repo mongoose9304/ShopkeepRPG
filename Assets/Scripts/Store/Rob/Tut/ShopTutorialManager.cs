@@ -64,6 +64,7 @@ public class ShopTutorialManager : TutorialManager
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 tutRemovableWalls[0].SetActive(false);
                 customerA.gameObject.SetActive(false);
+                AddTutItems();
                 break;
             case 5:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
