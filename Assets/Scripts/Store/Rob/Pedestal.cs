@@ -25,7 +25,7 @@ public class Pedestal : InteractableObject
     {
         ShopManager.instance.OpenPedestal(this);
     }
-    public void SetItem(ItemData myItem_,int amount_)
+    public virtual void SetItem(ItemData myItem_,int amount_)
     {
         myItem = myItem_;
         amount = amount_;
@@ -76,7 +76,7 @@ public class Pedestal : InteractableObject
         gameObject.SetActive(!inUse_);
         inUse = inUse_;
     }
-    public void ItemSold()
+    public virtual void ItemSold()
     {
         ClearItem();
         CustomerManager.instance.CheckPedestalsforItems();

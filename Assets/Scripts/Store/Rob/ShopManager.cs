@@ -768,6 +768,21 @@ public class ShopManager : MonoBehaviour
     //1=hot, 2=cold 0= neutral;
     public int CheckIfItemIsHot(ItemData itemToCheck,bool inHell=false)
     {
+        if(ShopTutorialManager.instance.inTut)
+        {
+            if(ShopTutorialManager.instance.hotItem.itemName==itemToCheck.itemName)
+            {
+                return 1;
+            }
+            else if(ShopTutorialManager.instance.coldItem.itemName == itemToCheck.itemName)
+            {
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
+        }
         if (!inHell)
         {
             foreach (ItemData data in hotItems)

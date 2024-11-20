@@ -12,8 +12,8 @@ public class TempItem
 public class Customer : MonoBehaviour
 {
     public bool isInHell;
-    [SerializeField] NavMeshAgent myAgent;
-    [SerializeField] GameObject tempTarget;
+    [SerializeField]protected NavMeshAgent myAgent;
+    [SerializeField] protected GameObject tempTarget;
     public float chanceToLookAtBArginBin;
     public float chanceToStealItem;
     public int cashOnHand;
@@ -30,20 +30,20 @@ public class Customer : MonoBehaviour
     public float stopDistance;
     public int maxBrowseChances;
     public int currentBrowseChances;
-    private bool isMoving;
-    private bool hasBeenSmallTalked;
-    [SerializeField]GameObject haggleIndicator;
+    protected bool isMoving;
+    protected bool hasBeenSmallTalked;
+    [SerializeField]protected GameObject haggleIndicator;
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     [SerializeField] GameObject waitingObject;
     public bool isInUse;
-    private bool isLeavingShop;
+    protected bool isLeavingShop;
     //Haggle Dialogues 
     public List<string> greetings = new List<string>();
     public List<string> wayTooHigh = new List<string>();
     public List<string> bitTooHigh = new List<string>();
     public List<string> smallTalks = new List<string>();
-    private void Update()
+    protected virtual void Update()
     {
         //SetTarget(tempTarget);
        if(isMoving)
@@ -95,7 +95,7 @@ public class Customer : MonoBehaviour
             }
         }
     }
-    public void ObservePedestal(Pedestal p_)
+    public virtual void ObservePedestal(Pedestal p_)
     {
         if (p_.inUse)
         {
@@ -199,7 +199,7 @@ public class Customer : MonoBehaviour
             waitingObject.SetActive(true);
     }
 
-    public void SetTarget(GameObject location)
+    public virtual void SetTarget(GameObject location)
     {
         if(pedestalsSeen.Contains(location))
         {

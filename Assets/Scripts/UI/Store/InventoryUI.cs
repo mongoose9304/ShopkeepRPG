@@ -125,4 +125,11 @@ public class InventoryUI : MonoBehaviour
 
         }
     }
+    public void ClearAllSlots()
+    {
+        foreach (InventorySlot slot_ in slots)
+        {
+            slot_.Clear();
+        }
+    }
 }

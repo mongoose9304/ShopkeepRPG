@@ -20,7 +20,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject[] objectsToDisableDuringTut;
     public GameObject[] objectsToDisablePostTut;
     public bool inTut;
-    private void Awake()
+    protected virtual void Awake()
     {
         instance_ = this;
     }
