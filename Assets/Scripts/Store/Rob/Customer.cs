@@ -381,7 +381,10 @@ public class Customer : MonoBehaviour
 
         return 4;
     }
-    private void ChangeMood(float mood_)
+    /// <summary>
+    /// Change my mood, caps at 10% and 100%
+    /// </summary>
+    public void ChangeMood(float mood_)
     {
         mood += mood_;
         if (mood < 0.1f)
@@ -389,7 +392,10 @@ public class Customer : MonoBehaviour
         if (mood > 1.0f)
             mood = 1.0f;
     }
-    public  virtual void EndHaggle(int cost_)
+    /// <summary>
+    /// End my haggle with a sale. If I'm out of cash leave, or else keep browsing
+    /// </summary>
+    public virtual void EndHaggle(int cost_)
     {
         if (waitingObject)
             waitingObject.SetActive(false);
@@ -409,6 +415,9 @@ public class Customer : MonoBehaviour
             GetNewTarget();
         }
     }
+    /// <summary>
+    /// End the haggle without a sale
+    /// </summary>
     public virtual void ForceEndHaggle()
     {
         if (waitingObject)
@@ -427,6 +436,9 @@ public class Customer : MonoBehaviour
             GetNewTarget();
         }
     }
+    /// <summary>
+    /// Slightly incerase my mood
+    /// </summary>
     public void SmallTalk()
     {
         if (hasBeenSmallTalked)
@@ -434,12 +446,18 @@ public class Customer : MonoBehaviour
         hasBeenSmallTalked = true;
         ChangeMood(0.1f);
     }
+    /// <summary>
+    /// Store an item from a bin to buy it at the register
+    /// </summary>
     private void PurchaseBarginItem(int cost_)
     {
         cashOnHand -= cost_;
         cashOwed += cost_;
         CustomerManager.instance.PlayEmote(0, transform);
     }
+    /// <summary>
+    /// If an NPC waits too long they will move on to another object
+    /// </summary>
     public void EndWait()
     {
         if (waitingObject)
@@ -454,6 +472,9 @@ public class Customer : MonoBehaviour
         }
         GetNewTarget();
     }
+    /// <summary>
+    /// Called when spawned
+    /// </summary>
     public void StartShopping()
     {
         currentBrowseChances = maxBrowseChances;
@@ -463,6 +484,9 @@ public class Customer : MonoBehaviour
         if (waitingObject)
             waitingObject.SetActive(false);
     }
+    /// <summary>
+    /// Leave the shop or head to the register first 
+    /// </summary>
     public void LeaveShop()
     {
         isLeavingShop = true;
@@ -481,6 +505,9 @@ public class Customer : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    /// <summary>
+    /// Get a new target to look at 
+    /// </summary>
     private void GetNewTarget()
     {
         hagglePedestal = null;
@@ -500,6 +527,9 @@ public class Customer : MonoBehaviour
         }
         CustomerManager.instance.NPCGetNewTarget(this,isInHell);
     }
+    /// <summary>
+    /// Logic for if the NPC has already seen this pedestal
+    /// </summary>
     private void TargetHasAlreadyBeenSeen()
     {
         GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
@@ -528,6 +558,9 @@ public class Customer : MonoBehaviour
         }
         isMoving = true;
     }
+    /// <summary>
+    /// Give the npc a budget
+    /// </summary>
     public void GiveStartingCash(int cash_)
     {
         startingCash = cash_;
@@ -538,11 +571,17 @@ public class Customer : MonoBehaviour
         hasBeenSmallTalked = false;
         heldItems.Clear();
     }
+    /// <summary>
+    /// Sell all held items at the register
+    /// </summary>
     public void SellHeldItems()
     {
         ShopManager.instance.AddCash(cashOwed,isInHell);
         cashOwed = 0;
     }
+    /// <summary>
+    /// How far am I from my target
+    /// </summary>
     public float GetDistanceToTarget()
     {
         if(tempTarget)
