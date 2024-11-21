@@ -4,44 +4,82 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [System.Serializable]
+/// <summary>
+/// Holds item data and an amount of that item
+/// </summary>
 public class TempItem
 {
     public ItemData myItem;
     public int amount;
 }
+/// <summary>
+/// The class for the customers that can walk into the store. 
+/// </summary>
 public class Customer : MonoBehaviour
 {
-    public bool isInHell;
-    [SerializeField]protected NavMeshAgent myAgent;
-    [SerializeField] protected GameObject tempTarget;
+    [Header("behavior variables")]
+    [Tooltip("%0-1 chnace to go to a bargin bin instead of a pedestal")]
     public float chanceToLookAtBArginBin;
+    [Tooltip("the chance I will steal an item")]
     public float chanceToStealItem;
-    public int cashOnHand;
-    public int cashOwed;
+    [Tooltip("the cash i start with")]
     public int startingCash;
+    [Tooltip("how long will i spend waiting for the player to come to me")]
     public float waitTimePerPedestalMax;
+    [Tooltip("how long will i spend waiting for the player to come to me at a pedestal with no items")]
     public float waitTimePerEmptyPedestalMax;
-    public float currentWaitTime;
+    [Tooltip("whats the max haggle amount I am willing to go to. At 100% mood I will go up to this amount")]
     public float haggleValueMax;
+    [Tooltip("my current mood, this affects how close to my max haggle value I am willing to get")]
     public float mood;
-    public Pedestal hagglePedestal;
-    public BarginBin currentBarginBin;
-    public GameObject haggleInteraction;
+    [Tooltip("how far can I be while interacting with a pedestal")]
     public float stopDistance;
+    [Tooltip("the max things I can look at before leaving the shop")]
     public int maxBrowseChances;
     public int currentBrowseChances;
+
+    [Header("Fixed variables")]
+    [Tooltip("Is this customer currently in hell")]
+    public bool isInHell;
+    [Tooltip("REFERNCE to my navnesh agent")]
+    [SerializeField]protected NavMeshAgent myAgent;
+    [Tooltip("the target I am currently moving towards")]
+    [SerializeField] protected GameObject tempTarget;
+    [Tooltip("how much cash I owe for items picked up from bins")]
+    public int cashOwed;
+    [Tooltip("how much cash I have left to spend today")]
+    public int cashOnHand;
+    public float currentWaitTime;
+    [Tooltip("the current pedestal I'm looking at")]
+    public Pedestal hagglePedestal;
+    [Tooltip("the current bargin bin I'm looking at")]
+    public BarginBin currentBarginBin;
+    [Tooltip("REFERENCE to the interactable target for the player to haggle with me")]
+    public GameObject haggleInteraction;
+    [Tooltip("Am i not at my destination yet?")]
     protected bool isMoving;
+    [Tooltip("Has my mood been bosted by small talk yet?")]
     protected bool hasBeenSmallTalked;
+    [Tooltip("REFERENCE to the ! above the NPC when they can be interacted with")]
     [SerializeField]protected GameObject haggleIndicator;
+    [Tooltip("all the pedestals I have already seen so I don't keep looking at the same items")]
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
+    [Tooltip("items I am holding in case of returns/steals")]
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
+    [Tooltip("REFERENCE to the ... above the NPC when they are waiting")]
     [SerializeField]protected GameObject waitingObject;
+    [Tooltip("am I currently being used")]
     public bool isInUse;
+    [Tooltip("am I leaving the shop")]
     protected bool isLeavingShop;
     //Haggle Dialogues 
+    [Tooltip("REFERENCE to the things I can say when haggling ")]
     public List<string> greetings = new List<string>();
+    [Tooltip("REFERENCE to the things I can say when haggling when I get a really bad deal ")]
     public List<string> wayTooHigh = new List<string>();
+    [Tooltip("REFERENCE to the things I can say when haggling when I get a slightly bad deal ")]
     public List<string> bitTooHigh = new List<string>();
+    [Tooltip("REFERENCE to the things I can say when haggling when small talk button is pressed ")]
     public List<string> smallTalks = new List<string>();
     protected virtual void Update()
     {
@@ -95,6 +133,9 @@ public class Customer : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// When i see a pedestal I should check If i should buy from it
+    /// </summary>
     public virtual void ObservePedestal(Pedestal p_)
     {
         if (p_.inUse)
@@ -138,6 +179,9 @@ public class Customer : MonoBehaviour
             isMoving = false;
         }
     }
+    /// <summary>
+    /// When I see a bargin bin I should check if I should buy from it
+    /// </summary>
     public void ObserveBarginBin(BarginBin b_)
     {
         if (b_.inUse)
@@ -188,6 +232,9 @@ public class Customer : MonoBehaviour
             isMoving = false;
         }
     }
+    /// <summary>
+    /// Set a pedestal as in use and allow the player to interact with me to start a haggle 
+    /// </summary>
     public virtual void RequestHaggle(Pedestal p_)
     {
         hagglePedestal = p_;
@@ -198,7 +245,9 @@ public class Customer : MonoBehaviour
         if (waitingObject)
             waitingObject.SetActive(true);
     }
-
+    /// <summary>
+    /// Set a target to walk towards and make sure I havent already seen it
+    /// </summary>
     public virtual void SetTarget(GameObject location)
     {
         if(pedestalsSeen.Contains(location))
@@ -219,13 +268,18 @@ public class Customer : MonoBehaviour
         isMoving = true;
         currentWaitTime = waitTimePerPedestalMax * 2;
     }
+    /// <summary>
+    /// Start a haggle with the player when interacted with
+    /// </summary>
     public void BeginHaggle()
     {
         //haggleIndicator.SetActive(false);
         ShopManager.instance.OpenHaggleScreen(hagglePedestal,this,1);
         isInUse = true;
     }
-    //return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
+    /// <summary>
+    ///The player is attempting to make a deal with this NPC. return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
+    /// </summary>
     public int AttemptHaggle(int itemCost_,float haggleAmount,bool itemHot=false,bool itemCold=false)
     {
         //the customer should spend more to buy hot items and less for cold items
@@ -292,6 +346,9 @@ public class Customer : MonoBehaviour
             return 0;
         
     }
+    /// <summary>
+    /// The player is moving the haggle slider and this will return a mood that is close but not 100% percise of if they will accept or not
+    /// </summary>
     public int CheckHaggle(int itemCost_, float haggleAmount)
     {
         if (itemCost_ == 0)
