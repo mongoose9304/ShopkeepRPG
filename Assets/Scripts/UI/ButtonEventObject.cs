@@ -31,7 +31,14 @@ public class ButtonEventObject : MonoBehaviour, ISelectHandler, IDeselectHandler
 		if (!isQuitting)
 			deselectEvent.Invoke();
     }
-	private void OnApplicationQuit()
+    private void OnEnable()
+    {
+		if (EventSystem.current.currentSelectedGameObject==gameObject)
+        {
+			selectEvent.Invoke();
+		}
+	}
+    private void OnApplicationQuit()
 	{
 		isQuitting = true;
 	}

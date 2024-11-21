@@ -117,6 +117,7 @@ public class Thief : MonoBehaviour
             }
             else
             {
+                ShopTutorialManager.instance.CreateSmoke(transform);
                 ShopTutorialManager.instance.SetAltTutorialState(8);
             }
         }

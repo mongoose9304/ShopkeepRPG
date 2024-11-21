@@ -22,7 +22,7 @@ public class SliderGamepadController : MonoBehaviour
         {
             sliderChange = Input.GetAxis(SliderInputString) * sliderRange / SliderMovement;
             float sliderValue = mySlider.value;
-            float tempValue = sliderValue + sliderChange;
+            float tempValue = sliderValue + sliderChange*Time.deltaTime;
             Mathf.Clamp(tempValue, mySlider.minValue, mySlider.maxValue);
             mySlider.value = tempValue;
         }

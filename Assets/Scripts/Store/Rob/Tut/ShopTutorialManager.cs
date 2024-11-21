@@ -18,6 +18,7 @@ public class ShopTutorialManager : TutorialManager
     public List<InventoryItem> tutItemsB = new List<InventoryItem>();
     public List<GameObject> tutRemovableWalls = new List<GameObject>();
     public InventoryUI invScreen;
+    public GameObject smokeEffect;
     protected override void Awake()
     {
         instance = this;
@@ -91,6 +92,7 @@ public class ShopTutorialManager : TutorialManager
                 break;
             case 11:
                 tutRemovableWalls[4].SetActive(false);
+                CreateSmoke(moveModeToggle.transform);
                 moveModeToggle.SetActive(false);
                 ShopManager.instance.ToggleMoveMode();
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
@@ -174,5 +176,9 @@ public class ShopTutorialManager : TutorialManager
         }
         inTut = false;
         invScreen.LoadInventory();
+    }
+    public void CreateSmoke(Transform trans_)
+    {
+        Instantiate(smokeEffect, trans_.position, trans_.rotation);
     }
 }
