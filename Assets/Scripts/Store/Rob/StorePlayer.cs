@@ -2,7 +2,9 @@ using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// The player class while they are in the store
+/// </summary>
 public class StorePlayer : MonoBehaviour
 {
     [Header("Movement")]
@@ -39,11 +41,17 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] MoveableObjectSlot moveableObjectSlotTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject moveableObjectSlotLockOnObject;
+    [Tooltip("The MoveableObject we are currently holding or have picked up")]
     [SerializeField] MoveableObject heldObject;
+    [Tooltip("Are we currently able to move objects")]
     public bool isInMovingMode;
+    [Tooltip("REFERENCE to location to spawn held objects, currently over the player's head")]
     public GameObject heldObjectSpawn;
+    [Tooltip("The visual for the object we are holding")]
     public GameObject heldObjectVisual;
+    [Tooltip("REFERENCE to object that detects if any moveable objects around us")]
     public GameObject moveDetector;
+    [Tooltip("REFERENCE to the UI for move mode")]
     public GameObject moveModeUIObject;
 
     [Header("REFERNCES and Inputs")]
@@ -51,7 +59,6 @@ public class StorePlayer : MonoBehaviour
     Vector3 moveInput;
     Vector3 newInput;
     Vector3 dashStartPos;
-
     Rigidbody rb;
     //slight delay before player regains control after falling off the map
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
@@ -77,6 +84,7 @@ public class StorePlayer : MonoBehaviour
             return;
         if (isDead)
             return;
+        //close most menus by pressing the B or back button
         if (ShopManager.instance.inMenu)
         {
             if (Input.GetButtonDown("Fire2"))
@@ -134,7 +142,6 @@ public class StorePlayer : MonoBehaviour
                     return;
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-               // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 transform.position =  PreventGoingThroughWalls(temp);
                 if(dashTime<=0.1f)
                 DashEdgeCheck();
@@ -217,7 +224,7 @@ public class StorePlayer : MonoBehaviour
 
     }
     /// <summary>
-    /// The actions taken when the player presses the interact button
+    /// The actions taken when the player presses the interact button, the functionality comes from the object being used
     /// </summary>
     private void InteractAction()
     {
@@ -230,7 +237,7 @@ public class StorePlayer : MonoBehaviour
         }
     }
     /// <summary>
-    /// The actions taken when the player presses the interact button
+    /// The actions taken when the player presses the move button (pickup or place down)
     /// </summary>
     private void MoveItemAction()
     {
@@ -258,6 +265,9 @@ public class StorePlayer : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Set the object we are holding and create a visual object above the players head
+    /// </summary>
     public void SetHeldObject(MoveableObject obj_)
     {
         if(obj_ == null)
@@ -457,26 +467,6 @@ public class StorePlayer : MonoBehaviour
     /// <returns></returns>
     private bool CheckForWallHit()
     {
-        /* for directions that will not change when player moves
-        var dir = transform.TransformDirection(Vector3.down);
-        // Up
-
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
-            return true;
-        // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 0.5f), dir, 15, wallMask))
-            return true;
-        //Left
-        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
-            return true;
-        //Right
-        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
-            return true;
-
-        return false;
-
-
-        */
         var dir = transform.TransformDirection(Vector3.forward);
         if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
@@ -516,20 +506,6 @@ public class StorePlayer : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-    /// <summary>
-    /// Functionality for running out of life
-    /// </summary>
-    public void Death()
-    {
-        if (isDead)
-            return;
-        isDead = true;
-    }
    public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);
@@ -539,6 +515,9 @@ public class StorePlayer : MonoBehaviour
             interactableObjectLockOnObject.SetActive(false);
         }
     }
+    /// <summary>
+    /// Teleport to the other shop
+    /// </summary>
     public void WarpToOtherShop()
     {
         if (teleportCooldown > 0)
@@ -546,6 +525,9 @@ public class StorePlayer : MonoBehaviour
         teleportCooldown = teleportCooldownMax;
         ShopManager.instance.WarpPlayerToOtherStore();
     }
+    /// <summary>
+    /// Toggle the ability to move objects, this will also save their layout 
+    /// </summary>
     public void ToggleMoveMode()
     {
         if(ShopTutorialManager.instance.inTut)
