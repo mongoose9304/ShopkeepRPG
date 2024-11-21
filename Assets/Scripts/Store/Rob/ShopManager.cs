@@ -391,6 +391,17 @@ public class ShopManager : MonoBehaviour
         SaveAllBarginBins();
         
     }
+    //Used in pause screen 
+    public void SaveEverything()
+    {
+        if (!ShopTutorialManager.instance.inTut)
+        {
+            MoveableObjectManager.instance.SaveAllSlots();
+            SetPedestalList();
+            SetBarginBinList();
+            DebugSaveItems();
+        }
+    }
     public void DebugAddItems()
     {
         foreach(InventoryItem item_ in debugItemsToAdd)
@@ -845,5 +856,9 @@ public class ShopManager : MonoBehaviour
     public float GetHotItemMultiplier()
     {
         return 1.3f;
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
