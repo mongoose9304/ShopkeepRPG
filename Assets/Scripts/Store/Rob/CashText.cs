@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+/// <summary>
+/// Used to apply cash counting UI effects when object is enabled/disabled
+/// </summary>
 public class CashText : MonoBehaviour
 {
     MMF_TMPCountTo cashCounter;

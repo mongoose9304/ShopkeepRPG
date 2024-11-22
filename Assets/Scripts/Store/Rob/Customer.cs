@@ -59,7 +59,7 @@ public class Customer : MonoBehaviour
     [Tooltip("Am i not at my destination yet?")]
     protected bool isMoving;
     [Tooltip("Has my mood been bosted by small talk yet?")]
-    protected bool hasBeenSmallTalked;
+    public bool hasBeenSmallTalked;
     [Tooltip("REFERENCE to the ! above the NPC when they can be interacted with")]
     [SerializeField]protected GameObject haggleIndicator;
     [Tooltip("all the pedestals I have already seen so I don't keep looking at the same items")]

@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages the objects that can be moved and saves them to json files to be loaded later
+/// </summary>
 public class MoveableObjectManager : MonoBehaviour
 {
+    [Tooltip("Singleton instance of the class")]
     public static MoveableObjectManager instance;
+    [Tooltip("The list of items the player ha stored")]
     public List<MoveableObject> masterItemList = new List<MoveableObject>();
+    [Tooltip("REFERENCE to all the slots where items can go")]
     public List<MoveableObjectSlot> allSlots = new List<MoveableObjectSlot>();
+    [Tooltip("REFERENCE to all the slots where items can go in the human world")]
     public List<MoveableObjectSlot> humanSlots = new List<MoveableObjectSlot>();
+    [Tooltip("REFERENCE to all the slots where items can go in the hell world")]
     public List<MoveableObjectSlot> hellSlots = new List<MoveableObjectSlot>();
     private void Awake()
     {
@@ -15,7 +23,9 @@ public class MoveableObjectManager : MonoBehaviour
         GetMasterList();
         LoadAllSlots();
     }
-
+    /// <summary>
+    /// Save every slot to a Json file
+    /// </summary>
     public void SaveAllSlots()
     {
         List<string> masterItemList_ = new List<string>();
@@ -32,7 +42,11 @@ public class MoveableObjectManager : MonoBehaviour
            
         }
         FileHandler.SaveToJSON(masterItemList_, "MoveableObjectInventory");
+
     }
+    /// <summary>
+    /// Init all slots based on the master list
+    /// </summary>
     private void LoadAllSlots()
     {
         
@@ -50,7 +64,11 @@ public class MoveableObjectManager : MonoBehaviour
                 }
             }
        
+
     }
+    /// <summary>
+    /// Load all the slots from Json files. If none are found it will use whatever is in the inspector 
+    /// </summary>
     private void GetMasterList()
     {
         masterItemList.Clear();
