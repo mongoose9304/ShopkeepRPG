@@ -29,7 +29,7 @@ public class ShopManager : MonoBehaviour
 
     public GameObject cashTextUI;
     public GameObject exitMenuUI;
-
+    public GameObject moveModeNeedsToBeDeactivatedText;
     public bool playerInHell;
     public bool hellShopEnabled;
     public bool humanShopEnabled;
@@ -292,6 +292,7 @@ public class ShopManager : MonoBehaviour
             {
                 door_.ResetDoor();
             }
+            moveModeNeedsToBeDeactivatedText.SetActive(true);
             return;
         }
         if (!humanShopEnabled && !hellShopEnabled)
@@ -708,7 +709,7 @@ public class ShopManager : MonoBehaviour
         }
         foreach (ShopDoor door_ in mydoorsHell)
         {
-            door_.RotateDoor();
+            door_.ResetDoor();
         }
         CustomerManager.instance.CloseShop();
     }
@@ -776,6 +777,7 @@ public class ShopManager : MonoBehaviour
     {
         if(!shopRunning)
         player.ToggleMoveMode();
+        moveModeNeedsToBeDeactivatedText.SetActive(false);
     }
     public void RedoNavMesh()
     {
