@@ -27,6 +27,8 @@ public class ShopManager : MonoBehaviour
     public List<ItemData> coldItemsUniversal = new List<ItemData>();
     public List<ItemData> coldItemsHellUniversal = new List<ItemData>();
 
+    public GameObject cashTextUI;
+    public GameObject exitMenuUI;
 
     public bool playerInHell;
     public bool hellShopEnabled;
@@ -115,6 +117,7 @@ public class ShopManager : MonoBehaviour
         pedScreen.OpenMenu(p_);
         inMenu = true;
         tutScreen.SetActive(false);
+        EnableExitMenuButton(true);
     }
     public void OpenBarginBin(BarginBin b_)
     {
@@ -122,6 +125,7 @@ public class ShopManager : MonoBehaviour
         barginScreen.OpenMenu(b_);
         inMenu = true;
         tutScreen.SetActive(false);
+        EnableExitMenuButton(true);
     }
     public void OpenHaggleScreen(Pedestal p_,Customer c_,float haggleStart_)
     {
@@ -129,6 +133,7 @@ public class ShopManager : MonoBehaviour
         haggleScreen.OpenMenu(p_,c_,haggleStart_);
         inMenu = true;
         tutScreen.SetActive(false);
+        EnableExitMenuButton(true);
     }
     public void OpenMoveableObjectScreen()
     {
@@ -136,6 +141,7 @@ public class ShopManager : MonoBehaviour
         moveableObjectScreen.OpenMenu();
         inMenu = true;
         tutScreen.SetActive(false);
+        EnableExitMenuButton(true);
     }
     public void CloseMenu()
     {
@@ -150,9 +156,14 @@ public class ShopManager : MonoBehaviour
         invScreen.OpenMenu(false);
         if(ShopTutorialManager.instance.inTut)
         tutScreen.SetActive(true);
+        EnableExitMenuButton(false);
 
-         
-        
+
+    }
+    private void EnableExitMenuButton(bool enable_=false)
+    {
+        exitMenuUI.SetActive(enable_);
+        cashTextUI.SetActive(!enable_);
     }
     public void MenuBackButton()
     {

@@ -44,12 +44,14 @@ public class Pedestal : InteractableObject
             case 1://hot
                 hotItem = true;
                 hotEffect.SetActive(true);
-                basePriceText.text = (myItem_.basePrice * amount_*ShopManager.instance.GetHotItemMultiplier()).ToString();
+                int x = Mathf.RoundToInt(myItem_.basePrice * amount_ * ShopManager.instance.GetHotItemMultiplier());
+                basePriceText.text = (x).ToString();
                 break;
             case 2://cold
                 coldItem = true;
                 coldEffect.SetActive(true);
-                basePriceText.text = (myItem_.basePrice * amount_*ShopManager.instance.GetColdItemMultiplier()).ToString();
+                int y = Mathf.RoundToInt(myItem_.basePrice * amount_ * ShopManager.instance.GetColdItemMultiplier());
+                basePriceText.text = y.ToString();
                 break;
         }
     }
