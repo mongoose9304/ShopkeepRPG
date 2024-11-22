@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class ShopTutorialManager : TutorialManager
     public List<GameObject> tutRemovableWalls = new List<GameObject>();
     public InventoryUI invScreen;
     public GameObject smokeEffect;
+    public AudioClip stealAudio;
     protected override void Awake()
     {
         instance = this;
@@ -121,8 +123,7 @@ public class ShopTutorialManager : TutorialManager
                 doorA.SetActive(true);
                 break;
             case 3:
-                tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
-                customerA.gameObject.SetActive(true);
+                tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 3, true);
                 break;
             case 4:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 0, true);
@@ -163,6 +164,9 @@ public class ShopTutorialManager : TutorialManager
         tutThief.gameObject.SetActive(true);
         tutThief.transform.position = tansform_.position;
         tutThief.SetTarget(thiefExit);
+        MMSoundManager.Instance.PlaySound(stealAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public override void EndTutorial()
     {

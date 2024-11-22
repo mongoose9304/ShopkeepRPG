@@ -65,8 +65,10 @@ public class TutCustomer : Customer
                     gameObject.SetActive(false);
                     return;
                 }
-                RequestHaggle(p_);
-                haggleIndicator.SetActive(true);
+
+                    RequestHaggle(p_);
+                    haggleIndicator.SetActive(true);
+                
 
 
             }
