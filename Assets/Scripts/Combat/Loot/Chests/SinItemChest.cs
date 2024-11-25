@@ -11,11 +11,12 @@ public class SinItemChest : TreasureChest
     {
         if (isOpening)
             return;
-        base.OpenChest();
         for (int i = 0; i < numberOfItemsToDrop; i++)
         {
             dropper.DropSpecificItem(LootManager.instance.GetTieredItem(itemTier));
         }
+        base.OpenChest();
+       
     }
     private void OnEnable()
     {

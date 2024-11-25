@@ -86,6 +86,14 @@ public class CombatPlayerMovement : MonoBehaviour
     float guardChargeDelay;
     bool isGuarding;
 
+    [Header("Interactions")]
+    [Tooltip("All the objects the player is currently in range to interact with")]
+    public List<GameObject> myInteractableObjects = new List<GameObject>();
+    [Tooltip("The object the player is currently locked onto")]
+    [SerializeField] GameObject interactableObjectTarget;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject interactableObjectLockOnObject;
+
     [Header("UI")]
     public MMProgressBar healthBar;
     public MMProgressBar shieldBar;
@@ -105,14 +113,17 @@ public class CombatPlayerMovement : MonoBehaviour
         movement.Enable();
         myPlayerInputActions.Player.Dash.performed += OnDash;
         myPlayerInputActions.Player.StartAction.performed += OnPause;
+        myPlayerInputActions.Player.YAction.performed += InteractAction;
         myPlayerInputActions.Player.Dash.Enable();
         myPlayerInputActions.Player.StartAction.Enable();
+        myPlayerInputActions.Player.YAction.Enable();
     }
     private void OnDisable()
     {
         movement.Disable();
         myPlayerInputActions.Player.Dash.Disable();
         myPlayerInputActions.Player.StartAction.Disable();
+        myPlayerInputActions.Player.YAction.Disable();
     }
     private void Start()
     {
@@ -144,6 +155,7 @@ public class CombatPlayerMovement : MonoBehaviour
             return;
         CheckForSoftLockOn();
         GetInput();
+        GetClosestInteractableObject();
         if (combatActions.isUsingBasicAttackRanged||combatActions.isUsingBasicAttackMelee)
         {
             if(combatActions.isUsingBasicAttackMelee)
@@ -960,5 +972,62 @@ public class CombatPlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetBar01(currentHealth / maxHealth);
         skullHead.SetActive(true);
+    }
+    /// <summary>
+    /// Calculates the nearest interactable object and sets that as the interactable target that will be used for lock ons
+    /// </summary>
+    private void GetClosestInteractableObject()
+    {
+        if (myInteractableObjects.Count == 0)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+            return;
+        }
+        for (int i = 0; i < myInteractableObjects.Count; i++)
+        {
+            if (!myInteractableObjects[i].activeInHierarchy)
+            {
+                if (interactableObjectTarget == myInteractableObjects[i])
+                    interactableObjectTarget = null;
+                myInteractableObjects.RemoveAt(i);
+                continue;
+            }
+            if (!interactableObjectTarget)
+            {
+                interactableObjectTarget = myInteractableObjects[i];
+            }
+            if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = myInteractableObjects[i];
+            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
+        }
+        foreach (GameObject obj in myInteractableObjects)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = obj;
+        }
+    }
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void InteractAction(InputAction.CallbackContext objdd)
+    {
+        if (interactableObjectTarget)
+        {
+            if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
+            {
+                obj.Interact();
+            }
+        }
+    }
+    public void RemoveInteractableObject(GameObject obj_)
+    {
+        myInteractableObjects.Remove(obj_);
+        if (interactableObjectTarget = obj_)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+        }
     }
 }

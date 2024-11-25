@@ -83,4 +83,8 @@ public class CombatPlayerManager : MonoBehaviour
     {
         players[0].combatMovement.ManaPickup(healAmount);
     }
+    public void RemoveInteractableObject(GameObject obj)
+    {
+        players[0].combatMovement.RemoveInteractableObject(obj);
+    }
 }

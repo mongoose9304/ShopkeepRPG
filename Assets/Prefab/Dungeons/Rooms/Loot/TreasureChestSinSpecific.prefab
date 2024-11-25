@@ -5119,8 +5119,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   up: {x: 0, y: 0.5, z: 0}
   down: {x: 0, y: -0.5, z: 0}
+  trueDown: {x: 0, y: 0, z: 0}
+  originalPosition: {x: 0, y: 0, z: 0}
   speed: 2
   changeSpeedBasedOnDistance: 1
+  speedInceraseOnGoingDown: 1
+  useEvents: 0
+  endDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  endUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6730639096767921006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5133,9 +5143,9 @@ GameObject:
   - component: {fileID: 2027866403863767950}
   - component: {fileID: 1415190936261990675}
   - component: {fileID: 6420903843281183376}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TreasureChestSinSpecific
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5180,7 +5190,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 2, z: 4}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1415190936261990675
 MonoBehaviour:
