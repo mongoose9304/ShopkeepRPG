@@ -56,18 +56,44 @@ public class CombatPlayerActions : MonoBehaviour
     public AudioClip basicRangedAudio;
     [Header("Inputs")]
     private bool PlayerIsHoldingMelee;
+    private bool PlayerIsHoldingRanged;
+    private bool PlayerIsHoldingSpecial1;
+    private bool PlayerIsHoldingSpecial2;
+    private bool PlayerIsHoldingUlitmate;
 
     private void Start()
     {
         SetUpProjectiles();
         SwapSpecials();
+        EnableActions();
+    }
+    private void EnableActions()
+    {
         combatMovement.myPlayerInputActions.Player.XAction.performed += OnMeleePressed;
         combatMovement.myPlayerInputActions.Player.XAction.canceled += OnMeleeReleased;
+        combatMovement.myPlayerInputActions.Player.AAction.performed += OnRangedPressed;
+        combatMovement.myPlayerInputActions.Player.AAction.canceled += OnRangedReleased;
+        combatMovement.myPlayerInputActions.Player.LBAction.performed += OnSpecial1Pressed;
+        combatMovement.myPlayerInputActions.Player.LBAction.canceled += OnSpecial1Released;
+        combatMovement.myPlayerInputActions.Player.RBAction.performed += OnSpecial2Pressed;
+        combatMovement.myPlayerInputActions.Player.RBAction.canceled += OnSpecial2Released;
+        combatMovement.myPlayerInputActions.Player.LTAction.performed += OnUltimatePressed;
+        combatMovement.myPlayerInputActions.Player.LTAction.canceled += OnUltimateReleased;
+
+
+
         combatMovement.myPlayerInputActions.Player.XAction.Enable();
+        combatMovement.myPlayerInputActions.Player.AAction.Enable();
+        combatMovement.myPlayerInputActions.Player.RBAction.Enable();
+        combatMovement.myPlayerInputActions.Player.LBAction.Enable();
+        combatMovement.myPlayerInputActions.Player.RTAction.Enable();
     }
     private void OnEnable()
     {
-        
+        if(combatMovement.myPlayerInputActions!=null)
+        {
+            EnableActions();
+        }
     }
 
    
@@ -75,6 +101,10 @@ public class CombatPlayerActions : MonoBehaviour
     private void OnDisable()
     {
         combatMovement.myPlayerInputActions.Player.XAction.Disable();
+        combatMovement.myPlayerInputActions.Player.AAction.Disable();
+        combatMovement.myPlayerInputActions.Player.RBAction.Disable();
+        combatMovement.myPlayerInputActions.Player.LBAction.Disable();
+        combatMovement.myPlayerInputActions.Player.RTAction.Disable();
     }
     private void Update()
     {
@@ -102,36 +132,26 @@ public class CombatPlayerActions : MonoBehaviour
 
 
         }
-        /*
-        else if(Input.GetButton("Fire1"))
+        else if(PlayerIsHoldingRanged)
         {
             BasicRanged();
             isUsingBasicAttackRanged = true;
             meleeObject.ForceEndAttack();
         }
-        else if(Input.GetButton("Special1"))
+        else if(PlayerIsHoldingSpecial1)
         {
             UseSpecialAttack(true);
         }
-        else if (Input.GetButton("Special2"))
+        else if (PlayerIsHoldingSpecial2)
         {
             UseSpecialAttack(false);
         }
-        else if (Input.GetButton("Special3"))
-        {
-            UseFamiliarUltimate();
-        }
-        else if (Input.GetAxis("Special3")==1)
+        else if (PlayerIsHoldingUlitmate)
         {
             UseFamiliarUltimate();
         }
 
-
-        if (Input.GetButtonUp("Fire3"))
-        {
-            meleeObject.ReleaseMeleeButton();
-        }
-      */
+    
         Cooldowns();
     }
 
@@ -384,7 +404,7 @@ public class CombatPlayerActions : MonoBehaviour
         }
         combatMovement.CalculateAllModifiers();
     }
-    //New Inputs
+    //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)
     {
         PlayerIsHoldingMelee = true;
@@ -392,5 +412,38 @@ public class CombatPlayerActions : MonoBehaviour
     private void OnMeleeReleased(InputAction.CallbackContext obj)
     {
         PlayerIsHoldingMelee = false;
+        meleeObject.ReleaseMeleeButton();
+    }
+    private void OnRangedPressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingRanged = true;
+    }
+    private void OnRangedReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingRanged = false;
+    }
+    private void OnSpecial1Pressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial1 = true;
+    }
+    private void OnSpecial1Released(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial1 = false;
+    }
+    private void OnSpecial2Pressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial2 = true;
+    }
+    private void OnSpecial2Released(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial2 = false;
+    }
+    private void OnUltimatePressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingUlitmate = true;
+    }
+    private void OnUltimateReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingUlitmate = false;
     }
 }
