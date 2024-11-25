@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
 using TMPro;
+using UnityEngine.InputSystem;
 public class CombatPlayerActions : MonoBehaviour
 {
     public CombatPlayerMovement combatMovement;
@@ -53,11 +54,27 @@ public class CombatPlayerActions : MonoBehaviour
     public MMProgressBar ultimateCoolDownBar;
     [Header("Audio")]
     public AudioClip basicRangedAudio;
+    [Header("Inputs")]
+    private bool PlayerIsHoldingMelee;
 
     private void Start()
     {
         SetUpProjectiles();
         SwapSpecials();
+        combatMovement.myPlayerInputActions.Player.XAction.performed += OnMeleePressed;
+        combatMovement.myPlayerInputActions.Player.XAction.canceled += OnMeleeReleased;
+        combatMovement.myPlayerInputActions.Player.XAction.Enable();
+    }
+    private void OnEnable()
+    {
+        
+    }
+
+   
+
+    private void OnDisable()
+    {
+        combatMovement.myPlayerInputActions.Player.XAction.Disable();
     }
     private void Update()
     {
@@ -77,7 +94,7 @@ public class CombatPlayerActions : MonoBehaviour
             
         }
 
-        if(Input.GetButton("Fire3"))
+        if(PlayerIsHoldingMelee)
         {
            
             BasicMelee();
@@ -85,6 +102,7 @@ public class CombatPlayerActions : MonoBehaviour
 
 
         }
+        /*
         else if(Input.GetButton("Fire1"))
         {
             BasicRanged();
@@ -113,6 +131,7 @@ public class CombatPlayerActions : MonoBehaviour
         {
             meleeObject.ReleaseMeleeButton();
         }
+      */
         Cooldowns();
     }
 
@@ -364,5 +383,14 @@ public class CombatPlayerActions : MonoBehaviour
             chargesUIBGB.SetActive(false);
         }
         combatMovement.CalculateAllModifiers();
+    }
+    //New Inputs
+    private void OnMeleePressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingMelee = true;
+    }
+    private void OnMeleeReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingMelee = false;
     }
 }

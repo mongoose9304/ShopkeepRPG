@@ -19,7 +19,7 @@ public class TempPause : MonoBehaviour
     {
         if (isInDialogue)
             return;
-        if (Input.GetButtonDown("PauseGame"))
+     /*   if (Input.GetButtonDown("PauseGame"))
         {
             if (isPaused)
             {
@@ -44,6 +44,7 @@ public class TempPause : MonoBehaviour
                 }
             }
         }
+     */
     }
     public void PauseForDialogue()
     {

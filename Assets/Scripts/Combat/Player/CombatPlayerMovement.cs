@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
+using UnityEngine.InputSystem;
 public class CombatPlayerMovement : MonoBehaviour
 {
     //FFYL stats
@@ -91,6 +92,25 @@ public class CombatPlayerMovement : MonoBehaviour
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
+    [Header("Inputs")]
+    public PlayerInputActions myPlayerInputActions;
+    private InputAction movement;
+    private void Awake()
+    {
+        myPlayerInputActions = new PlayerInputActions();
+    }
+    private void OnEnable()
+    {
+        movement = myPlayerInputActions.Player.Movement;
+        movement.Enable();
+        myPlayerInputActions.Player.Dash.performed += OnDash;
+        myPlayerInputActions.Player.Dash.Enable();
+    }
+    private void OnDisable()
+    {
+        movement.Disable();
+        myPlayerInputActions.Player.Dash.Disable();
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -187,7 +207,7 @@ public class CombatPlayerMovement : MonoBehaviour
 
         }
     }
-    private void OnDash()
+    private void OnDash(InputAction.CallbackContext obj)
     {
         if (dashCoolDown <= 0)
         {
@@ -197,12 +217,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     void GetInput()
     {
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-       if(Input.GetButtonDown("Fire2"))
-        {
-            OnDash();
-        }
-        
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
     }
     private void DashAction()
     {
