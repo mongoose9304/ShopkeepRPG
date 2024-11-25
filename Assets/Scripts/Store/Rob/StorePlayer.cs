@@ -2,6 +2,7 @@ using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 /// <summary>
 /// The player class while they are in the store
 /// </summary>
@@ -70,7 +71,38 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
+    [Header("Inputs")]
+    public PlayerInputActions myPlayerInputActions;
+    private InputAction movement;
+    private bool InteractHeld;
+    private void Awake()
+    {
+        myPlayerInputActions = new PlayerInputActions();
+    }
+    private void OnEnable()
+    {
+        myPlayerInputActions.Player.Dash.performed += OnDash;
+        myPlayerInputActions.Player.LTAction.performed += OnWarp;
+        myPlayerInputActions.Player.RBAction.performed += OnOpenMoveableInventory;
+        myPlayerInputActions.Player.YAction.performed += OnInteract;
+        myPlayerInputActions.Player.YAction.canceled += OnInteractReleased;
+        myPlayerInputActions.Player.XAction.performed += OnMoveAction;
+        movement = myPlayerInputActions.Player.Movement;
+        myPlayerInputActions.Player.StartAction.performed += OnPause;
 
+        myPlayerInputActions.Player.Dash.Enable();
+        myPlayerInputActions.Player.LTAction.Enable();
+        myPlayerInputActions.Player.Movement.Enable();
+        myPlayerInputActions.Player.YAction.Enable();
+        myPlayerInputActions.Player.RBAction.Enable();
+        myPlayerInputActions.Player.XAction.Enable();
+        myPlayerInputActions.Player.StartAction.Enable();
+    }
+    private void OnDisable()
+    {
+        myPlayerInputActions.Player.Dash.Disable();
+        myPlayerInputActions.Player.LTAction.Disable();
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -87,14 +119,6 @@ public class StorePlayer : MonoBehaviour
         //close most menus by pressing the B or back button
         if (ShopManager.instance.inMenu)
         {
-            if (Input.GetButtonDown("Fire2"))
-            {
-                ShopManager.instance.MenuBackButton();
-                if (ShopManager.instance)
-                {
-                    ShopManager.instance.PlayUIAudio("Close");
-                }
-            }
             return;
         }
 
@@ -156,14 +180,80 @@ public class StorePlayer : MonoBehaviour
     /// <summary>
     /// The actions taken when the player presses the dash button
     /// </summary>
-    private void OnDash()
+    private void OnDash(InputAction.CallbackContext obj)
     {
+        if (TempPause.instance.isPaused)
+            return;
+        if (ShopManager.instance.inMenu)
+        {
+
+                ShopManager.instance.MenuBackButton();
+                if (ShopManager.instance)
+                {
+                    ShopManager.instance.PlayUIAudio("Close");
+                }
+            return;
+        }
         
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
         }
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnWarp(InputAction.CallbackContext obj)
+    {
+
+        if (!ShopTutorialManager.instance.inTut)
+            WarpToOtherShop();
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnInteract(InputAction.CallbackContext obj)
+    {
+        InteractHeld = true;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnInteractReleased(InputAction.CallbackContext obj)
+    {
+        InteractHeld = false;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnMoveAction(InputAction.CallbackContext obj)
+    {
+        if (ShopManager.instance.inMenu)
+        {
+            return;
+        }
+        if (isInMovingMode)
+            MoveItemAction();
+    }
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance)
+        {
+            TempPause.instance.TogglePause();
+        }
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnOpenMoveableInventory(InputAction.CallbackContext obj)
+    {
+        if (ShopManager.instance.inMenu)
+        {
+            return;
+        }
+        if (isInMovingMode)
+            ShopManager.instance.OpenMoveableObjectScreen();
     }
 
     /// <summary>
@@ -172,38 +262,11 @@ public class StorePlayer : MonoBehaviour
     void GetInput()
     {
        
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         if(teleportCooldown>0)
         teleportCooldown -= Time.deltaTime;
-        if (Input.GetButtonDown("Fire2"))
-        {
-            OnDash();
-        }
-        else if (Input.GetButton("Fire4"))
-        {
-                InteractAction();
-        }
-        else if (Input.GetButtonDown("Fire3"))
-        {
-            if(isInMovingMode)
-            MoveItemAction();
-        }
-        else if (Input.GetButton("Special3"))
-        {
-            if(!ShopTutorialManager.instance.inTut)
-            WarpToOtherShop();
-        }
-        else if (Input.GetAxis("Special3") == 1)
-        {
-            if (!ShopTutorialManager.instance.inTut)
-                WarpToOtherShop();
-        }
-        else if (Input.GetButtonDown("Special2"))
-        {
-            if(isInMovingMode)
-            ShopManager.instance.OpenMoveableObjectScreen();
-        }
-
+        if (InteractHeld)
+            InteractAction();
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
     }
     /// <summary>
     /// The funcionality of a players dash. The player snaps to the nearest 90 degree and moves forwards constantly unless there is a wall
