@@ -102,6 +102,11 @@ public class StorePlayer : MonoBehaviour
     {
         myPlayerInputActions.Player.Dash.Disable();
         myPlayerInputActions.Player.LTAction.Disable();
+        myPlayerInputActions.Player.Movement.Disable();
+        myPlayerInputActions.Player.YAction.Disable();
+        myPlayerInputActions.Player.RBAction.Disable();
+        myPlayerInputActions.Player.XAction.Disable();
+        myPlayerInputActions.Player.StartAction.Disable();
     }
     private void Start()
     {
