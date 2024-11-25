@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// The controls and behavior for the player during the mining activity
@@ -83,7 +84,41 @@ public class MiningPlayer : MonoBehaviour
     float currentHealth;
     [Header("UI")]
     public MMProgressBar healthBar;
+    [Header("Inputs")]
+    public PlayerInputActions myPlayerInputActions;
+    private InputAction movement;
+    private bool InteractHeld;
+    private void Awake()
+    {
+        myPlayerInputActions = new PlayerInputActions();
+    }
+    private void OnEnable()
+    {
+        myPlayerInputActions.Player.Dash.performed += OnDash;
+        myPlayerInputActions.Player.XAction.performed += OnMine;
+        myPlayerInputActions.Player.YAction.performed += OnInteract;
+        myPlayerInputActions.Player.YAction.canceled += OnInteractReleased;
+        myPlayerInputActions.Player.AAction.performed += OnBombAction;
+        movement = myPlayerInputActions.Player.Movement;
+        myPlayerInputActions.Player.StartAction.performed += OnPause;
 
+        myPlayerInputActions.Player.Dash.Enable();
+        myPlayerInputActions.Player.Movement.Enable();
+        myPlayerInputActions.Player.YAction.Enable();
+        myPlayerInputActions.Player.XAction.Enable();
+        myPlayerInputActions.Player.AAction.Enable();
+        myPlayerInputActions.Player.StartAction.Enable();
+    }
+    private void OnDisable()
+    {
+        myPlayerInputActions.Player.Dash.Disable();
+        myPlayerInputActions.Player.LTAction.Disable();
+        myPlayerInputActions.Player.Movement.Disable();
+        myPlayerInputActions.Player.YAction.Disable();
+        myPlayerInputActions.Player.RBAction.Disable();
+        myPlayerInputActions.Player.XAction.Disable();
+        myPlayerInputActions.Player.StartAction.Disable();
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -159,7 +194,7 @@ public class MiningPlayer : MonoBehaviour
     /// <summary>
     /// The actions taken when the player presses the dash button
     /// </summary>
-    private void OnDash()
+    private void OnDash(InputAction.CallbackContext obj)
     {
         
         if (dashCoolDown <= 0&&!isSwinging)
@@ -174,32 +209,63 @@ public class MiningPlayer : MonoBehaviour
     /// </summary>
     void GetInput()
     {
-       
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
-        if (Input.GetButtonDown("Fire3"))
-        {
-            PickaxeAction();
-        }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            OnDash();
-        }
-        if (Input.GetButton("Fire4"))
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
+
+
+        if (InteractHeld)
         {
             InteractAction();
         }
-        if (Input.GetButtonDown("Fire1"))
-        {
-            BombAction();
-        }
 
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnBombAction(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+        {
+            return;
+        }
+        BombAction();
+    }
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void OnInteract(InputAction.CallbackContext obj)
+    {
+        InteractHeld = true;
+    }
+    /// <summary>
+    /// The actions taken when the player releasses the interact button
+    /// </summary>
+    private void OnInteractReleased(InputAction.CallbackContext obj)
+    {
+        InteractHeld = false;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void OnMine(InputAction.CallbackContext obj)
+    {
+        PickaxeAction();
+    }
+
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance)
+        {
+            TempPause.instance.TogglePause();
+        }
     }
     /// <summary>
     /// The funcionality of a players dash. The player snaps to the nearest 90 degree and moves forwards constantly unless there is a wall
     /// </summary>
     private void DashAction()
     {
+        if (TempPause.instance.isPaused)
+            return;
 
         dashStartPos = transform.position;
         SnapRotationToGrid(transform);
