@@ -103,6 +103,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [Header("Inputs")]
     public PlayerInputActions myPlayerInputActions;
     private InputAction movement;
+    private bool InteractHeld;
     private void Awake()
     {
         myPlayerInputActions = new PlayerInputActions();
@@ -113,7 +114,8 @@ public class CombatPlayerMovement : MonoBehaviour
         movement.Enable();
         myPlayerInputActions.Player.Dash.performed += OnDash;
         myPlayerInputActions.Player.StartAction.performed += OnPause;
-        myPlayerInputActions.Player.YAction.performed += InteractAction;
+        myPlayerInputActions.Player.YAction.performed += InteractPressed;
+        myPlayerInputActions.Player.YAction.canceled += InteractReleased;
         myPlayerInputActions.Player.Dash.Enable();
         myPlayerInputActions.Player.StartAction.Enable();
         myPlayerInputActions.Player.YAction.Enable();
@@ -153,6 +155,8 @@ public class CombatPlayerMovement : MonoBehaviour
         ChargeGuardTime();
         if (combatActions.isBusy)
             return;
+        if (InteractHeld)
+            InteractAction();
         CheckForSoftLockOn();
         GetInput();
         GetClosestInteractableObject();
@@ -1011,7 +1015,7 @@ public class CombatPlayerMovement : MonoBehaviour
     /// <summary>
     /// The actions taken when the player presses the interact button
     /// </summary>
-    private void InteractAction(InputAction.CallbackContext objdd)
+    private void InteractAction()
     {
         if (interactableObjectTarget)
         {
@@ -1020,6 +1024,14 @@ public class CombatPlayerMovement : MonoBehaviour
                 obj.Interact();
             }
         }
+    }
+    private void InteractPressed(InputAction.CallbackContext objdd)
+    {
+        InteractHeld = true;
+    }
+    private void InteractReleased(InputAction.CallbackContext objdd)
+    {
+        InteractHeld = false;
     }
     public void RemoveInteractableObject(GameObject obj_)
     {
