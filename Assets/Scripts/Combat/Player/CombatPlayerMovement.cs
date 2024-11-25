@@ -104,12 +104,15 @@ public class CombatPlayerMovement : MonoBehaviour
         movement = myPlayerInputActions.Player.Movement;
         movement.Enable();
         myPlayerInputActions.Player.Dash.performed += OnDash;
+        myPlayerInputActions.Player.StartAction.performed += OnPause;
         myPlayerInputActions.Player.Dash.Enable();
+        myPlayerInputActions.Player.StartAction.Enable();
     }
     private void OnDisable()
     {
         movement.Disable();
         myPlayerInputActions.Player.Dash.Disable();
+        myPlayerInputActions.Player.StartAction.Disable();
     }
     private void Start()
     {
@@ -209,10 +212,19 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void OnDash(InputAction.CallbackContext obj)
     {
+        if (Time.timeScale <= 0)
+            return;
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
+        }
+    }
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        if(TempPause.instance)
+        {
+            TempPause.instance.TogglePause();
         }
     }
     void GetInput()

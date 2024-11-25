@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Hotbar : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Hotbar : MonoBehaviour
     public float delayBetweenInputsMax;
     float delayBetweenInputsCurrent;
     public float delayBetweenItemUsages;
+    private InputAction movement;
     private void Start()
     {
         //Adding test items for debug pruposes, remove when ready 
@@ -21,6 +24,32 @@ public class Hotbar : MonoBehaviour
             AddItemToHotbar(data, 10);
         }
         SetHighlightedSlot(0);
+    }
+    private void OnEnable()
+    {
+        EnableActions();
+    }
+    private void EnableActions()
+    {
+        if (CombatPlayerManager.instance)
+        {
+            movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad;
+            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad.Enable();
+            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.performed += UseItemPressed;
+            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.Enable();
+        }
+    }
+
+    private void UseItemPressed(InputAction.CallbackContext obj)
+    {
+        if (delayBetweenItemUsages <= 0)
+            UseSelectedItem();
+    }
+
+    private void OnDisable()
+    {
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad.Disable();
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.Disable();
     }
     private void Update()
     {
@@ -53,18 +82,13 @@ public class Hotbar : MonoBehaviour
     }
     void GetInput()
     {
-        hotbarInput = Input.GetAxis("DpadHorizontal");
+        hotbarInput = movement.ReadValue<Vector2>().x;
         if(hotbarInput==0)
         {
             delayBetweenInputsCurrent = 0;
         }
-        if (Input.GetAxis("UseItem") == 1)
-        {
-            if(delayBetweenItemUsages<=0)
-            UseSelectedItem();
-        }
         //temp number inputs, get this crap outta here later -Rob
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+       /* if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             DeHighlightSlot(currentHighlight);
             currentHighlight = 0;
@@ -144,6 +168,7 @@ public class Hotbar : MonoBehaviour
             if (delayBetweenItemUsages <= 0)
                 UseSelectedItem();
         }
+       */
 
 
     }
