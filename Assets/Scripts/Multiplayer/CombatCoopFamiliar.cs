@@ -11,6 +11,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
     public AudioClip dashAudio;
+    public FamiliarCombatControls combatControls;
     [Header("LockOn")]
     public float maxLockOnDistance;
     [SerializeField] float minDistanceBetweenRetargets;
@@ -49,6 +50,7 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("YAction").performed += InteractPressed;
         playerActionMap.FindAction("YAction").canceled += InteractReleased;
         playerActionMap.FindAction("Dash").performed += OnDash;
+        combatControls.EnableActions(playerActionMap);
     }
     private void OnDisable()
     {
@@ -56,6 +58,8 @@ public class CombatCoopFamiliar : MonoBehaviour
     }
     private void Update()
     {
+        if (combatControls.isBusy)
+            return;
         GetClosestInteractableObject();
         if (InteractHeld)
             InteractAction();

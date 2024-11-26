@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &231680501712969212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7665473969739206422}
+  - component: {fileID: 8215243669195118742}
+  m_Layer: 0
+  m_Name: SlimeControls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7665473969739206422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231680501712969212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5145780978930212585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8215243669195118742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231680501712969212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5bd83c5153ee74e957330ae748a586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBusy: 0
+  slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
+  lowestJumpPercentage: 0.25
+  slamAttackDistance: 4
+  AttackDistance: 2
+  jumpHeight: 4
+  jumpSpeed: {x: 0, y: 16, z: 0}
+  slamRange: 5
+  slamCooldownMax: 3
+  slamCooldown: 3
 --- !u!1 &303960398361528278
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +1053,7 @@ Transform:
   m_Children:
   - {fileID: 6658701406152423563}
   - {fileID: 4290690253779354756}
+  - {fileID: 7665473969739206422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &6639211812500482768
@@ -1082,6 +1137,7 @@ MonoBehaviour:
     m_Bits: 8
   dashEffect: {fileID: 141433446842962269, guid: 68f11cab5b69bcd47a5d22278ca07fa7, type: 3}
   dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
+  combatControls: {fileID: 8215243669195118742}
   maxLockOnDistance: 10
   minDistanceBetweenRetargets: 0.25
   currentTarget: {fileID: 0}
