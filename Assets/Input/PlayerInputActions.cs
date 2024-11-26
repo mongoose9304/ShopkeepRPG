@@ -125,6 +125,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SelectAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""225a8260-24a8-4810-98a2-91c58202a301"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dpad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5974a059-a131-418e-aa89-0f84abe9be1f"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -377,6 +397,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_RTAction = m_Player.FindAction("RTAction", throwIfNotFound: true);
         m_Player_StartAction = m_Player.FindAction("StartAction", throwIfNotFound: true);
         m_Player_Dpad = m_Player.FindAction("Dpad", throwIfNotFound: true);
+        m_Player_SelectAction = m_Player.FindAction("SelectAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -449,6 +470,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RTAction;
     private readonly InputAction m_Player_StartAction;
     private readonly InputAction m_Player_Dpad;
+    private readonly InputAction m_Player_SelectAction;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -464,6 +486,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @RTAction => m_Wrapper.m_Player_RTAction;
         public InputAction @StartAction => m_Wrapper.m_Player_StartAction;
         public InputAction @Dpad => m_Wrapper.m_Player_Dpad;
+        public InputAction @SelectAction => m_Wrapper.m_Player_SelectAction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -506,6 +529,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dpad.started += instance.OnDpad;
             @Dpad.performed += instance.OnDpad;
             @Dpad.canceled += instance.OnDpad;
+            @SelectAction.started += instance.OnSelectAction;
+            @SelectAction.performed += instance.OnSelectAction;
+            @SelectAction.canceled += instance.OnSelectAction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -543,6 +569,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dpad.started -= instance.OnDpad;
             @Dpad.performed -= instance.OnDpad;
             @Dpad.canceled -= instance.OnDpad;
+            @SelectAction.started -= instance.OnSelectAction;
+            @SelectAction.performed -= instance.OnSelectAction;
+            @SelectAction.canceled -= instance.OnSelectAction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -573,5 +602,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRTAction(InputAction.CallbackContext context);
         void OnStartAction(InputAction.CallbackContext context);
         void OnDpad(InputAction.CallbackContext context);
+        void OnSelectAction(InputAction.CallbackContext context);
     }
 }
