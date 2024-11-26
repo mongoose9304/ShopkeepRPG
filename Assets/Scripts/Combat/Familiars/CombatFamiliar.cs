@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// </summary>
 public class CombatFamiliar : MonoBehaviour
 {
-    [Header("Referecnes")]
+    [Header("References")]
     [SerializeField] protected GameObject player;
     [SerializeField] protected NavMeshAgent agent;
     public GameObject target;

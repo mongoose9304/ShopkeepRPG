@@ -154,11 +154,11 @@ public class CombatPlayerMovement : MonoBehaviour
         ChargeGuardTime();
         if (combatActions.isBusy)
             return;
+        GetClosestInteractableObject();
         if (InteractHeld)
             InteractAction();
         CheckForSoftLockOn();
         GetInput();
-        GetClosestInteractableObject();
         if (combatActions.isUsingBasicAttackRanged||combatActions.isUsingBasicAttackMelee)
         {
             if(combatActions.isUsingBasicAttackMelee)

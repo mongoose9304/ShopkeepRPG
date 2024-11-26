@@ -6,6 +6,7 @@ public class CombatPlayerManager : MonoBehaviour
 {
     public static CombatPlayerManager instance;
     [SerializeField] CombatPlayerActions[] players;
+    [SerializeField] CombatCoopFamiliar familiarPlayer;
     public Hotbar playerHotbar;
     private void Awake()
     {
@@ -86,5 +87,6 @@ public class CombatPlayerManager : MonoBehaviour
     public void RemoveInteractableObject(GameObject obj)
     {
         players[0].combatMovement.RemoveInteractableObject(obj);
+        familiarPlayer.RemoveInteractableObject(obj);
     }
 }
