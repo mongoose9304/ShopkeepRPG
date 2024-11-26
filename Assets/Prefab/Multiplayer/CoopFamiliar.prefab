@@ -89,7 +89,7 @@ MonoBehaviour:
   RescaleY: 1
   RescaleZ: 1
   RotateToMatchDirection: 0
-  AutoSquashOnStop: 1
+  AutoSquashOnStop: 0
   SquashCurve:
     serializedVersion: 2
     m_Curve:
@@ -127,9 +127,9 @@ MonoBehaviour:
   SquashDuration: {x: 0.25, y: 0.5}
   SquashIntensity: {x: 0, y: 1}
   Spring: 1
-  SpringDamping: 0.3
+  SpringDamping: 0.5
   SpringFrequency: 3
-  SpringSpeed: 10
+  SpringSpeed: 8
   Velocity: {x: 0, y: 0, z: 0}
   RemappedVelocity: 0
   VelocityMagnitude: 0
@@ -983,7 +983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5145780978930212585
 Transform:
   m_ObjectHideFlags: 0
@@ -1076,7 +1076,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d455696c54348b489c159f441b8aff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterStats: {fileID: 0}
+  monsterStats: {fileID: 11400000, guid: 317958a8221ddaa41a1f12c0f69181ba, type: 2}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  dashEffect: {fileID: 141433446842962269, guid: 68f11cab5b69bcd47a5d22278ca07fa7, type: 3}
+  dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
+  maxLockOnDistance: 10
+  minDistanceBetweenRetargets: 0.25
+  currentTarget: {fileID: 0}
+  hardLockOn: 0
+  lockOnIcon: {fileID: 0}
+  timeBeforePlayerCanMoveAfterFallingOffPlatform: 0.1
+  dashDistance: 4
+  maxdashCoolDown: 0.25
+  dashStartPos: {x: 0, y: 0, z: 0}
   myInteractableObjects: []
   interactableObjectTarget: {fileID: 0}
   interactableObjectLockOnObject: {fileID: 0}
