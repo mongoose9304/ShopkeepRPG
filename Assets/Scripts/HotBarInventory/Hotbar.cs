@@ -29,14 +29,13 @@ public class Hotbar : MonoBehaviour
     {
         EnableActions();
     }
-    private void EnableActions()
+
+    public void EnableActions()
     {
-        if (CombatPlayerManager.instance)
+        if (CombatPlayerManager.instance.GetPlayer(0).isActiveAndEnabled)
         {
-            movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad;
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad.Enable();
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.performed += UseItemPressed;
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.Enable();
+            CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RTAction").performed += UseItemPressed;
+            movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("Dpad");
         }
     }
 
@@ -46,11 +45,6 @@ public class Hotbar : MonoBehaviour
             UseSelectedItem();
     }
 
-    private void OnDisable()
-    {
-        CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.Dpad.Disable();
-        CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RTAction.Disable();
-    }
     private void Update()
     {
         if (TempPause.instance.isPaused)

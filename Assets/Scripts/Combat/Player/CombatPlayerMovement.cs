@@ -101,31 +101,30 @@ public class CombatPlayerMovement : MonoBehaviour
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
     [Header("Inputs")]
-    public PlayerInputActions myPlayerInputActions;
+    public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
-    private void Awake()
+    //used to take control of object when player 1 joins
+    public void SetUpControls(PlayerInput myInput)
     {
-        myPlayerInputActions = new PlayerInputActions();
+        playerActionMap = myInput.actions.FindActionMap("Player");
+        movement= playerActionMap.FindAction("Movement");
+        playerActionMap.FindAction("Dash").performed+= OnDash;
+        playerActionMap.FindAction("StartAction").performed+= OnPause;
+        playerActionMap.FindAction("YAction").performed+= InteractPressed;
+        playerActionMap.FindAction("YAction").canceled+= InteractReleased;
+        combatActions.EnableActions();
+
+
+        playerActionMap.Enable();
     }
-    private void OnEnable()
-    {
-        movement = myPlayerInputActions.Player.Movement;
-        movement.Enable();
-        myPlayerInputActions.Player.Dash.performed += OnDash;
-        myPlayerInputActions.Player.StartAction.performed += OnPause;
-        myPlayerInputActions.Player.YAction.performed += InteractPressed;
-        myPlayerInputActions.Player.YAction.canceled += InteractReleased;
-        myPlayerInputActions.Player.Dash.Enable();
-        myPlayerInputActions.Player.StartAction.Enable();
-        myPlayerInputActions.Player.YAction.Enable();
-    }
+
     private void OnDisable()
     {
-        movement.Disable();
-        myPlayerInputActions.Player.Dash.Disable();
-        myPlayerInputActions.Player.StartAction.Disable();
-        myPlayerInputActions.Player.YAction.Disable();
+        if(playerActionMap!=null)
+        {
+            playerActionMap.Disable();
+        }
     }
     private void Start()
     {

@@ -65,46 +65,19 @@ public class CombatPlayerActions : MonoBehaviour
     {
         SetUpProjectiles();
         SwapSpecials();
-        EnableActions();
     }
-    private void EnableActions()
+    public void EnableActions()
     {
-        combatMovement.myPlayerInputActions.Player.XAction.performed += OnMeleePressed;
-        combatMovement.myPlayerInputActions.Player.XAction.canceled += OnMeleeReleased;
-        combatMovement.myPlayerInputActions.Player.AAction.performed += OnRangedPressed;
-        combatMovement.myPlayerInputActions.Player.AAction.canceled += OnRangedReleased;
-        combatMovement.myPlayerInputActions.Player.LBAction.performed += OnSpecial1Pressed;
-        combatMovement.myPlayerInputActions.Player.LBAction.canceled += OnSpecial1Released;
-        combatMovement.myPlayerInputActions.Player.RBAction.performed += OnSpecial2Pressed;
-        combatMovement.myPlayerInputActions.Player.RBAction.canceled += OnSpecial2Released;
-        combatMovement.myPlayerInputActions.Player.LTAction.performed += OnUltimatePressed;
-        combatMovement.myPlayerInputActions.Player.LTAction.canceled += OnUltimateReleased;
-
-
-
-        combatMovement.myPlayerInputActions.Player.XAction.Enable();
-        combatMovement.myPlayerInputActions.Player.AAction.Enable();
-        combatMovement.myPlayerInputActions.Player.RBAction.Enable();
-        combatMovement.myPlayerInputActions.Player.LBAction.Enable();
-        combatMovement.myPlayerInputActions.Player.RTAction.Enable();
-    }
-    private void OnEnable()
-    {
-        if(combatMovement.myPlayerInputActions!=null)
-        {
-            EnableActions();
-        }
-    }
-
-   
-
-    private void OnDisable()
-    {
-        combatMovement.myPlayerInputActions.Player.XAction.Disable();
-        combatMovement.myPlayerInputActions.Player.AAction.Disable();
-        combatMovement.myPlayerInputActions.Player.RBAction.Disable();
-        combatMovement.myPlayerInputActions.Player.LBAction.Disable();
-        combatMovement.myPlayerInputActions.Player.RTAction.Disable();
+        combatMovement.playerActionMap.FindAction("XAction").performed += OnMeleePressed;
+        combatMovement.playerActionMap.FindAction("XAction").canceled += OnMeleeReleased;
+        combatMovement.playerActionMap.FindAction("AAction").performed += OnRangedPressed;
+        combatMovement.playerActionMap.FindAction("AAction").canceled += OnRangedReleased;
+        combatMovement.playerActionMap.FindAction("LBAction").performed += OnSpecial1Pressed;
+        combatMovement.playerActionMap.FindAction("LBAction").canceled += OnSpecial1Released;
+        combatMovement.playerActionMap.FindAction("RBAction").performed += OnSpecial2Pressed;
+        combatMovement.playerActionMap.FindAction("RBAction").canceled += OnSpecial2Released;
+        combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
+        combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
     }
     private void Update()
     {

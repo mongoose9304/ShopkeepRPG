@@ -15,20 +15,14 @@ public class EventHotbar : MonoBehaviour
     }
     private void OnEnable()
     {
-        if(CombatPlayerManager.instance)
-        {
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.LBAction.performed += MoveSlotLeft;
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RBAction.performed += MoveSlotRight;
-        }
+        EnableActions();
     }
-    private void OnDisable()
+    public void EnableActions()
     {
-        if (CombatPlayerManager.instance)
-        {
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.LBAction.performed -= MoveSlotLeft;
-            CombatPlayerManager.instance.GetPlayer(0).combatMovement.myPlayerInputActions.Player.RBAction.performed -= MoveSlotRight;
-        }
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("LBAction").performed += MoveSlotLeft;
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RBAction").performed += MoveSlotRight;
     }
+
 
     private void MoveSlotLeft(InputAction.CallbackContext obj)
     {

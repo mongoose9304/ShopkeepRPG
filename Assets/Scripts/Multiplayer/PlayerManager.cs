@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    private List<PlayerInput> players = new List<PlayerInput>();
+    private List<PlayerController> players = new List<PlayerController>();
     [SerializeField]
     private Transform playerSpawn;
     [SerializeField]
@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
         private void Awake()
     {
         playerInputManager = FindObjectOfType<PlayerInputManager>();
+        DontDestroyOnLoad(gameObject);
     }
     private void OnEnable()
     {
@@ -29,19 +30,16 @@ public class PlayerManager : MonoBehaviour
     public void AddPlayer(PlayerInput player)
     {
         Debug.Log("PlayerAdded");
-        players.Add(player);
-
-        //need to use the parent due to the structure of the prefab
-        Transform playerParent = player.transform.parent;
-        playerParent.position = playerSpawn.position;
-
-        //convert layer mask (bit) to an integer 
+        players.Add(player.GetComponent<PlayerController>()); 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
-
-        //set the layer
-        playerParent.GetComponentInChildren<CinemachineVirtualCamera>().gameObject.layer = layerToAdd;
-        //add the layer
-        playerParent.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
+        player.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
+        player.GetComponent<PlayerController>().input = player;
+        if (players.Count==1)
+        SceneSpecificPlayerManager.instance.CreatePlayer1(players[0]);
+        else
+        {
+            SceneSpecificPlayerManager.instance.CreatePlayer2(players[1]);
+        }
 
     }
 }

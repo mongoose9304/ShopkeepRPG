@@ -53,7 +53,6 @@ public class CombatFamiliar : MonoBehaviour
     public MMF_FloatingText floatingText;
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         if (player)
         {
             combatPlayerMovement = player.GetComponent<CombatPlayerMovement>();
@@ -70,7 +69,7 @@ public class CombatFamiliar : MonoBehaviour
         floatingText.Channel = Random.Range(0, 1000000);
         textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
         currentHealth = maxHealth;
-        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+        //combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
 
     }
     protected virtual void Update()
