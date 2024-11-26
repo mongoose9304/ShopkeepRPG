@@ -10,6 +10,7 @@ public class SlimeCombatControls : FamiliarCombatControls
     bool isJumping;
     bool isSlaming;
     bool isUltimateJumping;
+    public Animator anim;
     [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
@@ -22,9 +23,15 @@ public class SlimeCombatControls : FamiliarCombatControls
     float jumpEnd;
     public float slamCooldownMax;
     public float slamCooldown;
+    public float meleeCooldown;
+    public float meleeCooldownMax;
+    [Header("Inputs")]
+    public bool isHoldingMelee;
     public override void EnableActions(InputActionMap playerActionMap)
     {
         playerActionMap.FindAction("RBAction").performed += SlamPressed;
+        playerActionMap.FindAction("XAction").performed += MeleePressed;
+        playerActionMap.FindAction("XAction").canceled += MeleeReleased;
     }
     public void SlamAttack()
     {
@@ -36,6 +43,20 @@ public class SlimeCombatControls : FamiliarCombatControls
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
     }
+    public void MeleeAttack()
+    {
+        anim.SetTrigger("basicAttack");
+        meleeCooldown = meleeCooldownMax;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.tag == "Enemy")
+            {
+                //add real damage later
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(40, 0, Element.Neutral, 0, this.gameObject);
+            }
+        }
+    }
     protected  void Update()
     {
         if (TempPause.instance.isPaused)
@@ -44,6 +65,13 @@ public class SlimeCombatControls : FamiliarCombatControls
         if (!isJumping)
         {
             CoolDowns();
+            if(isHoldingMelee)
+            {
+                if(meleeCooldown<=0)
+                {
+                    MeleeAttack();
+                }
+            }
         }
         else
         {
@@ -77,6 +105,7 @@ public class SlimeCombatControls : FamiliarCombatControls
     private void CoolDowns()
     {
         slamCooldown -= Time.deltaTime;
+        meleeCooldown -= Time.deltaTime;
     }
     /// <summary>
     /// The behavior when the slime hits the apex of thier jump
@@ -139,5 +168,13 @@ public class SlimeCombatControls : FamiliarCombatControls
             return;
         if(slamCooldown<=0)
             SlamAttack();
+    }
+    private void MeleePressed(InputAction.CallbackContext objdd)
+    {
+        isHoldingMelee = true;
+    }
+    private void MeleeReleased(InputAction.CallbackContext objdd)
+    {
+        isHoldingMelee = false;
     }
 }

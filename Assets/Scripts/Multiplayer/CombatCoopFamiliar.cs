@@ -68,10 +68,10 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         CheckForSoftLockOn();
-        LookAtCurrentTarget();
+       
         if (!isDashing)
         {
-
+            LookAtCurrentTarget();
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
