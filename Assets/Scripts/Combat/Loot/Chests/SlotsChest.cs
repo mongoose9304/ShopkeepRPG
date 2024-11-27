@@ -13,12 +13,19 @@ public class SlotsChest : TreasureChest
     public AudioClip loseAudio;
     public AudioClip jackpotAudio;
     public AudioSource spinAudioSource;
+    private void OnEnable()
+    {
+        cost = DungeonManager.instance.currentDungeon.GetTreasureChestAmount() / 3;
+        costText.text = cost.ToString();
+        myText.SetActive(true);
+    }
     protected override void OpenChest()
     {
         if (slotMachine.isSpinning)
             return;
         if(LootManager.instance.AttemptDemonPayment(cost))
         {
+            Debug.Log("Payed2sin");
         slotMachine.Spin();
             spinAudioSource.Play();
         }
