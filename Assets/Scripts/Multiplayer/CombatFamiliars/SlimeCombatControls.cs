@@ -1,3 +1,5 @@
+using Blobcreate.ProjectileToolkit;
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,9 @@ public class SlimeCombatControls : FamiliarCombatControls
     bool isSlaming;
     bool isUltimateJumping;
     public Animator anim;
+    [Tooltip("REFERENCE to the pool of ranged projectiles the player has")]
+    [SerializeField] protected MMMiniObjectPooler rangedProjectilePool;
+    public GameObject rangedAttackSpawn;
     [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
@@ -25,13 +30,18 @@ public class SlimeCombatControls : FamiliarCombatControls
     public float slamCooldown;
     public float meleeCooldown;
     public float meleeCooldownMax;
+    public float rangedCooldown;
+    public float rangedCooldownMax;
     [Header("Inputs")]
     public bool isHoldingMelee;
+    public bool isHoldingRanged;
     public override void EnableActions(InputActionMap playerActionMap)
     {
-        playerActionMap.FindAction("RBAction").performed += SlamPressed;
+        playerActionMap.FindAction("LBAction").performed += SlamPressed;
         playerActionMap.FindAction("XAction").performed += MeleePressed;
         playerActionMap.FindAction("XAction").canceled += MeleeReleased;
+        playerActionMap.FindAction("AAction").performed += RangedPressed;
+        playerActionMap.FindAction("AAction").canceled += RangedReleased;
     }
     public void SlamAttack()
     {
@@ -53,8 +63,27 @@ public class SlimeCombatControls : FamiliarCombatControls
             if (hitCollider.tag == "Enemy")
             {
                 //add real damage later
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(40, 0, Element.Neutral, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(40, 0, Element.Neutral, 0, this.gameObject,"Melee");
             }
+        }
+    }
+    public void RangedAttack(GameObject target_=null)
+    {
+        rangedCooldown = rangedCooldownMax;
+        anim.SetTrigger("basicAttack");
+        GameObject objB = rangedProjectilePool.GetPooledGameObject();
+        objB.transform.position = rangedAttackSpawn.transform.position;
+        //add real damage here
+        objB.GetComponent<FamiliarProjectile>().damage = 30;
+        objB.SetActive(true);
+        objB.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        if(target_!=null)
+        {
+        objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f), ForceMode.VelocityChange);
+        }
+        else
+        {
+            objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position,transform.position+transform.forward*5, -0.1f), ForceMode.VelocityChange);
         }
     }
     protected  void Update()
@@ -71,6 +100,11 @@ public class SlimeCombatControls : FamiliarCombatControls
                 {
                     MeleeAttack();
                 }
+            }
+            else if(isHoldingRanged)
+            {
+                if(rangedCooldown<=0)
+                RangedAttack();
             }
         }
         else
@@ -104,8 +138,12 @@ public class SlimeCombatControls : FamiliarCombatControls
     }
     private void CoolDowns()
     {
+        if(slamCooldown>0)
         slamCooldown -= Time.deltaTime;
+        if(meleeCooldown>0)
         meleeCooldown -= Time.deltaTime;
+        if(rangedCooldown>0)
+        rangedCooldown -= Time.deltaTime;
     }
     /// <summary>
     /// The behavior when the slime hits the apex of thier jump
@@ -150,7 +188,7 @@ public class SlimeCombatControls : FamiliarCombatControls
             if (hitCollider.tag == "Enemy")
             {
                 //add actual element here
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, Element.Water, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, Element.Water, 0, this.gameObject, "Special");
             }
         }
     }
@@ -176,5 +214,13 @@ public class SlimeCombatControls : FamiliarCombatControls
     private void MeleeReleased(InputAction.CallbackContext objdd)
     {
         isHoldingMelee = false;
+    }
+    private void RangedPressed(InputAction.CallbackContext objdd)
+    {
+        isHoldingRanged = true;
+    }
+    private void RangedReleased(InputAction.CallbackContext objdd)
+    {
+        isHoldingRanged = false;
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7665473969739206422}
   - component: {fileID: 8215243669195118742}
+  - component: {fileID: 5038190836570608131}
   m_Layer: 0
   m_Name: SlimeControls
   m_TagString: Untagged
@@ -29,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5832547013811824076}
   m_Father: {fileID: 5145780978930212585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8215243669195118742
@@ -46,6 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBusy: 0
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
+  anim: {fileID: 782298679564067850}
+  rangedProjectilePool: {fileID: 5038190836570608131}
+  rangedAttackSpawn: {fileID: 6068865543744034060}
   lowestJumpPercentage: 0.25
   slamAttackDistance: 4
   AttackDistance: 2
@@ -54,6 +59,29 @@ MonoBehaviour:
   slamRange: 5
   slamCooldownMax: 3
   slamCooldown: 3
+  meleeCooldown: 0
+  meleeCooldownMax: 1
+  rangedCooldown: 0
+  rangedCooldownMax: 1
+  isHoldingMelee: 0
+  isHoldingRanged: 0
+--- !u!114 &5038190836570608131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231680501712969212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 1855111589635335374, guid: e1fce2e1c4d605e499692b579472d329, type: 3}
+  PoolSize: 4
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
 --- !u!1 &303960398361528278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1045,37 @@ Transform:
   - {fileID: 3746851576443667536}
   - {fileID: 8825417027622866460}
   m_Father: {fileID: 2285796306962334665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6068865543744034060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5832547013811824076}
+  m_Layer: 0
+  m_Name: AttackSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5832547013811824076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068865543744034060}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7665473969739206422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6214112972054082137
 GameObject:

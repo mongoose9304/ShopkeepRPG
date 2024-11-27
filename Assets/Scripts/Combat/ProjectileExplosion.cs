@@ -13,6 +13,7 @@ public class ProjectileExplosion : MonoBehaviour
     public bool isContinuous;
     public float maxDelayBetweenActivations;
     float currentDelayBetweenActivations;
+    public string damageTag;
 
     private void OnEnable()
     {
@@ -54,7 +55,7 @@ public class ProjectileExplosion : MonoBehaviour
                         return;
 
                 }
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject,damageTag);
             }
             else if (hitCollider.tag == "Follower")
             {
