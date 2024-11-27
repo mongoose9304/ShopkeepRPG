@@ -7,6 +7,7 @@ public class CombatPlayerManager : MonoBehaviour
     public static CombatPlayerManager instance;
     [SerializeField] CombatPlayerActions[] players;
     [SerializeField] CombatCoopFamiliar familiarPlayer;
+    public bool coopPlayer;
     public Hotbar playerHotbar;
     private void Awake()
     {
@@ -22,9 +23,21 @@ public class CombatPlayerManager : MonoBehaviour
     }
     public void EnableFamiliars(bool enable_)
     {
+        if(coopPlayer)
+        {
+            return;
+        }
         foreach (CombatPlayerActions player_ in players)
         {
             player_.DisableFamiliar(enable_);
+        }
+    }
+    public void ConnectOtherPlayer()
+    {
+        coopPlayer = true;
+        foreach (CombatPlayerActions player_ in players)
+        {
+            player_.DisableFamiliar(false);
         }
     }
     public CombatPlayerActions GetPlayer(int slot_)
@@ -41,6 +54,8 @@ public class CombatPlayerManager : MonoBehaviour
             player_.transform.position = newLocation_.position;
             player_.transform.rotation = newLocation_.rotation;
         }
+        familiarPlayer.transform.position = newLocation_.position;
+        familiarPlayer.transform.rotation = newLocation_.rotation;
     }
     public void ResetPlayerSosChances()
     {

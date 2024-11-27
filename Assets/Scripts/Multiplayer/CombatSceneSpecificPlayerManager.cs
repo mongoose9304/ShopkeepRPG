@@ -27,5 +27,6 @@ public class CombatSceneSpecificPlayerManager : SceneSpecificPlayerManager
         player2.SetUpControls(controller.input);
         player2.transform.position = player1.transform.position;
         player2.gameObject.SetActive(true);
+        CombatPlayerManager.instance.ConnectOtherPlayer();
         }
 }

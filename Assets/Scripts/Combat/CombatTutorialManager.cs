@@ -15,6 +15,7 @@ public class CombatTutorialManager : TutorialManager
         {
             case 0:
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
+                CombatPlayerManager.instance.EnableFamiliars(false);
                 break;
             case 1:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
@@ -41,5 +42,18 @@ public class CombatTutorialManager : TutorialManager
                 break;
 
         }
+    }
+    public override void EndTutorial()
+    {
+        foreach (GameObject obj in objectsToDisableDuringTut)
+        {
+            obj.SetActive(true);
+        }
+        foreach (GameObject obj in objectsToDisablePostTut)
+        {
+            obj.SetActive(false);
+        }
+        CombatPlayerManager.instance.EnableFamiliars(true);
+        inTut = false;
     }
 }
