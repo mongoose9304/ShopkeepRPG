@@ -77,6 +77,12 @@ public class CombatCoopFamiliar : MonoBehaviour
     private void OnEnable()
     {
         currentHealth = maxHealth;
+        playerActionMap.Enable();
+    }
+    public void Respawn()
+    {
+        currentHealth = maxHealth;
+        combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
     }
     private void OnDisable()
     {

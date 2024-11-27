@@ -39,8 +39,9 @@ public class CombatPlayerActions : MonoBehaviour
     public float attackSpeedMod = 1;
     public float lifeStealPercent = 0;
     public bool rangedPierce;
-    
+
     [Header("Familiar")]
+    public bool coopPlayer;
     public CombatFamiliar myFamiliar;
     public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
@@ -315,9 +316,20 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void RespawnFamiliar()
     {
-        myFamiliar.transform.position = this.transform.position + new Vector3(2,0,0);
-        myFamiliar.gameObject.SetActive(true);
-        myFamiliar.Respawn();
+        if (!coopPlayer)
+        {
+
+
+            myFamiliar.TeleportToLocation(transform);
+            myFamiliar.gameObject.SetActive(true);
+            myFamiliar.Respawn();
+        }
+        else
+        {
+            myCoopFamiliar.gameObject.SetActive(true);
+            CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
+            myCoopFamiliar.Respawn();
+        }
     }
     public void ReturnFamiliar()
     {

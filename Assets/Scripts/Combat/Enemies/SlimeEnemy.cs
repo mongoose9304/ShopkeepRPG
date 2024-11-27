@@ -125,9 +125,9 @@ public class SlimeEnemy : BasicEnemy
         if (canMove)
         {
             if (!target)
-                target = player;
+               target= CheckIfPlayerIsCloserThanFamiliar();
             if (!target.activeInHierarchy)
-                target = player;
+               target= CheckIfPlayerIsCloserThanFamiliar();
             agent.SetDestination(target.transform.position);
             agent.speed = moveSpeed * currentMoveSpeedPercent;
             currentMoveSpeedPercent -= Time.deltaTime;

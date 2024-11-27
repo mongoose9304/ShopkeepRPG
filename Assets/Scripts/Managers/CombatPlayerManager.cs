@@ -39,6 +39,7 @@ public class CombatPlayerManager : MonoBehaviour
         foreach (CombatPlayerActions player_ in players)
         {
             player_.DisableFamiliar(false);
+            player_.coopPlayer = true;
         }
     }
     public CombatPlayerActions GetPlayer(int slot_)
