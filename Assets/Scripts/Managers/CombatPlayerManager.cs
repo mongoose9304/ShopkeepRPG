@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CombatPlayerManager : MonoBehaviour
 {
@@ -103,5 +104,17 @@ public class CombatPlayerManager : MonoBehaviour
     {
         players[0].combatMovement.RemoveInteractableObject(obj);
         familiarPlayer.RemoveInteractableObject(obj);
+    }
+    public void TeleportCoopPlayerToMainPlayer()
+    {
+        familiarPlayer.transform.position=
+        transform.position = players[0].transform.position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
+        {
+             Vector3 newPos = hit.position;
+            newPos.y = players[0].transform.position.y;
+            familiarPlayer.transform.position = newPos;
+        }
     }
 }

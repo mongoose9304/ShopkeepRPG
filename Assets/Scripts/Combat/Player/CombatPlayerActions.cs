@@ -42,6 +42,7 @@ public class CombatPlayerActions : MonoBehaviour
     
     [Header("Familiar")]
     public CombatFamiliar myFamiliar;
+    public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
     [Header("Feel")]

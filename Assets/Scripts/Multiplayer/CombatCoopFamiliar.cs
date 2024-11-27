@@ -12,6 +12,8 @@ public class CombatCoopFamiliar : MonoBehaviour
     [SerializeField] GameObject dashEffect;
     public AudioClip dashAudio;
     public FamiliarCombatControls combatControls;
+    public ParticleSystem teleportParticles;
+    public CombatPlayerMovement combatPlayerMovement;
     [Header("LockOn")]
     public float maxLockOnDistance;
     [SerializeField] float minDistanceBetweenRetargets;
@@ -25,6 +27,8 @@ public class CombatCoopFamiliar : MonoBehaviour
     float dashCoolDown;
     public float maxdashCoolDown;
     float dashTime;
+    public float maxTeleportCoolDown;
+    float currentTeleportCoolDown;
     [SerializeField] Vector3 dashStartPos;
     [Header("Interactions")]
     [Tooltip("All the objects the player is currently in range to interact with")]
@@ -33,7 +37,19 @@ public class CombatCoopFamiliar : MonoBehaviour
     [SerializeField] GameObject interactableObjectTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject interactableObjectLockOnObject;
-
+    [Header("Stats")]
+    float currentHealth;
+    //Stats Calculated based on Stat block
+    public float maxHealth;
+    public Element myWeakness;
+    public Element myElement;
+    public float PhysicalAtk;
+    public float MysticalAtk;
+    public float PhysicalDef;
+    public float MysticalDef;
+    public float LevelModifier;
+    public float HealthRegenPercent;
+    public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -50,6 +66,7 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("YAction").performed += InteractPressed;
         playerActionMap.FindAction("YAction").canceled += InteractReleased;
         playerActionMap.FindAction("Dash").performed += OnDash;
+        playerActionMap.FindAction("LTAction").performed += TeleportPressed;
         combatControls.EnableActions(playerActionMap);
     }
     private void OnDisable()
@@ -68,7 +85,9 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         CheckForSoftLockOn();
-       
+        if (currentTeleportCoolDown > 0)
+            currentTeleportCoolDown -= Time.deltaTime;
+        moveInput = PreventGoingThroughWalls(moveInput);
         if (!isDashing)
         {
             LookAtCurrentTarget();
@@ -304,6 +323,112 @@ public class CombatCoopFamiliar : MonoBehaviour
             interactableObjectLockOnObject.SetActive(false);
         }
     }
+    protected virtual void CalculateStats()
+    {
+        maxHealth = (monsterStats.Vitality * 2) * (1 + (monsterStats.Level * LevelModifier));
+        PhysicalAtk = (monsterStats.PhysicalProwess) * (1 + (monsterStats.Level * LevelModifier)) / 5;
+        MysticalAtk = (monsterStats.MysticalProwess) * (1 + (monsterStats.Level * LevelModifier)) / 5;
+        PhysicalDef = (monsterStats.PhysicalDefense) * (1 + (monsterStats.Level * LevelModifier)) / 5;
+        MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier)) / 5;
+        HealthRegenPercent = 0;
+    }
+    public virtual void CalculateAllModifiers()
+    {
+        CalculateStats();
+        List<EquipModifier> mods_ = new List<EquipModifier>();
+        for (int i = 0; i < externalModifiers.Count; i++)
+        {
+            if (!externalModifiers[i].isMultiplicative)
+            {
+                mods_.Insert(0, externalModifiers[i]);
+            }
+            else
+            {
+                mods_.Add(externalModifiers[i]);
+            }
+        }
+        for (int i = 0; i < mods_.Count; i++)
+        {
+            ApplyModifier(mods_[i]);
+        }
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        if (combatPlayerMovement)
+            combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+
+    }
+    private void ApplyModifier(EquipModifier mod_)
+    {
+        if (mod_.uniqueEffect == UniqueEquipEffect.None)
+        {
+            switch (mod_.affectedStat)
+            {
+                case Stat.HP:
+                    maxHealth = AddOrMultiply(mod_.isMultiplicative, maxHealth, mod_.amount);
+                    break;
+                case Stat.PATK:
+                    PhysicalAtk = AddOrMultiply(mod_.isMultiplicative, PhysicalAtk, mod_.amount);
+                    break;
+                case Stat.MATK:
+                    MysticalAtk = AddOrMultiply(mod_.isMultiplicative, MysticalAtk, mod_.amount);
+                    break;
+                case Stat.PDEF:
+                    PhysicalDef = AddOrMultiply(mod_.isMultiplicative, PhysicalDef, mod_.amount);
+                    break;
+                case Stat.MDEF:
+                    MysticalDef = AddOrMultiply(mod_.isMultiplicative, MysticalDef, mod_.amount);
+                    break;
+            }
+        }
+        switch (mod_.uniqueEffect)
+        {
+            case UniqueEquipEffect.None:
+                return;
+            case UniqueEquipEffect.HealthRegen:
+                HealthRegenPercent += mod_.amount;
+                break;
+        }
+    }
+    private float AddOrMultiply(bool multiply_, float A, float B)
+    {
+        if (multiply_)
+        {
+            return A * B;
+        }
+        else
+        {
+            return A + B;
+        }
+    }
+    public void AddExternalMod(EquipModifier mod_)
+    {
+        foreach (EquipModifier modX in externalModifiers)
+        {
+            if (modX.modName == mod_.modName)
+            {
+                externalModifiers.Remove(modX);
+                externalModifiers.Add(mod_);
+                return;
+            }
+        }
+        externalModifiers.Add(mod_);
+    }
+    protected void RegenHealth()
+    {
+        if (HealthRegenPercent == 0)
+            return;
+        currentHealth += HealthRegenPercent * maxHealth * Time.deltaTime;
+
+        if (currentHealth >= maxHealth)
+            currentHealth = maxHealth;
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+
+    }
+
+
+
+
+
     private void InteractPressed(InputAction.CallbackContext objdd)
     {
         InteractHeld = true;
@@ -311,6 +436,14 @@ public class CombatCoopFamiliar : MonoBehaviour
     private void InteractReleased(InputAction.CallbackContext objdd)
     {
         InteractHeld = false;
+    }
+    private void  TeleportPressed(InputAction.CallbackContext objdd)
+    {
+        if (currentTeleportCoolDown > 0||TempPause.instance.isPaused|| combatControls.isBusy)
+            return;
+        currentTeleportCoolDown = maxTeleportCoolDown;
+        CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
+        teleportParticles.Play();
     }
     private void OnDash(InputAction.CallbackContext obj)
     {

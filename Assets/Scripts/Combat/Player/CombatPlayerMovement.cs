@@ -903,6 +903,7 @@ public class CombatPlayerMovement : MonoBehaviour
                             unkillable.amount = 4;
                             unkillable.uniqueEffect = UniqueEquipEffect.None;
                             combatActions.myFamiliar.AddExternalMod(unkillable);
+                            combatActions.myCoopFamiliar.AddExternalMod(unkillable);
                         }
                     }
                     break;
@@ -952,22 +953,28 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myFamiliar.AddExternalMod(slimeHealthRegen);
         combatActions.myFamiliar.AddExternalMod(slimeIncreasedMDef);
         combatActions.myFamiliar.AddExternalMod(slimeIncreasedPDef);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeHealthRegen);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeIncreasedMDef);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeIncreasedPDef);
         AddExternalMod(slimeHealthRegen);
         AddExternalMod(slimeIncreasedMDef);
         AddExternalMod(slimeIncreasedPDef);
 
         //Dragon
         combatActions.myFamiliar.AddExternalMod(dragonMDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
         //Sword mods
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
         AddExternalMod(swordLifeSteal);
 
 
         combatActions.myFamiliar.CalculateAllModifiers();
+        combatActions.myCoopFamiliar.CalculateAllModifiers();
 
     }
     public void UndeadExtraLife()
