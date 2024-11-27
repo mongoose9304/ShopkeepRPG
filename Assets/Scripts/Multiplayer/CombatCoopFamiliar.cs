@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
     [SerializeField] GameObject interactableObjectLockOnObject;
     [Header("Stats")]
-    float currentHealth;
+    [SerializeField]  float currentHealth;
     //Stats Calculated based on Stat block
     public float maxHealth;
     public Element myWeakness;
@@ -50,6 +51,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     public float LevelModifier;
     public float HealthRegenPercent;
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
+    public float respawnTimeMax;
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -59,6 +61,9 @@ public class CombatCoopFamiliar : MonoBehaviour
     public float moveSpeedModifier;
     public LayerMask wallMask;
     private bool InteractHeld;
+    [Header("Feel")]
+    [SerializeField] MMF_Player hitEffects;
+    [SerializeField] GameObject deathEffect;
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
@@ -68,6 +73,10 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("Dash").performed += OnDash;
         playerActionMap.FindAction("LTAction").performed += TeleportPressed;
         combatControls.EnableActions(playerActionMap);
+    }
+    private void OnEnable()
+    {
+        currentHealth = maxHealth;
     }
     private void OnDisable()
     {
@@ -177,6 +186,29 @@ public class CombatCoopFamiliar : MonoBehaviour
         }
 
 
+    }
+    public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
+    {
+        if (element_ == myWeakness && element_ != Element.Neutral)
+        {
+            damage_ *= 1.5f;
+        }
+        currentHealth -= damage_;
+        if (currentHealth <= 0)
+        {
+            Death();
+            return;
+        }
+        if (hitEffects)
+            hitEffects.PlayFeedbacks();
+        if (combatPlayerMovement)
+            combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
+    }
+    private void Death()
+    {
+        combatPlayerMovement.combatActions.FamiliarDeath(respawnTimeMax);
+        gameObject.SetActive(false);
+        Instantiate(deathEffect, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
     }
     private void GroundCheck()
     {

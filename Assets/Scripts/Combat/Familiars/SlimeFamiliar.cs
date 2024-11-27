@@ -176,11 +176,11 @@ public class SlimeFamiliar : CombatFamiliar
     {
         return PhysicalAtk * 9;
     }
-    public override void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    public override void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
         if (isUltimateJumping)
             return;
-        base.TakeDamage(damage_, hitstun_, element_, knockBack_, knockBackObject);
+        base.TakeDamage(damage_, hitstun_, element_, knockBack_, knockBackObject,isMystical);
     }
 
     /// <summary>

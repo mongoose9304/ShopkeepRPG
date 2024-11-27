@@ -48,7 +48,11 @@ public class SlimeEnemy : BasicEnemy
             }
             else if (hitCollider.tag == "Familiar")
             {
-                hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
+            }
+            else if (hitCollider.tag == "PlayerFamiliar")
+            {
+                hitCollider.gameObject.GetComponent<CombatCoopFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
             }
             else if (hitCollider.tag == "Enemy")
             {

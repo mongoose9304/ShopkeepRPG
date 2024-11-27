@@ -146,7 +146,7 @@ public class CombatFamiliar : MonoBehaviour
         }
        
     }
-    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
         if (element_ == myWeakness && element_ != Element.Neutral)
         {

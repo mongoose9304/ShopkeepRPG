@@ -25377,6 +25377,7 @@ MonoBehaviour:
   dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
   combatControls: {fileID: 8215243669195118742}
   teleportParticles: {fileID: 2442077829848947552}
+  combatPlayerMovement: {fileID: 0}
   maxLockOnDistance: 10
   minDistanceBetweenRetargets: 0.25
   currentTarget: {fileID: 0}
@@ -25390,6 +25391,17 @@ MonoBehaviour:
   myInteractableObjects: []
   interactableObjectTarget: {fileID: 0}
   interactableObjectLockOnObject: {fileID: 0}
+  maxHealth: 0
+  myWeakness: 0
+  myElement: 0
+  PhysicalAtk: 0
+  MysticalAtk: 0
+  PhysicalDef: 0
+  MysticalDef: 0
+  LevelModifier: 0
+  HealthRegenPercent: 0
+  externalModifiers: []
+  respawnTimeMax: 12
   playerActionMap:
     m_Name: Player
     m_Id: 25832ccb-1f75-4408-beca-c332239ee656
@@ -25401,6 +25413,8 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 64
+  hitEffects: {fileID: 97936604998113805}
+  deathEffect: {fileID: 141433446842962269, guid: 8ccfd1efcbf90e24c91cfbd9fabeeef2, type: 3}
 --- !u!1 &6317694995203185954
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,18 @@ public class EnemyProjectile : MonoBehaviour
             other.gameObject.GetComponent<CombatPlayerMovement>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
             }
         }
+        else if (other.tag == "PlayerFamiliar")
+        {
+            gameObject.SetActive(false);
+            if (projectileExplosionObject)
+            {
+                CreateExplosion();
+            }
+            else
+            {
+                other.gameObject.GetComponent<CombatCoopFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
+            }
+        }
         else if (other.tag == "Familiar")
         {
             gameObject.SetActive(false);
