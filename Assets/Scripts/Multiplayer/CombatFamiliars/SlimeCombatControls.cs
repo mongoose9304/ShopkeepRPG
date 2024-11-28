@@ -1,5 +1,6 @@
 using Blobcreate.ProjectileToolkit;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,11 @@ using UnityEngine.InputSystem;
 
 public class SlimeCombatControls : FamiliarCombatControls
 {
+    [Header("Audios")]
+    public AudioClip jumpAudio;
+    public AudioClip slamAudio;
+    public AudioClip meleeAudio;
+    public AudioClip rangedAudio;
     [Header("Referecnes")]
     public GameObject slamParticleEffect;
     bool isJumping;
@@ -80,6 +86,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
         EndWhirlWind();
+        MMSoundManager.Instance.PlaySound(jumpAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void WhirlWindAttack()
     {
@@ -118,6 +127,9 @@ public class SlimeCombatControls : FamiliarCombatControls
             }
         }
         basicAttackSystem.Play();
+        MMSoundManager.Instance.PlaySound(meleeAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     public void RangedAttack(GameObject target_=null)
     {
@@ -137,6 +149,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         {
             objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position,transform.position+transform.forward*5, -0.1f), ForceMode.VelocityChange);
         }
+        MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     protected  void Update()
     {
@@ -224,10 +239,14 @@ public class SlimeCombatControls : FamiliarCombatControls
     /// </summary>
     private void LandJump()
     {
+        MMSoundManager.Instance.PlaySound(slamAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
         isSlaming = false;
         isJumping = false;
         isBusy = false;
         transform.parent.position = new Vector3(transform.parent.position.x, jumpStart, transform.parent.position.z);
+        CombatPlayerManager.instance.GetPlayer(0).transform.position=this.transform.position + new Vector3(1, 0, 0);
         if (isUltimateJumping)
         {
             isUltimateJumping = false;
@@ -277,6 +296,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         ultimateCooldown = ultimateCooldownMax;
         damageImmune = true;
         EndWhirlWind();
+        MMSoundManager.Instance.PlaySound(jumpAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+         false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+         1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     private void SlamPressed(InputAction.CallbackContext objdd)
     {
