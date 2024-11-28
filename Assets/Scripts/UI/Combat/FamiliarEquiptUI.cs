@@ -7,6 +7,7 @@ public class FamiliarEquiptUI : MonoBehaviour
 {
     public StatBlock famStatBlock;
     public CombatFamiliar combatFam;
+    public CombatCoopFamiliar combatCoopFam;
     public TextMeshProUGUI skillPointsText;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI descriptionTitle;
@@ -28,6 +29,8 @@ public class FamiliarEquiptUI : MonoBehaviour
         SaveChanges();
         if (combatFam)
             combatFam.CalculateAllModifiers();
+        if (combatCoopFam)
+            combatCoopFam.CalculateAllModifiers();
     }
     public void SetDescription(string title_, string description_)
     {
@@ -61,5 +64,7 @@ public class FamiliarEquiptUI : MonoBehaviour
         famStatBlock.ResetStats();
         if (combatFam)
             combatFam.CalculateAllModifiers();
+        if (combatCoopFam)
+            combatCoopFam.CalculateAllModifiers();
     }
 }
