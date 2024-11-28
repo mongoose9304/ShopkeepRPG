@@ -32,6 +32,10 @@ public class NextLevelObject : MonoBehaviour
         {
             currentHoldDuration += Time.deltaTime*2;
         }
+        else if (other.tag == "PlayerFamiliar")
+        {
+            currentHoldDuration += Time.deltaTime * 2;
+        }
     }
     private void Start()
     {

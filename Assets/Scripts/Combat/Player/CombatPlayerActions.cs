@@ -328,7 +328,6 @@ public class CombatPlayerActions : MonoBehaviour
         {
             myCoopFamiliar.gameObject.SetActive(true);
             CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
-            myCoopFamiliar.Respawn();
         }
     }
     public void ReturnFamiliar()

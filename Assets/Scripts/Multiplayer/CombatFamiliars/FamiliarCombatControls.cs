@@ -6,7 +6,15 @@ using UnityEngine.InputSystem;
 public class FamiliarCombatControls : MonoBehaviour
 {
     public bool isBusy;
+    public float meleeDamage;
+    public float rangedDamage;
+    public float specialADamage;
+    public float specialBDamage;
+    public float ultimateDamage;
     public virtual void EnableActions(InputActionMap playerActionMap)
+    {
+    }
+    public virtual void CalculateDamage(float pAttack,float mAttack)
     {
     }
 }

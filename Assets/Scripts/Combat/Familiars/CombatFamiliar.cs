@@ -148,11 +148,22 @@ public class CombatFamiliar : MonoBehaviour
     }
     public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
+        float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
-            damage_ *= 1.5f;
+            newDamage *= 1.5f;
         }
-        currentHealth -= damage_;
+        if (isMystical)
+        {
+            newDamage -= MysticalDef;
+        }
+        else
+        {
+            newDamage -= PhysicalDef;
+        }
+        if (newDamage < damage_ * 0.05f)
+            newDamage = damage_ * 0.05f;
+        currentHealth -= newDamage;
         if (currentHealth <= 0)
         {
             Death();

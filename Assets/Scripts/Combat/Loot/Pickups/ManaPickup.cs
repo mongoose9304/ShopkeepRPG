@@ -21,5 +21,10 @@ public class ManaPickup : MonoBehaviour
             other.GetComponent<CombatPlayerMovement>().ManaPickup(manaAmount);
             OnPickUp();
         }
+        if (other.tag == "PlayerFamiliar")
+        {
+            other.GetComponent<CombatCoopFamiliar>().combatPlayerMovement.ManaPickup(manaAmount);
+            OnPickUp();
+        }
     }
 }

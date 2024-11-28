@@ -16,6 +16,7 @@ public class SlimeCombatControls : FamiliarCombatControls
     [Tooltip("REFERENCE to the pool of ranged projectiles the player has")]
     [SerializeField] protected MMMiniObjectPooler rangedProjectilePool;
     public GameObject rangedAttackSpawn;
+    public ParticleSystem basicAttackSystem;
     [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
@@ -43,6 +44,13 @@ public class SlimeCombatControls : FamiliarCombatControls
         playerActionMap.FindAction("AAction").performed += RangedPressed;
         playerActionMap.FindAction("AAction").canceled += RangedReleased;
     }
+    public override void CalculateDamage(float pAttack, float mAttack)
+    {
+        meleeDamage = pAttack * 1.5f;
+        rangedDamage = mAttack * 1.5f;
+        specialADamage = pAttack * 5f;
+        ultimateDamage = pAttack * 15f;
+    }
     public void SlamAttack()
     {
         slamCooldown = slamCooldownMax;
@@ -57,15 +65,16 @@ public class SlimeCombatControls : FamiliarCombatControls
     {
         anim.SetTrigger("basicAttack");
         meleeCooldown = meleeCooldownMax;
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position+transform.forward*2, 2);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.tag == "Enemy")
             {
                 //add real damage later
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(40, 0, Element.Neutral, 0, this.gameObject,"Melee");
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(meleeDamage, 0.5f, Element.Neutral, 0, this.gameObject,"Melee");
             }
         }
+        basicAttackSystem.Play();
     }
     public void RangedAttack(GameObject target_=null)
     {
@@ -74,7 +83,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         GameObject objB = rangedProjectilePool.GetPooledGameObject();
         objB.transform.position = rangedAttackSpawn.transform.position;
         //add real damage here
-        objB.GetComponent<FamiliarProjectile>().damage = 30;
+        objB.GetComponent<FamiliarProjectile>().damage = rangedDamage;
         objB.SetActive(true);
         objB.GetComponent<Rigidbody>().velocity = Vector3.zero;
         if(target_!=null)
@@ -188,17 +197,9 @@ public class SlimeCombatControls : FamiliarCombatControls
             if (hitCollider.tag == "Enemy")
             {
                 //add actual element here
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, Element.Water, 0, this.gameObject, "Special");
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(specialADamage, 1.5f, Element.Water, 0, this.gameObject, "Special");
             }
         }
-    }
-    /// <summary>
-    /// Calculates the damage of the slam
-    /// </summary>
-    private float SlamDamage()
-    {
-        //add actual damage here
-        return 20 * 3;
     }
     private void SlamPressed(InputAction.CallbackContext objdd)
     {

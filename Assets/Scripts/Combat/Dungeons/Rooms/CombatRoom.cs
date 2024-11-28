@@ -25,9 +25,15 @@ public class CombatRoom : BasicRoom
     public override void StartRoomActivity()
     {
         CombatPlayerManager.instance.ReturnFamiliars();
+        CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
         LockRoom(true);
         myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
+    }
+    public void CoopFamiliarEnter()
+    {
+        CombatPlayerManager.instance.TeleportMainPlayerToCoopPlayer();
+        StartRoomActivity();
     }
     private void LockRoom(bool lock_)
     {

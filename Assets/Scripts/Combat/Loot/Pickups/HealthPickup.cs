@@ -22,5 +22,10 @@ public class HealthPickup : MonoBehaviour
             other.GetComponent<CombatPlayerMovement>().HealthPickup(healAmount);
             OnPickUp();
         }
+        if (other.tag == "PlayerFamiliar")
+        {
+            other.GetComponent<CombatCoopFamiliar>().combatPlayerMovement.HealthPickup(healAmount);
+            OnPickUp();
+        }
     }
 }

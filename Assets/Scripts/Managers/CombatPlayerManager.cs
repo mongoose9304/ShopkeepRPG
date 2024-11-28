@@ -108,14 +108,24 @@ public class CombatPlayerManager : MonoBehaviour
     }
     public void TeleportCoopPlayerToMainPlayer()
     {
-        familiarPlayer.transform.position=
-        transform.position = players[0].transform.position;
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(transform.position, out hit, 3.0f, NavMesh.AllAreas))
+        Vector3 newPos = familiarPlayer.transform.position;
+        if (NavMesh.SamplePosition(players[0].transform.position, out hit, 3.0f, NavMesh.AllAreas))
         {
-             Vector3 newPos = hit.position;
-            newPos.y = players[0].transform.position.y;
+            newPos = hit.position;
+            newPos.y = familiarPlayer.transform.position.y;
             familiarPlayer.transform.position = newPos;
+        }
+    }
+    public void TeleportMainPlayerToCoopPlayer()
+    {
+        NavMeshHit hit;
+        Vector3 newPos = players[0].transform.position;
+        if (NavMesh.SamplePosition(familiarPlayer.transform.position, out hit, 3.0f, NavMesh.AllAreas))
+        {
+            newPos = hit.position;
+            newPos.y = players[0].transform.position.y;
+            players[0].transform.position = newPos;
         }
     }
 }

@@ -71,18 +71,14 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("YAction").performed += InteractPressed;
         playerActionMap.FindAction("YAction").canceled += InteractReleased;
         playerActionMap.FindAction("Dash").performed += OnDash;
-        playerActionMap.FindAction("LTAction").performed += TeleportPressed;
+        playerActionMap.FindAction("RTAction").performed += TeleportPressed;
         combatControls.EnableActions(playerActionMap);
     }
     private void OnEnable()
     {
         currentHealth = maxHealth;
-        playerActionMap.Enable();
-    }
-    public void Respawn()
-    {
-        currentHealth = maxHealth;
         combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
+        playerActionMap.Enable();
     }
     private void OnDisable()
     {
@@ -195,11 +191,23 @@ public class CombatCoopFamiliar : MonoBehaviour
     }
     public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
+        float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {
-            damage_ *= 1.5f;
+            newDamage *= 1.5f;
         }
-        currentHealth -= damage_;
+        if (isMystical)
+        {
+            newDamage -= MysticalDef;
+        }
+        else
+        {
+            newDamage -= PhysicalDef;
+        }
+        if (newDamage < damage_ * 0.05f)
+            newDamage = damage_ * 0.05f;
+        currentHealth -= newDamage;
+
         if (currentHealth <= 0)
         {
             Death();
@@ -393,7 +401,7 @@ public class CombatCoopFamiliar : MonoBehaviour
             currentHealth = maxHealth;
         if (combatPlayerMovement)
             combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
-
+        combatControls.CalculateDamage(PhysicalAtk,MysticalAtk);
     }
     private void ApplyModifier(EquipModifier mod_)
     {

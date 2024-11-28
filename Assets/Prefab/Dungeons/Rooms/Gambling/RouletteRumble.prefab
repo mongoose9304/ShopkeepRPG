@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2138329730672078824}
   - component: {fileID: 2496296351985505055}
   - component: {fileID: 1808450824521524821}
+  - component: {fileID: 306319083274412092}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -119,6 +120,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tagToDetect: Player
+  oneTimeUse: 1
+  onEnterEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6321985448448164302}
+        m_TargetAssemblyTypeName: BasicRoom, Assembly-CSharp
+        m_MethodName: StartRoomActivity
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &306319083274412092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135293183788541580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9826de50702624448a9fc3eabd06188b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagToDetect: PlayerFamiliar
   oneTimeUse: 1
   onEnterEvent:
     m_PersistentCalls:
@@ -2651,9 +2681,9 @@ MonoBehaviour:
   spinDecay: 90
   speed: 360
   winSlot: 0
-  rotater: {fileID: 2134094579543236520}
   stopPos: {fileID: 2398060644610652478}
   currentShortestSlot: {fileID: 0}
+  rotater: {fileID: 2134094579543236520}
   slots:
   - {fileID: 4892932734204679406}
   - {fileID: 5904254719875436374}
@@ -2882,6 +2912,7 @@ MonoBehaviour:
       m_Calls: []
   lockObjects: []
   size: 0
+  maxEnemies: 20
   Wheel: {fileID: 7431544214426690082}
   postSpinObject: {fileID: 7585433577428922770}
   coinRain: {fileID: 3198196459741959247}
@@ -2912,7 +2943,6 @@ MonoBehaviour:
   - {fileID: 5816009571668593935}
   - {fileID: 850464273606962371}
   - {fileID: 6323359957305138863}
-  maxEnemies: 20
 --- !u!1 &6146730384384015872
 GameObject:
   m_ObjectHideFlags: 0
@@ -3672,8 +3702,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   up: {x: 0, y: 0, z: 1}
   down: {x: 0, y: 0, z: -1}
+  trueDown: {x: 0, y: 0, z: 0}
+  originalPosition: {x: 0, y: 0, z: 0}
   speed: 1
   changeSpeedBasedOnDistance: 1
+  speedInceraseOnGoingDown: 1
+  useEvents: 0
+  endDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  endUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7742542548375127427
 GameObject:
   m_ObjectHideFlags: 0
