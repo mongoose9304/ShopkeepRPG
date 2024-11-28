@@ -7,6 +7,7 @@ public class FamiliarCombatControls : MonoBehaviour
 {
     public bool damageImmune;
     public bool isBusy;
+    public bool isControllingRotation;
     public bool bothPlayersBusy;
     public float meleeDamage;
     public float rangedDamage;

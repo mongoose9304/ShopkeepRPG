@@ -94,7 +94,10 @@ public class CombatCoopFamiliar : MonoBehaviour
         moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
         //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
         if (moveInput != Vector3.zero)
+        {
+            if(!combatControls.isControllingRotation)
             transform.forward = moveInput;
+        }
         CheckForSoftLockOn();
         if (currentTeleportCoolDown > 0)
             currentTeleportCoolDown -= Time.deltaTime;
@@ -114,7 +117,10 @@ public class CombatCoopFamiliar : MonoBehaviour
             else
                 timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
             if (moveInput != Vector3.zero)
-                transform.forward = moveInput;
+            {
+                if (!combatControls.isControllingRotation)
+                    transform.forward = moveInput;
+            }
             LookAtCurrentTarget();
         }
         else

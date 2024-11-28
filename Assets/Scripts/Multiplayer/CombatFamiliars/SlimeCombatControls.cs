@@ -17,6 +17,12 @@ public class SlimeCombatControls : FamiliarCombatControls
     [SerializeField] protected MMMiniObjectPooler rangedProjectilePool;
     public GameObject rangedAttackSpawn;
     public ParticleSystem basicAttackSystem;
+    public SlimeWhirlwind myWhirlWindObject;
+    public Vector3 spinVector;
+    public Vector3 spinPosStart;
+    public Vector3 spinPosEnd;
+    public Quaternion spinStart;
+    public float spinAngle;
     [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
@@ -25,10 +31,14 @@ public class SlimeCombatControls : FamiliarCombatControls
     public Vector3 jumpSpeed;
     public float slamRange;
     float currentJumpPercentage;
+    public float spinTimeMax;
+    float currentSpinTime;
     float jumpStart;
     float jumpEnd;
     public float slamCooldownMax;
     public float slamCooldown;
+    public float whirlwindCooldownMax;
+    public float whirlwindCooldown;
     public float meleeCooldown;
     public float meleeCooldownMax;
     public float rangedCooldown;
@@ -38,9 +48,14 @@ public class SlimeCombatControls : FamiliarCombatControls
     [Header("Inputs")]
     public bool isHoldingMelee;
     public bool isHoldingRanged;
+    private void OnEnable()
+    {
+        currentSpinTime = 0;
+    }
     public override void EnableActions(InputActionMap playerActionMap)
     {
         playerActionMap.FindAction("LBAction").performed += SlamPressed;
+        playerActionMap.FindAction("RBAction").performed += WhirlWindPressed;
         playerActionMap.FindAction("XAction").performed += MeleePressed;
         playerActionMap.FindAction("XAction").canceled += MeleeReleased;
         playerActionMap.FindAction("AAction").performed += RangedPressed;
@@ -52,6 +67,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         meleeDamage = pAttack * 1.5f;
         rangedDamage = mAttack * 1.5f;
         specialADamage = pAttack * 5f;
+        specialBDamage = pAttack;
         ultimateDamage = pAttack * 15f;
     }
     public void SlamAttack()
@@ -63,6 +79,30 @@ public class SlimeCombatControls : FamiliarCombatControls
         jumpStart = transform.position.y;
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
+        EndWhirlWind();
+    }
+    public void WhirlWindAttack()
+    {
+        currentSpinTime = spinTimeMax;
+        myWhirlWindObject.gameObject.SetActive(true);
+        myWhirlWindObject.damage = specialBDamage;
+        whirlwindCooldown = whirlwindCooldownMax;
+        isControllingRotation = true;
+        anim.transform.rotation = spinStart;
+        anim.transform.localPosition = spinPosStart;
+    }
+    private void EndWhirlWind()
+    {
+        currentSpinTime = 0;
+        myWhirlWindObject.gameObject.SetActive(false);
+        isControllingRotation = false;
+        anim.transform.rotation = new Quaternion(0, 0, 0, 0);
+        anim.transform.localPosition = spinPosEnd;
+
+    }
+    private void Spin()
+    {
+        transform.parent.Rotate(spinVector, spinAngle);
     }
     public void MeleeAttack()
     {
@@ -105,6 +145,16 @@ public class SlimeCombatControls : FamiliarCombatControls
        
         if (!isJumping)
         {
+            if(currentSpinTime>0)
+            {
+                currentSpinTime -= Time.deltaTime;
+                Spin();
+                if(currentSpinTime<=0)
+                {
+                    EndWhirlWind();
+                }
+                return;
+            }
             CoolDowns();
             if(isHoldingMelee)
             {
@@ -158,6 +208,8 @@ public class SlimeCombatControls : FamiliarCombatControls
         rangedCooldown -= Time.deltaTime;
         if (ultimateCooldown > 0)
             ultimateCooldown -= Time.deltaTime;
+        if (whirlwindCooldown > 0)
+            whirlwindCooldown -= Time.deltaTime;
     }
     /// <summary>
     /// The behavior when the slime hits the apex of thier jump
@@ -224,6 +276,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         currentJumpPercentage = 1.0f;
         ultimateCooldown = ultimateCooldownMax;
         damageImmune = true;
+        EndWhirlWind();
     }
     private void SlamPressed(InputAction.CallbackContext objdd)
     {
@@ -231,6 +284,13 @@ public class SlimeCombatControls : FamiliarCombatControls
             return;
         if(slamCooldown<=0)
             SlamAttack();
+    }
+    private void WhirlWindPressed(InputAction.CallbackContext objdd)
+    {
+        if (isBusy)
+            return;
+        if (whirlwindCooldown <= 0)
+            WhirlWindAttack();
     }
     private void MeleePressed(InputAction.CallbackContext objdd)
     {
