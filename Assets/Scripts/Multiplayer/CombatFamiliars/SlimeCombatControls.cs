@@ -33,6 +33,8 @@ public class SlimeCombatControls : FamiliarCombatControls
     public float meleeCooldownMax;
     public float rangedCooldown;
     public float rangedCooldownMax;
+    public float ultimateCooldownMax;
+    public float ultimateCooldown;
     [Header("Inputs")]
     public bool isHoldingMelee;
     public bool isHoldingRanged;
@@ -43,6 +45,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         playerActionMap.FindAction("XAction").canceled += MeleeReleased;
         playerActionMap.FindAction("AAction").performed += RangedPressed;
         playerActionMap.FindAction("AAction").canceled += RangedReleased;
+        playerActionMap.FindAction("LTAction").performed += UltimatePressed;
     }
     public override void CalculateDamage(float pAttack, float mAttack)
     {
@@ -120,7 +123,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         {
             if (isUltimateJumping)
             {
-               // player.transform.position = this.transform.position + new Vector3(-1, 0, 0);
+                CombatPlayerManager.instance.GetPlayer(0).transform.position = this.transform.position + new Vector3(1, 0, 0);
 
 
             }
@@ -153,6 +156,8 @@ public class SlimeCombatControls : FamiliarCombatControls
         meleeCooldown -= Time.deltaTime;
         if(rangedCooldown>0)
         rangedCooldown -= Time.deltaTime;
+        if (ultimateCooldown > 0)
+            ultimateCooldown -= Time.deltaTime;
     }
     /// <summary>
     /// The behavior when the slime hits the apex of thier jump
@@ -174,17 +179,19 @@ public class SlimeCombatControls : FamiliarCombatControls
         if (isUltimateJumping)
         {
             isUltimateJumping = false;
+            damageImmune = false;
+            bothPlayersBusy = false;
             Instantiate(slamParticleEffect, transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
             Instantiate(slamParticleEffect, transform.position + new Vector3(2, 0, 0), Quaternion.Euler(new Vector3(-90, 0, 0)));
             Instantiate(slamParticleEffect, transform.position + new Vector3(-2, 0, 0), Quaternion.Euler(new Vector3(-90, 0, 0)));
             Instantiate(slamParticleEffect, transform.position + new Vector3(0, 0, 2), Quaternion.Euler(new Vector3(-90, 0, 0)));
             Instantiate(slamParticleEffect, transform.position + new Vector3(0, 0, -2), Quaternion.Euler(new Vector3(-90, 0, 0)));
-            Collider[] hitCollidersB = Physics.OverlapSphere(transform.position, slamRange);
+            Collider[] hitCollidersB = Physics.OverlapSphere(transform.position, slamRange*1.5f);
             foreach (var hitCollider in hitCollidersB)
             {
                 if (hitCollider.tag == "Enemy")
                 {
-                    //hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, myElement, 0, this.gameObject);
+                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(ultimateDamage, 1.5f, Element.Neutral, 0, this.gameObject);
                 }
             }
             return;
@@ -200,6 +207,23 @@ public class SlimeCombatControls : FamiliarCombatControls
                 hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(specialADamage, 1.5f, Element.Water, 0, this.gameObject, "Special");
             }
         }
+    }
+    private void UltimateAttack()
+    {
+        if (isBusy||CombatPlayerManager.instance.GetPlayer(0).isBusy)
+            return;
+
+        isBusy = true;
+        bothPlayersBusy = true;
+        CombatPlayerManager.instance.GetPlayer(0).transform.position = transform.position + new Vector3(1, 0, 0);
+        isUltimateJumping = true;
+        isJumping = true;
+        isSlaming = false;
+        jumpStart = transform.position.y;
+        jumpEnd = jumpStart + (jumpHeight * 1.25f);
+        currentJumpPercentage = 1.0f;
+        ultimateCooldown = ultimateCooldownMax;
+        damageImmune = true;
     }
     private void SlamPressed(InputAction.CallbackContext objdd)
     {
@@ -223,5 +247,10 @@ public class SlimeCombatControls : FamiliarCombatControls
     private void RangedReleased(InputAction.CallbackContext objdd)
     {
         isHoldingRanged = false;
+    }
+    private void UltimatePressed(InputAction.CallbackContext objdd)
+    {
+        if(ultimateCooldown<=0)
+        UltimateAttack();
     }
 }

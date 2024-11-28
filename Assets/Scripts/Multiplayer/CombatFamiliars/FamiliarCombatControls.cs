@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 
 public class FamiliarCombatControls : MonoBehaviour
 {
+    public bool damageImmune;
     public bool isBusy;
+    public bool bothPlayersBusy;
     public float meleeDamage;
     public float rangedDamage;
     public float specialADamage;

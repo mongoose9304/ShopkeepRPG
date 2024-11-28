@@ -191,6 +191,8 @@ public class CombatCoopFamiliar : MonoBehaviour
     }
     public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
+        if (combatControls.damageImmune)
+            return;
         float newDamage = damage_;
         if (element_ == myWeakness && element_ != Element.Neutral)
         {

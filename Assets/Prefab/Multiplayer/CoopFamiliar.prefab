@@ -47,7 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5bd83c5153ee74e957330ae748a586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageImmune: 0
   isBusy: 0
+  meleeDamage: 0
+  rangedDamage: 0
+  specialADamage: 0
+  specialBDamage: 0
+  ultimateDamage: 0
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   anim: {fileID: 782298679564067850}
   rangedProjectilePool: {fileID: 5038190836570608131}
@@ -65,6 +71,8 @@ MonoBehaviour:
   meleeCooldownMax: 1
   rangedCooldown: 0
   rangedCooldownMax: 1
+  ultimateCooldownMax: 9
+  ultimateCooldown: 0
   isHoldingMelee: 0
   isHoldingRanged: 0
 --- !u!114 &5038190836570608131

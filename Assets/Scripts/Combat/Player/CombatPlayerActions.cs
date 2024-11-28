@@ -87,7 +87,7 @@ public class CombatPlayerActions : MonoBehaviour
             return;
         isUsingBasicAttackRanged = false;
         isUsingBasicAttackMelee = false;
-        if (specialA.isBusy||specialB.isBusy||myFamiliar.isBusy)
+        if (specialA.isBusy||specialB.isBusy||myFamiliar.isBusy||myCoopFamiliar.combatControls.bothPlayersBusy)
         {
             isBusy = true;
             meleeObject.ForceEndAttack();
