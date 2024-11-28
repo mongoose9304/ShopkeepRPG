@@ -9,7 +9,7 @@ using UnityEngine.AI;
 /// </summary>
 public class CombatFamiliar : MonoBehaviour
 {
-    [Header("Referecnes")]
+    [Header("References")]
     [SerializeField] protected GameObject player;
     [SerializeField] protected NavMeshAgent agent;
     public GameObject target;
@@ -53,7 +53,6 @@ public class CombatFamiliar : MonoBehaviour
     public MMF_FloatingText floatingText;
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         if (player)
         {
             combatPlayerMovement = player.GetComponent<CombatPlayerMovement>();
@@ -70,7 +69,7 @@ public class CombatFamiliar : MonoBehaviour
         floatingText.Channel = Random.Range(0, 1000000);
         textSpawner.GetComponent<MMFloatingTextSpawner>().Channel = floatingText.Channel;
         currentHealth = maxHealth;
-        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
+        //combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
 
     }
     protected virtual void Update()
@@ -147,7 +146,7 @@ public class CombatFamiliar : MonoBehaviour
         }
        
     }
-    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null)
+    public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
         if (element_ == myWeakness && element_ != Element.Neutral)
         {

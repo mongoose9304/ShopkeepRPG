@@ -13,7 +13,7 @@ public class TutorialTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        if(other.tag=="Player")
+        if(other.tag=="Player"|| other.tag == "PlayerFamiliar")
         {
             if(!useAltState)
                 TutorialManager.instance_.SetTutorialState(tState);

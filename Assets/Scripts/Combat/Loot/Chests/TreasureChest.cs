@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreasureChest : MonoBehaviour
+public class TreasureChest : InteractableObject
 {
     public int value;
     public int curseSeverity;
@@ -16,18 +16,10 @@ public class TreasureChest : MonoBehaviour
     [SerializeField] ParticleSystem OpenCursedEffect;
     [SerializeField] GameObject curseIcon;
 
-    virtual protected void Update()
+
+    public override void Interact(GameObject interactingObject_ = null)
     {
-        if (!playerInRange)
-            return;
-
-
-        if (Input.GetButtonDown("Fire3"))
-        {
-            OpenChest();
-        }
-
-
+        InteractWithChest();
     }
     virtual protected void OpenChest()
     {
@@ -44,6 +36,8 @@ public class TreasureChest : MonoBehaviour
             DungeonManager.instance.AddRandomCurse(curseSeverity);
             OpenCursedEffect.Play();
         }
+        CombatPlayerManager.instance.RemoveInteractableObject(gameObject);
+        gameObject.SetActive(false);
     }
     virtual public void SetIsCursed(bool isCursed_,int severity_)
     {
@@ -64,14 +58,5 @@ public class TreasureChest : MonoBehaviour
         playerInRange = inRange_;
 
     }
-    protected void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-            ToggleInteractablity(true);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-            ToggleInteractablity(false);
-    }
+    
 }

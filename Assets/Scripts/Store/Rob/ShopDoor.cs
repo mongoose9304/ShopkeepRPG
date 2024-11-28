@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+/// <summary>
+/// The doors at the front of the store, the shopmanager opens the others when one door is opened to keep them in sync
+/// </summary>
 public class ShopDoor : MonoBehaviour
 {
     public Vector3 endPos;

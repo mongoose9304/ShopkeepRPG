@@ -8,6 +8,7 @@ public class ButtonEventObject : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
 	public UnityEvent selectEvent;
 	public UnityEvent deselectEvent;
+	bool isQuitting;
 	public void OnSelect(BaseEventData eventData)
 	{
 		selectEvent.Invoke();
@@ -25,4 +26,20 @@ public class ButtonEventObject : MonoBehaviour, ISelectHandler, IDeselectHandler
 		deselectEvent.Invoke();
 	}
 
+    private void OnDisable()
+    {
+		if (!isQuitting)
+			deselectEvent.Invoke();
+    }
+    private void OnEnable()
+    {
+		if (EventSystem.current.currentSelectedGameObject==gameObject)
+        {
+			selectEvent.Invoke();
+		}
+	}
+    private void OnApplicationQuit()
+	{
+		isQuitting = true;
+	}
 }

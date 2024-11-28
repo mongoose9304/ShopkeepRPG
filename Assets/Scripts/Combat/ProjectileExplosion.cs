@@ -13,6 +13,7 @@ public class ProjectileExplosion : MonoBehaviour
     public bool isContinuous;
     public float maxDelayBetweenActivations;
     float currentDelayBetweenActivations;
+    public string damageTag;
 
     private void OnEnable()
     {
@@ -44,7 +45,12 @@ public class ProjectileExplosion : MonoBehaviour
             else if (hitCollider.tag == "Familiar")
             {
                 if (!ignorePlayer)
-                    hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+                    hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
+            }
+            else if (hitCollider.tag == "PlayerFamiliar")
+            {
+                if (!ignorePlayer)
+                    hitCollider.gameObject.GetComponent<CombatCoopFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
             }
             else if (hitCollider.tag == "Enemy")
             {
@@ -54,7 +60,7 @@ public class ProjectileExplosion : MonoBehaviour
                         return;
 
                 }
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject,damageTag);
             }
             else if (hitCollider.tag == "Follower")
             {

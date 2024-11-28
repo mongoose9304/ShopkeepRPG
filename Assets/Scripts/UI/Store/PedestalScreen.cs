@@ -38,6 +38,7 @@ public class PedestalScreen : MonoBehaviour
             if (inventoryUI.GetSlotWithName(p_.myItem.itemName)!=null)
             x = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
             currentInventorySlot.SetItem(p_.myItem, x);
+            currentInventorySlot.gameObject.SetActive(true);
             SetButtonsActive(true);
             refillButtons.SetActive(false);
 
@@ -47,6 +48,7 @@ public class PedestalScreen : MonoBehaviour
             currentPedestalSlot.SetItem(p_.myItem, p_.amount);
             currentInventorySlot.myItem = p_.myItem;
             currentInventorySlot.amount = inventoryUI.GetSlotWithName(p_.myItem.itemName).amount;
+            currentInventorySlot.gameObject.SetActive(true);
             SetButtonsActive(true);
             refillButtons.SetActive(false);
         }
@@ -54,6 +56,7 @@ public class PedestalScreen : MonoBehaviour
         {
             currentPedestalSlot.SetNullItem();
             currentInventorySlot.SetNullItem();
+            currentInventorySlot.gameObject.SetActive(false);
             SetButtonsActive(false);
             if(previousItemSlot.myItem!=null)
             refillButtons.SetActive(true);
@@ -99,6 +102,7 @@ public class PedestalScreen : MonoBehaviour
         openPedestal.ClearItem();
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         CalculateItemValue();
+        currentInventorySlot.gameObject.SetActive(false);
         if (previousItemSlot.myItem != null)
             refillButtons.SetActive(true);
         else
@@ -110,7 +114,7 @@ public class PedestalScreen : MonoBehaviour
     }
     public void OpenInventorySection()
     {
-        inventoryUI.OpenMenu(true);
+        inventoryUI.OpenMenu(true,openPedestal.inHell);
         inventoryUI.SetClickFunctionIndex(1);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
         refillButtons.SetActive(false);
@@ -121,12 +125,14 @@ public class PedestalScreen : MonoBehaviour
         {
             currentPedestalSlot.SetItem(data_, 1);
             currentInventorySlot.SetItem(data_, amount_ - 1);
+            currentInventorySlot.gameObject.SetActive(true);
             SetButtonsActive(true);
         }
         else
         {
             currentPedestalSlot.SetNullItem();
             currentInventorySlot.SetNullItem();
+            currentInventorySlot.gameObject.SetActive(false);
             SetButtonsActive(false);
         }
             SetItemName();
@@ -209,7 +215,19 @@ public class PedestalScreen : MonoBehaviour
     {
         if (currentPedestalSlot.myItem)
         {
-            currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount).ToString();
+            switch (ShopManager.instance.CheckIfItemIsHot(currentPedestalSlot.myItem, openPedestal.inHell))
+            {
+                case 0://normal
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount).ToString();
+                    break;
+                case 1://hot
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount*ShopManager.instance.GetHotItemMultiplier()).ToString();
+                    break;
+                case 2://cold
+                    currentItemValue.text = (currentPedestalSlot.myItem.basePrice * currentPedestalSlot.amount * ShopManager.instance.GetColdItemMultiplier()).ToString();
+                    break;
+            }
+            
         }
         else
         {

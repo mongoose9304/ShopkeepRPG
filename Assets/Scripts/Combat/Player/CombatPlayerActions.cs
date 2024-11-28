@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
 using TMPro;
+using UnityEngine.InputSystem;
 public class CombatPlayerActions : MonoBehaviour
 {
     public CombatPlayerMovement combatMovement;
@@ -38,9 +39,11 @@ public class CombatPlayerActions : MonoBehaviour
     public float attackSpeedMod = 1;
     public float lifeStealPercent = 0;
     public bool rangedPierce;
-    
+
     [Header("Familiar")]
+    public bool coopPlayer;
     public CombatFamiliar myFamiliar;
+    public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
     [Header("Feel")]
@@ -53,11 +56,30 @@ public class CombatPlayerActions : MonoBehaviour
     public MMProgressBar ultimateCoolDownBar;
     [Header("Audio")]
     public AudioClip basicRangedAudio;
+    [Header("Inputs")]
+    private bool PlayerIsHoldingMelee;
+    private bool PlayerIsHoldingRanged;
+    private bool PlayerIsHoldingSpecial1;
+    private bool PlayerIsHoldingSpecial2;
+    private bool PlayerIsHoldingUlitmate;
 
     private void Start()
     {
         SetUpProjectiles();
         SwapSpecials();
+    }
+    public void EnableActions()
+    {
+        combatMovement.playerActionMap.FindAction("XAction").performed += OnMeleePressed;
+        combatMovement.playerActionMap.FindAction("XAction").canceled += OnMeleeReleased;
+        combatMovement.playerActionMap.FindAction("AAction").performed += OnRangedPressed;
+        combatMovement.playerActionMap.FindAction("AAction").canceled += OnRangedReleased;
+        combatMovement.playerActionMap.FindAction("LBAction").performed += OnSpecial1Pressed;
+        combatMovement.playerActionMap.FindAction("LBAction").canceled += OnSpecial1Released;
+        combatMovement.playerActionMap.FindAction("RBAction").performed += OnSpecial2Pressed;
+        combatMovement.playerActionMap.FindAction("RBAction").canceled += OnSpecial2Released;
+        combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
+        combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
     }
     private void Update()
     {
@@ -77,7 +99,7 @@ public class CombatPlayerActions : MonoBehaviour
             
         }
 
-        if(Input.GetButton("Fire3"))
+        if(PlayerIsHoldingMelee)
         {
            
             BasicMelee();
@@ -85,34 +107,26 @@ public class CombatPlayerActions : MonoBehaviour
 
 
         }
-        else if(Input.GetButton("Fire1"))
+        else if(PlayerIsHoldingRanged)
         {
             BasicRanged();
             isUsingBasicAttackRanged = true;
             meleeObject.ForceEndAttack();
         }
-        else if(Input.GetButton("Special1"))
+        else if(PlayerIsHoldingSpecial1)
         {
             UseSpecialAttack(true);
         }
-        else if (Input.GetButton("Special2"))
+        else if (PlayerIsHoldingSpecial2)
         {
             UseSpecialAttack(false);
         }
-        else if (Input.GetButton("Special3"))
-        {
-            UseFamiliarUltimate();
-        }
-        else if (Input.GetAxis("Special3")==1)
+        else if (PlayerIsHoldingUlitmate)
         {
             UseFamiliarUltimate();
         }
 
-
-        if (Input.GetButtonUp("Fire3"))
-        {
-            meleeObject.ReleaseMeleeButton();
-        }
+    
         Cooldowns();
     }
 
@@ -302,9 +316,20 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void RespawnFamiliar()
     {
-        myFamiliar.transform.position = this.transform.position + new Vector3(2,0,0);
-        myFamiliar.gameObject.SetActive(true);
-        myFamiliar.Respawn();
+        if (!coopPlayer)
+        {
+
+
+            myFamiliar.TeleportToLocation(transform);
+            myFamiliar.gameObject.SetActive(true);
+            myFamiliar.Respawn();
+        }
+        else
+        {
+            myCoopFamiliar.gameObject.SetActive(true);
+            CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
+            myCoopFamiliar.Respawn();
+        }
     }
     public void ReturnFamiliar()
     {
@@ -364,5 +389,47 @@ public class CombatPlayerActions : MonoBehaviour
             chargesUIBGB.SetActive(false);
         }
         combatMovement.CalculateAllModifiers();
+    }
+    //New Inputs, the pressed and released funtions allow us to check for holding buttons
+    private void OnMeleePressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingMelee = true;
+    }
+    private void OnMeleeReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingMelee = false;
+        meleeObject.ReleaseMeleeButton();
+    }
+    private void OnRangedPressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingRanged = true;
+    }
+    private void OnRangedReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingRanged = false;
+    }
+    private void OnSpecial1Pressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial1 = true;
+    }
+    private void OnSpecial1Released(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial1 = false;
+    }
+    private void OnSpecial2Pressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial2 = true;
+    }
+    private void OnSpecial2Released(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingSpecial2 = false;
+    }
+    private void OnUltimatePressed(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingUlitmate = true;
+    }
+    private void OnUltimateReleased(InputAction.CallbackContext obj)
+    {
+        PlayerIsHoldingUlitmate = false;
     }
 }

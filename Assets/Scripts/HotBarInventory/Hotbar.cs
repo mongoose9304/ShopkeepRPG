@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Hotbar : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Hotbar : MonoBehaviour
     public float delayBetweenInputsMax;
     float delayBetweenInputsCurrent;
     public float delayBetweenItemUsages;
+    private InputAction movement;
     private void Start()
     {
         //Adding test items for debug pruposes, remove when ready 
@@ -22,6 +25,26 @@ public class Hotbar : MonoBehaviour
         }
         SetHighlightedSlot(0);
     }
+    private void OnEnable()
+    {
+        EnableActions();
+    }
+
+    public void EnableActions()
+    {
+        if (CombatPlayerManager.instance.GetPlayer(0).isActiveAndEnabled)
+        {
+            CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RTAction").performed += UseItemPressed;
+            movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("Dpad");
+        }
+    }
+
+    private void UseItemPressed(InputAction.CallbackContext obj)
+    {
+        if (delayBetweenItemUsages <= 0)
+            UseSelectedItem();
+    }
+
     private void Update()
     {
         if (TempPause.instance.isPaused)
@@ -53,18 +76,13 @@ public class Hotbar : MonoBehaviour
     }
     void GetInput()
     {
-        hotbarInput = Input.GetAxis("DpadHorizontal");
+        hotbarInput = movement.ReadValue<Vector2>().x;
         if(hotbarInput==0)
         {
             delayBetweenInputsCurrent = 0;
         }
-        if (Input.GetAxis("UseItem") == 1)
-        {
-            if(delayBetweenItemUsages<=0)
-            UseSelectedItem();
-        }
         //temp number inputs, get this crap outta here later -Rob
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+       /* if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             DeHighlightSlot(currentHighlight);
             currentHighlight = 0;
@@ -144,6 +162,7 @@ public class Hotbar : MonoBehaviour
             if (delayBetweenItemUsages <= 0)
                 UseSelectedItem();
         }
+       */
 
 
     }

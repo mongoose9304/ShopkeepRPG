@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
+using UnityEngine.InputSystem;
 public class CombatPlayerMovement : MonoBehaviour
 {
     //FFYL stats
@@ -85,12 +86,46 @@ public class CombatPlayerMovement : MonoBehaviour
     float guardChargeDelay;
     bool isGuarding;
 
+    [Header("Interactions")]
+    [Tooltip("All the objects the player is currently in range to interact with")]
+    public List<GameObject> myInteractableObjects = new List<GameObject>();
+    [Tooltip("The object the player is currently locked onto")]
+    [SerializeField] GameObject interactableObjectTarget;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject interactableObjectLockOnObject;
+
     [Header("UI")]
     public MMProgressBar healthBar;
     public MMProgressBar shieldBar;
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
+    [Header("Inputs")]
+    public InputActionMap playerActionMap;
+    private InputAction movement;
+    private bool InteractHeld;
+    //used to take control of object when player 1 joins
+    public void SetUpControls(PlayerInput myInput)
+    {
+        playerActionMap = myInput.actions.FindActionMap("Player");
+        movement= playerActionMap.FindAction("Movement");
+        playerActionMap.FindAction("Dash").performed+= OnDash;
+        playerActionMap.FindAction("StartAction").performed+= OnPause;
+        playerActionMap.FindAction("YAction").performed+= InteractPressed;
+        playerActionMap.FindAction("YAction").canceled+= InteractReleased;
+        combatActions.EnableActions();
+
+
+        playerActionMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if(playerActionMap!=null)
+        {
+            playerActionMap.Disable();
+        }
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -119,6 +154,9 @@ public class CombatPlayerMovement : MonoBehaviour
         ChargeGuardTime();
         if (combatActions.isBusy)
             return;
+        GetClosestInteractableObject();
+        if (InteractHeld)
+            InteractAction();
         CheckForSoftLockOn();
         GetInput();
         if (combatActions.isUsingBasicAttackRanged||combatActions.isUsingBasicAttackMelee)
@@ -187,22 +225,26 @@ public class CombatPlayerMovement : MonoBehaviour
 
         }
     }
-    private void OnDash()
+    private void OnDash(InputAction.CallbackContext obj)
     {
+        if (Time.timeScale <= 0)
+            return;
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
         }
     }
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        if(TempPause.instance)
+        {
+            TempPause.instance.TogglePause();
+        }
+    }
     void GetInput()
     {
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-       if(Input.GetButtonDown("Fire2"))
-        {
-            OnDash();
-        }
-        
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
     }
     private void DashAction()
     {
@@ -861,6 +903,7 @@ public class CombatPlayerMovement : MonoBehaviour
                             unkillable.amount = 4;
                             unkillable.uniqueEffect = UniqueEquipEffect.None;
                             combatActions.myFamiliar.AddExternalMod(unkillable);
+                            combatActions.myCoopFamiliar.AddExternalMod(unkillable);
                         }
                     }
                     break;
@@ -910,22 +953,28 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myFamiliar.AddExternalMod(slimeHealthRegen);
         combatActions.myFamiliar.AddExternalMod(slimeIncreasedMDef);
         combatActions.myFamiliar.AddExternalMod(slimeIncreasedPDef);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeHealthRegen);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeIncreasedMDef);
+        combatActions.myCoopFamiliar.AddExternalMod(slimeIncreasedPDef);
         AddExternalMod(slimeHealthRegen);
         AddExternalMod(slimeIncreasedMDef);
         AddExternalMod(slimeIncreasedPDef);
 
         //Dragon
         combatActions.myFamiliar.AddExternalMod(dragonMDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
         //Sword mods
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
         AddExternalMod(swordLifeSteal);
 
 
         combatActions.myFamiliar.CalculateAllModifiers();
+        combatActions.myCoopFamiliar.CalculateAllModifiers();
 
     }
     public void UndeadExtraLife()
@@ -933,5 +982,70 @@ public class CombatPlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetBar01(currentHealth / maxHealth);
         skullHead.SetActive(true);
+    }
+    /// <summary>
+    /// Calculates the nearest interactable object and sets that as the interactable target that will be used for lock ons
+    /// </summary>
+    private void GetClosestInteractableObject()
+    {
+        if (myInteractableObjects.Count == 0)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+            return;
+        }
+        for (int i = 0; i < myInteractableObjects.Count; i++)
+        {
+            if (!myInteractableObjects[i].activeInHierarchy)
+            {
+                if (interactableObjectTarget == myInteractableObjects[i])
+                    interactableObjectTarget = null;
+                myInteractableObjects.RemoveAt(i);
+                continue;
+            }
+            if (!interactableObjectTarget)
+            {
+                interactableObjectTarget = myInteractableObjects[i];
+            }
+            if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = myInteractableObjects[i];
+            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
+        }
+        foreach (GameObject obj in myInteractableObjects)
+        {
+            if (Vector3.Distance(transform.position, obj.transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
+                interactableObjectTarget = obj;
+        }
+    }
+    /// <summary>
+    /// The actions taken when the player presses the interact button
+    /// </summary>
+    private void InteractAction()
+    {
+        if (interactableObjectTarget)
+        {
+            if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
+            {
+                obj.Interact();
+            }
+        }
+    }
+    private void InteractPressed(InputAction.CallbackContext objdd)
+    {
+        InteractHeld = true;
+    }
+    private void InteractReleased(InputAction.CallbackContext objdd)
+    {
+        InteractHeld = false;
+    }
+    public void RemoveInteractableObject(GameObject obj_)
+    {
+        myInteractableObjects.Remove(obj_);
+        if (interactableObjectTarget = obj_)
+        {
+            interactableObjectTarget = null;
+            interactableObjectLockOnObject.SetActive(false);
+        }
     }
 }

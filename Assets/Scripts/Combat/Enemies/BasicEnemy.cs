@@ -49,6 +49,8 @@ public class BasicEnemy : MonoBehaviour
     public GameObject stunIcon;
     [Tooltip("REFERENCE to the player object for targeting")]
     public GameObject player;
+    [Tooltip("REFERENCE to the 2ndplayer object for targeting")]
+    public GameObject playerFamiliar;
     [Tooltip("The current object I am trying to move towards and fight")]
     public GameObject target;
     [Tooltip("Used for rooms where the player must kill enemies to leave and such")]
@@ -275,9 +277,9 @@ public class BasicEnemy : MonoBehaviour
         if (canMove)
         {
             if (!target)
-                target = player;
-            if(!target.activeInHierarchy)
-                  target = player;
+                target = CheckIfPlayerIsCloserThanFamiliar();
+            if (!target.activeInHierarchy)
+                  target = CheckIfPlayerIsCloserThanFamiliar();
             agent.SetDestination(target.transform.position);
         }
         else
@@ -320,12 +322,18 @@ public class BasicEnemy : MonoBehaviour
     }
     public virtual void FindTarget()
     {
-        if(!player)
-        player = GameObject.FindGameObjectWithTag("Player");
+        if (!player)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        if (!playerFamiliar)
+        {
+            playerFamiliar = GameObject.FindGameObjectWithTag("PlayerFamiliar");
+        }
         TryGetComponent<TeamUser>(out myTeamUser);
         if (!myTeamUser)
         {
-        target = player;
+            target = CheckIfPlayerIsCloserThanFamiliar();
             return;
         }
         GameObject obj=EnemyManager.instance.FindEnemyTarget(myTeamUser.myTeam, transform.position);
@@ -337,14 +345,31 @@ public class BasicEnemy : MonoBehaviour
             }
             else
             {
-                target = player;
+                target = CheckIfPlayerIsCloserThanFamiliar();
             }
         }
         else
         {
             Debug.Log("Obj Null");
-            target = player;
+            target = CheckIfPlayerIsCloserThanFamiliar();
         }
+    }
+    public virtual GameObject CheckIfPlayerIsCloserThanFamiliar()
+    {
+        if(!playerFamiliar)
+        {
+            return player;
+        }
+        if (!playerFamiliar.activeInHierarchy)
+        {
+            Debug.Log("Inactive");
+            return player;
+        }
+        if (Vector3.Distance(transform.position,player.transform.position)> Vector3.Distance(transform.position, playerFamiliar.transform.position))
+        {
+            return playerFamiliar;
+        }
+        return player;
     }
     //returns true if the teams are different 
     public virtual bool CheckTeam(GameObject target)

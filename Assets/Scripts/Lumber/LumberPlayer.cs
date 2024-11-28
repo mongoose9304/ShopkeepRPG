@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using MoreMountains.Tools;
+using UnityEngine.InputSystem;
 
 public class LumberPlayer : MonoBehaviour
 {
@@ -50,6 +51,42 @@ public class LumberPlayer : MonoBehaviour
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
+
+    [Header("Inputs")]
+    public PlayerInputActions myPlayerInputActions;
+    private InputAction movement;
+    private bool InteractHeld;
+    private void Awake()
+    {
+        myPlayerInputActions = new PlayerInputActions();
+    }
+    private void OnEnable()
+    {
+        myPlayerInputActions.Player.Dash.performed += OnDash;
+        myPlayerInputActions.Player.YAction.performed += OnInteract;
+        myPlayerInputActions.Player.YAction.canceled += OnInteractReleased;
+        myPlayerInputActions.Player.XAction.performed += OnAxeAction;
+        myPlayerInputActions.Player.LTAction.performed += OnPuzzleReset;
+        movement = myPlayerInputActions.Player.Movement;
+        myPlayerInputActions.Player.StartAction.performed += OnPause;
+
+        myPlayerInputActions.Player.Dash.Enable();
+        myPlayerInputActions.Player.LTAction.Enable();
+        myPlayerInputActions.Player.Movement.Enable();
+        myPlayerInputActions.Player.YAction.Enable();
+        myPlayerInputActions.Player.XAction.Enable();
+        myPlayerInputActions.Player.StartAction.Enable();
+    }
+    private void OnDisable()
+    {
+        myPlayerInputActions.Player.Dash.Disable();
+        myPlayerInputActions.Player.LTAction.Disable();
+        myPlayerInputActions.Player.Movement.Disable();
+        myPlayerInputActions.Player.YAction.Disable();
+        myPlayerInputActions.Player.RBAction.Disable();
+        myPlayerInputActions.Player.XAction.Disable();
+        myPlayerInputActions.Player.StartAction.Disable();
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -123,9 +160,49 @@ public class LumberPlayer : MonoBehaviour
 
         }
     }
-    private void OnDash()
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnInteract(InputAction.CallbackContext obj)
     {
-
+        InteractHeld = true;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnInteractReleased(InputAction.CallbackContext obj)
+    {
+        InteractHeld = false;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnPuzzleReset(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        ResetCurrentPuzzle();
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnAxeAction(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        AxeAction();
+    }
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance)
+        {
+            TempPause.instance.TogglePause();
+        }
+    }
+    private void OnDash(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
         if (dashCoolDown <= 0 && !isSwinging)
         {
             dashCoolDown = maxdashCoolDown;
@@ -136,24 +213,9 @@ public class LumberPlayer : MonoBehaviour
     void GetInput()
     {
 
-        moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-        if (Input.GetButtonDown("Fire3"))
-        {
-            AxeAction();
-        }
-        if (Input.GetButtonDown("Fire2"))
-        {
-            OnDash();
-        }
-        if (Input.GetButton("Fire4"))
-        {
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
+        if (InteractHeld)
             InteractAction();
-        }
-        else if (Input.GetButton("Special1"))
-        {
-            ResetCurrentPuzzle();
-        }
 
 
     }

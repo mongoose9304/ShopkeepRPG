@@ -7,10 +7,12 @@ using TMPro;
 public class InventorySlot : MonoBehaviour
 {
     public ItemData myItem;
+    public MoveableObject myMoveableObject;
     public int amount;
     [SerializeField] TextMeshProUGUI myAmountText;
     [SerializeField] Image myItemImage;
     [SerializeField] InventoryUI myUI;
+    [SerializeField] MoveableInventoryUI myMoveableObjectUI;
     public void SetItem(ItemData item_, int amount_)
     {
         myItem = item_;
@@ -18,12 +20,20 @@ public class InventorySlot : MonoBehaviour
         myAmountText.text = amount.ToString();
         myItemImage.sprite = myItem.itemSprite;
     }
+    public void SetMoveableItem(MoveableObject item_, int amount_)
+    {
+        myMoveableObject = item_;
+        amount = amount_;
+        myAmountText.text = amount.ToString();
+        myItemImage.sprite = item_.mySprite;
+    }
     public void SetNullItem()
     {
         myItem = null;
         amount = 0;
         myAmountText.text = amount.ToString();
         myItemImage.sprite = null;
+        myMoveableObject = null;
     }
     public void Clear()
     {
@@ -46,12 +56,37 @@ public class InventorySlot : MonoBehaviour
                 ShopManager.instance.PlayUIAudio("Click");
             }
         }
+        else if(myMoveableObjectUI)
+        {
+            myMoveableObjectUI.InventoryButtonClicked(this);
+            if (ShopManager.instance)
+            {
+                ShopManager.instance.PlayUIAudio("Click");
+            }
+        }
     }
     public void OnSelectEvent()
     {
         if(ShopManager.instance)
         {
             ShopManager.instance.PlayUIAudio("Hover");
+        }
+    }
+    //0=normal, 1=hot, 2=cold
+    public void SetItemHotness(int hotness_)
+    {
+        switch(hotness_)
+        {
+            case 0:
+                myItemImage.color = Color.white;
+                break;
+            case 1:
+                myItemImage.color = Color.red;
+                break;
+            case 2:
+                myItemImage.color = Color.blue;
+                break;
+
         }
     }
 }

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The collider that detects if any interactable objects are in range
+/// </summary>
 public class ShopInteractableDetector : MonoBehaviour
 {
     StorePlayer Player;

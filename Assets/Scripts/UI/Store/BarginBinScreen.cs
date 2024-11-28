@@ -103,7 +103,7 @@ public class BarginBinScreen : MonoBehaviour
     }
     public void OpenInventorySection()
     {
-        inventoryUI.OpenMenu(true);
+        inventoryUI.OpenMenu(true,openBarginBin.inHell);
         inventoryUI.SetClickFunctionIndex(2);
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inventoryUI.slots[0].gameObject);
     }
@@ -137,6 +137,17 @@ public class BarginBinScreen : MonoBehaviour
         {
             // currentItemValue.text = (Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount / (1-openBarginBin.itemDiscount))).ToString();
             int x = Mathf.RoundToInt(currentlySelectedSlot.myItem.basePrice * currentlySelectedSlot.amount * (1 - openBarginBin.itemDiscount));
+            switch(ShopManager.instance.CheckIfItemIsHot(currentlySelectedSlot.myItem, openBarginBin.inHell))
+            {
+                case 0:
+                    break;
+                case 1:
+                    x = Mathf.RoundToInt(x * ShopManager.instance.GetHotItemMultiplier());
+                    break;
+                case 2:
+                    x = Mathf.RoundToInt(x * ShopManager.instance.GetColdItemMultiplier());
+                    break;
+            }
             currentItemValue.text = x.ToString();
         }
         else
@@ -181,9 +192,14 @@ public class BarginBinScreen : MonoBehaviour
     {
         for(int i=0;i<slots.Count;i++)
         {
-            if(openBarginBin.binSlotsPrevious[i].myItem)
+            if(openBarginBin.binSlotsPrevious[i].myItem!=null)
             {
-                int x = inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName).amount;
+                int x = 0;
+                if(inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName))
+                {
+                    x = inventoryUI.GetSlotWithName(openBarginBin.binSlotsPrevious[i].myItem.itemName).amount;
+                }
+                 
                 if (x >= openBarginBin.binSlotsPrevious[i].amount)
                 {
                     if(slots[i].amount>0)
@@ -206,8 +222,12 @@ public class BarginBinScreen : MonoBehaviour
         {
             if (slots[i].amount > 0)
             {
-                Debug.Log("Return Item: " + inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                if (inventoryUI.GetSlotWithName(slots[i].myItem.itemName))
                 inventoryUI.GetSlotWithName(slots[i].myItem.itemName).UpdateAmount(inventoryUI.GetSlotWithName(slots[i].myItem.itemName).amount + slots[i].amount);
+                else
+                {
+                    inventoryUI.AddItemToInventory(slots[i].myItem, slots[i].amount);
+                }
             }
             slots[i].SetNullItem();
             openBarginBin.ClearSlot(i);

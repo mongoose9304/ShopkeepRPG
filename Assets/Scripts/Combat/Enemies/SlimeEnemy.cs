@@ -48,7 +48,11 @@ public class SlimeEnemy : BasicEnemy
             }
             else if (hitCollider.tag == "Familiar")
             {
-                hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
+            }
+            else if (hitCollider.tag == "PlayerFamiliar")
+            {
+                hitCollider.gameObject.GetComponent<CombatCoopFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
             }
             else if (hitCollider.tag == "Enemy")
             {
@@ -121,9 +125,9 @@ public class SlimeEnemy : BasicEnemy
         if (canMove)
         {
             if (!target)
-                target = player;
+               target= CheckIfPlayerIsCloserThanFamiliar();
             if (!target.activeInHierarchy)
-                target = player;
+               target= CheckIfPlayerIsCloserThanFamiliar();
             agent.SetDestination(target.transform.position);
             agent.speed = moveSpeed * currentMoveSpeedPercent;
             currentMoveSpeedPercent -= Time.deltaTime;

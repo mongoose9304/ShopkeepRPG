@@ -6,7 +6,7 @@ using TMPro;
 /// <summary>
 /// The slots that hold purchaseable items in the demon shop
 /// </summary>
-public class DemonShopPedestal : MonoBehaviour
+public class DemonShopPedestal : InteractableObject
 {
     [Tooltip("The shop that I am a part of")]
     public ShopRoom myShop;
@@ -28,24 +28,27 @@ public class DemonShopPedestal : MonoBehaviour
     [SerializeField] Image itemImage;
     [Tooltip("REFERENCE to objects that should be toggled on and off when player is in range")]
     public List<GameObject> toggleObjects = new List<GameObject>();
-    virtual protected void Update()
+    private float delayBetweenPurchases;
+    private void Update()
     {
-        if (!isActive|| amountLeft <= 0)
-            return;
-
-
-        if (Input.GetButtonDown("Fire3"))
+        if (delayBetweenPurchases > 0)
+            delayBetweenPurchases -= Time.deltaTime;
+    }
+    /// <summary>
+    /// The virtual function all interactbale objects will override to set thier specific functionality
+    /// </summary>
+    public override void Interact(GameObject interactingObject_ = null)
+    {
+        if (myShop.isBeingRobbed)
         {
-             if(myShop.isBeingRobbed)
-            {
-                PurchaseItem();
-                return;
-            }
-            if (LootManager.instance.AttemptDemonPayment(myItem.basePrice))
-                PurchaseItem();
+            PurchaseItem();
+            return;
         }
-
-
+        if (delayBetweenPurchases > 0)
+            return;
+        delayBetweenPurchases = 0.5f;
+        if (LootManager.instance.AttemptDemonPayment(myItem.basePrice))
+            PurchaseItem();
     }
     public void SetItem(ItemData newItem, int amount = 1)
     {
@@ -68,21 +71,7 @@ public class DemonShopPedestal : MonoBehaviour
             obj.SetActive(isActive);
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag=="Player")
-        {
-            myShop.SetPedestalsInactive();
-            ToggleVisibility(true);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            ToggleVisibility(false);
-        }
-    }
+
     virtual protected void PurchaseItem()
     {
         if (!myItem)
@@ -91,7 +80,11 @@ public class DemonShopPedestal : MonoBehaviour
         amountLeftText.text = "(" + amountLeft + ")";
         myShop.PurchaseItem(myItem, transform);
         if (amountLeft <= 0)
+        {
             ToggleVisibility(false);
+            CombatPlayerManager.instance.RemoveInteractableObject(gameObject);
+            gameObject.SetActive(false);
+        }
     }
     public void SetBeingRobbed()
     {

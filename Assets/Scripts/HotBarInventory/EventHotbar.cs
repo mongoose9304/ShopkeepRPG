@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EventHotbar : MonoBehaviour
 {
@@ -11,21 +13,27 @@ public class EventHotbar : MonoBehaviour
        
         SetHighlightedSlot(0);
     }
-    private void Update()
+    private void OnEnable()
     {
-        GetInput();
+        EnableActions();
     }
-    void GetInput()
+    public void EnableActions()
     {
-        if (Input.GetButtonDown("Special1"))
-        {
-            MoveHighlightedSlot(false);
-        }
-        else if (Input.GetButtonDown("Special2"))
-        {
-            MoveHighlightedSlot(true);
-        }
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("LBAction").performed += MoveSlotLeft;
+        CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RBAction").performed += MoveSlotRight;
     }
+
+
+    private void MoveSlotLeft(InputAction.CallbackContext obj)
+    {
+        MoveHighlightedSlot(false);
+    }
+    private void MoveSlotRight(InputAction.CallbackContext obj)
+    {
+        MoveHighlightedSlot(true);
+    }
+
+   
     public void MoveHighlightedSlot(bool moveRight = false)
     {
         DeHighlightSlot(currentHighlight);

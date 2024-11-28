@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+/// <summary>
+/// Generic event that can be used when interacted with. Will happen every frame unless disabled after use.
+/// </summary>
 public class InteractEvent : InteractableObject
 {
     public UnityEvent myEvent;

@@ -144,15 +144,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8875528852905999159}
   - component: {fileID: 4013140254971720372}
-  - component: {fileID: 4174264149256932265}
-  - component: {fileID: 2080532664729089298}
   m_Layer: 5
   m_Name: PressBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8875528852905999159
 RectTransform:
   m_ObjectHideFlags: 0
@@ -180,62 +178,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2873551775431708718}
   m_CullTransparentMesh: 1
---- !u!114 &4174264149256932265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2873551775431708718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.10457456, g: 0.4100941, b: 0.8867924, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cc61919a0af9cb342b28a4e83d3e9646, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!114 &2080532664729089298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2873551775431708718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95a065ebcb0fb0d4f9163e608e86222d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  up: {x: 0, y: 0.5, z: 0}
-  down: {x: 0, y: -0.5, z: 0}
-  trueDown: {x: 0, y: 0, z: 0}
-  originalPosition: {x: 0, y: 0, z: 0}
-  speed: 2
-  changeSpeedBasedOnDistance: 1
-  speedInceraseOnGoingDown: 1
-  useEvents: 0
-  endDownEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  endUpEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &2911397052306022834
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,9 +189,9 @@ GameObject:
   - component: {fileID: 5912901754592108722}
   - component: {fileID: 8118721362084158918}
   - component: {fileID: 4318133537591959881}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DemonShopPedestal
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
