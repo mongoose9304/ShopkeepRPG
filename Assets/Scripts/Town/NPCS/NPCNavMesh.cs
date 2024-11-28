@@ -32,7 +32,7 @@ public class NPCNavMesh : MonoBehaviour
         // just for testing
         agent.destination = NPCtarget.position;
         bool isMoving = agent.remainingDistance > agent.stoppingDistance;
-
+        
         if (!isMoving){
             //check if waypoints aren't empty, choose random waypoint
             if (waypoints.Count > 0) {
