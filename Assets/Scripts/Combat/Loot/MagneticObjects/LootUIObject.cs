@@ -26,6 +26,10 @@ public class LootUIObject : MonoBehaviour
         myImage.sprite = bgSprites[bgToUse];
         myPlayer.PlayFeedbacks();
         gameObject.transform.SetSiblingIndex(0);
+        //Reset the positions to zero or its funky (objects at sacles like 2300 or far away like 24000Z -Rob)
+        gameObject.transform.localScale = Vector3.one;
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.localRotation = new Quaternion(0,0,0,0);
     }
 
     private void Update()
