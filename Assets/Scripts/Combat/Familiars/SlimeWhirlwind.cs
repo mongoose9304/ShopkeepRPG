@@ -11,9 +11,11 @@ public class SlimeWhirlwind : MonoBehaviour
     public float damageInterval;
     public float minDistance;
     float currentdamageInterval;
+    public AudioSource audio;
     private void OnEnable()
     {
         currentdamageInterval = 0;
+        audio.Play();
     }
     private void Update()
     {
