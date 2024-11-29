@@ -361,7 +361,8 @@ public class DungeonManager : MonoBehaviour
         LootDisplayManager.instance.AddResources(x, y, resourceSprites);
         LootDisplayManager.instance.StartVictoryScreen(hasLost_);
         CombatPlayerManager.instance.EnableFamiliars(false);
-
+        EnemyManager.instance.DisableAllEnemies();
+        PlayerManager.instance.TemporaryDisablePlayer2();
     }
     public void SwitchSinSrops()
     {

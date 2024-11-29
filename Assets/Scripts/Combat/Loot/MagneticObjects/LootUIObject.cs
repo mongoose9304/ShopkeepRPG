@@ -18,6 +18,9 @@ public class LootUIObject : MonoBehaviour
     private void OnEnable()
     {
         currentLifetime = maxLifetime;
+        gameObject.transform.localScale = Vector3.one;
+        gameObject.transform.localPosition = Vector3.zero;
+        gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
     }
     public void CreateUIObject(int amount,string name_,bool isNew=false,int bgToUse=0)
     {

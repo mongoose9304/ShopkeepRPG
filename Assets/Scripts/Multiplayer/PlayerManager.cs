@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager instance;
     private List<PlayerController> players = new List<PlayerController>();
     [SerializeField]
     private Transform playerSpawn;
@@ -15,8 +16,16 @@ public class PlayerManager : MonoBehaviour
 
         private void Awake()
     {
-        playerInputManager = FindObjectOfType<PlayerInputManager>();
-        DontDestroyOnLoad(gameObject);
+        if (!instance)
+        {
+            playerInputManager = FindObjectOfType<PlayerInputManager>();
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnEnable()
     {
@@ -27,9 +36,27 @@ public class PlayerManager : MonoBehaviour
     {
         playerInputManager.onPlayerJoined -= AddPlayer;
     }
+    public void TemporaryDisablePlayer2()
+    {
+        if(players.Count>1)
+        {
+            players[1].gameObject.SetActive(false);
+        }
+    }
+    public void BringPlayer2Back()
+    {
+        if (players.Count > 1)
+        {
+            players[1].gameObject.SetActive(true);
+        }
+    }
     public void AddPlayer(PlayerInput player)
     {
         Debug.Log("PlayerAdded");
+        if(players.Contains(player.GetComponent<PlayerController>()))
+        {
+            return;
+        }
         players.Add(player.GetComponent<PlayerController>()); 
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
         player.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;

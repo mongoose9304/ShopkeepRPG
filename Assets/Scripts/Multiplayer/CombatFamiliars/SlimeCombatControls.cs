@@ -38,7 +38,7 @@ public class SlimeCombatControls : FamiliarCombatControls
     public float slamRange;
     float currentJumpPercentage;
     public float spinTimeMax;
-    float currentSpinTime;
+   [SerializeField] float currentSpinTime;
     float jumpStart;
     float jumpEnd;
     public float slamCooldownMax;
@@ -56,7 +56,7 @@ public class SlimeCombatControls : FamiliarCombatControls
     public bool isHoldingRanged;
     private void OnEnable()
     {
-        currentSpinTime = 0;
+        EndWhirlWind();
     }
     public override void EnableActions(InputActionMap playerActionMap)
     {
@@ -188,7 +188,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         {
             if (isUltimateJumping)
             {
-                CombatPlayerManager.instance.GetPlayer(0).transform.position = this.transform.position + new Vector3(1, 0, 0);
+               // CombatPlayerManager.instance.GetPlayer(0).transform.position = this.transform.position + new Vector3(1, 0, 0);
 
 
             }
@@ -246,9 +246,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         isJumping = false;
         isBusy = false;
         transform.parent.position = new Vector3(transform.parent.position.x, jumpStart, transform.parent.position.z);
-        CombatPlayerManager.instance.GetPlayer(0).transform.position=this.transform.position + new Vector3(1, 0, 0);
         if (isUltimateJumping)
         {
+            //CombatPlayerManager.instance.TeleportMainPlayerToCoopPlayer();
             isUltimateJumping = false;
             damageImmune = false;
             bothPlayersBusy = false;
@@ -286,7 +286,6 @@ public class SlimeCombatControls : FamiliarCombatControls
 
         isBusy = true;
         bothPlayersBusy = true;
-        CombatPlayerManager.instance.GetPlayer(0).transform.position = transform.position + new Vector3(1, 0, 0);
         isUltimateJumping = true;
         isJumping = true;
         isSlaming = false;
