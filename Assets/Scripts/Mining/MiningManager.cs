@@ -159,6 +159,13 @@ public class MiningManager : MonoBehaviour
             playa.Respawn();
         }
     }
+    public void HealPlayers(float amount_)
+    {
+        foreach(MiningPlayer playa in players )
+        {
+            playa.Heal(amount_);
+        }
+    }
     public void CheckIfBothPlayersDead(GameObject obj)
     {
         foreach (MiningPlayer playa in players)

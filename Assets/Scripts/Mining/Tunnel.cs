@@ -44,10 +44,6 @@ public class Tunnel : InteractableObject
     public void Teleport(GameObject obj_)
     {
         obj_.transform.position = teleportLocation.position;
-        if(MiningManager.instance.checkPointLevel=objectToSetActive)
-        {
-            MiningManager.instance.EnterCheckpointLevel();
-        }
     }
     public override void Interact(GameObject interactingObject_ = null)
     {

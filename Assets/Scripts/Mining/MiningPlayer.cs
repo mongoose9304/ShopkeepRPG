@@ -661,12 +661,18 @@ public class MiningPlayer : MonoBehaviour
         switch(power)
         {
             case MiningPowerType.Heal:
-                currentHealth += maxHealth*amount_;
-                healthBar.UpdateBar01(currentHealth / maxHealth);
+                MiningManager.instance.HealPlayers(amount_);
                 break;
              default:
                 break;
         }
+    }
+    public void Heal(float amount_)
+    {
+        currentHealth += maxHealth * amount_;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        healthBar.UpdateBar01(currentHealth / maxHealth);
     }
   
    
