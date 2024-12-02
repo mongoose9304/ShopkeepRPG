@@ -227,7 +227,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void OnDash(InputAction.CallbackContext obj)
     {
-        if (Time.timeScale <= 0)
+        if (TempPause.instance.isPaused)
             return;
         if (dashCoolDown <= 0)
         {
@@ -292,18 +292,22 @@ public class CombatPlayerMovement : MonoBehaviour
         var dir = transform.TransformDirection(Vector3.down);
         newInput = temp_;
         // Down
+        
         if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
         // Up
+        
         if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 0.5f), dir, 15, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
+       
         if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
+       
         if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;

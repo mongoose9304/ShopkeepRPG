@@ -46,6 +46,7 @@ public class LumberPlayer : MonoBehaviour
     float timeBeforePlayerCanMoveAfterFallingOffPlatform;
     private Vector3 velocity = Vector3.zero;
     [SerializeField] LayerMask wallMask;
+    [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
     [SerializeField] LayerMask tileLayer;
 
@@ -205,9 +206,7 @@ public class LumberPlayer : MonoBehaviour
     private void DashAction()
     {
 
-        if (Physics.Raycast(transform.position - new Vector3(0f, 0f, -1), transform.TransformDirection(Vector3.down), 10))
-            dashStartPos = transform.position;
-        SnapRotationToGrid(transform);
+        dashStartPos = transform.position;
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
         isDashing = true;
@@ -403,23 +402,26 @@ public class LumberPlayer : MonoBehaviour
     private Vector3 PreventGoingThroughWalls(Vector3 temp_)
     {
 
-        var dir = transform.TransformDirection(Vector3.down);
+        var dir = -transform.up;
         newInput = temp_;
         // Up
-
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, -0.5f), dir, 15, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
+
         // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, .5f), dir, 15, wallMask))
+        //Debug.DrawLine(transform.position + new Vector3(0f, 5.0f, 0.5f), dir * 2);
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, .5f), dir, 15, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
-        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
+        //Debug.DrawLine(transform.position + new Vector3(0.5f, 5.0f, 0f), dir * 2);
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 10.0f, 0f), dir, 15, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
-        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
+        //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir * 2);
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 10.0f, 0f), dir, 15, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;
         return newInput;
@@ -428,26 +430,7 @@ public class LumberPlayer : MonoBehaviour
     }
     private bool CheckForWallHit()
     {
-        /* for directions that will not change when player moves
-        var dir = transform.TransformDirection(Vector3.down);
-        // Up
-
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, -0.5f), dir, 15, wallMask))
-            return true;
-        // Down
-        if (Physics.Raycast(transform.position + new Vector3(0f, 5.0f, 0.5f), dir, 15, wallMask))
-            return true;
-        //Left
-        if (Physics.Raycast(transform.position + new Vector3(0.5f, 5.0f, 0f), dir, 15, wallMask))
-            return true;
-        //Right
-        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir, 15, wallMask))
-            return true;
-
-        return false;
-
-
-        */
+        
         var dir = transform.TransformDirection(Vector3.forward);
         if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
@@ -462,7 +445,7 @@ public class LumberPlayer : MonoBehaviour
     }
     private void GroundCheck()
     {
-        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
+        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10, groundMask))
         {
             // transform.position = new Vector3.(0, 0.66f, 0);
             transform.position = dashStartPos;
