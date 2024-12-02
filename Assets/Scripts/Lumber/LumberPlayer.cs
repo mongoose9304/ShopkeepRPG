@@ -57,6 +57,7 @@ public class LumberPlayer : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private bool ResetHeld;
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
@@ -66,6 +67,7 @@ public class LumberPlayer : MonoBehaviour
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("XAction").performed += OnAxeAction;
         playerActionMap.FindAction("LTAction").performed += OnPuzzleReset;
+        playerActionMap.FindAction("LTAction").canceled += OnPuzzleResetReleased;
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
     }
@@ -159,13 +161,18 @@ public class LumberPlayer : MonoBehaviour
         InteractHeld = false;
     }
     /// <summary>
-    /// The actions taken when the player presses the dash button
+    /// The actions while the player holds the puzzle reset button
     /// </summary>
     private void OnPuzzleReset(InputAction.CallbackContext obj)
     {
-        if (TempPause.instance.isPaused)
-            return;
-        ResetCurrentPuzzle();
+        ResetHeld = true;
+    }
+    /// <summary>
+    ///  The actions while the player releases the puzzle reset button
+    /// </summary>
+    private void OnPuzzleResetReleased(InputAction.CallbackContext obj)
+    {
+        ResetHeld = false;
     }
     /// <summary>
     /// The actions taken when the player presses the dash button
@@ -200,6 +207,8 @@ public class LumberPlayer : MonoBehaviour
         moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
         if (InteractHeld)
             InteractAction();
+        if (ResetHeld)
+            ResetCurrentPuzzle();
 
 
     }
@@ -478,7 +487,7 @@ public class LumberPlayer : MonoBehaviour
     public void ResetCurrentPuzzle()
     {
         if(myPuzzle)
-        myPuzzle.ResetTreeChopDirections();
+        myPuzzle.HoldResetTreeChopDirections();
     }
 
 

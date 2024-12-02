@@ -5,6 +5,23 @@ using UnityEngine;
 public class LumberPuzzle : MonoBehaviour
 {
     public List<GameObject> myTrees = new List<GameObject>();
+    public GameObject resetParticleEffect;
+    private float timeToResetTreeChopDirectoions;
+    private void Update()
+    {
+        if(timeToResetTreeChopDirectoions<3)
+        {
+            timeToResetTreeChopDirectoions += Time.deltaTime;
+        }
+        else if(timeToResetTreeChopDirectoions >= 3)
+        {
+            resetParticleEffect.SetActive(false);
+        }
+        if(timeToResetTreeChopDirectoions <= 0)
+        {
+            ResetTreeChopDirections();
+        }
+    }
     private void AddDescendantsWithTag(Transform parent, string tag, List<GameObject> list)
     {
         foreach (Transform child in parent)
@@ -26,6 +43,12 @@ public class LumberPuzzle : MonoBehaviour
         {
             obj.GetComponent<Tree>().ResetFallIndicator();
         }
+        timeToResetTreeChopDirectoions = 3;
+    }
+    public void HoldResetTreeChopDirections()
+    {
+        resetParticleEffect.SetActive(true);
+        timeToResetTreeChopDirectoions -= Time.deltaTime*2;
     }
     private void OnTriggerEnter(Collider other)
     {

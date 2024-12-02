@@ -1597,7 +1597,6 @@ GameObject:
   - component: {fileID: 219558308061996617}
   - component: {fileID: 3465256084100333751}
   - component: {fileID: 2258569298939971139}
-  - component: {fileID: 2253133598383212680}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1612,15 +1611,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5060681263393131051}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0025, y: 0.01, z: 0.1}
+  m_LocalScale: {x: 0.0025, y: 0.02, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5664906450192012393}
   - {fileID: 4163764911013936661}
   m_Father: {fileID: 6207383684042699863}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 2.116, y: -2.511}
@@ -1944,21 +1943,6 @@ MonoBehaviour:
   BarTarget: 0
   DelayedBarIncreasingProgress: 0
   DelayedBarDecreasingProgress: 0
---- !u!114 &2253133598383212680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5060681263393131051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4079100ebb983b649aec75f76efd3568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LockX: 1
-  LockY: 0
-  LockZ: 0
 --- !u!1 &5549098676800868694
 GameObject:
   m_ObjectHideFlags: 0
