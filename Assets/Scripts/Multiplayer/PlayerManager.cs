@@ -67,4 +67,8 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
+    public List<PlayerController> GetPlayers()
+    {
+        return players;
+    }
 }

@@ -102,7 +102,7 @@ public class Bomb : MonoBehaviour
         //down
         if (Physics.Raycast(transform.position + new Vector3(0.5f, 0.0f, 0f), new Vector3(0, 0f, -1f), out hit, range * 2, wallMask))
         {
-            Debug.Log(Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2));
+           
             int x = Mathf.RoundToInt(Vector3.Distance(transform.position, hit.transform.position) / 2);
             if (hit.transform.gameObject.tag == rockTag)
             {

@@ -44,6 +44,10 @@ public class Tunnel : InteractableObject
     public void Teleport(GameObject obj_)
     {
         obj_.transform.position = teleportLocation.position;
+        if(MiningManager.instance.checkPointLevel=objectToSetActive)
+        {
+            MiningManager.instance.EnterCheckpointLevel();
+        }
     }
     public override void Interact(GameObject interactingObject_ = null)
     {
@@ -60,7 +64,11 @@ public class Tunnel : InteractableObject
         {
             TutorialManager.instance_.EndTutorial();
             teleportLocation = MiningManager.instance.currentLevel.startLocation;
-            Teleport(GameObject.FindGameObjectWithTag("Player"));
+            foreach (GameObject obj in MiningManager.instance.GetPlayerObjects())
+            {
+                Teleport(obj);
+            }
+            
             objectToSetActive = MiningManager.instance.currentLevel.gameObject;
             if (objectToSetActive)
             {
@@ -75,7 +83,10 @@ public class Tunnel : InteractableObject
             MiningManager.instance.EndCameraTeleport();
             return;
         }
-        Teleport(GameObject.FindGameObjectWithTag("Player"));
+        foreach (GameObject obj in MiningManager.instance.GetPlayerObjects())
+        {
+            Teleport(obj);
+        }
         if (objectToSetActive)
         {
             if (!doNotChangeMiningLevels)

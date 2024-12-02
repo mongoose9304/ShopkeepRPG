@@ -51,7 +51,7 @@ public class MiningManager : MonoBehaviour
     [Tooltip("REFERNCE to the location to put the player when the game is over for the victroy screen")]
     [SerializeField] GameObject victoryPlayerPos;
     [Tooltip("REFERNCE to the miningPlayer")]
-    [SerializeField] MiningPlayer player;
+    [SerializeField] MiningPlayer[] players;
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
     public AudioSource backgroundNoise;
@@ -70,7 +70,6 @@ public class MiningManager : MonoBehaviour
     private void Start()
     {
         InitLevels();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<MiningPlayer>();
         PlayRandomBGM();
         PlayNextLevel();
         SpawnFloor();
@@ -126,12 +125,19 @@ public class MiningManager : MonoBehaviour
         obj.transform.rotation = location_.rotation;
         obj.SetActive(true);
     }
-    public void WinLevel(bool loss_=false)
+    public void WinLevel(bool loss_ = false)
     {
-        player.enabled = false;
         victoryLevel.SetActive(true);
-        player.gameObject.transform.position = victoryPlayerPos.transform.position;
-        player.gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+        float extraX=0; //Nudge the 2nd player to the side to prevent overlaps
+        foreach (MiningPlayer playa in players)
+        {
+            playa.enabled = false;
+            playa.gameObject.SetActive(true);
+            playa.gameObject.transform.position = victoryPlayerPos.transform.position+new Vector3(extraX,0,0);
+            playa.gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+            extraX -= 1.5f;
+        }
+           
         LootDisplayManager.instance.AddItems(LootManager.instance.currentLootItems);
         List<int> x = new List<int>();
         //here is where you would load the inventorys count of how many resources *stone* you have.
@@ -140,11 +146,32 @@ public class MiningManager : MonoBehaviour
         x.Add(LootManager.instance.currentResource);
         LootDisplayManager.instance.AddResources(x,y,resourceSprites);
         LootDisplayManager.instance.StartVictoryScreen(loss_);
-
+        PlayerManager.instance.TemporaryDisablePlayer2();
     }
     public void PlayNextLevel()
     {
         UpdateMineHealth(PlayerPrefs.GetFloat("MineHealth", 1));
+    }
+    public void EnterCheckpointLevel()
+    {
+        foreach(MiningPlayer playa in players)
+        {
+            playa.Respawn();
+        }
+    }
+    public void CheckIfBothPlayersDead(GameObject obj)
+    {
+        foreach (MiningPlayer playa in players)
+        {
+            if (!playa.gameObject.activeInHierarchy)
+                continue;
+            if (!playa.isDead)
+            {
+                obj.SetActive(false);
+                return;
+            }
+        }
+        WinLevel(false);
     }
     public void PlayRandomBGM()
     {
@@ -184,6 +211,14 @@ public class MiningManager : MonoBehaviour
         mineFloor.GetComponent<MiningCosmeticZone>().SetUpCosmetics(mineHealth);
         mineFloorSpawner.SpawnObjects();
     }
+    public List<GameObject> GetPlayerObjects()
+    {
+        List<GameObject> players_ = new List<GameObject>();
+        foreach (MiningPlayer playa in players)
+            players_.Add(playa.gameObject);
+
+        return players_;
+    }
     public void ContinueGameFromCheckPoint()
     {
         sectionsCompleted += 1;
@@ -208,7 +243,8 @@ public class MiningManager : MonoBehaviour
                 levels[i].nextLocation = levels[i + 1];
             }
             currentLevel = levels[0];
-            player.transform.position = currentLevel.startLocation.position;
+            foreach(MiningPlayer playa in players)
+                playa.transform.position = currentLevel.startLocation.position;
             currentLevel.gameObject.SetActive(true);
             currentLevel.StartLevel();
             myCamera.gameObject.SetActive(true);
@@ -217,19 +253,26 @@ public class MiningManager : MonoBehaviour
         }
         InitLevels();
         StartCameraTeleport();
-        player.transform.position = currentLevel.startLocation.position;
+        foreach (MiningPlayer playa in players)
+            playa.transform.position = currentLevel.startLocation.position;
         currentLevel.gameObject.SetActive(true);
         currentLevel.StartLevel();
         EndCameraTeleport();
     }
     public void StartCameraTeleport()
     {
-        myCamera.gameObject.SetActive(false);
-        myCamera.Teleport();
+        foreach(PlayerController playa in PlayerManager.instance.GetPlayers())
+        {
+            playa.myCam.gameObject.SetActive(false);
+        }
+        //myCamera.Teleport();
     }
     public void EndCameraTeleport()
     {
-        myCamera.gameObject.SetActive(true);
+        foreach (PlayerController playa in PlayerManager.instance.GetPlayers())
+        {
+            playa.myCam.gameObject.SetActive(true);
+        }
     }
     public void PlayBackgroundNoise()
     {

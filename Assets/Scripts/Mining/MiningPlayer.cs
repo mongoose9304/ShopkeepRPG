@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class MiningPlayer : MonoBehaviour
 {
+    public bool isPlayer2;
     [Header("Movement")]
     [Tooltip("The time before a player can dash again")]
     public float maxdashCoolDown;
@@ -78,47 +79,37 @@ public class MiningPlayer : MonoBehaviour
     [SerializeField] AudioClip pickaxeAudio;
     [SerializeField] AudioClip pickaxeWhiffAudio;
     [SerializeField] AudioClip dashAudio;
-    [SerializeField] bool isDead;
+    [SerializeField] public bool isDead;
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     float currentHealth;
     [Header("UI")]
     public MMProgressBar healthBar;
     [Header("Inputs")]
-    public PlayerInputActions myPlayerInputActions;
+    public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
-    private void Awake()
+    public void SetUpControls(PlayerInput myInput)
     {
-        myPlayerInputActions = new PlayerInputActions();
+        playerActionMap = myInput.actions.FindActionMap("Player");
+        movement = playerActionMap.FindAction("Movement");
+        playerActionMap.FindAction("Dash").performed += OnDash;
+        playerActionMap.FindAction("YAction").performed += OnInteract;
+        playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
+        playerActionMap.FindAction("XAction").performed += OnMine;
+        playerActionMap.FindAction("AAction").performed += OnBombAction;
+        playerActionMap.FindAction("StartAction").performed += OnPause;
+        playerActionMap.Enable();
     }
     private void OnEnable()
     {
-        myPlayerInputActions.Player.Dash.performed += OnDash;
-        myPlayerInputActions.Player.XAction.performed += OnMine;
-        myPlayerInputActions.Player.YAction.performed += OnInteract;
-        myPlayerInputActions.Player.YAction.canceled += OnInteractReleased;
-        myPlayerInputActions.Player.AAction.performed += OnBombAction;
-        movement = myPlayerInputActions.Player.Movement;
-        myPlayerInputActions.Player.StartAction.performed += OnPause;
-
-        myPlayerInputActions.Player.Dash.Enable();
-        myPlayerInputActions.Player.Movement.Enable();
-        myPlayerInputActions.Player.YAction.Enable();
-        myPlayerInputActions.Player.XAction.Enable();
-        myPlayerInputActions.Player.AAction.Enable();
-        myPlayerInputActions.Player.StartAction.Enable();
+        playerActionMap.Enable();
     }
     private void OnDisable()
     {
-        myPlayerInputActions.Player.Dash.Disable();
-        myPlayerInputActions.Player.LTAction.Disable();
-        myPlayerInputActions.Player.Movement.Disable();
-        myPlayerInputActions.Player.YAction.Disable();
-        myPlayerInputActions.Player.RBAction.Disable();
-        myPlayerInputActions.Player.XAction.Disable();
-        myPlayerInputActions.Player.StartAction.Disable();
+        playerActionMap.Disable();
     }
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -652,8 +643,17 @@ public class MiningPlayer : MonoBehaviour
     {
         if (isDead)
             return;
-        isDead = true;
-        MiningManager.instance.WinLevel(true);
+            isDead = true;
+        MiningManager.instance.CheckIfBothPlayersDead(gameObject);
+    }
+    public void Respawn()
+    {
+        if (!isDead)
+            return;
+        isDead = false;
+        gameObject.SetActive(true);
+        currentHealth = maxHealth;
+        healthBar.UpdateBar01(currentHealth / maxHealth);
     }
    
    public void ApplyPowerUp(float amount_=1, MiningPowerType power = MiningPowerType.Heal)
