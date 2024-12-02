@@ -121,6 +121,6 @@ public class LumberLevelManager : MonoBehaviour
        // x.Add(LootManager.instance.regularCurrentCash);
         LootDisplayManager.instance.AddResources(x, y, resourceSprites);
         LootDisplayManager.instance.StartVictoryScreen(hasLost_);
-
+        PlayerManager.instance.TemporaryDisablePlayer2();
     }
 }
