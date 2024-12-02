@@ -6,7 +6,9 @@ public class SceneSpecificPlayerManager : MonoBehaviour
 {
     public static SceneSpecificPlayerManager instance;
     public List<GameObject> objectsToDisableWhenPlayer1Joins = new List<GameObject>();
+    public List<GameObject> objectsToEnableWhenPlayer2Joins = new List<GameObject>();
     public List<Canvas> player1Canvases = new List<Canvas>();
+    public List<Canvas> player2Canvases = new List<Canvas>();
     private void Awake()
     {
         instance = this;

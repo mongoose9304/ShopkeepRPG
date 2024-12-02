@@ -21,7 +21,14 @@ public class MiningSceneSpecificPlayerManager : SceneSpecificPlayerManager
     }
     public override void CreatePlayer2(PlayerController controller)
     {
-
+        foreach (GameObject obj in objectsToEnableWhenPlayer2Joins)
+        {
+            obj.SetActive(true);
+        }
+        foreach (Canvas canv in player2Canvases)
+        {
+            canv.worldCamera = controller.myCam;
+        }
         player2.SetUpControls(controller.input);
         player2.transform.position = player1.transform.position;
         player2.gameObject.SetActive(true);
