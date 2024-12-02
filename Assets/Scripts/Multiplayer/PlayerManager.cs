@@ -9,8 +9,6 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     private List<PlayerController> players = new List<PlayerController>();
     [SerializeField]
-    private Transform playerSpawn;
-    [SerializeField]
     private List<LayerMask> playerLayers;
     private PlayerInputManager playerInputManager;
 
