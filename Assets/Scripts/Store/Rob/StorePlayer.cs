@@ -72,41 +72,30 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
     [Header("Inputs")]
-    public PlayerInputActions myPlayerInputActions;
+    public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
-    private void Awake()
+
+    public void SetUpControls(PlayerInput myInput)
     {
-        myPlayerInputActions = new PlayerInputActions();
+        playerActionMap = myInput.actions.FindActionMap("Player");
+        movement = playerActionMap.FindAction("Movement");
+        playerActionMap.FindAction("Dash").performed += OnDash;
+        playerActionMap.FindAction("YAction").performed += OnInteract;
+        playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
+        playerActionMap.FindAction("XAction").performed += OnMoveAction;
+        playerActionMap.FindAction("LTAction").performed += OnWarp;
+        playerActionMap.FindAction("RBAction").performed += OnOpenMoveableInventory;
+        playerActionMap.FindAction("StartAction").performed += OnPause;
+        playerActionMap.Enable();
     }
     private void OnEnable()
     {
-        myPlayerInputActions.Player.Dash.performed += OnDash;
-        myPlayerInputActions.Player.LTAction.performed += OnWarp;
-        myPlayerInputActions.Player.RBAction.performed += OnOpenMoveableInventory;
-        myPlayerInputActions.Player.YAction.performed += OnInteract;
-        myPlayerInputActions.Player.YAction.canceled += OnInteractReleased;
-        myPlayerInputActions.Player.XAction.performed += OnMoveAction;
-        movement = myPlayerInputActions.Player.Movement;
-        myPlayerInputActions.Player.StartAction.performed += OnPause;
-
-        myPlayerInputActions.Player.Dash.Enable();
-        myPlayerInputActions.Player.LTAction.Enable();
-        myPlayerInputActions.Player.Movement.Enable();
-        myPlayerInputActions.Player.YAction.Enable();
-        myPlayerInputActions.Player.RBAction.Enable();
-        myPlayerInputActions.Player.XAction.Enable();
-        myPlayerInputActions.Player.StartAction.Enable();
+        playerActionMap.Enable();
     }
     private void OnDisable()
     {
-        myPlayerInputActions.Player.Dash.Disable();
-        myPlayerInputActions.Player.LTAction.Disable();
-        myPlayerInputActions.Player.Movement.Disable();
-        myPlayerInputActions.Player.YAction.Disable();
-        myPlayerInputActions.Player.RBAction.Disable();
-        myPlayerInputActions.Player.XAction.Disable();
-        myPlayerInputActions.Player.StartAction.Disable();
+        playerActionMap.Disable();
     }
     private void Start()
     {
@@ -172,8 +161,6 @@ public class StorePlayer : MonoBehaviour
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
                 transform.position =  PreventGoingThroughWalls(temp);
-                if(dashTime<=0.1f)
-                DashEdgeCheck();
 
             }
 
@@ -560,20 +547,7 @@ public class StorePlayer : MonoBehaviour
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
     }
-    /// <summary>
-    /// Stop the player from going over the edge near the end of their dash to make the dash feel smoother.
-    /// </summary>
-    private void DashEdgeCheck()
-    {
-        if (!Physics.Raycast(transform.position+transform.forward, transform.TransformDirection(Vector3.down), 10))
-        {
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
-            {
-                dashTime = 0;
-                isDashing = false;
-            }
-        }
-    }
+
    public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);
