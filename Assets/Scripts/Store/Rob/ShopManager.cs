@@ -134,10 +134,10 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
-    public void OpenBarginBin(BarginBin b_)
+    public void OpenBarginBin(BarginBin b_, bool isPlayer2 = false)
     {
         barginScreen.gameObject.SetActive(true);
-        barginScreen.OpenMenu(b_);
+        barginScreen.OpenMenu(b_,isPlayer2);
         inMenu = true;
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);

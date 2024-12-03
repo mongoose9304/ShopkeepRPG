@@ -40,7 +40,20 @@ public class BarginBin : InteractableObject
     public bool inUse;
     public override void Interact(GameObject interactingObject_ = null)
     {
-        ShopManager.instance.OpenBarginBin(this);
+        if (interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
+        {
+            if (!playa.isPlayer2)
+            {
+                if (ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[0]))
+                    ShopManager.instance.OpenBarginBin(this);
+            }
+            else if (playa.isPlayer2)
+            {
+                if (ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[1], true))
+                    ShopManager.instance.OpenBarginBin(this, true);
+            }
+
+        }
     }
     /// <summary>
     /// Set a specifc slot with an item and amount

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using MoreMountains.Tools;
+using UnityEngine.InputSystem.UI;
 
 public class BarginBinScreen : MonoBehaviour
 {
@@ -27,13 +28,18 @@ public class BarginBinScreen : MonoBehaviour
     [SerializeField] AudioClip takeItemAudio;
     [SerializeField] private float maxTimebetweenSliderAudios;
     [SerializeField] private float currentTimebetweenSliderAudios;
+    public InputSystemUIInputModule model;
     private void Update()
     {
         if (currentTimebetweenSliderAudios > 0)
             currentTimebetweenSliderAudios -= Time.deltaTime;
     }
-    public void OpenMenu(BarginBin bin_)
+    public void OpenMenu(BarginBin bin_, bool isPlayer2 = false)
     {
+        if (isPlayer2 == false)
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
+        else
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
         openBarginBin = bin_;
         LoadInventory(bin_);
         SetButtonsActive(false);
