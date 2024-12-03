@@ -24,6 +24,8 @@ public class HaggleUI : MonoBehaviour
     [SerializeField] float maxTimebetweenSliderAudios;
     [Tooltip("REFERNCE to the slider that is used when haggling")]
     public Slider haggleSlider;
+    [Tooltip("REFERNCE to the slider controller that is used when haggling")]
+    public SliderGamepadController haggleSliderController;
     [Tooltip("REFERENCE to the sell button")]
     public GameObject sellButton;
     [Tooltip("REFERENCE to the UI text for the current item's name")]

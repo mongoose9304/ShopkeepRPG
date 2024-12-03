@@ -108,6 +108,7 @@ public class ShopManager : MonoBehaviour
     {
         haggleScreenCopy = GameObject.Instantiate(haggleScreenOriginal.gameObject).GetComponent<HaggleUIHolder>();
         haggleScreenCopy.haggleScreen.isPlayer2 = true;
+        haggleScreenCopy.haggleScreen.haggleSliderController.isPlayer2 = true;
     }
     private void Start()
     {
@@ -115,7 +116,16 @@ public class ShopManager : MonoBehaviour
     }
     public float GetSliderInput()
     {
+        if(!player2InMenu)
         return players[0].movement.ReadValue<Vector2>().x;
+        else
+        {
+            return players[1].movement.ReadValue<Vector2>().x;
+        }
+    }
+    public float GetPlayerSliderInputDirectly(int index)
+    {
+            return players[index].movement.ReadValue<Vector2>().x;
     }
     public void SetUpLevel()
     {
