@@ -21,6 +21,8 @@ public class ShopTutorialManager : TutorialManager
     public InventoryUI invScreen;
     public GameObject smokeEffect;
     public AudioClip stealAudio;
+    public GameObject[] players;
+    public Transform tutEndLocation;
     protected override void Awake()
     {
         instance = this;
@@ -180,6 +182,10 @@ public class ShopTutorialManager : TutorialManager
         }
         inTut = false;
         invScreen.LoadInventory();
+        foreach(GameObject obj in players)
+        {
+            obj.transform.position = tutEndLocation.position;
+        }
     }
     public void CreateSmoke(Transform trans_)
     {

@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 666913769084571804}
   - component: {fileID: 3656911123736680317}
   - component: {fileID: 4209000686433302195}
-  - component: {fileID: 4279502235406185653}
+  - component: {fileID: 7104715737776819142}
   m_Layer: 10
   m_Name: HaggleInteraction
   m_TagString: Interactable
@@ -715,7 +715,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4279502235406185653
+--- !u!114 &7104715737776819142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -724,24 +724,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4013173100327968745}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb16ad56d544ff4ab1982cee3974e8c, type: 3}
+  m_Script: {fileID: 11500000, guid: d966940637b3eaa45adb927c9845b69e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6215699913844178681}
-        m_TargetAssemblyTypeName: Customer, Assembly-CSharp
-        m_MethodName: BeginHaggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  customer: {fileID: 6215699913844178681}
 --- !u!1 &4769628154202271425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,25 +1214,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d45d71ce3c0fff4582f25639ae77583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInHell: 0
-  myAgent: {fileID: 2226765556290703643}
-  tempTarget: {fileID: 0}
   chanceToLookAtBArginBin: 0.3
   chanceToStealItem: 0.15
-  cashOnHand: 500
-  cashOwed: 0
   startingCash: 0
   waitTimePerPedestalMax: 16
   waitTimePerEmptyPedestalMax: 4
-  currentWaitTime: 0
   haggleValueMax: 2
   mood: 0.8
-  hagglePedestal: {fileID: 0}
-  currentBarginBin: {fileID: 0}
-  haggleInteraction: {fileID: 4013173100327968745}
   stopDistance: 2
   maxBrowseChances: 4
   currentBrowseChances: 0
+  isInHell: 0
+  myAgent: {fileID: 2226765556290703643}
+  tempTarget: {fileID: 0}
+  cashOwed: 0
+  cashOnHand: 500
+  currentWaitTime: 0
+  hagglePedestal: {fileID: 0}
+  currentBarginBin: {fileID: 0}
+  haggleInteraction: {fileID: 4013173100327968745}
+  hasBeenSmallTalked: 0
   haggleIndicator: {fileID: 866788123179483881}
   pedestalsSeen: []
   heldItems: []

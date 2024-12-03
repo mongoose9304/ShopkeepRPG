@@ -50,7 +50,9 @@ public class ShopManager : MonoBehaviour
     public PedestalScreen pedScreen;
     public InventoryUI invScreen;
     public BarginBinScreen barginScreen;
-    public HaggleUI haggleScreen;
+    //Haggle Section is set up diffrently so both players can haggle at once
+    public HaggleUIHolder haggleScreenOriginal;
+    public HaggleUIHolder haggleScreenCopy;
     public MoveableObjectUI moveableObjectScreen;
     public GameObject tutScreen;
     public bool inMenu;
@@ -98,7 +100,11 @@ public class ShopManager : MonoBehaviour
 
         if (cashFeedbackHell)
             cashCounterHell = cashFeedbackHell.GetFeedbackOfType<MMF_TMPCountTo>();
-      
+        SetUpHaggleScreens();
+    }
+    private void SetUpHaggleScreens()
+    {
+        haggleScreenCopy = GameObject.Instantiate(haggleScreenOriginal.gameObject).GetComponent<HaggleUIHolder>();
     }
     private void Start()
     {
@@ -142,13 +148,26 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
-    public void OpenHaggleScreen(Pedestal p_,Customer c_,float haggleStart_)
+    public void OpenHaggleScreen(Pedestal p_,Customer c_,float haggleStart_, bool isPlayer2 = false)
     {
-        haggleScreen.gameObject.SetActive(true);
-        haggleScreen.OpenMenu(p_,c_,haggleStart_);
-        inMenu = true;
+        Debug.Log("OpenHaggle");
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
+        if (!isPlayer2)
+        {
+
+            haggleScreenOriginal.haggleUICanvas.worldCamera = PlayerManager.instance.GetPlayers()[0].myCam;
+            haggleScreenOriginal.haggleScreen.transform.parent.gameObject.SetActive(true);
+            haggleScreenOriginal.haggleScreen.gameObject.SetActive(true);
+            haggleScreenOriginal.haggleScreen.OpenMenu(p_, c_, haggleStart_);
+        }
+        else
+        {
+            haggleScreenCopy.haggleUICanvas.worldCamera = PlayerManager.instance.GetPlayers()[1].myCam;
+            haggleScreenCopy.haggleScreen.transform.parent.gameObject.SetActive(true);
+            haggleScreenCopy.haggleScreen.gameObject.SetActive(true);
+            haggleScreenCopy.haggleScreen.OpenMenu(p_, c_, haggleStart_);
+        }
     }
     public void OpenMoveableObjectScreen()
     {
@@ -164,8 +183,8 @@ public class ShopManager : MonoBehaviour
         pedScreen.gameObject.SetActive(false);
         barginScreen.gameObject.SetActive(false);
         barginScreen.CloseMenu();
-        haggleScreen.gameObject.SetActive(false);
-        haggleScreen.CloseMenu();
+        //haggleScreen.gameObject.SetActive(false);
+        //haggleScreen.CloseMenu();
         moveableObjectScreen.gameObject.SetActive(false);
         moveableObjectScreen.CloseMenu();
         invScreen.OpenMenu(false);

@@ -271,10 +271,10 @@ public class Customer : MonoBehaviour
     /// <summary>
     /// Start a haggle with the player when interacted with
     /// </summary>
-    public void BeginHaggle()
+    public void BeginHaggle(bool isPlayer2=false)
     {
         //haggleIndicator.SetActive(false);
-        ShopManager.instance.OpenHaggleScreen(hagglePedestal,this,1);
+        ShopManager.instance.OpenHaggleScreen(hagglePedestal,this,1,isPlayer2);
         isInUse = true;
     }
     /// <summary>
