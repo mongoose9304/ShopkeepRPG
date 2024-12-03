@@ -112,9 +112,19 @@ public class StorePlayer : MonoBehaviour
         if (isDead)
             return;
         //close most menus by pressing the B or back button
-        if (ShopManager.instance.inMenu)
+        if (!isPlayer2)
         {
-            return;
+            if (ShopManager.instance.inMenu&&!ShopManager.instance.player2InMenu)
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (ShopManager.instance.inMenu && ShopManager.instance.player2InMenu)
+            {
+                return;
+            }
         }
 
            
@@ -177,15 +187,31 @@ public class StorePlayer : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
-        if (ShopManager.instance.inMenu)
+        if (!isPlayer2)
         {
+            if (ShopManager.instance.inMenu&& !ShopManager.instance.player2InMenu)
+            {
 
                 ShopManager.instance.MenuBackButton();
                 if (ShopManager.instance)
                 {
                     ShopManager.instance.PlayUIAudio("Close");
                 }
-            return;
+                return;
+            }
+        }
+        else
+        {
+            if (ShopManager.instance.inMenu &&ShopManager.instance.player2InMenu)
+            {
+
+                ShopManager.instance.MenuBackButton();
+                if (ShopManager.instance)
+                {
+                    ShopManager.instance.PlayUIAudio("Close");
+                }
+                return;
+            }
         }
         
         if (dashCoolDown <= 0)

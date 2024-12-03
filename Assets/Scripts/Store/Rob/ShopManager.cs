@@ -54,6 +54,7 @@ public class ShopManager : MonoBehaviour
     public MoveableObjectUI moveableObjectScreen;
     public GameObject tutScreen;
     public bool inMenu;
+    public bool player2InMenu;
     MMF_TMPCountTo cashCounter;
     MMF_TMPCountTo cashCounterHell;
     [SerializeField] MMF_Player cashFeedback;
@@ -116,17 +117,19 @@ public class ShopManager : MonoBehaviour
         PlayRandomBGM();
         StartCoroutine(WaitAFrameBeforeRedoingNavmesh());
     }
-    public bool OpenAMenu(PlayerController controller)
+    public bool OpenAMenu(PlayerController controller,bool isPlayer2=false)
     {
         if (inMenu)
             return false;
+        if (isPlayer2)
+            player2InMenu = true;
         shopUI.worldCamera = controller.myCam;
         return true;
     }
-    public void OpenPedestal(Pedestal p_)
+    public void OpenPedestal(Pedestal p_, bool isPlayer2 = false)
     {
         pedScreen.gameObject.SetActive(true);
-        pedScreen.OpenMenu(p_);
+        pedScreen.OpenMenu(p_,isPlayer2);
         inMenu = true;
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
@@ -169,7 +172,7 @@ public class ShopManager : MonoBehaviour
         if(ShopTutorialManager.instance.inTut)
         tutScreen.SetActive(true);
         EnableExitMenuButton(false);
-
+        player2InMenu = false;
 
     }
     private void EnableExitMenuButton(bool enable_=false)

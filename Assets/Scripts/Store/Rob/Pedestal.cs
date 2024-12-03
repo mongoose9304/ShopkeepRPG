@@ -48,8 +48,8 @@ public class Pedestal : InteractableObject
             }
             else if (playa.isPlayer2)
             {
-                if (ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[1]))
-                    ShopManager.instance.OpenPedestal(this);
+                if (ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[1], true))
+                    ShopManager.instance.OpenPedestal(this,true);
             }
 
         }

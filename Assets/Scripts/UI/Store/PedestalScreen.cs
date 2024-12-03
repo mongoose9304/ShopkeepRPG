@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using MoreMountains.Tools;
+using UnityEngine.InputSystem.UI;
 
 public class PedestalScreen : MonoBehaviour
 {
@@ -18,8 +19,13 @@ public class PedestalScreen : MonoBehaviour
     public TextMeshProUGUI currentItemValue;
     [SerializeField] AudioClip placeItemAudio;
     [SerializeField] AudioClip takeItemAudio;
-    public void OpenMenu(Pedestal p_)
+    public InputSystemUIInputModule model;
+    public void OpenMenu(Pedestal p_,bool isPlayer2=false)
     {
+        if(isPlayer2==false)
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
+        else
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         if (p_.myItemPrevious)
         {
