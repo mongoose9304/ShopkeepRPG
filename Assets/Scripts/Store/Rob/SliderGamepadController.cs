@@ -20,7 +20,7 @@ public class SliderGamepadController : MonoBehaviour
     {
         if (buttonObject == EventSystem.current.currentSelectedGameObject)
         {
-            sliderChange = Input.GetAxis(SliderInputString) * sliderRange / SliderMovement;
+            sliderChange = ShopManager.instance.GetSliderInput() * sliderRange / SliderMovement;
             float sliderValue = mySlider.value;
             float tempValue = sliderValue + sliderChange*Time.deltaTime;
             Mathf.Clamp(tempValue, mySlider.minValue, mySlider.maxValue);

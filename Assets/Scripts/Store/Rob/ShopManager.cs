@@ -87,6 +87,7 @@ public class ShopManager : MonoBehaviour
     public AudioClip enterHellAudio;
     public AudioClip openShopAudio;
     public NavMeshSurface surface;
+    public Canvas shopUI;
     private void Awake()
     {
         instance = this;
@@ -102,6 +103,10 @@ public class ShopManager : MonoBehaviour
     {
         SetUpLevel();
     }
+    public float GetSliderInput()
+    {
+        return player.movement.ReadValue<Vector2>().x;
+    }
     public void SetUpLevel()
     {
         SetPedestalList();
@@ -110,6 +115,13 @@ public class ShopManager : MonoBehaviour
         LoadAllBarginBins();
         PlayRandomBGM();
         StartCoroutine(WaitAFrameBeforeRedoingNavmesh());
+    }
+    public bool OpenAMenu(PlayerController controller)
+    {
+        if (inMenu)
+            return false;
+        shopUI.worldCamera = controller.myCam;
+        return true;
     }
     public void OpenPedestal(Pedestal p_)
     {

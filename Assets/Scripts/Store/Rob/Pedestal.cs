@@ -37,7 +37,22 @@ public class Pedestal : InteractableObject
     /// </summary>
     public override void Interact(GameObject interactingObject_ = null)
     {
-        ShopManager.instance.OpenPedestal(this);
+        if (interactingObject_ == null)
+            return;
+      if(interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
+        {
+            if(!playa.isPlayer2)
+            {
+                if(ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[0]))
+                    ShopManager.instance.OpenPedestal(this);
+            }
+            else if (playa.isPlayer2)
+            {
+                if (ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[1]))
+                    ShopManager.instance.OpenPedestal(this);
+            }
+
+        }
     }
     /// <summary>
     /// Set an item on this pedestal and set up the visuals , if the item is null this will throw an error

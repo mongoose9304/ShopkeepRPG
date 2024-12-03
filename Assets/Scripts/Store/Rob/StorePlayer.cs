@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class StorePlayer : MonoBehaviour
 {
+    public bool isPlayer2;
     [Header("Movement")]
     [Tooltip("The time before a player can dash again")]
     public float maxdashCoolDown;
@@ -73,7 +74,7 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] bool isDead;
     [Header("Inputs")]
     public InputActionMap playerActionMap;
-    private InputAction movement;
+    public InputAction movement;
     private bool InteractHeld;
 
     public void SetUpControls(PlayerInput myInput)
@@ -287,7 +288,7 @@ public class StorePlayer : MonoBehaviour
         {
            if(interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj ))
             {
-                obj.Interact();
+                obj.Interact(gameObject);
             }
         }
     }
