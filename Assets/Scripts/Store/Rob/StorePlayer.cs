@@ -120,6 +120,8 @@ public class StorePlayer : MonoBehaviour
             {
                 return;
             }
+            if(ShopManager.instance.inHaggle)
+                return;
         }
         else
         {
@@ -127,6 +129,8 @@ public class StorePlayer : MonoBehaviour
             {
                 return;
             }
+            if (ShopManager.instance.player2InHaggle)
+                return;
         }
 
            
@@ -201,18 +205,40 @@ public class StorePlayer : MonoBehaviour
                 }
                 return;
             }
+            if (ShopManager.instance.inHaggle)
+            {
+                {
+                    ShopManager.instance.MenuBackButton();
+                    if (ShopManager.instance)
+                    {
+                        ShopManager.instance.PlayUIAudio("Close");
+                    }
+                    return;
+                }
+            }
         }
         else
         {
             if (ShopManager.instance.inMenu &&ShopManager.instance.player2InMenu)
             {
 
-                ShopManager.instance.MenuBackButton();
+                ShopManager.instance.MenuBackButton(true);
                 if (ShopManager.instance)
                 {
                     ShopManager.instance.PlayUIAudio("Close");
                 }
                 return;
+            }
+            if (ShopManager.instance.player2InHaggle)
+            {
+                {
+                    ShopManager.instance.MenuBackButton(true);
+                    if (ShopManager.instance)
+                    {
+                        ShopManager.instance.PlayUIAudio("Close");
+                    }
+                    return;
+                }
             }
         }
         

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 /// <summary>
 /// UI screen that is activated when a player tries to haggle at a pedestal with an NPC
 /// </summary>
 public class HaggleUI : MonoBehaviour
 {
+    public bool isPlayer2;
     [Tooltip("UI for the current object being haggled over")]
     public InventorySlot currentHaggleSlot;
     [Tooltip("The current pedestal we are haggling at")]
@@ -37,6 +39,7 @@ public class HaggleUI : MonoBehaviour
     [Tooltip("REFERENCE to the image that changes with the NPCs mood on the current haggle price")]
     public Image SliderEmoji;
     private float currentTimebetweenSliderAudios;
+    public InputSystemUIInputModule model;
     private void Update()
     {
         if (currentTimebetweenSliderAudios > 0)
@@ -45,8 +48,12 @@ public class HaggleUI : MonoBehaviour
     /// <summary>
     /// Open the menu and set up the currently selected UI object/all the UI
     /// </summary>
-    public void OpenMenu(Pedestal p_,Customer c_,float haggleStart_)
+    public void OpenMenu(Pedestal p_,Customer c_,float haggleStart_, bool isPlayer2 = false)
     {
+        if (isPlayer2 == false)
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
+        else
+            model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
         openPedestal = p_;
         currentCustomer = c_;
         currentItemValue.text = (p_.myItem.basePrice * p_.amount).ToString();
@@ -89,7 +96,7 @@ public class HaggleUI : MonoBehaviour
                 currentCustomer.EndHaggle(currentSellValue);
                 openPedestal.ItemSold();
                 ShopManager.instance.AddCash(currentSellValue,currentCustomer.isInHell);
-                ShopManager.instance.CloseMenu();
+                ShopManager.instance.CloseMenu(isPlayer2);
                 break;
             case 1:
                 RandomWayTooHigh();
@@ -107,12 +114,12 @@ public class HaggleUI : MonoBehaviour
         {
             currentCustomer.ForceEndHaggle();
             openPedestal.SetInUse(false);
-            ShopManager.instance.CloseMenu();
+            ShopManager.instance.CloseMenu(isPlayer2);
         }
         else
         {
             currentCustomer.ForceEndHaggle();
-            ShopManager.instance.CloseMenu();
+            ShopManager.instance.CloseMenu(isPlayer2);
         }
     }
     /// <summary>

@@ -56,6 +56,8 @@ public class ShopManager : MonoBehaviour
     public MoveableObjectUI moveableObjectScreen;
     public GameObject tutScreen;
     public bool inMenu;
+    public bool inHaggle;
+    public bool player2InHaggle;
     public bool player2InMenu;
     MMF_TMPCountTo cashCounter;
     MMF_TMPCountTo cashCounterHell;
@@ -105,6 +107,7 @@ public class ShopManager : MonoBehaviour
     private void SetUpHaggleScreens()
     {
         haggleScreenCopy = GameObject.Instantiate(haggleScreenOriginal.gameObject).GetComponent<HaggleUIHolder>();
+        haggleScreenCopy.haggleScreen.isPlayer2 = true;
     }
     private void Start()
     {
@@ -155,7 +158,7 @@ public class ShopManager : MonoBehaviour
         EnableExitMenuButton(true);
         if (!isPlayer2)
         {
-
+            inHaggle = true;
             haggleScreenOriginal.haggleUICanvas.worldCamera = PlayerManager.instance.GetPlayers()[0].myCam;
             haggleScreenOriginal.haggleScreen.transform.parent.gameObject.SetActive(true);
             haggleScreenOriginal.haggleScreen.gameObject.SetActive(true);
@@ -163,10 +166,11 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
+            player2InHaggle = true;
             haggleScreenCopy.haggleUICanvas.worldCamera = PlayerManager.instance.GetPlayers()[1].myCam;
             haggleScreenCopy.haggleScreen.transform.parent.gameObject.SetActive(true);
             haggleScreenCopy.haggleScreen.gameObject.SetActive(true);
-            haggleScreenCopy.haggleScreen.OpenMenu(p_, c_, haggleStart_);
+            haggleScreenCopy.haggleScreen.OpenMenu(p_, c_, haggleStart_,true);
         }
     }
     public void OpenMoveableObjectScreen()
@@ -177,14 +181,24 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
-    public void CloseMenu()
+    public void CloseMenu(bool player2=false)
     {
+        if (!player2)
+        {
+            haggleScreenOriginal.haggleScreen.gameObject.SetActive(false);
+            haggleScreenOriginal.haggleScreen.CloseMenu();
+            inHaggle = false;
+        }
+        else
+        {
+            haggleScreenCopy.haggleScreen.gameObject.SetActive(false);
+            haggleScreenCopy.haggleScreen.CloseMenu();
+            player2InHaggle = false;
+        }
         inMenu = false;
         pedScreen.gameObject.SetActive(false);
         barginScreen.gameObject.SetActive(false);
         barginScreen.CloseMenu();
-        //haggleScreen.gameObject.SetActive(false);
-        //haggleScreen.CloseMenu();
         moveableObjectScreen.gameObject.SetActive(false);
         moveableObjectScreen.CloseMenu();
         invScreen.OpenMenu(false);
@@ -199,9 +213,9 @@ public class ShopManager : MonoBehaviour
         exitMenuUI.SetActive(enable_);
         cashTextUI.SetActive(!enable_);
     }
-    public void MenuBackButton()
+    public void MenuBackButton(bool player2=false)
     {
-        CloseMenu();
+        CloseMenu(player2);
     }
     public void ResetCashEarned()
     {
