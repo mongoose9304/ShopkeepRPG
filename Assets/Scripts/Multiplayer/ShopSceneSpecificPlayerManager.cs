@@ -32,5 +32,6 @@ public class ShopSceneSpecificPlayerManager : SceneSpecificPlayerManager
         player2.SetUpControls(controller.input);
         player2.transform.position = player1.transform.position;
         player2.gameObject.SetActive(true);
+        ShopManager.instance.twoPlayerMode = true;
     }
 }

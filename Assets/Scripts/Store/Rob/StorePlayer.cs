@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class StorePlayer : MonoBehaviour
 {
     public bool isPlayer2;
+    public bool inHell;
     [Header("Movement")]
     [Tooltip("The time before a player can dash again")]
     public float maxdashCoolDown;
@@ -72,6 +73,7 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] LayerMask tileLayer;
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
+    public ParticleSystem tpEffect;
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     public InputAction movement;
@@ -592,7 +594,11 @@ public class StorePlayer : MonoBehaviour
         if (teleportCooldown > 0)
             return;
         teleportCooldown = teleportCooldownMax;
-        ShopManager.instance.WarpPlayerToOtherStore();
+        ShopManager.instance.WarpPlayerToOtherStore(gameObject);
+    }
+    public void PlayTeleportEffects()
+    {
+        tpEffect.Play();
     }
     /// <summary>
     /// Toggle the ability to move objects, this will also save their layout 

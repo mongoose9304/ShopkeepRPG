@@ -9,7 +9,7 @@ using Unity.AI.Navigation;
 public class ShopManager : MonoBehaviour
 {
     public static ShopManager instance;
-
+    public bool twoPlayerMode;
     //hot and cold items lists combined
     public List<ItemData> hotItems=new List<ItemData>();
     public List<ItemData> hotItemsHell=new List<ItemData>();
@@ -40,7 +40,7 @@ public class ShopManager : MonoBehaviour
     public MMF_Player cashSymbolHell;
     public MMF_Player stealAlertHell;
     public TextMeshProUGUI cashEarnedTextHell;
-    public StorePlayer player;
+    public StorePlayer[] players;
     public GameObject storeRoom;
     public GameObject storeRoomHell;
     public GameObject[] exitSpots;
@@ -106,7 +106,7 @@ public class ShopManager : MonoBehaviour
     }
     public float GetSliderInput()
     {
-        return player.movement.ReadValue<Vector2>().x;
+        return players[0].movement.ReadValue<Vector2>().x;
     }
     public void SetUpLevel()
     {
@@ -235,8 +235,12 @@ public class ShopManager : MonoBehaviour
     }
     public void RemoveInteractableObject(GameObject obj)
     {
-        if (player.myInteractableObjects.Contains(obj))
-            player.RemoveInteractableObject(obj);
+        foreach (StorePlayer playa in players)
+        {
+            if (playa.myInteractableObjects.Contains(obj))
+                playa.RemoveInteractableObject(obj);
+        }
+            
     }
     public GameObject GetRandomTargetPedestal(float chanceToTargetWindows,bool inHell=false)
     {
@@ -301,7 +305,7 @@ public class ShopManager : MonoBehaviour
     }
     public void OpenShop()
     {
-        if(player.isInMovingMode)
+        if(players[0].isInMovingMode)
         {
             foreach (ShopDoor door_ in mydoors)
             {
@@ -379,7 +383,7 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
-    public void EnterHell()
+    public void EnterHell(GameObject obj)
     {
         playerInHell = true;
         foreach(Thief t_ in currentThieves)
@@ -394,12 +398,16 @@ public class ShopManager : MonoBehaviour
    false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
-    public void ExitHell()
+    public void ExitHell(GameObject obj)
     {
-        playerInHell = false;
-        foreach (Thief t_ in currentThieves)
+        if (twoPlayerMode)
         {
-            t_.CheckSpeed();
+
+            playerInHell = false;
+            foreach (Thief t_ in currentThieves)
+            {
+                t_.CheckSpeed();
+            }
         }
         foreach(ParticleSystem sys in teleportEffectsHuman)
         {
@@ -739,17 +747,19 @@ public class ShopManager : MonoBehaviour
             return hellShopEnabled;
         }
     }
-    public void WarpPlayerToOtherStore()
+    public void WarpPlayerToOtherStore(GameObject obj)
     {
-        if(playerInHell)
+        if(obj.GetComponent<StorePlayer>().inHell)
         {
-            ExitHell();
-            player.gameObject.transform.position = teleportLocationHuman.position;
+            obj.GetComponent<StorePlayer>().inHell = false;
+            ExitHell(obj);
+            obj.transform.position = teleportLocationHuman.position;
         }
         else
         {
-            EnterHell();
-            player.gameObject.transform.position = teleportLocationHell.position;
+            obj.GetComponent<StorePlayer>().inHell = true;
+            EnterHell(obj);
+            obj.transform.position = teleportLocationHell.position;
         }
     }
     public void PlayRandomBGM()
@@ -790,8 +800,11 @@ public class ShopManager : MonoBehaviour
     }
     public void ToggleMoveMode()
     {
-        if(!shopRunning)
-        player.ToggleMoveMode();
+        if (!shopRunning)
+        {
+            foreach(StorePlayer playa in players)
+                playa.ToggleMoveMode();
+        }
         moveModeNeedsToBeDeactivatedText.SetActive(false);
     }
     public void RedoNavMesh()
@@ -805,11 +818,11 @@ public class ShopManager : MonoBehaviour
     }
     public MoveableObject GetPlayerHeldMoveableItem()
     {
-       return player.GetHeldObject();
+       return players[0].GetHeldObject();
     }
     public void SetPlayerHeldMoveableItem(MoveableObject obj_)
     {
-        player.SetHeldObject(obj_);
+        players[0].SetHeldObject(obj_);
     }
     //1=hot, 2=cold 0= neutral;
     public int CheckIfItemIsHot(ItemData itemToCheck,bool inHell=false)
