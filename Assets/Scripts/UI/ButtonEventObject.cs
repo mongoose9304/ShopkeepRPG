@@ -33,6 +33,8 @@ public class ButtonEventObject : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
     private void OnEnable()
     {
+		if (EventSystem.current == null)
+			return;
 		if (EventSystem.current.currentSelectedGameObject==gameObject)
         {
 			selectEvent.Invoke();
