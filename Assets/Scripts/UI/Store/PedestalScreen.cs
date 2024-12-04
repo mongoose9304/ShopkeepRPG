@@ -8,6 +8,7 @@ using UnityEngine.InputSystem.UI;
 public class PedestalScreen : MonoBehaviour
 {
     public InventorySlot currentPedestalSlot;
+    public bool isPlayer2;
     public InventoryUI  inventoryUI;
     public InventorySlot currentInventorySlot;
     public InventorySlot previousItemSlot;
@@ -20,12 +21,18 @@ public class PedestalScreen : MonoBehaviour
     [SerializeField] AudioClip placeItemAudio;
     [SerializeField] AudioClip takeItemAudio;
     public InputSystemUIInputModule model;
-    public void OpenMenu(Pedestal p_,bool isPlayer2=false)
+    public void OpenMenu(Pedestal p_,bool isPlayer2_=false)
     {
-        if(isPlayer2==false)
+        if (isPlayer2_ == false)
+        {
             model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
+            isPlayer2 = false;
+        }
         else
+        {
             model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
+            isPlayer2 = true;
+        }
         UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(currentPedestalSlot.gameObject);
         if (p_.myItemPrevious)
         {
@@ -189,7 +196,7 @@ public class PedestalScreen : MonoBehaviour
         {
             openPedestal.ClearItem();
         }
-        ShopManager.instance.CloseMenu();
+        ShopManager.instance.CloseMenu(isPlayer2);
         CustomerManager.instance.CheckPedestalsforItems();
         MMSoundManager.Instance.PlaySound(placeItemAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,

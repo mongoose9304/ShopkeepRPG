@@ -192,17 +192,23 @@ public class ShopManager : MonoBehaviour
     }
     public void CloseMenu(bool player2=false)
     {
-        if (!player2)
+        if (!player2&&inHaggle)
         {
             haggleScreenOriginal.haggleScreen.gameObject.SetActive(false);
             haggleScreenOriginal.haggleScreen.CloseMenu();
             inHaggle = false;
+            if (ShopTutorialManager.instance.inTut)
+                tutScreen.SetActive(true);
+            return;
         }
-        else
+        if(player2 && player2InHaggle)
         {
             haggleScreenCopy.haggleScreen.gameObject.SetActive(false);
             haggleScreenCopy.haggleScreen.CloseMenu();
             player2InHaggle = false;
+            if (ShopTutorialManager.instance.inTut)
+                tutScreen.SetActive(true);
+            return;
         }
         inMenu = false;
         pedScreen.gameObject.SetActive(false);
