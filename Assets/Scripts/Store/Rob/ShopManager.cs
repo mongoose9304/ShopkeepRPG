@@ -108,7 +108,6 @@ public class ShopManager : MonoBehaviour
     {
         haggleScreenCopy = GameObject.Instantiate(haggleScreenOriginal.gameObject).GetComponent<HaggleUIHolder>();
         haggleScreenCopy.haggleScreen.isPlayer2 = true;
-        haggleScreenCopy.haggleScreen.haggleSliderController.isPlayer2 = true;
     }
     private void Start()
     {

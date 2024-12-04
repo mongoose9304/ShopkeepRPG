@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 /// <summary>
@@ -52,22 +53,57 @@ public class HaggleUI : MonoBehaviour
     /// </summary>
     public void OpenMenu(Pedestal p_,Customer c_,float haggleStart_, bool isPlayer2 = false)
     {
-        if (isPlayer2 == false)
-            model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
-        else
-            model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
+       // if (isPlayer2 == false)
+       //     model.actionsAsset = PlayerManager.instance.GetPlayers()[0].input.actions;
+       // else
+       //     model.actionsAsset = PlayerManager.instance.GetPlayers()[1].input.actions;
         openPedestal = p_;
         currentCustomer = c_;
         currentItemValue.text = (p_.myItem.basePrice * p_.amount).ToString();
         currentHaggleAmount = haggleStart_;
         haggleSlider.value = currentHaggleAmount;
         CalculateHagglePrice();
-        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(sellButton);
         RandomGreeting();
         currentHaggleSlot.SetItem(openPedestal.myItem, openPedestal.amount);
         currentItemNameText.text = openPedestal.myItem.itemName;
         ChangeHaggleSliderEmotion(haggleStart_);
         currentTimebetweenSliderAudios = 0;
+        AddPlayerInput();
+    }
+
+    private void AddPlayerInput()
+    {
+        if(!isPlayer2)
+        {
+            ShopManager.instance.players[0].playerActionMap.FindAction("XAction").performed += OnNoDeal;
+            ShopManager.instance.players[0].playerActionMap.FindAction("AAction").performed += OnDeal;
+        }
+        if (isPlayer2)
+        {
+            ShopManager.instance.players[1].playerActionMap.FindAction("XAction").performed += OnNoDeal;
+            ShopManager.instance.players[1].playerActionMap.FindAction("AAction").performed += OnDeal;
+        }
+    }
+    private void RemovePlayerInput()
+    {
+        if (!isPlayer2)
+        {
+            ShopManager.instance.players[0].playerActionMap.FindAction("XAction").performed -= OnNoDeal;
+            ShopManager.instance.players[0].playerActionMap.FindAction("AAction").performed -= OnDeal;
+        }
+        if (isPlayer2)
+        {
+            ShopManager.instance.players[1].playerActionMap.FindAction("XAction").performed -= OnNoDeal;
+            ShopManager.instance.players[1].playerActionMap.FindAction("AAction").performed -= OnDeal;
+        }
+    }
+    private void OnNoDeal(InputAction.CallbackContext obj)
+    {
+        NoDeal();
+    }
+    private void OnDeal(InputAction.CallbackContext obj)
+    {
+        Sell();
     }
     /// <summary>
     /// Set the haggle amount. This is used by the UI slider 
@@ -170,6 +206,7 @@ public class HaggleUI : MonoBehaviour
         if (currentCustomer)
             currentCustomer.isInUse = false;
         currentCustomer = null;
+        RemovePlayerInput();
     }
     /// <summary>
     ///Chnage the emotion of the haggle slider. 0 = superHappy, 1= super pissed, 2 = little pissed,3 little happy, 4 normal
