@@ -26,7 +26,7 @@ public class HaggleUI : MonoBehaviour
     [Tooltip("REFERNCE to the slider that is used when haggling")]
     public Slider haggleSlider;
     [Tooltip("REFERNCE to the slider controller that is used when haggling")]
-    public SliderGamepadController haggleSliderController;
+    public HaggleSlider haggleSliderController;
     [Tooltip("REFERENCE to the sell button")]
     public GameObject sellButton;
     [Tooltip("REFERENCE to the UI text for the current item's name")]
@@ -47,6 +47,10 @@ public class HaggleUI : MonoBehaviour
     {
         if (currentTimebetweenSliderAudios > 0)
             currentTimebetweenSliderAudios -= Time.deltaTime;
+        if(!isPlayer2)
+            haggleSliderController.sliderInput = ShopManager.instance.players[0].movement.ReadValue<Vector2>().x;
+        else
+            haggleSliderController.sliderInput = ShopManager.instance.players[1].movement.ReadValue<Vector2>().x;
     }
     /// <summary>
     /// Open the menu and set up the currently selected UI object/all the UI
@@ -77,6 +81,7 @@ public class HaggleUI : MonoBehaviour
         {
             ShopManager.instance.players[0].playerActionMap.FindAction("XAction").performed += OnNoDeal;
             ShopManager.instance.players[0].playerActionMap.FindAction("AAction").performed += OnDeal;
+            
         }
         if (isPlayer2)
         {
