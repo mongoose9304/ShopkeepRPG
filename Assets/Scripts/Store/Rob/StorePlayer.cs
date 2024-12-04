@@ -88,6 +88,7 @@ public class StorePlayer : MonoBehaviour
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("XAction").performed += OnMoveAction;
         playerActionMap.FindAction("LTAction").performed += OnWarp;
+        if(!isPlayer2)
         playerActionMap.FindAction("RBAction").performed += OnOpenMoveableInventory;
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
@@ -633,6 +634,13 @@ public class StorePlayer : MonoBehaviour
     {
         if(ShopTutorialManager.instance.inTut)
         {
+            ShopManager.instance.MenuBackButton();
+            ShopManager.instance.ChangeCameraForUI(PlayerManager.instance.GetPlayers()[0]);
+            if (heldObject)
+            {
+                ShopManager.instance.moveableObjectScreen.StoreItem(heldObject);
+                ClearHeldObject();
+            }
             if (isInMovingMode)
             {
                 moveDetector.SetActive(false);
@@ -650,7 +658,14 @@ public class StorePlayer : MonoBehaviour
             }
             return;
         }
-        if(isInMovingMode)
+        ShopManager.instance.MenuBackButton();
+        ShopManager.instance.ChangeCameraForUI(PlayerManager.instance.GetPlayers()[0]);
+        if (heldObject)
+        {
+            ShopManager.instance.moveableObjectScreen.StoreItem(heldObject);
+            ClearHeldObject();
+        }
+        if (isInMovingMode)
         {
             moveDetector.SetActive(false);
             moveableObjectSlotLockOnObject.SetActive(false);
@@ -670,6 +685,7 @@ public class StorePlayer : MonoBehaviour
             isInMovingMode = true;
             moveModeUIObject.SetActive(true);
         }
+        
     }
   
    

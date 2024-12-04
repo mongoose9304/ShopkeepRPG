@@ -29,7 +29,6 @@ public class ShopManager : MonoBehaviour
 
     public GameObject cashTextUI;
     public GameObject exitMenuUI;
-    public GameObject moveModeNeedsToBeDeactivatedText;
     public bool playerInHell;
     public bool hellShopEnabled;
     public bool humanShopEnabled;
@@ -93,6 +92,7 @@ public class ShopManager : MonoBehaviour
     public AudioClip openShopAudio;
     public NavMeshSurface surface;
     public Canvas shopUI;
+    public TextMeshProUGUI[] playerTextPopUps;
     private void Awake()
     {
         instance = this;
@@ -138,11 +138,18 @@ public class ShopManager : MonoBehaviour
     public bool OpenAMenu(PlayerController controller,bool isPlayer2=false)
     {
         if (inMenu)
+        {
+            PlayPopUpText("Other Player is in a menu", isPlayer2);
             return false;
+        }
         if (isPlayer2)
             player2InMenu = true;
         shopUI.worldCamera = controller.myCam;
         return true;
+    }
+    public void ChangeCameraForUI(PlayerController controller)
+    {
+        shopUI.worldCamera = controller.myCam;
     }
     public void OpenPedestal(Pedestal p_, bool isPlayer2 = false)
     {
@@ -290,6 +297,19 @@ public class ShopManager : MonoBehaviour
         }
             
     }
+    public void PlayPopUpText(string text,bool isPlayer2=false)
+    {
+        if(!isPlayer2)
+        {
+            playerTextPopUps[0].text = text;
+            playerTextPopUps[0].gameObject.SetActive(true);
+        }
+        else
+        {
+            playerTextPopUps[1].text = text;
+            playerTextPopUps[1].gameObject.SetActive(true);
+        }
+    }
     public GameObject GetRandomTargetPedestal(float chanceToTargetWindows,bool inHell=false)
     {
         if (!inHell)
@@ -359,7 +379,8 @@ public class ShopManager : MonoBehaviour
             {
                 door_.ResetDoor();
             }
-            moveModeNeedsToBeDeactivatedText.SetActive(true);
+            PlayPopUpText("Exit Moving Mode first");
+            PlayPopUpText("Exit Moving Mode first",true);
             return;
         }
         if (!humanShopEnabled && !hellShopEnabled)
@@ -853,7 +874,6 @@ public class ShopManager : MonoBehaviour
             foreach(StorePlayer playa in players)
                 playa.ToggleMoveMode();
         }
-        moveModeNeedsToBeDeactivatedText.SetActive(false);
     }
     public void RedoNavMesh()
     {

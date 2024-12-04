@@ -41,6 +41,11 @@ public class Pedestal : InteractableObject
             return;
       if(interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
         {
+            if (playa.isInMovingMode)
+            {
+              ShopManager.instance.PlayPopUpText("Exit Moving Mode first", playa.isPlayer2);
+                return;
+            }
             if(!playa.isPlayer2)
             {
                 if(ShopManager.instance.OpenAMenu(PlayerManager.instance.GetPlayers()[0]))

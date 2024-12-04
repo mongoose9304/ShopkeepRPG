@@ -44,6 +44,10 @@ public class MoveableObjectUI : MonoBehaviour
             SaveItem();
         }
     }
+    public void StoreItem(MoveableObject item_,int amount_=1)
+    {
+        invUI.AddItemToInventory(item_, amount_);
+    }
     public void SaveItem()
     {
         ShopManager.instance.SetPlayerHeldMoveableItem(currentItemSlot.myMoveableObject);
