@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LumberPuzzle : MonoBehaviour
 {
+    public bool LastHitByPlayerTwo;
     public int currentComboCount;
     public List<GameObject> myTrees = new List<GameObject>();
     public GameObject resetParticleEffect;
@@ -77,12 +78,12 @@ public class LumberPuzzle : MonoBehaviour
     public void AddToCombo()
     {
         currentComboCount += 1;
-        TreeManager.instance.SetCombo(currentComboCount);
+        TreeManager.instance.SetCombo(currentComboCount, LastHitByPlayerTwo);
     }
     public void ResetCombo()
     {
         currentComboCount = 0;
-        TreeManager.instance.ResetCombo();
+        TreeManager.instance.ResetCombo(LastHitByPlayerTwo);
     }
 
 }

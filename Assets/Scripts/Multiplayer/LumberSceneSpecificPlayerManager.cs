@@ -21,7 +21,10 @@ public class LumberSceneSpecificPlayerManager : SceneSpecificPlayerManager
     }
     public override void CreatePlayer2(PlayerController controller)
     {
-
+        foreach (Canvas canv in player2Canvases)
+        {
+            canv.worldCamera = controller.myCam;
+        }
         player2.SetUpControls(controller.input);
         player2.transform.position = player1.transform.position;
         player2.gameObject.SetActive(true);

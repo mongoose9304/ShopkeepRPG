@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class LumberPlayer : MonoBehaviour
 {
     //movement
+    public bool isPlayer2;
     public int axePower;
     public int shovelPower;
     public float maxdashCoolDown;

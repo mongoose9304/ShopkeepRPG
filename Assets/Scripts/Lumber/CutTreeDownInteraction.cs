@@ -7,6 +7,10 @@ public class CutTreeDownInteraction : InteractableObject
     [SerializeField] Tree myTree;
     public override void Interact(GameObject interactingObject_ = null)
     {
-        myTree.Fall();
+        if (interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer playa))
+        {
+            myTree.myPuzzle.LastHitByPlayerTwo = playa.isPlayer2;
+            myTree.Fall();
+        }
     }
 }
