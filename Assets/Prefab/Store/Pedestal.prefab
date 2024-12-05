@@ -45,12 +45,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75d773395ea76d4991f364a4e028230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inHell: 0
   myItem: {fileID: 0}
   amount: 0
   myItemPrevious: {fileID: 0}
   amountPrevious: 0
-  myItemImage: {fileID: 3394205906072324112}
   inUse: 0
+  hotItem: 0
+  coldItem: 0
+  myItemImage: {fileID: 3394205906072324112}
   basePriceText: {fileID: 7308941264545673652}
   hotEffect: {fileID: 8641396091620910852}
   coldEffect: {fileID: 1923781299175443946}
@@ -183,7 +186,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 2.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7488150927252684948
 MonoBehaviour:

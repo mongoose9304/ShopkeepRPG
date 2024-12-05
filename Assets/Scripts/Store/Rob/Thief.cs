@@ -28,6 +28,11 @@ public class Thief : MonoBehaviour
     }
     public void CheckSpeed()
     {
+        if(ShopManager.instance.twoPlayerMode)
+        {
+            myAgent.speed = speed;
+            return;
+        }
         if (isInHell != ShopManager.instance.playerInHell)
         {
             myAgent.speed = slowSpeed;

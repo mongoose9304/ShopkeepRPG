@@ -171,7 +171,6 @@ public class ShopManager : MonoBehaviour
     {
         Debug.Log("OpenHaggle");
         tutScreen.SetActive(false);
-        EnableExitMenuButton(true);
         if (!isPlayer2)
         {
             inHaggle = true;

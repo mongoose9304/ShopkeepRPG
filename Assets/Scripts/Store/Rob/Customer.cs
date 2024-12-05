@@ -250,6 +250,11 @@ public class Customer : MonoBehaviour
     /// </summary>
     public virtual void SetTarget(GameObject location)
     {
+        if(location==null)
+        {
+            LeaveShop();
+            return;
+        }
         if(pedestalsSeen.Contains(location))
         {
             TargetHasAlreadyBeenSeen();
