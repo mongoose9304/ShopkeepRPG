@@ -26,15 +26,15 @@ public class MoneyTree : Tree
         {
             CoinSpawner.instance_.CreateRegularCoins(value, obj.transform);
         }
-        if (TreeManager.instance.GetCurrentCombo() == 1)
+        if (GetCombo() == 1)
         {
             CoinSpawner.instance_.CreateRegularCoins(value, transform);
         }
-        else if (TreeManager.instance.GetCurrentCombo() > 1)
+        else if (GetCombo() > 1)
         {
-            CoinSpawner.instance_.CreateRegularCoins(value* TreeManager.instance.GetCurrentCombo(), transform);
+            CoinSpawner.instance_.CreateRegularCoins(value* GetCombo(), transform);
         }
-        if(TreeManager.instance.GetCurrentCombo()>=comboRequired)
+        if(GetCombo() >= comboRequired)
         {
             OpenChest();
         }

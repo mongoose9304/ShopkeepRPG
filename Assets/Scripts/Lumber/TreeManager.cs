@@ -19,9 +19,9 @@ public class TreeManager : MonoBehaviour
         currentComboText.text = currentCombo.ToString();
         comboObject.SetActive(false);
     }
-    public void AddToCombo(int amount_=1)
+    public void SetCombo(int combo)
     {
-        currentCombo += amount_;
+        currentCombo = combo;
         currentComboText.text = currentCombo.ToString();
         PlayComboAnimation();
         comboObject.SetActive(true);

@@ -8,6 +8,9 @@ public class Tree : MonoBehaviour
 {
     public int treeHeight=1;
     public int woodMultiplier=1;
+    //myPuzzle is set by the puzzle 
+    public LumberPuzzle myPuzzle;
+    public Transform woodSpawn;
     [SerializeField] protected GameObject treeTrunkPrefab;
     [SerializeField] protected GameObject woodPrefab;
     [SerializeField] protected GameObject multiWoodPrefab;
@@ -136,7 +139,8 @@ public class Tree : MonoBehaviour
         isFalling = true;
         fallSpeed = fallSpeedMin;
         fallDirectionIndicator.gameObject.SetActive(false);
-        if(!hasBeenHit)
+        myHealthBar.gameObject.SetActive(false);
+        if (!hasBeenHit)
         {
             int x = Random.Range(0, 4);
             switch (x)
@@ -174,13 +178,13 @@ public class Tree : MonoBehaviour
         {
             LumberLevelManager.instance.SpawnLumber(obj.transform, woodMultiplier);
         }
-        if(TreeManager.instance.GetCurrentCombo()==1)
+        if(GetCombo() == 1)
         {
-            LumberLevelManager.instance.SpawnLumber(transform, woodMultiplier);
+            LumberLevelManager.instance.SpawnLumber(woodSpawn, woodMultiplier);
         }
-        else if( TreeManager.instance.GetCurrentCombo() > 1)
+        else if(GetCombo() > 1)
         {
-            LumberLevelManager.instance.SpawnLumber(transform, Mathf.RoundToInt(woodMultiplier*TreeManager.instance.GetCurrentCombo()*LumberLevelManager.instance.forestHealth),true);
+            LumberLevelManager.instance.SpawnLumber(woodSpawn, Mathf.RoundToInt(woodMultiplier* GetCombo() * LumberLevelManager.instance.forestHealth),true);
         }
     }
     public void BreakTree()
@@ -214,5 +218,25 @@ public class Tree : MonoBehaviour
     public void ResetFallIndicator()
     {
         fallDirectionLineRenderer.gameObject.SetActive(false);
+    }
+    public void AddToCombo()
+    {
+        if(myPuzzle)
+        {
+            myPuzzle.AddToCombo();
+        }
+    }
+    public void ResetCombo()
+    {
+        if (myPuzzle)
+        {
+            myPuzzle.ResetCombo();
+        }
+    }
+    public int GetCombo()
+    {
+        if(myPuzzle)
+        return myPuzzle.currentComboCount;
+        return 0;
     }
 }

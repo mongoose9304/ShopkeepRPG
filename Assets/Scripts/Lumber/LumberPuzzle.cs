@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LumberPuzzle : MonoBehaviour
 {
+    public int currentComboCount;
     public List<GameObject> myTrees = new List<GameObject>();
     public GameObject resetParticleEffect;
     private float timeToResetTreeChopDirectoions;
@@ -36,6 +37,8 @@ public class LumberPuzzle : MonoBehaviour
     void Start()
     {
         AddDescendantsWithTag(transform, "Tree", myTrees);
+        SetTreeOwners();
+        ResetCombo();
     }
     public void ResetTreeChopDirections()
     {
@@ -63,6 +66,23 @@ public class LumberPuzzle : MonoBehaviour
         {
             other.gameObject.GetComponent<LumberPlayer>().ExitPuzzle();
         }
+    }
+    private void SetTreeOwners()
+    {
+        foreach(GameObject obj in myTrees)
+        {
+            obj.GetComponent<Tree>().myPuzzle = this;
+        }
+    }
+    public void AddToCombo()
+    {
+        currentComboCount += 1;
+        TreeManager.instance.SetCombo(currentComboCount);
+    }
+    public void ResetCombo()
+    {
+        currentComboCount = 0;
+        TreeManager.instance.ResetCombo();
     }
 
 }

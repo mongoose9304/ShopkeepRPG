@@ -197,6 +197,7 @@ Transform:
   - {fileID: 1450784434712705527}
   - {fileID: 7720033632393896846}
   - {fileID: 6207383684042699863}
+  - {fileID: 6589621480674923107}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1152614354953674504
@@ -327,6 +328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeHeight: 6
   woodMultiplier: 1
+  myPuzzle: {fileID: 0}
+  woodSpawn: {fileID: 6589621480674923107}
   treeTrunkPrefab: {fileID: 1402833552548243411, guid: 86291fda483b2df498cc948547094b4b, type: 3}
   woodPrefab: {fileID: 5180752463271632814, guid: ea36bac6af5dcd145add2792efd80c69, type: 3}
   multiWoodPrefab: {fileID: 5180752463271632814, guid: ea36bac6af5dcd145add2792efd80c69, type: 3}
@@ -3255,6 +3258,37 @@ Transform:
   - {fileID: 2838069592296175232}
   - {fileID: 298656068411804855}
   - {fileID: 389348920061722808}
+  m_Father: {fileID: 4075985645788307472}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7913160580160874621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6589621480674923107}
+  m_Layer: 9
+  m_Name: TreeSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6589621480674923107
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7913160580160874621}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 4075985645788307472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8021303977013963543

@@ -16,7 +16,7 @@ public class TreeSection : MonoBehaviour
                 tree_.Fall();
                 myTree.BreakTree();
                 myTree.HitOtherTreeAudio();
-                TreeManager.instance.AddToCombo();
+                myTree.AddToCombo();
             }
         }
         if (other.tag == "TreeTrunk" && !myTree.myTreeSections.Contains(other.gameObject))
@@ -28,14 +28,14 @@ public class TreeSection : MonoBehaviour
                 tree_.myTree.Fall();
                 myTree.BreakTree();
                 myTree.HitOtherTreeAudio();
-                TreeManager.instance.AddToCombo();
+                myTree.AddToCombo();
             }
         }
       
         if (other.tag == "Ground")
         {
             myTree.GetComponent<Tree>().BreakTree();
-            TreeManager.instance.ResetCombo();
+            myTree.ResetCombo();
         }
         if (other.tag == "Breakable")
         {
@@ -43,7 +43,7 @@ public class TreeSection : MonoBehaviour
             {
                 breakObject_.Break(this.gameObject);
                 myTree.GetComponent<Tree>().BreakTree();
-                TreeManager.instance.ResetCombo();
+                myTree.ResetCombo();
             }
         }
     }

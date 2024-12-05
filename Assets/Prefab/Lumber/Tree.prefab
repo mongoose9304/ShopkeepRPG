@@ -270,6 +270,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &879106182815230998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5743815581875863882}
+  m_Layer: 9
+  m_Name: WoodSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5743815581875863882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879106182815230998}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1443353256394105613}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1178250195998244197
 GameObject:
   m_ObjectHideFlags: 0
@@ -964,6 +995,7 @@ Transform:
   - {fileID: 7392776013864461604}
   - {fileID: 6231651046893773519}
   - {fileID: 5998295743312148676}
+  - {fileID: 5743815581875863882}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.425}
 --- !u!33 &1946461076822232502
@@ -1078,6 +1110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeHeight: 5
   woodMultiplier: 1
+  myPuzzle: {fileID: 0}
+  woodSpawn: {fileID: 5743815581875863882}
   treeTrunkPrefab: {fileID: 1402833552548243411, guid: 4aef01b9b84798643bd6c533990df8c5, type: 3}
   woodPrefab: {fileID: 3936162037148123290, guid: c981582e84edc514ea195b6f9f025e20, type: 3}
   multiWoodPrefab: {fileID: 5365747741590646619, guid: e0b32a769a9393540815971efe195dbd, type: 3}
