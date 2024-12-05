@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using MoreMountains.Tools;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class LumberPlayer : MonoBehaviour
 {
@@ -19,6 +20,13 @@ public class LumberPlayer : MonoBehaviour
     public float dashTime;
     public bool isDashing;
     //Camera
+    public CinemachineVirtualCamera cam;
+    public float camChangeSpeed;
+    private float camChange;
+    public float MinDist;
+    public float MaxDist;
+    public float currentDist;
+    CinemachineFramingTransposer transposerCam;
     [SerializeField] GameObject cameraObject;
     [SerializeField] Vector3 cameraRotationRegular;
     [SerializeField] Vector3 cameraRotationPuzzle;
@@ -57,12 +65,14 @@ public class LumberPlayer : MonoBehaviour
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
+    private InputAction cameraMovement;
     private bool InteractHeld;
     private bool ResetHeld;
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
         movement = playerActionMap.FindAction("Movement");
+        cameraMovement = playerActionMap.FindAction("CameraMovement");
         playerActionMap.FindAction("Dash").performed += OnDash;
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
@@ -77,7 +87,9 @@ public class LumberPlayer : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        transposerCam = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+
     }
     // Update is called once per frame
 
@@ -211,7 +223,11 @@ public class LumberPlayer : MonoBehaviour
         if (ResetHeld)
             ResetCurrentPuzzle();
 
-
+        camChange = cameraMovement.ReadValue<Vector2>().y;
+        if(camChange!=0)
+        {
+            AdjustCameraDistance(camChange);
+        }
     }
     private void DashAction()
     {
@@ -355,6 +371,15 @@ public class LumberPlayer : MonoBehaviour
     {
         myAxe.SetActive(false);
         isSwinging = false;
+    }
+    private void AdjustCameraDistance(float dist_)
+    {
+        currentDist -= dist_*camChangeSpeed*Time.deltaTime;
+        if (currentDist > MaxDist)
+            currentDist = MaxDist;
+        if (currentDist < MinDist)
+            currentDist = MinDist;
+        transposerCam.m_CameraDistance = currentDist;
     }
     private void SnapRotationToGrid(Transform transform_)
     {
