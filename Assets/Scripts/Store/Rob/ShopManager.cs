@@ -453,10 +453,13 @@ public class ShopManager : MonoBehaviour
     }
     public void EnterHell(GameObject obj)
     {
-        playerInHell = true;
-        foreach(Thief t_ in currentThieves)
+        if (!twoPlayerMode)
         {
-            t_.CheckSpeed();
+            playerInHell = true;
+            foreach (Thief t_ in currentThieves)
+            {
+                t_.CheckSpeed();
+            }
         }
         foreach (ParticleSystem sys in teleportEffectsHell)
         {
@@ -468,7 +471,7 @@ public class ShopManager : MonoBehaviour
     }
     public void ExitHell(GameObject obj)
     {
-        if (twoPlayerMode)
+        if (!twoPlayerMode)
         {
 
             playerInHell = false;
