@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+/// <summary>
+/// The mostly virtual class for a familiars attacks and behavior that change between familiars
+/// </summary>
 public class FamiliarCombatControls : MonoBehaviour
 {
     public bool damageImmune;

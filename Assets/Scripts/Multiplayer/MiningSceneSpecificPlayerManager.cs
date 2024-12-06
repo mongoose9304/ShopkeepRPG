@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// What happens when player join in the mining scene
+/// </summary>
 public class MiningSceneSpecificPlayerManager : SceneSpecificPlayerManager
 {
     public MiningPlayer player1;

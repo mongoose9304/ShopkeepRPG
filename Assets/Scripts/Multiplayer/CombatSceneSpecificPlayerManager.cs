@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// What happens when player join in the combat scene
+/// </summary>
 public class CombatSceneSpecificPlayerManager : SceneSpecificPlayerManager
 {
     public CombatPlayerMovement player1;

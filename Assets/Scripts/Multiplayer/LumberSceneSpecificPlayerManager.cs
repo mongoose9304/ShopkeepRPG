@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// What happens when player join in the lumber scene
+/// </summary>
 public class LumberSceneSpecificPlayerManager : SceneSpecificPlayerManager
 {
     public LumberPlayer player1;
