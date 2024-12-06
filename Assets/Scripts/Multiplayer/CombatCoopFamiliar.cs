@@ -5,42 +5,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// The 2nd player will ocntrol the familiar of the player
+/// </summary>
 public class CombatCoopFamiliar : MonoBehaviour
 {
-    [Header("References")]
+        [Header("References")]
+    [Tooltip("The saved stats of this player")]
     [SerializeField] public StatBlock monsterStats;
+    [Tooltip("REFERENCE to the ground layer")]
     [SerializeField] LayerMask groundMask;
+    [Tooltip("REFERENCE to the dash effect used by the player")]
     [SerializeField] GameObject dashEffect;
+    [Tooltip("REFERENCE to the dash SFX used by the player")]
     public AudioClip dashAudio;
+    [Tooltip("REFERENCE to the controls for the current familar, these will swap between familiars as they have diffrent attacks and such")]
     public FamiliarCombatControls combatControls;
+    [Tooltip("REFERENCE to the teleport effect used by the player")]
     public ParticleSystem teleportParticles;
+    [Tooltip("REFERENCE to the first player")]
     public CombatPlayerMovement combatPlayerMovement;
-    [Header("LockOn")]
-    public float maxLockOnDistance;
-    [SerializeField] float minDistanceBetweenRetargets;
-    [SerializeField] GameObject currentTarget;
-    [SerializeField] bool hardLockOn;
+    [Tooltip("REFERENCE to the lock on Icon")]
     [SerializeField] GameObject lockOnIcon;
-    [Header("Dash")]
+    [Tooltip("REFERENCE to the effects played when the player is hit")]
+    [SerializeField] MMF_Player hitEffects;
+    [Tooltip("REFERENCE to the effects played when the player is killed")]
+    [SerializeField] GameObject deathEffect;
+    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
+    [SerializeField] GameObject interactableObjectLockOnObject;
+    [Tooltip("REFERENCE to the wall layers")]
+    public LayerMask wallMask;
+
+    [Header("LockOn")]
+    [Tooltip("how far this player can remain locked onto an enemy")]
+    public float maxLockOnDistance;
+    [Tooltip("min distance before retargeting to a closer enemy")]
+    [SerializeField] float minDistanceBetweenRetargets;
+    [Tooltip("current enemy I am targeting")]
+    [SerializeField] GameObject currentTarget;
+    [Tooltip("currently unused, would be for manual lock ons")]
+    [SerializeField] bool hardLockOn;
+    
+        [Header("Dash")]
+    [Tooltip("how long before the player can move after falling off a platform")]
     public float timeBeforePlayerCanMoveAfterFallingOffPlatform;
+    [Tooltip("how far the player can dash")]
     public float dashDistance;
     bool isDashing;
     float dashCoolDown;
+    [Tooltip("how long must the player wait between dashes")]
     public float maxdashCoolDown;
     float dashTime;
+    [Tooltip("how long before the player can teleport to the other player")]
     public float maxTeleportCoolDown;
     float currentTeleportCoolDown;
+    [Tooltip("where the player started their dash in case they need to be sent back")]
     [SerializeField] Vector3 dashStartPos;
-    [Header("Interactions")]
+
+        [Header("Interactions")]
     [Tooltip("All the objects the player is currently in range to interact with")]
     public List<GameObject> myInteractableObjects = new List<GameObject>();
     [Tooltip("The object the player is currently locked onto")]
     [SerializeField] GameObject interactableObjectTarget;
-    [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
-    [SerializeField] GameObject interactableObjectLockOnObject;
-    [Header("Stats")]
+
+        [Header("Stats")]
     [SerializeField]  float currentHealth;
-    //Stats Calculated based on Stat block
     public float maxHealth;
     public Element myWeakness;
     public Element myElement;
@@ -48,22 +77,30 @@ public class CombatCoopFamiliar : MonoBehaviour
     public float MysticalAtk;
     public float PhysicalDef;
     public float MysticalDef;
+    [Tooltip("This will be how much stronger each stat will be based on the user's level")]
     public float LevelModifier;
     public float HealthRegenPercent;
+    [Tooltip("any modifiers affecting the player's stats")]
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
+    [Tooltip("How long before the 2nd player can respawn")]
     public float respawnTimeMax;
-    [Header("Inputs")]
+
+     [Header("Inputs")]
+    [Tooltip("The player's controls")]
     public InputActionMap playerActionMap;
+    [Tooltip("used to quickly get movement inputs ")]
     private InputAction movement;
     Vector3 moveInput;
     Vector3 newInput;
+    [Tooltip("how fast the player will move")]
     public float moveSpeed;
+    [Tooltip("used for temp speed buffs/debuffs")]
     public float moveSpeedModifier;
-    public LayerMask wallMask;
     private bool InteractHeld;
-    [Header("Feel")]
-    [SerializeField] MMF_Player hitEffects;
-    [SerializeField] GameObject deathEffect;
+
+    /// <summary>
+    /// Attatch the controller to this scripts inputs
+    /// </summary>
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
@@ -151,6 +188,9 @@ public class CombatCoopFamiliar : MonoBehaviour
 
         }
     }
+    /// <summary>
+    /// Cause the player to face its current target
+    /// </summary>
     void LookAtCurrentTarget()
     {
         if (!currentTarget)
@@ -159,6 +199,9 @@ public class CombatCoopFamiliar : MonoBehaviour
         transform.LookAt(currentTarget.transform);
         transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
     }
+    /// <summary>
+    /// Find the closest target
+    /// </summary>
     void CheckForSoftLockOn()
     {
         if (hardLockOn || EnemyManager.instance.currentEnemiesList.Count == 0)
@@ -195,6 +238,9 @@ public class CombatCoopFamiliar : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Get hit by an attack and calculate the damage
+    /// </summary>
     public void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
         if (combatControls.damageImmune)
@@ -226,12 +272,18 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (combatPlayerMovement)
             combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
     }
+    /// <summary>
+    /// Die and respawn after some time
+    /// </summary>
     private void Death()
     {
         combatPlayerMovement.combatActions.FamiliarDeath(respawnTimeMax);
         gameObject.SetActive(false);
         Instantiate(deathEffect, transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
     }
+    /// <summary>
+    /// Check if player is above the ground
+    /// </summary>
     private void GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10, groundMask))
@@ -242,6 +294,9 @@ public class CombatCoopFamiliar : MonoBehaviour
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
         }
     }
+    /// <summary>
+    /// Check if a player is hitting a wall
+    /// </summary>
     private bool CheckForWallHit()
     {
 
@@ -258,6 +313,9 @@ public class CombatCoopFamiliar : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Adjust a players input to stop walking through walls
+    /// </summary>
     private Vector3 PreventGoingThroughWalls(Vector3 temp_)
     {
 
@@ -284,6 +342,9 @@ public class CombatCoopFamiliar : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// Prevent a player walking off an edge
+    /// </summary>
     private Vector3 PreventFalling()
     {
         // Stop walking
@@ -356,6 +417,9 @@ public class CombatCoopFamiliar : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Move the player forward in a burst
+    /// </summary>
     private void DashAction()
     {
         dashStartPos = transform.position;
@@ -368,6 +432,9 @@ public class CombatCoopFamiliar : MonoBehaviour
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
           1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    /// <summary>
+    /// Remove an object from the interaction list if its being disabled to prevent errors
+    /// </summary>
     public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);
@@ -377,6 +444,9 @@ public class CombatCoopFamiliar : MonoBehaviour
             interactableObjectLockOnObject.SetActive(false);
         }
     }
+    /// <summary>
+    /// Calculate the familliars stats
+    /// </summary>
     protected virtual void CalculateStats()
     {
         maxHealth = (monsterStats.Vitality * 2) * (1 + (monsterStats.Level * LevelModifier));
@@ -386,6 +456,9 @@ public class CombatCoopFamiliar : MonoBehaviour
         MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier)) / 5;
         HealthRegenPercent = 0;
     }
+    /// <summary>
+    /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.
+    /// </summary>
     public virtual void CalculateAllModifiers()
     {
         CalculateStats();
@@ -411,6 +484,9 @@ public class CombatCoopFamiliar : MonoBehaviour
             combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
         combatControls.CalculateDamage(PhysicalAtk,MysticalAtk);
     }
+    /// <summary>
+    /// Apply a single modifer
+    /// </summary>
     private void ApplyModifier(EquipModifier mod_)
     {
         if (mod_.uniqueEffect == UniqueEquipEffect.None)
@@ -443,6 +519,9 @@ public class CombatCoopFamiliar : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Hellper function to add or multiply 2 values
+    /// </summary>
     private float AddOrMultiply(bool multiply_, float A, float B)
     {
         if (multiply_)
@@ -454,6 +533,9 @@ public class CombatCoopFamiliar : MonoBehaviour
             return A + B;
         }
     }
+    /// <summary>
+    /// Add an external mod to the list
+    /// </summary>
     public void AddExternalMod(EquipModifier mod_)
     {
         foreach (EquipModifier modX in externalModifiers)
@@ -467,6 +549,9 @@ public class CombatCoopFamiliar : MonoBehaviour
         }
         externalModifiers.Add(mod_);
     }
+    /// <summary>
+    /// Regenerate the players health over time
+    /// </summary>
     protected void RegenHealth()
     {
         if (HealthRegenPercent == 0)

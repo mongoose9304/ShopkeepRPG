@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     publc GameState GameState {get; private set;}
 
     */
-    public InventoryManager inventoryManager;
     public PlayerManager playerManager;
     public UIManager uIManager;
 
