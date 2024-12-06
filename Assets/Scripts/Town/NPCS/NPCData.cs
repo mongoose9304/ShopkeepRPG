@@ -6,7 +6,7 @@ using UnityEngine;
 public class NPCData : ScriptableObject
 {
     // Store all non-changing data of npc
-    public string name;
+    public string NPCname;
 
     // preffered atmosphere i.e. cheap, fancy, evil, cozy, etc. for now save as string
     public string atmosphere;
