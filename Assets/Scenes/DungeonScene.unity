@@ -9449,7 +9449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &328003039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22491,7 +22491,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1c4de7cc8e52646a1cde40d74fff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpawn: {fileID: 448174648}
   playerLayers:
   - serializedVersion: 2
     m_Bits: 8192
@@ -54630,8 +54629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToDisableWhenPlayer1Joins:
   - {fileID: 91680499}
+  objectsToEnableWhenPlayer2Joins: []
   player1Canvases:
   - {fileID: 1871691659}
+  player2Canvases: []
   player1: {fileID: 448174652}
   player2: {fileID: 1596406815}
 --- !u!1 &1713701187
