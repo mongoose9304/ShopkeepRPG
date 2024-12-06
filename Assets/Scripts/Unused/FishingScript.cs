@@ -11,12 +11,12 @@ public class FishingScript : MonoBehaviour
 
     Animator animator;
 
-    public GameObject TheBaitPrefab;
-    public GameObject End_Of_Rope;
-    public GameObject Start_Of_Rope;
-    public GameObject Start_Of_Rod;
+    public GameObject Bait;
+    public GameObject String;
+    public GameObject FishingRod;
+    
 
-    Transform baitPosition;
+    
 
 
 
