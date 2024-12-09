@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Controls the UI slider manually to allow 2 players to use the UI at once
+/// </summary>
 public class HaggleSlider : MonoBehaviour
 {
     [SerializeField] private Slider mySlider;

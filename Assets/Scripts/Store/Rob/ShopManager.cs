@@ -6,83 +6,154 @@ using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Unity.AI.Navigation;
 
+/// <summary>
+/// The singleton that manages and controls the shop minigame
+/// </summary>
 public class ShopManager : MonoBehaviour
 {
+    [Tooltip("The singleton instance")]
     public static ShopManager instance;
+    [Tooltip("Is there two players connected")]
     public bool twoPlayerMode;
+
+        [Header("References")]
+    [Tooltip("REFERNCE to the text that shows how much money you have")]
+    public GameObject cashTextUI;
+    [Tooltip("REFERNCE to the UI that says press B to exit")]
+    public GameObject exitMenuUI;
+    [Tooltip("REFERNCE to the text that displays cash earned in the human world")]
+    public TextMeshProUGUI cashEarnedText;
+    [Tooltip("REFERNCE to the symbol for human cash")]
+    public MMF_Player cashSymbol;
+    [Tooltip("REFERNCE symbol that shows you are being robbed in the human world")]
+    public MMF_Player stealAlert;
+    [Tooltip("REFERNCE to the symbol for hell cash")]
+    public MMF_Player cashSymbolHell;
+    [Tooltip("REFERNCE symbol that shows you are being robbed in the hell world")]
+    public MMF_Player stealAlertHell;
+    [Tooltip("REFERNCE to the text that displays cash earned in hell")]
+    public TextMeshProUGUI cashEarnedTextHell;
+    [Tooltip("REFERNCE to the players")]
+    public StorePlayer[] players;
+    [Tooltip("REFERNCE to the storeroom for thief targeting ")]
+    public GameObject storeRoom;
+    [Tooltip("REFERNCE to the storeroom in hell for thief targeting ")]
+    public GameObject storeRoomHell;
+    [Tooltip("REFERNCE to NPC exits in the human world")]
+    public GameObject[] exitSpots;
+    [Tooltip("REFERNCE to NPC exits in the hell world")]
+    public GameObject[] exitSpotsHell;
+    [Tooltip("how much cash have we earned today ")]
+    public int currentCashEarned;
+    [Tooltip("how much cash have we earned today in hell ")]
+    public int currentCashEarnedHell;
+    [Tooltip("REFERNCE to the pedestal screen")]
+    public PedestalScreen pedScreen;
+    [Tooltip("REFERNCE to the inventory screen")]
+    public InventoryUI invScreen;
+    [Tooltip("REFERNCE to bargin screen")]
+    public BarginBinScreen barginScreen;
+    //Haggle Section is set up diffrently so both players can haggle at once
+    [Tooltip("REFERNCE to haggle screen for player 1")]
+    public HaggleUIHolder haggleScreenOriginal;
+    [Tooltip("REFERNCE to haggle screen for player 2")]
+    public HaggleUIHolder haggleScreenCopy;
+    [Tooltip("REFERNCE moveable object inventory screen")]
+    public MoveableObjectUI moveableObjectScreen;
+    [Tooltip("REFERNCE to the tutorial UI")]
+    public GameObject tutScreen;
+    [Tooltip("REFERNCE to effects that play when getting human money")]
+    [SerializeField] MMF_Player cashFeedback;
+    [Tooltip("REFERNCE to effects that play when getting hell money")]
+    [SerializeField] MMF_Player cashFeedbackHell;
+    [Tooltip("REFERNCE to the doors in the human shop")]
+    public List<ShopDoor> mydoors = new List<ShopDoor>();
+    [Tooltip("REFERNCE to the doors in the hell shop")]
+    public List<ShopDoor> mydoorsHell = new List<ShopDoor>();
+    [Tooltip("REFERNCE to the cash register in the human world")]
+    public CashRegister cashRegister;
+    [Tooltip("REFERNCE to the cash register in the hell world")]
+    public CashRegister cashRegisterHell;
+    [Tooltip("REFERNCE to the human world teleport effects")]
+    public ParticleSystem[] teleportEffectsHuman;
+    [Tooltip("REFERNCE to the location you teleport to in the hell world when swapping between shops")]
+    public Transform teleportLocationHell;
+    [Tooltip("REFERNCE to the hell world teleport effects")]
+    public ParticleSystem[] teleportEffectsHell;
+    [Tooltip("REFERNCE to the location you teleport to in the human world when swapping between shops")]
+    public Transform teleportLocationHuman;
+    [Tooltip("REFERNCE to navmesh to rebuild when moving objects around")]
+    public NavMeshSurface surface;
+    [Tooltip("REFERNCE to canvas the shop UI is on")]
+    public Canvas shopUI;
+    [Tooltip("REFERNCE to text slots that can pop up with info for players")]
+    public TextMeshProUGUI[] playerTextPopUps;
+
+        [Header("Variables")]
     //hot and cold items lists combined
     public List<ItemData> hotItems=new List<ItemData>();
     public List<ItemData> hotItemsHell=new List<ItemData>();
     public List<ItemData> coldItems=new List<ItemData>();
     public List<ItemData> coldItemsHell=new List<ItemData>();
-    //hot and cold items lists weekly
+    //hot and cold items lists that change every week or season or event
     public List<ItemData> hotItemsWeekly = new List<ItemData>();
     public List<ItemData> hotItemsHellWeekly = new List<ItemData>();
     public List<ItemData> coldItemsWeekly = new List<ItemData>();
     public List<ItemData> coldItemsHellWeekly = new List<ItemData>();
 
-    //hot and cold items lists Universal
+    //hot and cold items lists Universal, these never change
     public List<ItemData> hotItemsUniversal = new List<ItemData>();
     public List<ItemData> hotItemsHellUniversal = new List<ItemData>();
     public List<ItemData> coldItemsUniversal = new List<ItemData>();
     public List<ItemData> coldItemsHellUniversal = new List<ItemData>();
-
-    public GameObject cashTextUI;
-    public GameObject exitMenuUI;
+    [Tooltip("is the player currently in hell, only used in singleplayer")]
     public bool playerInHell;
+    [Tooltip("is the hell shop open")]
     public bool hellShopEnabled;
+    [Tooltip("is the human shop open")]
     public bool humanShopEnabled;
+    [Tooltip("is the shop game currently running, are customers coming into the shop")]
     public bool shopRunning;
-    public TextMeshProUGUI cashEarnedText;
-    public MMF_Player cashSymbol;
-    public MMF_Player stealAlert;
-    public MMF_Player cashSymbolHell;
-    public MMF_Player stealAlertHell;
-    public TextMeshProUGUI cashEarnedTextHell;
-    public StorePlayer[] players;
-    public GameObject storeRoom;
-    public GameObject storeRoomHell;
-    public GameObject[] exitSpots;
-    public GameObject[] exitSpotsHell;
-    public int currentCashEarned;
-    public int currentCashEarnedHell;
-    public PedestalScreen pedScreen;
-    public InventoryUI invScreen;
-    public BarginBinScreen barginScreen;
-    //Haggle Section is set up diffrently so both players can haggle at once
-    public HaggleUIHolder haggleScreenOriginal;
-    public HaggleUIHolder haggleScreenCopy;
-    public MoveableObjectUI moveableObjectScreen;
-    public GameObject tutScreen;
+    [Tooltip("are we currently in a menu")]
     public bool inMenu;
+    [Tooltip("is player 1 haggling")]
     public bool inHaggle;
+    [Tooltip("is player 2 haggling")]
     public bool player2InHaggle;
+    [Tooltip("is player 2 currently in a menu")]
     public bool player2InMenu;
     MMF_TMPCountTo cashCounter;
     MMF_TMPCountTo cashCounterHell;
-    [SerializeField] MMF_Player cashFeedback;
-    [SerializeField] MMF_Player cashFeedbackHell;
+    //pedestals and bins are all collected at runtime since players can move/remove them
+    [Tooltip("all the human pedestals not near windows")]
     public List<Pedestal> regularPedestals = new List<Pedestal>();
+    [Tooltip("all the human pedestals near windows")]
     public List<Pedestal> windowPedestals = new List<Pedestal>();
+    [Tooltip("all the hell pedestals not near windows")]
     public List<Pedestal> regularPedestalsHell = new List<Pedestal>();
+    [Tooltip("all the hell pedestals near windows")]
     public List<Pedestal> windowPedestalsHell = new List<Pedestal>();
+    [Tooltip("all the human bargain bins")]
     public List<BarginBin> barginBins = new List<BarginBin>();
+    [Tooltip("all the hell bargain bins")]
     public List<BarginBin> barginBinsHell = new List<BarginBin>();
-    public List<ShopDoor> mydoors = new List<ShopDoor>();
-    public List<ShopDoor> mydoorsHell = new List<ShopDoor>();
-    public CashRegister cashRegister;
-    public CashRegister cashRegisterHell;
+    [Tooltip("all the thieves currently in the shop")]
     public List<Thief> currentThieves=new List<Thief>();
+    [Tooltip("test items")]
     public List<InventoryItem> debugItemsToAdd=new List<InventoryItem>();
+    [Tooltip("test items 2")]
     public List<InventoryItem> debugItemsToAdd2=new List<InventoryItem>();
+    [Tooltip("all the pedestals in all shops")]
     [SerializeField] private List<Pedestal> allPedestals = new List<Pedestal>();
+    [Tooltip("all the bargin bins in all shops")]
     [SerializeField] private List<BarginBin> allBarginBins = new List<BarginBin>();
-    public Transform teleportLocationHuman;
-    public ParticleSystem[] teleportEffectsHuman;
-    public Transform teleportLocationHell;
-    public ParticleSystem[] teleportEffectsHell;
+
+        [Header("Audios")]
+    [Tooltip("audios that play when making money")]
     public AudioClip[] cashAudios;
+    [Tooltip("bgms that play while the shop is inactive")]
     public List<AudioClip> BGMs = new List<AudioClip>();
+    [Tooltip("bgms that play while the shop is active")]
     public List<AudioClip> ShopActiveBGMs = new List<AudioClip>();
     public AudioClip hoverUIAudio;
     public AudioClip clickUIAudio;
@@ -90,9 +161,6 @@ public class ShopManager : MonoBehaviour
     public AudioClip closeUIAudio;
     public AudioClip enterHellAudio;
     public AudioClip openShopAudio;
-    public NavMeshSurface surface;
-    public Canvas shopUI;
-    public TextMeshProUGUI[] playerTextPopUps;
     private void Awake()
     {
         instance = this;

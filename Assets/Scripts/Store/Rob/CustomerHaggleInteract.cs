@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Interact with acustomer and start haggling
+/// </summary>
 public class CustomerHaggleInteract : InteractableObject
 {
     public Customer customer;
