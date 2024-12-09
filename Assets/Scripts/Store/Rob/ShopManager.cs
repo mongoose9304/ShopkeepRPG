@@ -172,6 +172,9 @@ public class ShopManager : MonoBehaviour
             cashCounterHell = cashFeedbackHell.GetFeedbackOfType<MMF_TMPCountTo>();
         SetUpHaggleScreens();
     }
+    /// <summary>
+    /// copy the haggle screen for player 2
+    /// </summary>
     private void SetUpHaggleScreens()
     {
         haggleScreenCopy = GameObject.Instantiate(haggleScreenOriginal.gameObject).GetComponent<HaggleUIHolder>();
@@ -181,6 +184,9 @@ public class ShopManager : MonoBehaviour
     {
         SetUpLevel();
     }
+    /// <summary>
+    /// Get the current player's input to control sliders
+    /// </summary>
     public float GetSliderInput()
     {
         if(!player2InMenu)
@@ -189,11 +195,18 @@ public class ShopManager : MonoBehaviour
         {
             return players[1].movement.ReadValue<Vector2>().x;
         }
+
     }
+    /// <summary>
+    /// Get a player's input to control sliders
+    /// </summary>
     public float GetPlayerSliderInputDirectly(int index)
     {
             return players[index].movement.ReadValue<Vector2>().x;
     }
+    /// <summary>
+    /// Load the previous layouts and set up the shop to how it was saved before
+    /// </summary>
     public void SetUpLevel()
     {
         SetPedestalList();
@@ -203,6 +216,9 @@ public class ShopManager : MonoBehaviour
         PlayRandomBGM();
         StartCoroutine(WaitAFrameBeforeRedoingNavmesh());
     }
+    /// <summary>
+    /// Try to open a menu if one is not open yet
+    /// </summary>
     public bool OpenAMenu(PlayerController controller,bool isPlayer2=false)
     {
         if (inMenu)
@@ -215,10 +231,16 @@ public class ShopManager : MonoBehaviour
         shopUI.worldCamera = controller.myCam;
         return true;
     }
+    /// <summary>
+    /// Swap the UI canvas to the player that opened the menu's camera
+    /// </summary>
     public void ChangeCameraForUI(PlayerController controller)
     {
         shopUI.worldCamera = controller.myCam;
     }
+    /// <summary>
+    /// Open the pedestal menu
+    /// </summary>
     public void OpenPedestal(Pedestal p_, bool isPlayer2 = false)
     {
         pedScreen.gameObject.SetActive(true);
@@ -227,6 +249,9 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
+    /// <summary>
+    /// Open the bargain bin menu
+    /// </summary>
     public void OpenBarginBin(BarginBin b_, bool isPlayer2 = false)
     {
         barginScreen.gameObject.SetActive(true);
@@ -235,6 +260,9 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
+    /// <summary>
+    /// Open the haggle menu
+    /// </summary>
     public void OpenHaggleScreen(Pedestal p_,Customer c_,float haggleStart_, bool isPlayer2 = false)
     {
         Debug.Log("OpenHaggle");
@@ -256,6 +284,9 @@ public class ShopManager : MonoBehaviour
             haggleScreenCopy.haggleScreen.OpenMenu(p_, c_, haggleStart_,true);
         }
     }
+    /// <summary>
+    /// Open the movable object inventory
+    /// </summary>
     public void OpenMoveableObjectScreen()
     {
         moveableObjectScreen.gameObject.SetActive(true);
@@ -264,6 +295,9 @@ public class ShopManager : MonoBehaviour
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
     }
+    /// <summary>
+    /// Close all open menus
+    /// </summary>
     public void CloseMenu(bool player2=false)
     {
         if (!player2&&inHaggle)
@@ -297,15 +331,24 @@ public class ShopManager : MonoBehaviour
         player2InMenu = false;
 
     }
+    /// <summary>
+    /// Toggle a small UI piece that says press B to close the menu
+    /// </summary>
     private void EnableExitMenuButton(bool enable_=false)
     {
         exitMenuUI.SetActive(enable_);
         cashTextUI.SetActive(!enable_);
     }
+    /// <summary>
+    /// Pressed a button to close the menu
+    /// </summary>
     public void MenuBackButton(bool player2=false)
     {
         CloseMenu(player2);
     }
+    /// <summary>
+    /// Reset the cash earned in a day
+    /// </summary>
     public void ResetCashEarned()
     {
         currentCashEarned = 0;
@@ -333,6 +376,9 @@ public class ShopManager : MonoBehaviour
     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    /// <summary>
+    /// Find an exit for the NPC to head towards
+    /// </summary>
     public GameObject GetRandomNPCExit(bool inHell = false)
     {
         if (!inHell)
@@ -344,6 +390,9 @@ public class ShopManager : MonoBehaviour
         return exitSpotsHell[Random.Range(0, exitSpotsHell.Length)];
         }
     }
+    /// <summary>
+    /// Find the store room for thieves to head to
+    /// </summary>
     public GameObject GetStoreRoom(bool inHell = false)
     {
         if (!inHell)
@@ -355,6 +404,9 @@ public class ShopManager : MonoBehaviour
             return storeRoomHell;
         }
     }
+    /// <summary>
+    /// Remove an interactable object from the player's lists to prevent errors
+    /// </summary>
     public void RemoveInteractableObject(GameObject obj)
     {
         foreach (StorePlayer playa in players)
@@ -364,6 +416,9 @@ public class ShopManager : MonoBehaviour
         }
             
     }
+    /// <summary>
+    /// Set up a small text to pop up on a player's screen
+    /// </summary>
     public void PlayPopUpText(string text,bool isPlayer2=false)
     {
         if(!isPlayer2)
@@ -377,6 +432,9 @@ public class ShopManager : MonoBehaviour
             playerTextPopUps[1].gameObject.SetActive(true);
         }
     }
+    /// <summary>
+    /// Find a random pedestal for targeting
+    /// </summary>
     public GameObject GetRandomTargetPedestal(float chanceToTargetWindows,bool inHell=false)
     {
         if (!inHell)
@@ -406,6 +464,9 @@ public class ShopManager : MonoBehaviour
             return null;
         }
     }
+    /// <summary>
+    /// Find a random bargin bin for targeting
+    /// </summary>
     public GameObject GetRandomTargetBarginBin(bool inHell = false)
     {
         if (!inHell)
@@ -425,6 +486,9 @@ public class ShopManager : MonoBehaviour
             return null;
         }
     }
+    /// <summary>
+    /// Send an NPC to the register to cash out
+    /// </summary>
     public void HeadToCashRegister(Customer C_,bool inHell=false)
     {
         if(!inHell)
@@ -438,6 +502,9 @@ public class ShopManager : MonoBehaviour
             cashRegisterHell.SetCustomerTargets();
         }
     }
+    /// <summary>
+    /// Open the shops and start the game if no one is in moving mode
+    /// </summary>
     public void OpenShop()
     {
         if(players[0].isInMovingMode)
@@ -481,6 +548,9 @@ public class ShopManager : MonoBehaviour
    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
 
     }
+    /// <summary>
+    /// Put an item back to the players inventory 
+    /// </summary>
     public void ReturnItemToInventory(ItemData item_,int amount)
     {
         if(amount>0)
@@ -488,6 +558,9 @@ public class ShopManager : MonoBehaviour
             invScreen.AddItemToInventory(item_, amount);
         }
     }
+    /// <summary>
+    /// Set the UI indicators to show you are being robbed
+    /// </summary>
     public void SetStealAlert(bool isStealing,bool inHell=false)
     {
         if(isStealing)
@@ -556,6 +629,9 @@ public class ShopManager : MonoBehaviour
    false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    /// <summary>
+    /// Save the layout and contents of all items
+    /// </summary>
     public void DebugSaveItems()
     {
         PlayerInventory.instance.UpdateItems(invScreen.slots);
@@ -576,17 +652,25 @@ public class ShopManager : MonoBehaviour
             DebugSaveItems();
         }
     }
+    /// <summary>
+    /// Add some items for testings
+    /// </summary>
     public void DebugAddItems()
     {
         foreach(InventoryItem item_ in debugItemsToAdd)
         invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
     }
+    /// <summary>
+    /// Add some items for testings
+    /// </summary>
     public void DebugAddItems2()
     {
         foreach (InventoryItem item_ in debugItemsToAdd2)
             invScreen.AddItemToInventory(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
     }
-    //grabs all the pedestals from the moveable object list
+    /// <summary>
+    /// Grab all the pedestals from the moveable object list and set up our lists
+    /// </summary>
     public void SetPedestalList()
     {
         //need to add hell
@@ -630,7 +714,9 @@ public class ShopManager : MonoBehaviour
         }
         InitPedestalList();
     }
-    //grabs all the bins from the moveable object list
+    /// <summary>
+    /// Grab all the bins from the moveable object list and set up our lists
+    /// </summary>
     public void SetBarginBinList()
     {
         //need to add hell
@@ -672,6 +758,9 @@ public class ShopManager : MonoBehaviour
         allBarginBins.AddRange(barginBins);
         allBarginBins.AddRange(barginBinsHell);
     }
+    /// <summary>
+    /// Save all the pedestal's contents
+    /// </summary>
     private void SaveAllPedestals()
     {
         List<InventoryItem> masterItemList_=new List<InventoryItem>();
@@ -717,6 +806,9 @@ public class ShopManager : MonoBehaviour
         FileHandler.SaveToJSON(masterItemList_, "PedestalInventory");
         FileHandler.SaveToJSON(masterPreviousItemList_, "PedestalInventoryPrevious");
     }
+    /// <summary>
+    /// Load all the pedestals previous items
+    /// </summary>
     private void LoadAllPedestals()
     {
         List<InventoryItem> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItem>("PedestalInventory");
@@ -739,6 +831,9 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// GSave all the bargain bin contents
+    /// </summary>
     private void SaveAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = new List<InventoryItemList>();
@@ -803,7 +898,9 @@ public class ShopManager : MonoBehaviour
         FileHandler.SaveToJSON(masterItemListPrevious_, "BarginBinInventoryPrevious");
         FileHandler.SaveToJSON(discounts, "BarginBinDiscounts");
     }
-   
+    /// <summary>
+    /// Load all the bargain bins previous contents
+    /// </summary>
     private void LoadAllBarginBins()
     {
         List<InventoryItemList> masterItemList_ = FileHandler.ReadListFromJSON<InventoryItemList>("BarginBinInventory");
@@ -840,6 +937,9 @@ public class ShopManager : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Any events that need to happen when closing the shop
+    /// </summary>
     public void EndShopEvent()
     {
         foreach (ShopDoor door_ in mydoors)
@@ -847,6 +947,9 @@ public class ShopManager : MonoBehaviour
             door_.ResetDoor();
         }
     }
+    /// <summary>
+    /// Set the shop as Open or closed
+    /// </summary>
     public void ToggleShopOpen(bool enabled_,bool inHell_)
     {
        
@@ -860,6 +963,9 @@ public class ShopManager : MonoBehaviour
             }
 
     }
+    /// <summary>
+    /// Close the shop
+    /// </summary>
     public void CloseShop()
     {
         if (currentThieves.Count > 0)
@@ -875,6 +981,9 @@ public class ShopManager : MonoBehaviour
         }
         CustomerManager.instance.CloseShop();
     }
+    /// <summary>
+    /// Check if a shop is open
+    /// </summary>
     public bool CheckIfShopIsOpen(bool inHell_)
     {
         if(!inHell_)
@@ -886,6 +995,9 @@ public class ShopManager : MonoBehaviour
             return hellShopEnabled;
         }
     }
+    /// <summary>
+    /// Warp a player to the shop they are currently not in
+    /// </summary>
     public void WarpPlayerToOtherStore(GameObject obj)
     {
         if(obj.GetComponent<StorePlayer>().inHell)
@@ -911,6 +1023,9 @@ public class ShopManager : MonoBehaviour
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
         MMSoundManager.Instance.PlaySound(ShopActiveBGMs[Random.Range(0, ShopActiveBGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero, true);
     }
+    /// <summary>
+    /// Play a particular audio for the UI
+    /// </summary>
     public void PlayUIAudio(string Audio)
     {
         switch(Audio)
@@ -937,6 +1052,9 @@ public class ShopManager : MonoBehaviour
                 break;
         }
     }
+    /// <summary>
+    /// Enter or exit moving mode
+    /// </summary>
     public void ToggleMoveMode()
     {
         if (!shopRunning)
@@ -949,20 +1067,31 @@ public class ShopManager : MonoBehaviour
     {
         surface.BuildNavMesh();
     }
+    /// <summary>
+    /// Wait to redo the navmesh to allow objects to be enabled
+    /// </summary>
     IEnumerator WaitAFrameBeforeRedoingNavmesh()
     {
         yield return new WaitForSeconds(0.001f);
         RedoNavMesh();
     }
+    /// <summary>
+    /// Return the object held by player 1
+    /// </summary>
     public MoveableObject GetPlayerHeldMoveableItem()
     {
        return players[0].GetHeldObject();
     }
+    /// <summary>
+    /// Set the object held by player 1
+    /// </summary>
     public void SetPlayerHeldMoveableItem(MoveableObject obj_)
     {
         players[0].SetHeldObject(obj_);
     }
-    //1=hot, 2=cold 0= neutral;
+    /// <summary>
+    /// Check if an item is hot or cold. Hot items sell for more, cold for less.     //1=hot, 2=cold 0= neutral;
+    /// </summary>
     public int CheckIfItemIsHot(ItemData itemToCheck,bool inHell=false)
     {
         if(ShopTutorialManager.instance.inTut)
