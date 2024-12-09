@@ -6,29 +6,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// The controls for the slime familiar
+/// </summary>
 public class SlimeCombatControls : FamiliarCombatControls
 {
-    [Header("Audios")]
+        [Header("Customizable Variables ")]
+    [Tooltip("The vector I rotate at while spinnning")]
+    public Vector3 spinVector;
+    [Tooltip("The position I start a spin")]
+    public Vector3 spinPosStart;
+    [Tooltip("The angle I stop spinning at")]
+    public Vector3 spinPosEnd;
+    [Tooltip("The angle I start spinning at")]
+    public Quaternion spinStart;
+    [Tooltip("The speed I spin")]
+    public float spinAngle;
+
+        [Header("Audios")]
     public AudioClip jumpAudio;
     public AudioClip slamAudio;
     public AudioClip meleeAudio;
     public AudioClip rangedAudio;
-    [Header("Referecnes")]
+
+        [Header("Referecnes")]
+    [Tooltip("REFERENCE to the particle effect that plays when I slam down")]
     public GameObject slamParticleEffect;
-    bool isJumping;
-    bool isSlaming;
-    bool isUltimateJumping;
+    [Tooltip("REFERENCE my animator")]
     public Animator anim;
     [Tooltip("REFERENCE to the pool of ranged projectiles the player has")]
     [SerializeField] protected MMMiniObjectPooler rangedProjectilePool;
+    [Tooltip("REFERENCE where I create ranged projectiles")]
     public GameObject rangedAttackSpawn;
+    [Tooltip("REFERENCE to the particle effect that plays when I use my basic attack")]
     public ParticleSystem basicAttackSystem;
+    [Tooltip("REFERENCE to the script that handles my spin special attack")]
     public SlimeWhirlwind myWhirlWindObject;
-    public Vector3 spinVector;
-    public Vector3 spinPosStart;
-    public Vector3 spinPosEnd;
-    public Quaternion spinStart;
-    public float spinAngle;
     [Header("Stats")]
     public float lowestJumpPercentage;
     public float slamAttackDistance;
@@ -51,13 +64,18 @@ public class SlimeCombatControls : FamiliarCombatControls
     public float rangedCooldownMax;
     public float ultimateCooldownMax;
     public float ultimateCooldown;
-    [Header("Inputs")]
+    
+        [Header("Inputs")]
     public bool isHoldingMelee;
     public bool isHoldingRanged;
+    bool isJumping;
+    bool isSlaming;
+    bool isUltimateJumping;
     private void OnEnable()
     {
         EndWhirlWind();
     }
+
     public override void EnableActions(InputActionMap playerActionMap)
     {
         playerActionMap.FindAction("LBAction").performed += SlamPressed;
@@ -68,6 +86,7 @@ public class SlimeCombatControls : FamiliarCombatControls
         playerActionMap.FindAction("AAction").canceled += RangedReleased;
         playerActionMap.FindAction("LTAction").performed += UltimatePressed;
     }
+
     public override void CalculateDamage(float pAttack, float mAttack)
     {
         meleeDamage = pAttack * 1.5f;
@@ -76,6 +95,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         specialBDamage = pAttack;
         ultimateDamage = pAttack * 15f;
     }
+    /// <summary>
+    /// Start my slam attack where I jump into the air and then slam down
+    /// </summary>
     public void SlamAttack()
     {
         slamCooldown = slamCooldownMax;
@@ -90,6 +112,9 @@ public class SlimeCombatControls : FamiliarCombatControls
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    /// <summary>
+    /// Start my whirlwind attack where I spin around and damage all enemies around me
+    /// </summary>
     public void WhirlWindAttack()
     {
         currentSpinTime = spinTimeMax;
@@ -100,6 +125,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         anim.transform.rotation = spinStart;
         anim.transform.localPosition = spinPosStart;
     }
+    /// <summary>
+    /// End my whirlwind attack and return to normal
+    /// </summary>
     private void EndWhirlWind()
     {
         currentSpinTime = 0;
@@ -113,6 +141,9 @@ public class SlimeCombatControls : FamiliarCombatControls
     {
         transform.parent.Rotate(spinVector, spinAngle);
     }
+    /// <summary>
+    /// Use a basic melee attack and hit enemies in front of me
+    /// </summary>
     public void MeleeAttack()
     {
         anim.SetTrigger("basicAttack");
@@ -131,6 +162,9 @@ public class SlimeCombatControls : FamiliarCombatControls
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    /// <summary>
+    /// Start my whirlwind attack where I spin around and damage all enemies around me
+    /// </summary>
     public void RangedAttack(GameObject target_=null)
     {
         rangedCooldown = rangedCooldownMax;
@@ -213,6 +247,9 @@ public class SlimeCombatControls : FamiliarCombatControls
             }
         }
     }
+    /// <summary>
+    /// All the cooldown counters 
+    /// </summary>
     private void CoolDowns()
     {
         if(slamCooldown>0)
@@ -279,6 +316,9 @@ public class SlimeCombatControls : FamiliarCombatControls
             }
         }
     }
+    /// <summary>
+    /// Start my ultimate attack, a larger slam attack
+    /// </summary>
     private void UltimateAttack()
     {
         if (isBusy||CombatPlayerManager.instance.GetPlayer(0).isBusy)

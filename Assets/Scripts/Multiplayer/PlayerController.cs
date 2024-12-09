@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    [Tooltip("Refernce to the Player's controls")]
     public PlayerInput input;
+    [Tooltip("Reference to the camera of this player")]
     public Camera myCam;
 }

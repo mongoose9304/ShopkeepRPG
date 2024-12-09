@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 /// <summary>
-/// bDebug Class for basic movement
+/// Debug Class for basic movement and rapid prototypes
 /// </summary>
 public class TestController : MonoBehaviour
 {
