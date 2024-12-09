@@ -1,11 +1,10 @@
-using Cinemachine;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TownPlayer : MonoBehaviour
+public class FishingPlayer : MonoBehaviour
 {
     //movement
     public bool isPlayer2;
@@ -67,15 +66,15 @@ public class TownPlayer : MonoBehaviour
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
 
-                if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
-                {
-                    //transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.deltaTime * moveSpeedModifier, ref velocity, dampModifier);
-                    transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                }
-                else
-                    timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
-                if (moveInput != Vector3.zero)
-                    transform.forward = moveInput;
+            if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
+            {
+                //transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.deltaTime * moveSpeedModifier, ref velocity, dampModifier);
+                transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+            }
+            else
+                timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
+            if (moveInput != Vector3.zero)
+                transform.forward = moveInput;
 
         }
         else
