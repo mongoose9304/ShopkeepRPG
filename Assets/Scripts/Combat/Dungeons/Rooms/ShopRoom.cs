@@ -28,7 +28,7 @@ public class ShopRoom : BasicRoom
         {
             myPedestals[i].myShop = this;
             myPedestals[i].SetItem(DemonShopManager.instance.currentSinItemList.itemTiers[myPedestals[i].itemTier].GetRandomItem(),4);
-            myPedestals[i].ToggleVisibility(false);
+            myPedestals[i].ToggleVisibility(true);
         }
     }
     public void SetPedestalsInactive()

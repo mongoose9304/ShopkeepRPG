@@ -88,9 +88,11 @@ public class StorePlayer : MonoBehaviour
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("XAction").performed += OnMoveAction;
         playerActionMap.FindAction("LTAction").performed += OnWarp;
-        if(!isPlayer2)
-        playerActionMap.FindAction("RBAction").performed += OnOpenMoveableInventory;
-        playerActionMap.FindAction("StartAction").performed += OnPause;
+        if (!isPlayer2)
+        {
+            playerActionMap.FindAction("RBAction").performed += OnOpenMoveableInventory;
+            playerActionMap.FindAction("StartAction").performed += OnPause;
+        }
         playerActionMap.Enable();
     }
     private void OnEnable()
@@ -99,6 +101,16 @@ public class StorePlayer : MonoBehaviour
     }
     private void OnDisable()
     {
+        playerActionMap.FindAction("Dash").performed -= OnDash;
+        playerActionMap.FindAction("YAction").performed -= OnInteract;
+        playerActionMap.FindAction("YAction").canceled -= OnInteractReleased;
+        playerActionMap.FindAction("XAction").performed -= OnMoveAction;
+        playerActionMap.FindAction("LTAction").performed -= OnWarp;
+        if (!isPlayer2)
+        {
+            playerActionMap.FindAction("RBAction").performed -= OnOpenMoveableInventory;
+            playerActionMap.FindAction("StartAction").performed -= OnPause;
+        }
         playerActionMap.Disable();
     }
     private void Start()
