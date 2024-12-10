@@ -4,13 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using MoreMountains.Tools;
-
+/// <summary>
+/// Allows players to open and close a human or hell shop and display it as such
+/// </summary>
 public class ShopOpenSign : InteractableObject
 {
+    [Tooltip("REFRERENCE to the image that displays if the shop is open or closed")]
     public Image signImage;
-    public bool isInHell;
+    [Tooltip("REFERENCE to the part of the object that is scaled up/down to give the illusion of fliping around")]
     public Transform scaleObject;
+    [Tooltip("Is this shop in hell?")]
+    public bool isInHell;
+    [Tooltip("Is the shop currently open")]
     public bool isOpen;
+    [Tooltip("The sprites to show if a shop is closed or open")]
     public Sprite[] signSprites;
     bool isSwapping;
     float swapTime;

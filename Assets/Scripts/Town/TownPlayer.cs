@@ -4,7 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+/// <summary>
+/// Controls the player in the town section
+/// </summary>
 public class TownPlayer : MonoBehaviour
 {
     //movement

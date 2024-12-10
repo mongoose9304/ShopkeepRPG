@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// A NPC that tries to take your items or money in the shop minigame
+/// </summary>
 public class Thief : MonoBehaviour
 {
     public bool isInHell;
+    [Tooltip("Speed the npc moves")]
     [SerializeField] float speed;
+    [Tooltip("Speed the npc moves when the player is in another zone")]
     [SerializeField] float slowSpeed;
     private bool hasStolenMoney;
+    [Tooltip("the % chance an npc will try to rob the store's backroom before leaving")]
     public float chanceToGoForStoreCash;
     public NavMeshAgent myAgent;
     public ItemData stolenItem;
@@ -17,6 +22,9 @@ public class Thief : MonoBehaviour
     public int stolenCash;
     public ParticleSystem startStealEffect;
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
+    /// <summary>
+    /// Flee the shop
+    /// </summary>
     public void Flee()
     {
         myAgent.SetDestination(ShopManager.instance.GetRandomNPCExit(isInHell).transform.position);
@@ -42,6 +50,9 @@ public class Thief : MonoBehaviour
             myAgent.speed = speed;
         }
     }
+    /// <summary>
+    /// try to rob the backroom before leaving
+    /// </summary>
     public void HeadToStoreRoom()
     {
         myAgent.SetDestination(ShopManager.instance.GetStoreRoom(isInHell).transform.position);
@@ -80,6 +91,9 @@ public class Thief : MonoBehaviour
         }
         Flee();
     }
+    /// <summary>
+    /// The player has caught the thief, they return the items /money
+    /// </summary>
     public void Caught()
     {
         if (ShopTutorialManager.instance.inTut)
