@@ -28,7 +28,7 @@ public class SceneSpecificPlayerManager : MonoBehaviour
         }
         if (PlayerManager.instance.GetPlayers().Count > 1)
         {
-            CreatePlayer1(PlayerManager.instance.GetPlayers()[1]);
+            CreatePlayer2(PlayerManager.instance.GetPlayers()[1]);
         }
     }
     /// <summary>

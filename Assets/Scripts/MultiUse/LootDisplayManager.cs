@@ -46,6 +46,7 @@ public class LootDisplayManager : MonoBehaviour
             {
                 if(TryGetComponent<LoadLevel>(out LoadLevel lv))
                 {
+                    PlayerManager.instance.BringPlayer2Back();
                     lv.LoadMyLevel();
                     currenttimeBeforeLoadingNextScene = 15;
                 }
