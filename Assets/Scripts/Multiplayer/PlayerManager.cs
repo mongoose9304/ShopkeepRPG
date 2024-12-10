@@ -26,18 +26,20 @@ public class PlayerManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        else
+        else if(instance!=this)
         {
             Destroy(gameObject);
         }
     }
     private void OnEnable()
     {
+        if(playerInputManager)
         playerInputManager.onPlayerJoined += AddPlayer;
     }
 
     private void OnDisable()
     {
+        if(playerInputManager)
         playerInputManager.onPlayerJoined -= AddPlayer;
     }
     /// <summary>

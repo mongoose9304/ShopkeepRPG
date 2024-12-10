@@ -12,6 +12,8 @@ public class LootDisplayManager : MonoBehaviour
     public int maxUIBackgrounds;
     int currentUIBackground;
     [SerializeField] float maxTimeBetweenAdds;
+    [SerializeField] private float timeBeforeLoadingNextScene;
+    private float currenttimeBeforeLoadingNextScene;
     [SerializeField] float maxObjectsCollectedDisplayTime;
     float currentTimeBetweenAdds;
     public float maxResourceDisplayTime;
@@ -28,6 +30,7 @@ public class LootDisplayManager : MonoBehaviour
     [SerializeField] UnityEvent startVictoryEvent;
     [SerializeField] UnityEvent endVictoryEvent;
     private bool isPlaying;
+    private bool hasPlayed;
     private bool hasLost = false;
     private void Awake()
     {
@@ -36,6 +39,21 @@ public class LootDisplayManager : MonoBehaviour
     }
     private void Update()
     {
+        if (hasPlayed)
+        {
+            currenttimeBeforeLoadingNextScene -= Time.deltaTime;
+            if(currenttimeBeforeLoadingNextScene<=0)
+            {
+                if(TryGetComponent<LoadLevel>(out LoadLevel lv))
+                {
+                    lv.LoadMyLevel();
+                    currenttimeBeforeLoadingNextScene = 15;
+                }
+
+            }
+
+            return;
+        }
         if (!isPlaying)
             return;
         if (allItemsDisplayed)
@@ -48,7 +66,9 @@ public class LootDisplayManager : MonoBehaviour
                 else
                     playerFireworkObject.SetActive(true);
                 endVictoryEvent.Invoke();
+                currenttimeBeforeLoadingNextScene = timeBeforeLoadingNextScene;
                 isPlaying = false;
+                hasPlayed = true;
             }
             return;
         }

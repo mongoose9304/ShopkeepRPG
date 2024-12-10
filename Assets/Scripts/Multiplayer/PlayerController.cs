@@ -12,4 +12,8 @@ public class PlayerController : MonoBehaviour
     public PlayerInput input;
     [Tooltip("Reference to the camera of this player")]
     public Camera myCam;
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }

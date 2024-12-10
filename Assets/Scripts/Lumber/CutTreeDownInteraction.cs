@@ -9,6 +9,7 @@ public class CutTreeDownInteraction : InteractableObject
     {
         if (interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer playa))
         {
+            if(myTree.myPuzzle)
             myTree.myPuzzle.LastHitByPlayerTwo = playa.isPlayer2;
             myTree.Fall();
         }

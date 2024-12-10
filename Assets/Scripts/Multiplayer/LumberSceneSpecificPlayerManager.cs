@@ -8,6 +8,13 @@ public class LumberSceneSpecificPlayerManager : SceneSpecificPlayerManager
 {
     public LumberPlayer player1;
     public LumberPlayer player2;
+    private void Start()
+    {
+        if(PlayerManager.instance.GetPlayers().Count>0)
+        {
+            CreatePlayer1(PlayerManager.instance.GetPlayers()[0]);
+        }
+    }
     public override void CreatePlayer1(PlayerController controller)
     {
         foreach (GameObject obj in objectsToDisableWhenPlayer1Joins)

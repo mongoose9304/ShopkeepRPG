@@ -48,6 +48,13 @@ public class TownPlayer : MonoBehaviour
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
     }
+    private void OnDisable()
+    {
+        playerActionMap.FindAction("Dash").performed -= OnDash;
+        playerActionMap.FindAction("YAction").performed -= OnInteract;
+        playerActionMap.FindAction("YAction").canceled -= OnInteractReleased;
+        playerActionMap.FindAction("StartAction").performed -= OnPause;
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();

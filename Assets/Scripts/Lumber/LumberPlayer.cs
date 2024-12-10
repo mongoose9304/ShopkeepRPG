@@ -82,6 +82,17 @@ public class LumberPlayer : MonoBehaviour
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
     }
+    private void OnDisable()
+    {
+        playerActionMap.FindAction("Dash").performed -= OnDash;
+        playerActionMap.FindAction("YAction").performed -= OnInteract;
+        playerActionMap.FindAction("YAction").canceled -= OnInteractReleased;
+        playerActionMap.FindAction("XAction").performed -= OnAxeAction;
+        playerActionMap.FindAction("LTAction").performed -= OnPuzzleReset;
+        playerActionMap.FindAction("LTAction").canceled -= OnPuzzleResetReleased;
+        playerActionMap.FindAction("StartAction").performed -= OnPause;
+
+    }
 
 
     private void Start()
