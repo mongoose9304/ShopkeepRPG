@@ -81,7 +81,23 @@ public class CombatPlayerActions : MonoBehaviour
         combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
         combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
     }
-    private void Update()
+    private void OnDisable()
+    {
+        if (combatMovement.playerActionMap!=null)
+        {
+            combatMovement.playerActionMap.FindAction("XAction").performed -= OnMeleePressed;
+            combatMovement.playerActionMap.FindAction("XAction").canceled -= OnMeleeReleased;
+            combatMovement.playerActionMap.FindAction("AAction").performed -= OnRangedPressed;
+            combatMovement.playerActionMap.FindAction("AAction").canceled -= OnRangedReleased;
+            combatMovement.playerActionMap.FindAction("LBAction").performed -= OnSpecial1Pressed;
+            combatMovement.playerActionMap.FindAction("LBAction").canceled -= OnSpecial1Released;
+            combatMovement.playerActionMap.FindAction("RBAction").performed -= OnSpecial2Pressed;
+            combatMovement.playerActionMap.FindAction("RBAction").canceled -= OnSpecial2Released;
+            combatMovement.playerActionMap.FindAction("LTAction").performed -= OnUltimatePressed;
+            combatMovement.playerActionMap.FindAction("LTAction").canceled -= OnUltimateReleased;
+        }
+        }
+        private void Update()
     {
         if (TempPause.instance.isPaused)
             return;

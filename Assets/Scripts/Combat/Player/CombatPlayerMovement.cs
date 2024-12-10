@@ -123,6 +123,10 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         if(playerActionMap!=null)
         {
+            playerActionMap.FindAction("Dash").performed -= OnDash;
+            playerActionMap.FindAction("StartAction").performed -= OnPause;
+            playerActionMap.FindAction("YAction").performed -= InteractPressed;
+            playerActionMap.FindAction("YAction").canceled-= InteractReleased;
             playerActionMap.Disable();
         }
     }

@@ -20,6 +20,17 @@ public class SceneSpecificPlayerManager : MonoBehaviour
     {
         instance = this;
     }
+    protected virtual void Start()
+    {
+        if (PlayerManager.instance.GetPlayers().Count > 0)
+        {
+            CreatePlayer1(PlayerManager.instance.GetPlayers()[0]);
+        }
+        if (PlayerManager.instance.GetPlayers().Count > 1)
+        {
+            CreatePlayer1(PlayerManager.instance.GetPlayers()[1]);
+        }
+    }
     /// <summary>
     /// Create player 1 and assign their character
     /// </summary>

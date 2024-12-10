@@ -16,6 +16,7 @@ public class Hotbar : MonoBehaviour
     float delayBetweenInputsCurrent;
     public float delayBetweenItemUsages;
     private InputAction movement;
+    private bool actionsEnabled;
     private void Start()
     {
         //Adding test items for debug pruposes, remove when ready 
@@ -29,6 +30,17 @@ public class Hotbar : MonoBehaviour
     {
         EnableActions();
     }
+    private void OnDisable()
+    {
+        if (CombatPlayerManager.instance.GetPlayer(0)!=null)
+        {
+            if (CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap != null && actionsEnabled)
+            {
+                CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RTAction").performed -= UseItemPressed;
+                actionsEnabled = false;
+            }
+        }
+    }
 
     public void EnableActions()
     {
@@ -36,6 +48,7 @@ public class Hotbar : MonoBehaviour
         {
             CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RTAction").performed += UseItemPressed;
             movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("Dpad");
+            actionsEnabled = false;
         }
     }
 

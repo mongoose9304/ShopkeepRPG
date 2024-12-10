@@ -89,6 +89,7 @@ public class MiningPlayer : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private bool controlsDisabled;
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
@@ -103,11 +104,28 @@ public class MiningPlayer : MonoBehaviour
     }
     private void OnEnable()
     {
+        if(controlsDisabled)
+        {
+            playerActionMap.FindAction("Dash").performed += OnDash;
+            playerActionMap.FindAction("YAction").performed += OnInteract;
+            playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
+            playerActionMap.FindAction("XAction").performed += OnMine;
+            playerActionMap.FindAction("AAction").performed += OnBombAction;
+            playerActionMap.FindAction("StartAction").performed += OnPause;
+            controlsDisabled = false;
+        }
         playerActionMap.Enable();
     }
     private void OnDisable()
     {
+        playerActionMap.FindAction("Dash").performed -= OnDash;
+        playerActionMap.FindAction("YAction").performed -= OnInteract;
+        playerActionMap.FindAction("YAction").canceled -= OnInteractReleased;
+        playerActionMap.FindAction("XAction").performed -= OnMine;
+        playerActionMap.FindAction("AAction").performed -= OnBombAction;
+        playerActionMap.FindAction("StartAction").performed -= OnPause;
         playerActionMap.Disable();
+        controlsDisabled = true;
     }
 
     private void Start()
