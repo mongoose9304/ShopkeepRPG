@@ -40,10 +40,10 @@ public class PlayerInventory : MonoBehaviour
     public List<MoveableItem> masterMoveableItemList = new List<MoveableItem>();
     [Tooltip("The singeton instance")]
     public static PlayerInventory instance;
-    public int woodTotal;
-    public int stoneTotal;
-    public int humanCashTotal;
-    public int hellCashTotal;
+    [SerializeField] int woodTotal;
+    [SerializeField] int stoneTotal;
+    [SerializeField] int humanCashTotal;
+    [SerializeField] int hellCashTotal;
     private void Awake()
     {
         if (!instance)
@@ -180,6 +180,13 @@ public class PlayerInventory : MonoBehaviour
         humanCashTotal = PlayerPrefs.GetInt("humanCashTotal", 0);
         hellCashTotal = PlayerPrefs.GetInt("hellCashTotal", 0);
     }
+    public void SaveAllResources()
+    {
+        PlayerPrefs.SetInt("woodTotal", woodTotal);
+        PlayerPrefs.SetInt("stoneTotal", stoneTotal);
+        PlayerPrefs.SetInt("humanCashTotal", humanCashTotal);
+        PlayerPrefs.SetInt("hellCashTotal", hellCashTotal);
+    }
     public void AddWood(int amount_)
     {
         woodTotal += amount_;
@@ -196,4 +203,8 @@ public class PlayerInventory : MonoBehaviour
     {
         hellCashTotal += amount_;
     }
+    public int GetWood() { return woodTotal; }
+    public int GetStone() { return stoneTotal; }
+    public int GetHumanCash() { return humanCashTotal; }
+    public int GetHellCash() { return hellCashTotal; }
 }

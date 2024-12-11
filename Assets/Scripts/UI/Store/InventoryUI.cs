@@ -17,6 +17,7 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         LoadInventory();
+        LoadSavedResouces();
     }
     public void LoadInventory()
     {
@@ -39,7 +40,23 @@ public class InventoryUI : MonoBehaviour
     }
     public void LoadSavedResouces()
     {
-        
+        if(woodText)
+        {
+            woodText.text = PlayerInventory.instance.GetWood().ToString();
+        }
+        if (stoneText)
+        {
+            stoneText.text = PlayerInventory.instance.GetStone().ToString();
+        }
+        if (humanCashText)
+        {
+            humanCashText.text = PlayerInventory.instance.GetHumanCash().ToString();
+        }
+        if (hellCashText)
+        {
+            hellCashText.text = PlayerInventory.instance.GetHellCash().ToString();
+        }
+
     }
     private void SetHotColdItems(bool inHell)
     {

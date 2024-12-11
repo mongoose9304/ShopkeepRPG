@@ -115,12 +115,23 @@ public class LumberLevelManager : MonoBehaviour
         List<int> x = new List<int>();
         //here is where you would load the inventorys count of how many resources *Regular cash* you have.
         List<int> y = new List<int>();
-        y.Add(500);
-        //y.Add(1000);
+        if (PlayerInventory.instance)
+        {
+            y.Add(PlayerInventory.instance.GetWood());
+        }
+        else
+            y.Add(0);
         x.Add(LootManager.instance.currentResource);
        // x.Add(LootManager.instance.regularCurrentCash);
         LootDisplayManager.instance.AddResources(x, y, resourceSprites);
         LootDisplayManager.instance.StartVictoryScreen(hasLost_);
         PlayerManager.instance.TemporaryDisablePlayer2();
+        if (hasLost_)
+            return;
+        if(PlayerInventory.instance)
+        {
+            PlayerInventory.instance.AddWood(LootManager.instance.currentResource);
+            PlayerInventory.instance.SaveAllResources();
+        }
     }
 }
