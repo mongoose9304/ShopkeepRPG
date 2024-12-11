@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class InventoryUI : MonoBehaviour
@@ -10,6 +11,12 @@ public class InventoryUI : MonoBehaviour
     public PedestalScreen pedScreen;
     public BarginBinScreen barginBinScreen;
     [SerializeField] int clickFunctionIndex;
+
+    //TownInventory stuff
+    public TextMeshProUGUI selectedItemNameText;
+    public TextMeshProUGUI selectedItemNameDescription;
+    public GameObject selectedItemDisplay;
+    public Image selectedItemImage;
     public TextMeshProUGUI woodText;
     public TextMeshProUGUI stoneText;
     public TextMeshProUGUI humanCashText;
@@ -157,5 +164,17 @@ public class InventoryUI : MonoBehaviour
         {
             slot_.Clear();
         }
+    }
+    public void SetDisplayedItem(InventorySlot slot_)
+    {
+        if (selectedItemDisplay == null)
+            return;
+        if (slot_.myItem == null)
+            return;
+        selectedItemNameText.text = slot_.myItem.itemName;
+        selectedItemNameDescription.text = slot_.myItem.description;
+        selectedItemImage.sprite = slot_.myItem.itemSprite;
+        selectedItemImage.color = slot_.myItem.itemColor;
+        selectedItemDisplay.SetActive(true);
     }
 }

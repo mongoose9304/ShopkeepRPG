@@ -71,6 +71,10 @@ public class InventorySlot : MonoBehaviour
         {
             ShopManager.instance.PlayUIAudio("Hover");
         }
+        if(myUI)
+        {
+            myUI.SetDisplayedItem(this);
+        }
     }
     //0=normal, 1=hot, 2=cold
     public void SetItemHotness(int hotness_)
