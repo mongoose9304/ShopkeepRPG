@@ -9596,6 +9596,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   dashEffect: {fileID: 141433446842962269, guid: 68f11cab5b69bcd47a5d22278ca07fa7, type: 3}
+  menuObject: {fileID: 1245382371}
   enemyTag: Enemy
   dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
   playerActionMap:
@@ -12103,6 +12104,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833112764}
   m_CullTransparentMesh: 1
+--- !u!1 &838292374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1588726709263905852, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
+  m_PrefabInstance: {fileID: 1134181917}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &852895390
 GameObject:
   m_ObjectHideFlags: 0
@@ -18860,7 +18866,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4989042495718594183, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
   m_PrefabInstance: {fileID: 1134181917}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 838292374}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 470a4cae8bdf7b348a7a6180746c432d, type: 3}
@@ -19290,6 +19296,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1245382372}
   - component: {fileID: 1245382373}
+  - component: {fileID: 1245382375}
+  - component: {fileID: 1245382374}
+  - component: {fileID: 1245382376}
   m_Layer: 5
   m_Name: PlayerInventoryUI
   m_TagString: Untagged
@@ -19381,6 +19390,64 @@ MonoBehaviour:
   stoneText: {fileID: 1992295252}
   humanCashText: {fileID: 702851618}
   hellCashText: {fileID: 723002781}
+--- !u!114 &1245382374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245382371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 3a3fca8e0db260d4e9d2b6feaa3285fd, type: 3}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: -7729109995281323610, guid: 3a3fca8e0db260d4e9d2b6feaa3285fd, type: 3}
+  m_SubmitAction: {fileID: 4113215318114780954, guid: 3a3fca8e0db260d4e9d2b6feaa3285fd, type: 3}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+--- !u!114 &1245382375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245382371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 838292374}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!114 &1245382376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245382371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f217c5f26d4214fb2568c651a807e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inv: {fileID: 1245382373}
 --- !u!1 &1253406695
 GameObject:
   m_ObjectHideFlags: 0
@@ -29782,6 +29849,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   dashEffect: {fileID: 141433446842962269, guid: 68f11cab5b69bcd47a5d22278ca07fa7, type: 3}
+  menuObject: {fileID: 0}
   enemyTag: Enemy
   dashAudio: {fileID: 8300000, guid: 0304af7fd8a684e44a2b150e6f555c7a, type: 3}
   playerActionMap:

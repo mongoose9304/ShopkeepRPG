@@ -32,6 +32,7 @@ public class TownPlayer : MonoBehaviour
     [SerializeField] LayerMask wallMask;
     [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    [SerializeField] GameObject menuObject;
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
@@ -40,6 +41,7 @@ public class TownPlayer : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private bool menuOpen;
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
@@ -48,6 +50,8 @@ public class TownPlayer : MonoBehaviour
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("StartAction").performed += OnPause;
+        if(!isPlayer2)
+        playerActionMap.FindAction("RBAction").performed += OnOpenMenu;
         playerActionMap.Enable();
     }
     private void OnDisable()
@@ -65,7 +69,8 @@ public class TownPlayer : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
-
+        if (menuOpen)
+            return;
         GetInput();
         moveInput = PreventGoingThroughWalls(moveInput);
         GetClosestInteractableObject();
@@ -146,6 +151,17 @@ public class TownPlayer : MonoBehaviour
             DashAction();
         }
     }
+    private void OnOpenMenu(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        if (isPlayer2)
+            return;
+        if (!menuOpen)
+            OpenMenuAction();
+        else
+            CloseMenuAction();
+    }
 
     void GetInput()
     {
@@ -166,6 +182,16 @@ public class TownPlayer : MonoBehaviour
         MMSoundManager.Instance.PlaySound(dashAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+    }
+    private void OpenMenuAction()
+    {
+        menuObject.SetActive(true);
+        menuOpen = true;
+    }
+    private void CloseMenuAction()
+    {
+        menuObject.SetActive(false);
+        menuOpen = false;
     }
 
     private void InteractAction()
