@@ -60,6 +60,8 @@ public class TownPlayer : MonoBehaviour
         playerActionMap.FindAction("YAction").performed -= OnInteract;
         playerActionMap.FindAction("YAction").canceled -= OnInteractReleased;
         playerActionMap.FindAction("StartAction").performed -= OnPause;
+        if (!isPlayer2)
+            playerActionMap.FindAction("RBAction").performed -= OnOpenMenu;
     }
     private void Start()
     {
