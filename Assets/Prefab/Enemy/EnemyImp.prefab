@@ -5761,19 +5761,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 0
   Level: 0
-  myBaseData: {fileID: 11400000, guid: f14c1efc1400bb3448f8b96cc05d796d, type: 2}
-  maxHealth: 50
-  maxHitstun: 4
-  maxAttackCooldown: 4
-  myElement: 0
   moveSpeed: 8
   attackDistance: 12
   knockBackMax: 0
+  maxAttackCooldown: 4
+  myBaseData: {fileID: 11400000, guid: f14c1efc1400bb3448f8b96cc05d796d, type: 2}
+  maxHealth: 50
+  maxHitstun: 4
+  myElement: 0
   damage: 50
   isMysticalDamage: 1
   canMove: 1
   stunIcon: {fileID: 1103133305953425829}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 942828602656045708}
@@ -5781,7 +5782,6 @@ MonoBehaviour:
   maxTimeBeforeDamageTextFades: 2
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
-  deathEffects: []
   myTeamUser: {fileID: 0}
   textSpawner: {fileID: 3921487302632673204}
   hitEffects: {fileID: 0}
@@ -5910,6 +5910,11 @@ MonoBehaviour:
       name: Imp Wing
       amount: 1
     maxAmount: 3
+    chancesToSpawn: 10
+  - item:
+      name: Void Dust
+      amount: 1
+    maxAmount: 1
     chancesToSpawn: 5
   itemsToDrop: []
   DropOnlyOneItem: 0

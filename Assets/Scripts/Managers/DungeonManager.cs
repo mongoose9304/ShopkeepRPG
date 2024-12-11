@@ -373,8 +373,13 @@ public class DungeonManager : MonoBehaviour
             return;
         if (PlayerInventory.instance)
         {
-            PlayerInventory.instance.AddHellCash(LootManager.instance.currentResource);
+            PlayerInventory.instance.AddHellCash(LootManager.instance.demonCurrentCash);
             PlayerInventory.instance.SaveAllResources();
+            foreach (LootItem item_ in LootManager.instance.currentLootItems)
+            {
+                PlayerInventory.instance.AddItemToInventory(item_.name, item_.amount);
+            }
+            PlayerInventory.instance.SaveItems();
         }
     }
     public void SwitchSinSrops()

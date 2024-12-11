@@ -158,6 +158,11 @@ public class MiningManager : MonoBehaviour
         {
             PlayerInventory.instance.AddStone(LootManager.instance.currentResource);
             PlayerInventory.instance.SaveAllResources();
+            foreach (LootItem item_ in LootManager.instance.currentLootItems)
+            {
+                PlayerInventory.instance.AddItemToInventory(item_.name, item_.amount);
+            }
+            PlayerInventory.instance.SaveItems();
         }
     }
     public void PlayNextLevel()

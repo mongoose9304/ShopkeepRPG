@@ -5812,19 +5812,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 1
   Level: 1
-  myBaseData: {fileID: 11400000, guid: 0cf47711fb612ee4d86dafd3ea3b3d99, type: 2}
-  maxHealth: 35
-  maxHitstun: 4
-  maxAttackCooldown: 0.1
-  myElement: 4
   moveSpeed: 18
   attackDistance: 15
   knockBackMax: 0
+  maxAttackCooldown: 0.1
+  myBaseData: {fileID: 11400000, guid: 0cf47711fb612ee4d86dafd3ea3b3d99, type: 2}
+  maxHealth: 35
+  maxHitstun: 4
+  myElement: 4
   damage: 10
   isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 2726459677985465011}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 8868628790568603205}
@@ -5832,7 +5833,6 @@ MonoBehaviour:
   maxTimeBeforeDamageTextFades: 2
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
-  deathEffects: []
   myTeamUser: {fileID: 0}
   textSpawner: {fileID: 1515498765607761511}
   hitEffects: {fileID: 2278016337899292895}
@@ -5857,10 +5857,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myTable:
   - item:
-      name: Broken Arrow
+      name: Goblin Fang
       amount: 1
-    maxAmount: 1
-    chancesToSpawn: 5
+    maxAmount: 3
+    chancesToSpawn: 10
+  - item:
+      name: Basic Fur
+      amount: 1
+    maxAmount: 4
+    chancesToSpawn: 10
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}

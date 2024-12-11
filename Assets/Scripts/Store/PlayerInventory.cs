@@ -69,6 +69,7 @@ public class PlayerInventory : MonoBehaviour
             if (slot_.myItem)
             {
               bool hasFoundItem = false;
+                bool itemExists = false;
                 foreach (InventoryItem masterItem_ in masterItemList)
                 {
 
@@ -79,7 +80,15 @@ public class PlayerInventory : MonoBehaviour
                         break;
                     }
                 }
-                if(!hasFoundItem)
+                foreach (ItemData item_ in allItems)
+                {
+                    if (item_.itemName == slot_.myItem.itemName)
+                    {
+                        itemExists = true;
+                        break;
+                    }
+                }
+                if (!hasFoundItem&&itemExists)
                 {
                     InventoryItem itemX = new InventoryItem();
                     itemX.myItemName = slot_.myItem.itemName;
@@ -89,23 +98,32 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    public void AddItemToInventory(string name,int amount_)
+    public void AddItemToInventory(string name_,int amount_)
     {
         bool hasFoundItem = false;
+        bool itemExists = false;
         foreach (InventoryItem masterItem_ in masterItemList)
         {
 
-            if (masterItem_.myItemName == name)
+            if (masterItem_.myItemName == name_)
             {
                 masterItem_.amount += amount_;
                 hasFoundItem = true;
                 break;
             }
         }
-        if (!hasFoundItem)
+        foreach(ItemData item_ in allItems)
+        {
+            if(item_.itemName==name_)
+            {
+                itemExists = true;
+                break;
+            }
+        }
+        if (!hasFoundItem&&itemExists)
         {
             InventoryItem itemX = new InventoryItem();
-            itemX.myItemName = name;
+            itemX.myItemName = name_;
             itemX.amount = amount_;
             masterItemList.Add(itemX);
         }

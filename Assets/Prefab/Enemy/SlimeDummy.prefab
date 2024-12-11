@@ -1002,19 +1002,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 0
   Level: 0
-  myBaseData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
-  maxHealth: 50
-  maxHitstun: 5
-  maxAttackCooldown: 3
-  myElement: 0
   moveSpeed: 10
   attackDistance: 5
   knockBackMax: 0.2
+  maxAttackCooldown: 3
+  myBaseData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
+  maxHealth: 50
+  maxHitstun: 5
+  myElement: 0
   damage: 5
   isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 6611630499809330876}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 8608462071610935158}
@@ -1022,7 +1023,6 @@ MonoBehaviour:
   maxTimeBeforeDamageTextFades: 2
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
-  deathEffects: []
   myTeamUser: {fileID: 0}
   textSpawner: {fileID: 2334537997967041440}
   hitEffects: {fileID: 6735126338250919985}
@@ -1047,20 +1047,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myTable:
   - item:
-      name: Rusty Spoon
+      name: Slime Goo
       amount: 1
     maxAmount: 5
-    chancesToSpawn: 5
+    chancesToSpawn: 10
   - item:
-      name: Broken Sword
+      name: Infernal Shard
       amount: 1
-    maxAmount: 5
+    maxAmount: 1
     chancesToSpawn: 4
-  - item:
-      name: Apples
-      amount: 1
-    maxAmount: 10
-    chancesToSpawn: 3
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}

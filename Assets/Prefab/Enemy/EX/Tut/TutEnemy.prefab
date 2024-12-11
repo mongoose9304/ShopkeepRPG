@@ -882,19 +882,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 1
   Level: 0
-  myBaseData: {fileID: 11400000, guid: 69479430654910e49868339579952227, type: 2}
-  maxHealth: 50
-  maxHitstun: 5
-  maxAttackCooldown: 2
-  myElement: 0
   moveSpeed: 12
   attackDistance: 7
   knockBackMax: 0.2
+  maxAttackCooldown: 2
+  myBaseData: {fileID: 11400000, guid: 69479430654910e49868339579952227, type: 2}
+  maxHealth: 50
+  maxHitstun: 5
+  myElement: 0
   damage: 5
   isMysticalDamage: 0
   canMove: 1
   stunIcon: {fileID: 8463199300756448662}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 5890966177527715490}
@@ -902,7 +903,6 @@ MonoBehaviour:
   maxTimeBeforeDamageTextFades: 2
   currentTimeBeforeDamageTextFades: 2
   fadeTimeMultiplier: 1
-  deathEffects: []
   myTeamUser: {fileID: 0}
   textSpawner: {fileID: 702407520697695468}
   hitEffects: {fileID: 6645059372470791588}
@@ -925,17 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTable:
-  - item:
-      name: Rusty Spoon
-      amount: 1
-    maxAmount: 5
-    chancesToSpawn: 50
-  - item:
-      name: Apples
-      amount: 1
-    maxAmount: 10
-    chancesToSpawn: 25
+  myTable: []
   itemsToDrop: []
   DropOnlyOneItem: 0
   lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
