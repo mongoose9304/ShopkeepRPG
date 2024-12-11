@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class InventoryUI : MonoBehaviour
     public PedestalScreen pedScreen;
     public BarginBinScreen barginBinScreen;
     [SerializeField] int clickFunctionIndex;
+    public TextMeshProUGUI woodText;
+    public TextMeshProUGUI stoneText;
+    public TextMeshProUGUI humanCashText;
+    public TextMeshProUGUI hellCashText;
     private void Start()
     {
         LoadInventory();
@@ -31,6 +36,10 @@ public class InventoryUI : MonoBehaviour
                 index += 1;
             }
         }
+    }
+    public void LoadSavedResouces()
+    {
+        
     }
     private void SetHotColdItems(bool inHell)
     {

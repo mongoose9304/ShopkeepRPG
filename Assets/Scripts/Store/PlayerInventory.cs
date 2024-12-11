@@ -40,15 +40,20 @@ public class PlayerInventory : MonoBehaviour
     public List<MoveableItem> masterMoveableItemList = new List<MoveableItem>();
     [Tooltip("The singeton instance")]
     public static PlayerInventory instance;
+    public int woodTotal;
+    public int stoneTotal;
+    public int humanCashTotal;
+    public int hellCashTotal;
     private void Awake()
     {
         if (!instance)
         {
             instance = this;
             LoadItems();
+            LoadAllResources();
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if(instance!=this)
         {
             Destroy(gameObject);
         }
@@ -167,5 +172,28 @@ public class PlayerInventory : MonoBehaviour
                 return data;
         }
         return null;
+    }
+    public void LoadAllResources()
+    {
+        woodTotal = PlayerPrefs.GetInt("woodTotal", 0);
+        stoneTotal = PlayerPrefs.GetInt("stoneTotal", 0);
+        humanCashTotal = PlayerPrefs.GetInt("humanCashTotal", 0);
+        hellCashTotal = PlayerPrefs.GetInt("hellCashTotal", 0);
+    }
+    public void AddWood(int amount_)
+    {
+        woodTotal += amount_;
+    }
+    public void AddStone(int amount_)
+    {
+        stoneTotal += amount_;
+    }
+    public void AddHumanCash(int amount_)
+    {
+        humanCashTotal += amount_;
+    }
+    public void AddHellCash(int amount_)
+    {
+        hellCashTotal += amount_;
     }
 }
