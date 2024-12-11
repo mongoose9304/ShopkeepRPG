@@ -59,7 +59,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
     /// <summary>
-    /// Add all the UI items to the master list
+    /// Updates the master list to reflect the UI items, replacement NOT addition
     /// </summary>
     public void UpdateItems(List<InventorySlot> items_)
     {
@@ -81,12 +81,33 @@ public class PlayerInventory : MonoBehaviour
                 }
                 if(!hasFoundItem)
                 {
-                    MoveableItem itemX = new MoveableItem();
+                    InventoryItem itemX = new InventoryItem();
                     itemX.myItemName = slot_.myItem.itemName;
                     itemX.amount = slot_.amount;
-                    masterMoveableItemList.Add(itemX);
+                    masterItemList.Add(itemX);
                 }
             }
+        }
+    }
+    public void AddItemToInventory(string name,int amount_)
+    {
+        bool hasFoundItem = false;
+        foreach (InventoryItem masterItem_ in masterItemList)
+        {
+
+            if (masterItem_.myItemName == name)
+            {
+                masterItem_.amount += amount_;
+                hasFoundItem = true;
+                break;
+            }
+        }
+        if (!hasFoundItem)
+        {
+            InventoryItem itemX = new InventoryItem();
+            itemX.myItemName = name;
+            itemX.amount = amount_;
+            masterItemList.Add(itemX);
         }
     }
     /// <summary>
