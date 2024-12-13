@@ -16,7 +16,11 @@ public class ShopManager : MonoBehaviour
     [Tooltip("Is there two players connected")]
     public bool twoPlayerMode;
 
-        [Header("References")]
+    [Header("References")]
+    [Tooltip("REFERNCE to the script that loads into the town level")]
+    public LoadLevel townLevelLoader;
+    [Tooltip("REFERNCE to the script that loads into the town level")]
+    public PlayerInNearExitDetector exitDetector;
     [Tooltip("REFERNCE to the text that shows how much money you have")]
     public GameObject cashTextUI;
     [Tooltip("REFERNCE to the UI that says press B to exit")]
@@ -89,7 +93,9 @@ public class ShopManager : MonoBehaviour
     [Tooltip("REFERNCE to text slots that can pop up with info for players")]
     public TextMeshProUGUI[] playerTextPopUps;
 
-        [Header("Variables")]
+    [Header("Variables")]
+    public bool PlayerIsNearExit;
+    private bool isLeaving;
     //hot and cold items lists combined
     public List<ItemData> hotItems=new List<ItemData>();
     public List<ItemData> hotItemsHell=new List<ItemData>();
@@ -543,6 +549,7 @@ public class ShopManager : MonoBehaviour
         }
         shopRunning = true;
         PlayRandomShopActiveBGM();
+        exitDetector.OpenShop();
         MMSoundManager.Instance.PlaySound(openShopAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
    false, 1.0f, 0, false, 0, 1, null, false, null, null, 1, 0, 0.0f, false, false, false, false, false, false, 128, 1f,
    1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
@@ -979,6 +986,7 @@ public class ShopManager : MonoBehaviour
         {
             door_.ResetDoor();
         }
+        exitDetector.CloseShop();
         CustomerManager.instance.CloseShop();
     }
     /// <summary>
@@ -1137,6 +1145,20 @@ public class ShopManager : MonoBehaviour
             }
             return 0;
         }
+    }
+    /// <summary>
+    /// Try to leave the shop and head to town, only works when shop is closed
+    /// </summary>
+    public void TryToLeaveShop()
+    {
+        if (!PlayerIsNearExit)
+            return;
+        if (shopRunning)
+            return;
+        if (isLeaving)
+            return;
+        isLeaving = true;
+        townLevelLoader.LoadMyLevel();
     }
     private void CalculateHotItems()
     {

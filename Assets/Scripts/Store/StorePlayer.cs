@@ -295,6 +295,13 @@ public class StorePlayer : MonoBehaviour
         }
         if (isInMovingMode)
             MoveItemAction();
+        else
+        {
+            if(!isPlayer2)
+            {
+                ShopManager.instance.TryToLeaveShop();
+            }
+        }
     }
     private void OnPause(InputAction.CallbackContext obj)
     {
