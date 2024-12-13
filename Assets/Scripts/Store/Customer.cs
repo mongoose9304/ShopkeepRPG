@@ -42,7 +42,7 @@ public class Customer : MonoBehaviour
     [Tooltip("Is this customer currently in hell")]
     public bool isInHell;
     [Tooltip("REFERNCE to my navnesh agent")]
-    [SerializeField]protected NavMeshAgent myAgent;
+    [SerializeField]public NavMeshAgent myAgent;
     [Tooltip("the target I am currently moving towards")]
     [SerializeField] protected GameObject tempTarget;
     [Tooltip("how much cash I owe for items picked up from bins")]

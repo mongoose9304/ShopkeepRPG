@@ -15,10 +15,15 @@ public class ShopManager : MonoBehaviour
     public static ShopManager instance;
     [Tooltip("Is there two players connected")]
     public bool twoPlayerMode;
+    private bool shopHasBeenOpenedOnce;
 
     [Header("References")]
     [Tooltip("REFERNCE to the script that loads into the town level")]
     public LoadLevel townLevelLoader;
+    [Tooltip("REFERNCE to where the player will be placed when finishing the level ")]
+    public GameObject victoryPlayerPos;
+    [Tooltip("REFERNCE to where the player will be placed when finishing the level ")]
+    public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("REFERNCE to the script that loads into the town level")]
     public PlayerInNearExitDetector exitDetector;
     [Tooltip("REFERNCE to the text that shows how much money you have")]
@@ -548,6 +553,7 @@ public class ShopManager : MonoBehaviour
             }
         }
         shopRunning = true;
+        shopHasBeenOpenedOnce = true;
         PlayRandomShopActiveBGM();
         exitDetector.OpenShop();
         MMSoundManager.Instance.PlaySound(openShopAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
@@ -1155,10 +1161,59 @@ public class ShopManager : MonoBehaviour
             return;
         if (shopRunning)
             return;
+        if (players[0].isInMovingMode)
+            return;
+        if (inMenu)
+            return;
         if (isLeaving)
             return;
         isLeaving = true;
-        townLevelLoader.LoadMyLevel();
+        DebugSaveItems();
+        if (!shopHasBeenOpenedOnce)
+        {
+            townLevelLoader.LoadMyLevel();
+        }
+        else
+            WinLevel();
+    }
+    public void WinLevel()
+    {
+        float extraX = 0; //Nudge the 2nd player to the side to prevent overlaps
+        foreach (StorePlayer playa in players)
+        {
+            playa.enabled = false;
+            playa.gameObject.SetActive(true);
+            playa.gameObject.transform.position = victoryPlayerPos.transform.position + new Vector3(extraX, 0, 0);
+            playa.gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
+            extraX -= 1.5f;
+        }
+
+        List<int> x = new List<int>();
+        //here is where you would load the inventorys count of how many resources *stone* you have.
+        List<int> y = new List<int>();
+        if (PlayerInventory.instance)
+        {
+            y.Add(PlayerInventory.instance.GetHumanCash());
+        }
+        else
+            y.Add(0);
+        if (PlayerInventory.instance)
+        {
+            y.Add(PlayerInventory.instance.GetHellCash());
+        }
+        else
+            y.Add(0);
+        x.Add(currentCashEarned);
+        x.Add(currentCashEarnedHell);
+        LootDisplayManager.instance.AddResources(x, y, resourceSprites);
+        LootDisplayManager.instance.StartVictoryScreen();
+        PlayerManager.instance.TemporaryDisablePlayer2();
+        if (PlayerInventory.instance)
+        {
+            PlayerInventory.instance.AddHumanCash(currentCashEarned);
+            PlayerInventory.instance.AddHellCash(currentCashEarnedHell);
+            PlayerInventory.instance.SaveAllResources();
+        }
     }
     private void CalculateHotItems()
     {

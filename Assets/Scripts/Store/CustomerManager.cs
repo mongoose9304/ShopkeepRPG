@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using UnityEngine.AI;
 
 /// <summary>
 /// Manages all the customers that will be spanwd in the store
@@ -169,6 +170,12 @@ public class CustomerManager : MonoBehaviour
             c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
             c.ChangeMood(0);
             c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(c.transform.position, out hit, 3.0f, NavMesh.AllAreas))
+            {
+                c.myAgent.Warp(hit.position);
+                //transform.position = hit.position;
+            }
             lastNPCSpawnIndex += 1;
             if (lastNPCSpawnIndex >= customerSpawns.Length)
             {

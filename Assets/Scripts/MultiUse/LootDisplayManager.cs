@@ -85,6 +85,8 @@ public class LootDisplayManager : MonoBehaviour
         if(itemsToDisplay.Count==0)
         {
             allItemsDisplayed = true;
+            currentResourceDisplayTime = alteredResourceDisplayTime;
+            DisplayLootedResouces();
             return;
         }
 
