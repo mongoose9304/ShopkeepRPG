@@ -83,22 +83,16 @@ public class LumberLevel : MonoBehaviour
         {
             case 1:
                 return tier1DigItems;
-                break;
             case 2:
                 return tier2DigItems;
-                break;
             case 3:
                 return tier3DigItems;
-                break;
             case 4:
                 return tier4DigItems;
-                break;
             case 5:
                 return tier5DigItems;
-                break;
             default:
                 return tier1DigItems;
-                break;
 
         }
     }

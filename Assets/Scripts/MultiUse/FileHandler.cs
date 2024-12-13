@@ -19,6 +19,10 @@ public static class FileHandler
         string content = JsonUtility.ToJson(toSave);
         WriteFile(GetPath(filename), content);
     }
+    public static void DeleteFile(string filename)
+    {
+        File.Delete(GetPath(filename));
+    }
 
     public static List<T> ReadListFromJSON<T>(string filename)
     {
