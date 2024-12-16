@@ -112,7 +112,8 @@ public class TownPlayer : MonoBehaviour
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
                 // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
-                transform.position = PreventGoingThroughWalls(temp);
+                // transform.position = PreventGoingThroughWalls(temp);
+                transform.position = temp ;
 
 
             }
