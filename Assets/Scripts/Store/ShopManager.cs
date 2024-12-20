@@ -1187,7 +1187,7 @@ public class ShopManager : MonoBehaviour
             playa.gameObject.transform.rotation = victoryPlayerPos.transform.rotation;
             extraX -= 1.5f;
         }
-
+        shopUI.worldCamera = PlayerManager.instance.GetPlayers()[0].myCam;
         List<int> x = new List<int>();
         //here is where you would load the inventorys count of how many resources *stone* you have.
         List<int> y = new List<int>();

@@ -56,6 +56,8 @@ public class StorePlayer : MonoBehaviour
     public GameObject moveDetector;
     [Tooltip("REFERENCE to the UI for move mode")]
     public GameObject moveModeUIObject;
+    [Tooltip("REFERENCE to the UI for move mode")]
+    public GameObject moveModeUIObjectP2;
 
     [Header("REFERNCES and Inputs")]
     //used for movement calculations
@@ -666,14 +668,16 @@ public class StorePlayer : MonoBehaviour
                 moveableObjectSlotLockOnObject.SetActive(false);
                 myMoveableObjectSlots.Clear();
                 isInMovingMode = false;
-                if (moveModeUIObject)
-                    moveModeUIObject.SetActive(false);
+      
+                moveModeUIObject.SetActive(false);
+                moveModeUIObjectP2.SetActive(false);
             }
             else
             {
                 moveDetector.SetActive(true);
                 isInMovingMode = true;
                 moveModeUIObject.SetActive(true);
+                moveModeUIObjectP2.SetActive(true);
             }
             return;
         }
@@ -694,8 +698,8 @@ public class StorePlayer : MonoBehaviour
             ShopManager.instance.SetPedestalList();
             ShopManager.instance.SetBarginBinList();
             ShopManager.instance.RedoNavMesh();
-            if (moveModeUIObject)
-                moveModeUIObject.SetActive(false);
+            moveModeUIObject.SetActive(false);
+            moveModeUIObjectP2.SetActive(false);
             ShopManager.instance.DebugSaveItems();
         }
         else
@@ -703,6 +707,7 @@ public class StorePlayer : MonoBehaviour
             moveDetector.SetActive(true);
             isInMovingMode = true;
             moveModeUIObject.SetActive(true);
+            moveModeUIObjectP2.SetActive(true);
         }
         
     }
