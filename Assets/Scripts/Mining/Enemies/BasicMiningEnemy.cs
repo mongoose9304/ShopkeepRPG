@@ -12,14 +12,11 @@ public class BasicMiningEnemy : MonoBehaviour
     public float attackDistance;
     public float damage;
    [SerializeField] protected LootDropper lootDropper;
-    [Header("References")]
-    public GameObject player;
     [SerializeField] protected float currentHealth;
     [SerializeField] protected AudioClip deathAudio;
     [SerializeField] protected AudioClip attackAudio;
     protected virtual void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         lootDropper = GetComponent<LootDropper>();
         currentHealth = maxHealth;
     }

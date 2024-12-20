@@ -28,20 +28,20 @@ public class HideEnemy : BasicMiningEnemy
             return;
         }
        
-            if (Vector3.Distance(transform.position, player.transform.position) < hideDistance)
+          /*  if (Vector3.Distance(transform.position, player.transform.position) < hideDistance)
                 Hide();
             if (Vector3.Distance(transform.position, player.transform.position) > hideDistance)
                 UnHide();
-
+          */
        
     }
-    private void Hide()
+    public void Hide()
    {
        transform.position= Vector3.MoveTowards(transform.position, endPos, Time.deltaTime * moveSpeed);
         collider.enabled = false;
         timeToWaitBeforePopingUpAfterLosingHat = 0.5f;
     }
-    private void UnHide()
+    public void UnHide()
     {
       transform.position=  Vector3.MoveTowards(transform.position, startPos, Time.deltaTime * moveSpeed);
         collider.enabled = true;
