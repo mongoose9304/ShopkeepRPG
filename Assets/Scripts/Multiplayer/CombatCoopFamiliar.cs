@@ -97,6 +97,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     [Tooltip("used for temp speed buffs/debuffs")]
     public float moveSpeedModifier;
     private bool InteractHeld;
+    private bool controlsEnabled;
 
     /// <summary>
     /// Attatch the controller to this scripts inputs
@@ -110,16 +111,30 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("Dash").performed += OnDash;
         playerActionMap.FindAction("RTAction").performed += TeleportPressed;
         combatControls.EnableActions(playerActionMap);
+        controlsEnabled = true;
     }
     private void OnEnable()
     {
         currentHealth = maxHealth;
         combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
+        if(!controlsEnabled)
+        {
+            playerActionMap.FindAction("YAction").performed += InteractPressed;
+            playerActionMap.FindAction("YAction").canceled += InteractReleased;
+            playerActionMap.FindAction("Dash").performed += OnDash;
+            playerActionMap.FindAction("RTAction").performed += TeleportPressed;
+            controlsEnabled = true;
+        }
         playerActionMap.Enable();
     }
     private void OnDisable()
     {
         playerActionMap.Disable();
+        playerActionMap.FindAction("YAction").performed -= InteractPressed;
+        playerActionMap.FindAction("YAction").canceled -= InteractReleased;
+        playerActionMap.FindAction("Dash").performed -= OnDash;
+        playerActionMap.FindAction("RTAction").performed -= TeleportPressed;
+        controlsEnabled = false;
     }
     private void Update()
     {
