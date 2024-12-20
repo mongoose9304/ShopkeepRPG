@@ -34,7 +34,7 @@ public class TempPause : MonoBehaviour
         else
         {
             Time.timeScale = 0;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            Time.fixedDeltaTime = 0;
             pauseObject.SetActive(true);
             isPaused = true;
             foreach (GameObject obj in toggleOnPauseObjects)

@@ -68,6 +68,10 @@ public class LootManager : MonoBehaviour
         if(expFeedback)
         SetExpToNextLevel();
     }
+    public void ClearAllLootItems()
+    {
+        worldObjectPool.ResetAllObjects();
+    }
     private void Update()
     {
        // scrollRect.normalizedPosition = new Vector2(0, 1);

@@ -104,6 +104,8 @@ public class DungeonManager : MonoBehaviour
             EnemyManager.instance.HardClearEnemyList();
             TutorialManager.instance_.EndTutorial();
         }
+        CoinSpawner.instance_.ClearAllCoins();
+        LootManager.instance.ClearAllLootItems();
         dungeonsCleared += 1;
         if(dungeonsCleared>=dungeonList.Count)
         {
@@ -112,7 +114,7 @@ public class DungeonManager : MonoBehaviour
         }
         currentSin = sin_;
         PlayRandomBGM();
-        SwitchSinSrops();
+        SwitchSinDrops();
         if(currentDungeon)
         Destroy(currentDungeon.gameObject);
         StartCoroutine(WaitAFrameBeforeMoving());
@@ -382,7 +384,7 @@ public class DungeonManager : MonoBehaviour
             PlayerInventory.instance.SaveItems();
         }
     }
-    public void SwitchSinSrops()
+    public void SwitchSinDrops()
     {
         foreach(ItemDropList list_ in sinItemDropLists)
         {

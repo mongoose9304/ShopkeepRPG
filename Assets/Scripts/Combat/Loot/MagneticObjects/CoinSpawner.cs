@@ -18,7 +18,17 @@ public class CoinSpawner : MonoBehaviour
         instance_ = this;
         temp = demonCoins;
     }
-
+    public void ClearAllCoins()
+    {
+        if(regularCoinPool)
+        {
+            regularCoinPool.ResetAllObjects();
+        }
+        if (demonCoinPool)
+        {
+            demonCoinPool.ResetAllObjects();
+        }
+    }
     public void CreateDemonCoins(int value_,Transform location_)
     {
          temp = MakeDemonChange(value_);
