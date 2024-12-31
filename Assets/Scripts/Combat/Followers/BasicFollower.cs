@@ -33,7 +33,7 @@ public class BasicFollower : MonoBehaviour
     protected float currentHitstun;
     protected float currentAttackCooldown = 0.2f;
     protected float currentSpecialCooldown = 0.2f;
-    protected float currentHealth;
+   [SerializeField] protected float currentHealth;
     bool superArmor;
 
     [Header("References")]
@@ -74,12 +74,13 @@ public class BasicFollower : MonoBehaviour
     {
         if (Vector3.Distance(this.transform.position, myMaster.transform.position) > maxDistanceToMyMaster)
         {
+            if(agent.isOnNavMesh)
             agent.SetDestination(myMaster.transform.position + new Vector3(0, 0, 2));
         }
         if (Vector3.Distance(this.transform.position, myMaster.transform.position) > maxDistanceToMyMaster*2)
         {
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(myMaster.transform.position + new Vector3(2, 0, 0), out hit, 3.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(myMaster.transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)), out hit, 7.0f, NavMesh.AllAreas))
             {
                 agent.Warp(hit.position);
             }

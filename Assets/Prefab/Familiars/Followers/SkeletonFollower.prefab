@@ -66,11 +66,14 @@ MonoBehaviour:
   specialDistance: 0
   knockBackMax: 0
   basicDamage: 5
+  physicalDef: 0
+  mysticalDef: 0
   basicStun: 0
   specialDamage: 0
   isMysticalDamage: 0
   maxDistanceToMyMaster: 8
   canMove: 1
+  currentHealth: 0
   myMaster: {fileID: 0}
   stunIcon: {fileID: 0}
   target: {fileID: 0}
@@ -83,6 +86,8 @@ MonoBehaviour:
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 2493129815980078077}
   useFlicker: 0
+  canUseSpecialAttack: 0
+  specialAttackPool: {fileID: 0}
 --- !u!195 &6604895891151908402
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -93,10 +98,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
-  m_Acceleration: 8
+  m_Speed: 12
+  m_Acceleration: 16
   avoidancePriority: 99
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 0

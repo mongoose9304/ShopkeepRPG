@@ -93,7 +93,7 @@ public class FollowerMaster : MonoBehaviour
             if(!myFollowers[i].gameObject.activeInHierarchy)
             {
                 NavMeshHit hit;
-                if (NavMesh.SamplePosition(transform.position+new Vector3(2,0,0), out hit, 3.0f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(transform.position + new Vector3(Random.Range(-1.5f, 1.5f), 0, Random.Range(-1.5f, 1.5f)), out hit, 6.0f, NavMesh.AllAreas))
                 {
                     myFollowers[i].transform.position = hit.position;
                 }

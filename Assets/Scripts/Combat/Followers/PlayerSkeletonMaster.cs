@@ -11,10 +11,21 @@ public class PlayerSkeletonMaster : FollowerMaster
     public GameObject superSkeleton;
     public int maxSuperFollowers;
     public List<BasicFollower> mySuperSkeletons = new List<BasicFollower>();
+    [SerializeField] float skeletonHealthPerLevel;
+    [SerializeField] float skeletonPhysicalDamagePerLevel;
+    [SerializeField] float skeletonMysticalDamagePerLevel;
+    [SerializeField] float skeletonPhysicalDefencePerLevel;
+    [SerializeField] float skeletonMysticalDefencePerLevel;
 
+    [SerializeField] float skeletonBaseHealth;
+    [SerializeField] float skeletonBasePhysicalDamage;
+    [SerializeField] float skeletonBaseMysticalDamage;
+    [SerializeField] float skeletonBasePhysicalDefence;
+    [SerializeField] float skeletonBaseMysticalDefence;
    
     public override void Reset()
     {
+        Debug.Log("Skeleton Mater Reset");
         base.Reset();
         for (int i = 0; i < mySuperSkeletons.Count; i++)
         {
@@ -28,16 +39,26 @@ public class PlayerSkeletonMaster : FollowerMaster
             mySuperSkeletons.Add(obj.GetComponent<BasicFollower>());
             obj.GetComponent<BasicFollower>().myMaster = this;
         }
+        SpawnFollowers();
+        SpawnFollowers();
+        SpawnFollowers();
+        SpawnFollowers();
+        SpawnFollowers();
     }
-    public override void SetStats(float health, float damage, float specialDamage_, float physicalDef_, float mysticalDef_)
+   
+    public void SetStatsBasedOnPlayerLevel(int level_)
     {
-         maxHealth=health*0.2f;
-     regularDamage=damage*0.2f;
-    specialDamage=specialDamage_*0.2f;
-        physicalDef = physicalDef_*0.2f;
-        mysticalDef = mysticalDef_ * 0.2f;
+        if (level_ < 1)
+            level_ = 1;
+        maxHealth = (skeletonHealthPerLevel * level_)+skeletonBaseHealth;
+        regularDamage = (skeletonPhysicalDamagePerLevel * level_)+ skeletonBasePhysicalDamage;
+        specialDamage = (skeletonMysticalDamagePerLevel * level_)+skeletonBaseMysticalDamage;
+        physicalDef = (skeletonPhysicalDefencePerLevel * level_)+skeletonBasePhysicalDefence;
+        mysticalDef = (skeletonMysticalDefencePerLevel * level_)+skeletonBaseMysticalDefence;
         skeletonExplosionDamage = specialDamage * 3;
-     }
+
+
+    }
     public override void FollowerDeath(Transform location_)
     {
         if (deathEffectPool)
@@ -67,7 +88,7 @@ public class PlayerSkeletonMaster : FollowerMaster
             if (!mySuperSkeletons[i].gameObject.activeInHierarchy)
             {
                 NavMeshHit hit;
-                if (NavMesh.SamplePosition(transform.position + new Vector3(2, 0, 0), out hit, 3.0f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(transform.position + new Vector3(Random.Range(-1,1), 0, Random.Range(-1, 1)), out hit, 3.0f, NavMesh.AllAreas))
                 {
                     mySuperSkeletons[i].transform.position = hit.position;
                 }

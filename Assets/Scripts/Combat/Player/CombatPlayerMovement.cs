@@ -656,7 +656,8 @@ public class CombatPlayerMovement : MonoBehaviour
         manaBar.SetBar01(currentMana / maxMana);
         combatActions.SetSpecialDamages(PhysicalAtk,MysticalAtk);
         combatActions.SetStats(PhysicalAtk, MysticalAtk, myEquiptment.RangedWeapon.myElement, myEquiptment.MeleeWeapon.myElement);
-        mySkeltonMaster.SetStats(maxHealth, PhysicalAtk, MysticalAtk, PhysicalDef, MysticalDef);
+        //mySkeltonMaster.SetStats(maxHealth, PhysicalAtk, MysticalAtk, PhysicalDef, MysticalDef);
+        mySkeltonMaster.SetStatsBasedOnPlayerLevel(myStats.Level);
     }
     //public List<EquipmentStatBlock> Rings = new List<EquipmentStatBlock>();
     //public EquipmentStatBlock MeleeWeapon;
