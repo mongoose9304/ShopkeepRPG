@@ -6,7 +6,10 @@ using UnityEngine;
 public class SkeletonFollower : BasicFollower
 {
     public bool canUseSpecialAttack;
+    public bool isRanged;
     public MMMiniObjectPooler specialAttackPool;
+    public MMMiniObjectPooler rangedAttackPool;
+    public Transform rangedSpawn;
     public override void Attack()
     {
        
@@ -14,6 +17,19 @@ public class SkeletonFollower : BasicFollower
             return;
         if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
             return;
+
+        if(isRanged)
+        {
+            transform.LookAt(target.transform);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            GameObject obj = rangedAttackPool.GetPooledGameObject();
+            obj.transform.position = rangedSpawn.position;
+            obj.transform.rotation = rangedSpawn.rotation;
+            obj.GetComponent<FamiliarProjectile>().damage = specialDamage;
+            obj.SetActive(true);
+
+            return;
+        }
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2);
         foreach (var hitCollider in hitColliders)
         {
