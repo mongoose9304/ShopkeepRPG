@@ -24,9 +24,10 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] protected Element myElement;
     [SerializeField] protected float damage;
     [SerializeField] protected bool isMysticalDamage;
-
-    [Tooltip("REFERNCE to the script that allows for items to drop ")]
-    LootDropper lootDropper;
+    [Header("Status Effects")]
+    protected bool isHexed;
+    protected float hexTime;
+   
 
     [Header("CurrentValues")]
     public bool canMove;
@@ -63,6 +64,9 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float fadeTimeMultiplier;
     [Tooltip("REFERNCE to the team I am on")]
     [SerializeField] TeamUser myTeamUser;
+    public GameObject hexStatusEffect;
+    [Tooltip("REFERNCE to the script that allows for items to drop ")]
+    LootDropper lootDropper;
 
 
     [Header("Feel")]
@@ -141,6 +145,12 @@ public class BasicEnemy : MonoBehaviour
         currentHitstun = 0;
         canMove = true;
         stunIcon.SetActive(false);
+        hexTime = 0;
+        isHexed = false;
+        if(hexStatusEffect)
+        {
+            hexStatusEffect.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -204,6 +214,10 @@ public class BasicEnemy : MonoBehaviour
                 KnockBack(knockBack_, knockBackObject);
             }
         }
+        if(isHexed)
+        {
+            damage_ *= 1.5f;
+        }
         if(element_==myWeakness&&element_!=Element.Neutral)
         {
             damage_ *= 1.5f;
@@ -227,6 +241,36 @@ public class BasicEnemy : MonoBehaviour
            currentDamageTextAlpha = 1;
            currentTimeBeforeDamageTextFades = maxTimeBeforeDamageTextFades;
         */
+    }
+
+    public virtual void ApplyStatusEffect(Status effect_,float statusTime)
+    {
+        switch(effect_)
+        {
+            case Status.Hexed:
+                if(hexStatusEffect)
+                {
+                    hexStatusEffect.SetActive(true);
+                }
+                isHexed = true;
+                hexTime += statusTime;
+                break;
+        }
+    }
+    public virtual void StatusEffectUpdates()
+    {
+        if(isHexed)
+        {
+            hexTime -= Time.deltaTime;
+            if(hexTime<=0)
+            {
+                isHexed = false;
+                if (hexStatusEffect)
+                {
+                    hexStatusEffect.SetActive(false);
+                }
+            }
+        }
     }
     /// <summary>
     /// This will happen when the enemy runs out of health

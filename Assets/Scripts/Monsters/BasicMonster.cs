@@ -6,6 +6,10 @@ public enum Element
 {
     Fire,Water,Air,Earth,Neutral
 };
+public enum Status
+{
+    Hexed
+};
 
 public class BasicMonster : MonoBehaviour
 {

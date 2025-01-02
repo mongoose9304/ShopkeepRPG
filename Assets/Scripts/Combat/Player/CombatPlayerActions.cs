@@ -197,7 +197,7 @@ public class CombatPlayerActions : MonoBehaviour
         {
          
             familarRespawnTimer -= Time.deltaTime;
-            float temp = (myFamiliar.RespawnTimeMax - familarRespawnTimer) / myFamiliar.RespawnTimeMax;
+            float temp = (myFamiliar.respawnTimeMax - familarRespawnTimer) / myFamiliar.respawnTimeMax;
             if (temp < 0)
                 temp = 0;
             combatMovement.SetFamiliarHealth(temp);

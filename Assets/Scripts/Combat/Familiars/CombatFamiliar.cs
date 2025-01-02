@@ -25,13 +25,12 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField]protected  float specialAttackCooldownMax;
     [SerializeField]protected float ultimateAttackCooldownMax;
     [SerializeField]protected float AttackCooldownMax;
-    [SerializeField]public float RespawnTimeMax;
     protected float specialAttackCooldowncurrent;
     protected float AttackCooldowncurrent;
     protected float ultimateAttackCooldowncurrent;
     [SerializeField] float maxDistanceToPlayer;
     [SerializeField] float maxDistanceToTarget;
-    [SerializeField] float respawnTimeMax;
+    [SerializeField] public float respawnTimeMax;
     [SerializeField] float delayBeforeLookingForAnotherTargetMax;
     float delayBeforeLookingForAnotherTargetCurrent;
     //StatsFromData
