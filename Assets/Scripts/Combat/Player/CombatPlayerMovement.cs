@@ -863,7 +863,7 @@ public class CombatPlayerMovement : MonoBehaviour
             {
                 case "Necromancer":
                     mySkeltonMaster.enabled = false;
-                    mySkeltonMaster.maxSuperFollowers = 0;
+                    mySkeltonMaster.maxMageFollowers = 0;
                     mySkeltonMaster.maxFollowers = 0;
                     mySkeltonMaster.superSkeletonPower = 0;
                     extraLife = false;
@@ -874,14 +874,9 @@ public class CombatPlayerMovement : MonoBehaviour
                             mySkeltonMaster.enabled = true;
                             mySkeltonMaster.maxFollowers += 1;
                         }
-                        else if (i == 5)
-                        {
-                            mySkeltonMaster.maxSuperFollowers += 1;
-                            mySkeltonMaster.superSkeletonPower += 1.0f;
-                        }
                         else if (i < 10)
                         {
-                            mySkeltonMaster.superSkeletonPower += 1.0f;
+                            mySkeltonMaster.maxMageFollowers += 1;
                         }
                         else if (i == 10)
                         {

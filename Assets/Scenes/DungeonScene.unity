@@ -7245,7 +7245,7 @@ Transform:
   m_GameObject: {fileID: 91680499}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 1.93, y: 9.451068, z: -9.831068}
+  m_LocalPosition: {x: 5.48, y: 9.451068, z: -10.051068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9922,12 +9922,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathEffectPool: {fileID: 363149387}
   spawnEffectPool: {fileID: 363149388}
-  followerPrefab: {fileID: 1409099129502374210, guid: aa5748a5df58d654ca3692c7a3243151, type: 3}
+  followerPrefab: {fileID: 1409099129502374210, guid: 8ac1e6f283d8c914cac780ff75156a81, type: 3}
   maxFollowers: 5
   myFollowers: []
   myTargets: []
-  maxTimeBeforeTargetSearchs: 3
-  currentTimeBeforeTargetSearchs: 3
+  maxTimeBeforeTargetSearchs: 0.5
+  currentTimeBeforeTargetSearchs: 0.5
   SearchRange: 12
   searchableTags:
   - Enemy
@@ -9941,9 +9941,9 @@ MonoBehaviour:
   mysticalDef: 0
   skeletonExplosionDamage: 0
   superSkeletonPower: 5
-  superSkeleton: {fileID: 7639247490541423730, guid: febf0a76e3874c7498209c4a57bf9955, type: 3}
-  maxSuperFollowers: 1
-  mySuperSkeletons: []
+  mageSkeleton: {fileID: 1409099129502374210, guid: aa5748a5df58d654ca3692c7a3243151, type: 3}
+  maxMageFollowers: 0
+  myMageSkeletons: []
   skeletonHealthPerLevel: 20
   skeletonPhysicalDamagePerLevel: 1
   skeletonMysticalDamagePerLevel: 1

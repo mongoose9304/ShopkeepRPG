@@ -7,15 +7,11 @@ public class HomingAttack : MonoBehaviour
     [SerializeField] float maxLifeTime;
     [SerializeField] float moveSpeed;
     [SerializeField] float lookSpeed;
-    [SerializeField] float homingCheckDelayMax;
-    float homingCheckDelay;
     [SerializeField] bool isHoming;
-    [SerializeField] string homingTag;
     public Transform target;
     Quaternion rotation;
     Vector3 direction;
     float currentLifeTime;
-    RaycastHit hit;
     private void Update()
     {
         //look at target if you have one

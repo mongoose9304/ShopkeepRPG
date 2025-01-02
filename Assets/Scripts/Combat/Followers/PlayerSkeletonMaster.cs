@@ -8,9 +8,9 @@ public class PlayerSkeletonMaster : FollowerMaster
     public float skeletonExplosionDamage;
     [Tooltip("Multiplies the power of the basic skeleton to create a stronger one")]
     public float superSkeletonPower;
-    public GameObject superSkeleton;
-    public int maxSuperFollowers;
-    public List<BasicFollower> mySuperSkeletons = new List<BasicFollower>();
+    public GameObject mageSkeleton;
+    public int maxMageFollowers;
+    public List<BasicFollower> myMageSkeletons = new List<BasicFollower>();
     [SerializeField] float skeletonHealthPerLevel;
     [SerializeField] float skeletonPhysicalDamagePerLevel;
     [SerializeField] float skeletonMysticalDamagePerLevel;
@@ -27,16 +27,16 @@ public class PlayerSkeletonMaster : FollowerMaster
     {
         Debug.Log("Skeleton Mater Reset");
         base.Reset();
-        for (int i = 0; i < mySuperSkeletons.Count; i++)
+        for (int i = 0; i < myMageSkeletons.Count; i++)
         {
-            Destroy(mySuperSkeletons[i].gameObject);
+            Destroy(myMageSkeletons[i].gameObject);
         }
-        mySuperSkeletons.Clear();
-        for (int i = 0; i < maxSuperFollowers; i++)
+        myMageSkeletons.Clear();
+        for (int i = 0; i < maxMageFollowers; i++)
         {
-            GameObject obj = GameObject.Instantiate(superSkeleton);
+            GameObject obj = GameObject.Instantiate(mageSkeleton);
             obj.SetActive(false);
-            mySuperSkeletons.Add(obj.GetComponent<BasicFollower>());
+            myMageSkeletons.Add(obj.GetComponent<BasicFollower>());
             obj.GetComponent<BasicFollower>().myMaster = this;
         }
         SpawnFollowers();
@@ -74,34 +74,34 @@ public class PlayerSkeletonMaster : FollowerMaster
         base.SearchForTargets();
         if (myTargets.Count > 0)
         {
-            for (int i = 0; i < mySuperSkeletons.Count; i++)
+            for (int i = 0; i < myMageSkeletons.Count; i++)
             {
-                if (mySuperSkeletons[i].target == null)
-                    mySuperSkeletons[i].target = myTargets[Random.Range(0, myTargets.Count)];
+                if (myMageSkeletons[i].target == null)
+                    myMageSkeletons[i].target = myTargets[Random.Range(0, myTargets.Count)];
             }
         }
     }
     public override void SpawnFollowers()
     {
-        for (int i = 0; i < mySuperSkeletons.Count; i++)
+        for (int i = 0; i < myMageSkeletons.Count; i++)
         {
-            if (!mySuperSkeletons[i].gameObject.activeInHierarchy)
+            if (!myMageSkeletons[i].gameObject.activeInHierarchy)
             {
                 NavMeshHit hit;
                 if (NavMesh.SamplePosition(transform.position + new Vector3(Random.Range(-1,1), 0, Random.Range(-1, 1)), out hit, 3.0f, NavMesh.AllAreas))
                 {
-                    mySuperSkeletons[i].transform.position = hit.position;
+                    myMageSkeletons[i].transform.position = hit.position;
                 }
                 else
                 {
-                    mySuperSkeletons[i].transform.position = transform.position;
+                    myMageSkeletons[i].transform.position = transform.position;
                 }
-                mySuperSkeletons[i].SetStats(maxHealth* superSkeletonPower, regularDamage* superSkeletonPower, specialDamage* superSkeletonPower, physicalDef* superSkeletonPower, mysticalDef* superSkeletonPower);
-                mySuperSkeletons[i].gameObject.SetActive(true);
+                myMageSkeletons[i].SetStats(maxHealth, regularDamage, specialDamage, physicalDef, mysticalDef);
+                myMageSkeletons[i].gameObject.SetActive(true);
                 if (spawnEffectPool)
                 {
                     GameObject obj = spawnEffectPool.GetPooledGameObject();
-                    obj.transform.position = mySuperSkeletons[i].transform.position;
+                    obj.transform.position = myMageSkeletons[i].transform.position;
                     obj.SetActive(true);
                 }
                 break;

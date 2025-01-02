@@ -9696,8 +9696,8 @@ GameObject:
   - component: {fileID: 7138840185446868342}
   - component: {fileID: 9126893181173650891}
   - component: {fileID: 234057767378862617}
-  - component: {fileID: 1719407493304108602}
-  - component: {fileID: 811961043015177381}
+  - component: {fileID: 7908664930683774521}
+  - component: {fileID: 4703855966995799660}
   m_Layer: 0
   m_Name: SkeletonMageProjectile
   m_TagString: Untagged
@@ -9777,7 +9777,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1719407493304108602
+--- !u!114 &7908664930683774521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9786,28 +9786,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 8230403905138075863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396dd8be7786f9949a4fa14bcbcee2dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxLifeTime: 5
-  speed: 10
---- !u!114 &811961043015177381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8230403905138075863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5284f70001590fe4d88cb63267b96887, type: 3}
+  m_Script: {fileID: 11500000, guid: 920dc4eb3fc68d844883a8bf3e833634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  myElement: 0
-  isMysticalDamage: 1
-  projectileExplosionObject: {fileID: 0}
-  myTeam: Player
+  hitStun: 0
+  knockBack: 0
+  lifeSteal: 0
+  element: 0
+  canPierceEnemies: 1
+  damageTag: 
+--- !u!114 &4703855966995799660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8230403905138075863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5fc1a86e38cf547ac6076df9dd39cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLifeTime: 5
+  moveSpeed: 8
+  lookSpeed: 5
+  homingCheckDelayMax: 1
+  isHoming: 1
+  homingTag: 
+  target: {fileID: 0}
 --- !u!1 &8847562530779739302
 GameObject:
   m_ObjectHideFlags: 0

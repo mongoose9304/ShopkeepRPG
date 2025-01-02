@@ -25,7 +25,8 @@ public class SkeletonFollower : BasicFollower
             GameObject obj = rangedAttackPool.GetPooledGameObject();
             obj.transform.position = rangedSpawn.position;
             obj.transform.rotation = rangedSpawn.rotation;
-            obj.GetComponent<FamiliarProjectile>().damage = specialDamage;
+            obj.GetComponent<MagicMissile>().damage = specialDamage;
+            obj.GetComponent<HomingAttack>().target = target.transform;
             obj.SetActive(true);
 
             return;
