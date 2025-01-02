@@ -865,7 +865,7 @@ public class CombatPlayerMovement : MonoBehaviour
                     mySkeltonMaster.enabled = false;
                     mySkeltonMaster.maxMageFollowers = 0;
                     mySkeltonMaster.maxFollowers = 0;
-                    mySkeltonMaster.superSkeletonPower = 0;
+                    mySkeltonMaster.maxSuperFollowers = 0;
                     extraLife = false;
                     for(int i=0;i<tal_.levelInvested;i++)
                     {
@@ -880,6 +880,7 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                         else if (i == 10)
                         {
+                            mySkeltonMaster.maxSuperFollowers += 1;
                             extraLife = true;
                         }
                     }

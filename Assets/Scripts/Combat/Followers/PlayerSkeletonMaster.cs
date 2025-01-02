@@ -9,8 +9,11 @@ public class PlayerSkeletonMaster : FollowerMaster
     [Tooltip("Multiplies the power of the basic skeleton to create a stronger one")]
     public float superSkeletonPower;
     public GameObject mageSkeleton;
+    public GameObject superSkeleton;
     public int maxMageFollowers;
+    public int maxSuperFollowers;
     public List<BasicFollower> myMageSkeletons = new List<BasicFollower>();
+    public List<BasicFollower> mySuperSkeletons = new List<BasicFollower>();
     [SerializeField] float skeletonHealthPerLevel;
     [SerializeField] float skeletonPhysicalDamagePerLevel;
     [SerializeField] float skeletonMysticalDamagePerLevel;
@@ -37,6 +40,19 @@ public class PlayerSkeletonMaster : FollowerMaster
             GameObject obj = GameObject.Instantiate(mageSkeleton);
             obj.SetActive(false);
             myMageSkeletons.Add(obj.GetComponent<BasicFollower>());
+            obj.GetComponent<BasicFollower>().myMaster = this;
+        }
+
+        for (int i = 0; i < mySuperSkeletons.Count; i++)
+        {
+            Destroy(mySuperSkeletons[i].gameObject);
+        }
+        mySuperSkeletons.Clear();
+        for (int i = 0; i < maxSuperFollowers; i++)
+        {
+            GameObject obj = GameObject.Instantiate(superSkeleton);
+            obj.SetActive(false);
+            mySuperSkeletons.Add(obj.GetComponent<BasicFollower>());
             obj.GetComponent<BasicFollower>().myMaster = this;
         }
         SpawnFollowers();
@@ -79,6 +95,11 @@ public class PlayerSkeletonMaster : FollowerMaster
                 if (myMageSkeletons[i].target == null)
                     myMageSkeletons[i].target = myTargets[Random.Range(0, myTargets.Count)];
             }
+            for (int i = 0; i < mySuperSkeletons.Count; i++)
+            {
+                if (mySuperSkeletons[i].target == null)
+                    mySuperSkeletons[i].target = myTargets[Random.Range(0, myTargets.Count)];
+            }
         }
     }
     public override void SpawnFollowers()
@@ -102,6 +123,30 @@ public class PlayerSkeletonMaster : FollowerMaster
                 {
                     GameObject obj = spawnEffectPool.GetPooledGameObject();
                     obj.transform.position = myMageSkeletons[i].transform.position;
+                    obj.SetActive(true);
+                }
+                break;
+            }
+        }
+        for (int i = 0; i < mySuperSkeletons.Count; i++)
+        {
+            if (!mySuperSkeletons[i].gameObject.activeInHierarchy)
+            {
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(transform.position + new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)), out hit, 3.0f, NavMesh.AllAreas))
+                {
+                    mySuperSkeletons[i].transform.position = hit.position;
+                }
+                else
+                {
+                    mySuperSkeletons[i].transform.position = transform.position;
+                }
+                mySuperSkeletons[i].SetStats(maxHealth*superSkeletonPower, regularDamage*superSkeletonPower, specialDamage * superSkeletonPower, physicalDef * superSkeletonPower, mysticalDef * superSkeletonPower);
+                mySuperSkeletons[i].gameObject.SetActive(true);
+                if (spawnEffectPool)
+                {
+                    GameObject obj = spawnEffectPool.GetPooledGameObject();
+                    obj.transform.position = mySuperSkeletons[i].transform.position;
                     obj.SetActive(true);
                 }
                 break;
