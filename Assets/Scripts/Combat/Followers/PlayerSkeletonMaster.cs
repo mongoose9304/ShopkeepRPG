@@ -25,7 +25,6 @@ public class PlayerSkeletonMaster : FollowerMaster
     [SerializeField] float skeletonBaseMysticalDamage;
     [SerializeField] float skeletonBasePhysicalDefence;
     [SerializeField] float skeletonBaseMysticalDefence;
-   
     public override void Reset()
     {
         Debug.Log("Skeleton Mater Reset");

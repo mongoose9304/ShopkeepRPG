@@ -9,6 +9,7 @@ public class SkeletonFamiliar : CombatFamiliar
     public float specialRange;
     public float AttackDistance;
     public float specialHexTime;
+    public PlayerSkeletonMaster mySkeltonMaster;
     protected override void Update()
     {
         if (TempPause.instance.isPaused)
@@ -70,5 +71,10 @@ public class SkeletonFamiliar : CombatFamiliar
                 hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(PhysicalAtk, 0, Element.Neutral, 0, this.gameObject);
             }
         }
+    }
+    public override void CalculateAllModifiers()
+    {
+        base.CalculateAllModifiers();
+        mySkeltonMaster.SetStatsBasedOnPlayerLevel(monsterStats.Level);
     }
 }

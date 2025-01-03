@@ -29,6 +29,14 @@ public class FollowerMaster : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if(deathEffectPool)
+        {
+            deathEffectPool.FillObjectPool();
+        }
+        if (spawnEffectPool)
+        {
+            spawnEffectPool.FillObjectPool();
+        }
         Reset();
     }
     public virtual void Reset()

@@ -6129,6 +6129,7 @@ Transform:
   - {fileID: 3118731261790261959}
   - {fileID: 7411590960347477955}
   - {fileID: 7973243574272911160}
+  - {fileID: 5864023955375019645}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6314173209146273319
@@ -6253,7 +6254,9 @@ MonoBehaviour:
   hitEffects: {fileID: 6735126338250919985}
   specialAttackPool: {fileID: 8496439855155061789}
   specialRange: 5
+  AttackDistance: 0
   specialHexTime: 8
+  mySkeltonMaster: {fileID: 8790139088563588411}
 --- !u!65 &8281628657713986625
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11252,6 +11255,123 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8349249554637019805}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &8519731576371892273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5864023955375019645}
+  - component: {fileID: 8790139088563588411}
+  - component: {fileID: 6188776517797991099}
+  - component: {fileID: 8674539754035012361}
+  m_Layer: 0
+  m_Name: SummonMaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5864023955375019645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8519731576371892273}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.516, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3856738759050230793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8790139088563588411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8519731576371892273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c3d0129ba37bc44bbccb11ca8cd17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathEffectPool: {fileID: 6188776517797991099}
+  spawnEffectPool: {fileID: 8674539754035012361}
+  followerPrefab: {fileID: 1409099129502374210, guid: 8ac1e6f283d8c914cac780ff75156a81, type: 3}
+  maxFollowers: 2
+  myFollowers: []
+  myTargets: []
+  maxTimeBeforeTargetSearchs: 0.5
+  currentTimeBeforeTargetSearchs: 0.5
+  SearchRange: 12
+  searchableTags:
+  - Enemy
+  teams: []
+  maxTimeBetweenRespawns: 4
+  currentTimeBetweenRespawns: 4
+  maxHealth: 0
+  regularDamage: 0
+  specialDamage: 0
+  physicalDef: 0
+  mysticalDef: 0
+  skeletonExplosionDamage: 0
+  superSkeletonPower: 3
+  mageSkeleton: {fileID: 1409099129502374210, guid: aa5748a5df58d654ca3692c7a3243151, type: 3}
+  superSkeleton: {fileID: 7639247490541423730, guid: febf0a76e3874c7498209c4a57bf9955, type: 3}
+  maxMageFollowers: 1
+  maxSuperFollowers: 0
+  myMageSkeletons: []
+  mySuperSkeletons: []
+  skeletonHealthPerLevel: 20
+  skeletonPhysicalDamagePerLevel: 1
+  skeletonMysticalDamagePerLevel: 1
+  skeletonPhysicalDefencePerLevel: 1
+  skeletonMysticalDefencePerLevel: 1
+  skeletonBaseHealth: 200
+  skeletonBasePhysicalDamage: 10
+  skeletonBaseMysticalDamage: 10
+  skeletonBasePhysicalDefence: 10
+  skeletonBaseMysticalDefence: 10
+--- !u!114 &6188776517797991099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8519731576371892273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 5480857277832582209, guid: e1b643e6ea28e0944ba2ec79f90a2730, type: 3}
+  PoolSize: 5
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
+--- !u!114 &8674539754035012361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8519731576371892273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameObjectToPool: {fileID: 1737921928726309688, guid: 9c72ee8035b15944897801c687a9a1c5, type: 3}
+  PoolSize: 5
+  PoolCanExpand: 1
+  MutualizeWaitingPools: 0
+  NestWaitingPool: 0
 --- !u!1 &8867944493876285400
 GameObject:
   m_ObjectHideFlags: 0
