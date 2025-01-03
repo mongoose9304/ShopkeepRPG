@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+public enum Familiar
+{
+    Slime,Skeleton
+};
 /// <summary>
 /// Manages players joining the game
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
+    public Familiar currentFamiliar;
     [Tooltip("The singleton instance of this class")]
     public static PlayerManager instance;
     [Tooltip("All the players loaded in the game")]

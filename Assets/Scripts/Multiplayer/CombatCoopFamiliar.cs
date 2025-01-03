@@ -21,14 +21,15 @@ public class CombatCoopFamiliar : MonoBehaviour
     public AudioClip dashAudio;
     [Tooltip("REFERENCE to the controls for the current familar, these will swap between familiars as they have diffrent attacks and such")]
     public FamiliarCombatControls combatControls;
+    [Tooltip("REFERENCE to all possible controls for the familars, these will swap between familiars as they have diffrent attacks and such")]
+    public FamiliarCombatControls[] combatControlsForAllFamiliars;
     [Tooltip("REFERENCE to the teleport effect used by the player")]
     public ParticleSystem teleportParticles;
     [Tooltip("REFERENCE to the first player")]
     public CombatPlayerMovement combatPlayerMovement;
     [Tooltip("REFERENCE to the lock on Icon")]
     [SerializeField] GameObject lockOnIcon;
-    [Tooltip("REFERENCE to the effects played when the player is hit")]
-    [SerializeField] MMF_Player hitEffects;
+    
     [Tooltip("REFERENCE to the effects played when the player is killed")]
     [SerializeField] GameObject deathEffect;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
@@ -110,8 +111,27 @@ public class CombatCoopFamiliar : MonoBehaviour
         playerActionMap.FindAction("YAction").canceled += InteractReleased;
         playerActionMap.FindAction("Dash").performed += OnDash;
         playerActionMap.FindAction("RTAction").performed += TeleportPressed;
-        combatControls.EnableActions(playerActionMap);
         controlsEnabled = true;
+    }
+    public void ChangeFamiliar(Familiar fam_)
+    {
+        foreach(FamiliarCombatControls control in combatControlsForAllFamiliars)
+        {
+            control.gameObject.SetActive(false);
+        }
+        switch (fam_)
+        {
+            case Familiar.Slime:
+                combatControls = combatControlsForAllFamiliars[0];
+                break;
+            case Familiar.Skeleton:
+                combatControls = combatControlsForAllFamiliars[1];
+                break;
+
+        }
+        combatControls.EnableActions(playerActionMap);
+        combatControls.gameObject.SetActive(true);
+
     }
     private void OnEnable()
     {
@@ -282,8 +302,8 @@ public class CombatCoopFamiliar : MonoBehaviour
             Death();
             return;
         }
-        if (hitEffects)
-            hitEffects.PlayFeedbacks();
+        if (combatControls.hitEffects)
+            combatControls.hitEffects.PlayFeedbacks();
         if (combatPlayerMovement)
             combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
     }

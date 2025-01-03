@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,8 @@ public class FamiliarCombatControls : MonoBehaviour
     public float specialBDamage;
     [Tooltip("How much damage will my ultimate attack do")]
     public float ultimateDamage;
+    [Tooltip("REFERENCE to the effects played when the player is hit")]
+    [SerializeField]public MMF_Player hitEffects;
     /// <summary>
     /// Set up my controls to perform attack actions
     /// </summary>
