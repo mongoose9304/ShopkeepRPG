@@ -10,6 +10,9 @@ public class SkeletonCombatControls : FamiliarCombatControls
     [Header("Referecnes")]
     [Tooltip("REFERENCE to the pool of ranged projectiles the player has")]
     [SerializeField] protected MMMiniObjectPooler rangedProjectilePool;
+
+    [Tooltip("REFERENCE to the pool of explosive projectiles the player has")]
+    [SerializeField] protected MMMiniObjectPooler explosiveProjectilePool;
     public MMMiniObjectPooler specialAttackPool;
     [Tooltip("REFERENCE where I create ranged projectiles")]
     public GameObject rangedAttackSpawn;
@@ -18,6 +21,7 @@ public class SkeletonCombatControls : FamiliarCombatControls
 
     public float rushCooldownMax;
     public float rushCooldown;
+    public float rushSpawns;
     public float hexCooldownMax;
     public float hexCooldown;
     public float meleeCooldown;
@@ -94,6 +98,8 @@ public class SkeletonCombatControls : FamiliarCombatControls
                 rangedCooldown -= (Time.deltaTime * ultimateAttackSpeed);
             if (hexCooldown > 0)
                 hexCooldown -= (Time.deltaTime * ultimateAttackSpeed);
+            if (rushCooldown > 0)
+                rushCooldown -= (Time.deltaTime * ultimateAttackSpeed);
             if (ultDurationCurrent > 0)
                 ultDurationCurrent -= Time.deltaTime;
             if (ultDurationCurrent <= 0)
@@ -111,6 +117,8 @@ public class SkeletonCombatControls : FamiliarCombatControls
                 rangedCooldown -= Time.deltaTime;
             if (hexCooldown > 0)
                 hexCooldown -= Time.deltaTime;
+            if (rushCooldown > 0)
+                rushCooldown -= Time.deltaTime;
         }
     }
     public void MeleeAttack()
@@ -132,7 +140,7 @@ public class SkeletonCombatControls : FamiliarCombatControls
     /// <summary>
     /// Basic Ranged Attack
     /// </summary>
-    public void RangedAttack(GameObject target_ = null)
+    public void RangedAttack()
     {
         rangedCooldown = rangedCooldownMax;
         GameObject objB = rangedProjectilePool.GetPooledGameObject();
@@ -140,10 +148,10 @@ public class SkeletonCombatControls : FamiliarCombatControls
         objB.transform.rotation = rangedAttackSpawn.transform.rotation;
         //add real damage here
         objB.GetComponent<MagicMissile>().damage = rangedDamage;
-        if (target_ != null)
+        if ( currentTarget!= null)
         {
-            if(target_.activeInHierarchy)
-            objB.GetComponent<HomingAttack>().target = target_.transform;
+            if(currentTarget.activeInHierarchy)
+            objB.GetComponent<HomingAttack>().target = currentTarget.transform;
         }
         objB.SetActive(true);
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
@@ -180,6 +188,35 @@ public class SkeletonCombatControls : FamiliarCombatControls
                 hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyStatusEffect(Status.Hexed, specialHexTime);
             }
         }
+    }
+
+    private void RushAttack()
+    {
+        rushCooldown = rushCooldownMax;
+        StartCoroutine(RushRepeat());
+    }
+    IEnumerator RushRepeat()
+    {
+        for (int i = 0; i < rushSpawns; i++)
+        {
+            RushSpawn();
+            yield return new WaitForSeconds(.1f);
+        }
+        
+    }
+    private void RushSpawn()
+    {
+        GameObject objB = explosiveProjectilePool.GetPooledGameObject();
+        objB.transform.position = rangedAttackSpawn.transform.position;
+        objB.transform.rotation = rangedAttackSpawn.transform.rotation;
+        //add real damage here
+        objB.GetComponent<FamiliarProjectile>().damage = specialADamage;
+        if (currentTarget != null)
+        {
+            if (currentTarget.activeInHierarchy)
+                objB.GetComponent<HomingAttack>().target = currentTarget.transform;
+        }
+        objB.SetActive(true);
     }
     public void SetUltimateMode(bool ult_)
     {
@@ -230,5 +267,7 @@ public class SkeletonCombatControls : FamiliarCombatControls
     {
         if (isBusy)
             return;
+        if (rushCooldown <= 0)
+        { RushAttack(); }
     }
 }

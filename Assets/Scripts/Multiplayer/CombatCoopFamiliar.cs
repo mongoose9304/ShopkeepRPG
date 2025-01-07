@@ -176,7 +176,6 @@ public class CombatCoopFamiliar : MonoBehaviour
         moveInput = PreventGoingThroughWalls(moveInput);
         if (!isDashing)
         {
-            LookAtCurrentTarget();
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
@@ -228,6 +227,10 @@ public class CombatCoopFamiliar : MonoBehaviour
     /// </summary>
     void LookAtCurrentTarget()
     {
+        if (combatControls)
+        {
+            combatControls.SetCurrentTarget(currentTarget);
+        }
         if (!currentTarget)
             return;
 

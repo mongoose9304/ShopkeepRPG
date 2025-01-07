@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class FamiliarCombatControls : MonoBehaviour
 {
+    protected GameObject currentTarget;
     [Tooltip("Can the familliar take damage right now")]
     public bool damageImmune;
     [Tooltip("Is the familiar performing an action that would prevent them from acting or moving")]
@@ -39,5 +40,19 @@ public class FamiliarCombatControls : MonoBehaviour
     /// </summary>
     public virtual void CalculateDamage(float pAttack,float mAttack)
     {
+    }
+    /// <summary>
+    /// Calculate the damage each of my attacks can do
+    /// </summary>
+    public virtual void SetCurrentTarget(GameObject target_)
+    {
+        if(target_!=null)
+        {
+            currentTarget = target_;
+        }
+        else
+        {
+            currentTarget = null;
+        }
     }
 }
