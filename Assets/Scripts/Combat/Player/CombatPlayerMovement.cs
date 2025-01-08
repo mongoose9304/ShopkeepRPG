@@ -773,6 +773,11 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myFamiliar.monsterStats.totalSkillPoints += 5;
         CalculateAllModifiers();
         Instantiate(levelUpEffect,transform.position,transform.rotation);
+        if(PlayerInventory.instance)
+        {
+            PlayerInventory.instance.SavePlayerStats();
+            PlayerInventory.instance.SaveFamiliarStats();
+        }
     }
     public int GetExpToNextLevel()
     {

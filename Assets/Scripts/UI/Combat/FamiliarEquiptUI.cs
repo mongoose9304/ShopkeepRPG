@@ -64,6 +64,10 @@ public class FamiliarEquiptUI : MonoBehaviour
         famStatBlock.MysticalProwess = famStatObjects[2].amount;
         famStatBlock.PhysicalDefense = famStatObjects[3].amount;
         famStatBlock.MysticalDefense = famStatObjects[4].amount;
+        if (PlayerInventory.instance)
+        {
+            PlayerInventory.instance.SaveFamiliarStats();
+        }
     }
     private void OnEnable()
     {

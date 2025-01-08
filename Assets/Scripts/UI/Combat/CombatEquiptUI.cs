@@ -90,6 +90,10 @@ public class CombatEquiptUI : MonoBehaviour
         playerStatBlock.MysticalProwess = playerStatObjects[3].amount;
         playerStatBlock.PhysicalDefense = playerStatObjects[4].amount;
         playerStatBlock.MysticalDefense = playerStatObjects[5].amount;
+        if (PlayerInventory.instance)
+        {
+            PlayerInventory.instance.SavePlayerStats();
+        }
     }
     private void OnEnable()
     {

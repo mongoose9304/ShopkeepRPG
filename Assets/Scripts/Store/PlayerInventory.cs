@@ -28,7 +28,7 @@ public class InventoryItemList
     public List<InventoryItem> myList = new List<InventoryItem>();
 }
 /// <summary>
-/// The singleton that should persist between all scens to save the player's items
+/// The singleton that should persist between all scens to save the player's items and stats 
 /// </summary>
 public class PlayerInventory : MonoBehaviour
 {
@@ -44,6 +44,8 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] int stoneTotal;
     [SerializeField] int humanCashTotal;
     [SerializeField] int hellCashTotal;
+    public StatBlock playerStats;
+    public StatBlock familiarStats;
     private void Awake()
     {
         if (!instance)
@@ -51,6 +53,8 @@ public class PlayerInventory : MonoBehaviour
             instance = this;
             LoadItems();
             LoadAllResources();
+            LoadPlayerStats();
+            LoadFamiliarStats();
             DontDestroyOnLoad(gameObject);
         }
         else if(instance!=this)
@@ -211,6 +215,74 @@ public class PlayerInventory : MonoBehaviour
                 return data;
         }
         return null;
+    }
+    public void LoadPlayerStats()
+    {
+        if (!playerStats)
+            return;
+        if (PlayerPrefs.GetInt("PlayerLevel", 0) == 0)
+            return;
+        playerStats.Level= PlayerPrefs.GetInt("PlayerLevel", 0);
+        playerStats.Vitality = PlayerPrefs.GetInt("PlayerVitality", 0);
+        playerStats.Soul = PlayerPrefs.GetInt("PlayerSoul", 0);
+        playerStats.PhysicalProwess = PlayerPrefs.GetInt("PlayerPhysicalProwess", 0);
+        playerStats.MysticalProwess = PlayerPrefs.GetInt("PlayerMysticalProwess", 0);
+        playerStats.PhysicalDefense = PlayerPrefs.GetInt("PlayerPhysicalDefense", 0);
+        playerStats.MysticalDefense = PlayerPrefs.GetInt("PlayerMysticalDefense", 0);
+        playerStats.Luck = PlayerPrefs.GetInt("PlayerLuck", 0);
+        playerStats.savedExp = PlayerPrefs.GetInt("PlayerSavedExp", 0);
+        playerStats.remainingSkillPoints = PlayerPrefs.GetInt("PlayerRemainingSkillPoints", 0);
+        playerStats.totalSkillPoints = PlayerPrefs.GetInt("PlayerTotalSkillPoints", 0);
+    }
+    public void SavePlayerStats()
+    {
+        if (!playerStats)
+            return;
+        PlayerPrefs.SetInt("PlayerLevel", playerStats.Level);
+        PlayerPrefs.SetInt("PlayerVitality", playerStats.Vitality);
+        PlayerPrefs.SetInt("PlayerSoul", playerStats.Soul);
+        PlayerPrefs.SetInt("PlayerPhysicalProwess", playerStats.PhysicalProwess);
+        PlayerPrefs.SetInt("PlayerMysticalProwess", playerStats.MysticalProwess);
+        PlayerPrefs.SetInt("PlayerPhysicalDefense", playerStats.PhysicalDefense);
+        PlayerPrefs.SetInt("PlayerMysticalDefense", playerStats.MysticalDefense);
+        PlayerPrefs.SetInt("PlayerLuck", playerStats.Luck);
+        PlayerPrefs.SetInt("PlayerSavedExp", playerStats.savedExp);
+        PlayerPrefs.SetInt("PlayerRemainingSkillPoints", playerStats.remainingSkillPoints);
+        PlayerPrefs.SetInt("PlayerTotalSkillPoints", playerStats.totalSkillPoints);
+    }
+    public void LoadFamiliarStats()
+    {
+        if (!familiarStats)
+            return;
+        if (PlayerPrefs.GetInt("FamiliarLevel", 0) == 0)
+            return;
+        playerStats.Level = PlayerPrefs.GetInt("FamiliarLevel", 0);
+        playerStats.Vitality = PlayerPrefs.GetInt("FamiliarVitality", 0);
+        playerStats.Soul = PlayerPrefs.GetInt("FamiliarSoul", 0);
+        playerStats.PhysicalProwess = PlayerPrefs.GetInt("FamiliarPhysicalProwess", 0);
+        playerStats.MysticalProwess = PlayerPrefs.GetInt("FamiliarMysticalProwess", 0);
+        playerStats.PhysicalDefense = PlayerPrefs.GetInt("FamiliarPhysicalDefense", 0);
+        playerStats.MysticalDefense = PlayerPrefs.GetInt("FamiliarMysticalDefense", 0);
+        playerStats.Luck = PlayerPrefs.GetInt("FamiliarLuck", 0);
+        playerStats.savedExp = PlayerPrefs.GetInt("FamiliarSavedExp", 0);
+        playerStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 0);
+        playerStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 0);
+    }
+    public void SaveFamiliarStats()
+    {
+        if (!familiarStats)
+            return;
+        PlayerPrefs.SetInt("FamiliarLevel", familiarStats.Level);
+        PlayerPrefs.SetInt("FamiliarVitality", familiarStats.Vitality);
+        PlayerPrefs.SetInt("FamiliarSoul", familiarStats.Soul);
+        PlayerPrefs.SetInt("FamiliarPhysicalProwess", familiarStats.PhysicalProwess);
+        PlayerPrefs.SetInt("FamiliarMysticalProwess", familiarStats.MysticalProwess);
+        PlayerPrefs.SetInt("FamiliarPhysicalDefense", familiarStats.PhysicalDefense);
+        PlayerPrefs.SetInt("FamiliarMysticalDefense", familiarStats.MysticalDefense);
+        PlayerPrefs.SetInt("FamiliarLuck", familiarStats.Luck);
+        PlayerPrefs.SetInt("FamiliarSavedExp", familiarStats.savedExp);
+        PlayerPrefs.SetInt("FamiliarRemainingSkillPoints", familiarStats.remainingSkillPoints);
+        PlayerPrefs.SetInt("FamiliarTotalSkillPoints", familiarStats.totalSkillPoints);
     }
     public void LoadAllResources()
     {
