@@ -44,8 +44,6 @@ public class BasicEnemy : MonoBehaviour
     bool superArmor;
 
     [Header("References")]
-    [Tooltip("I take double damage from this source")]
-    Element myWeakness;
     [Tooltip("REFERENCE to the icon that displays I am stunned")]
     public GameObject stunIcon;
     [Tooltip("REFERENCE to the player object for targeting")]
@@ -85,22 +83,6 @@ public class BasicEnemy : MonoBehaviour
         LoadMonsterData();
         lootDropper = GetComponent<LootDropper>();
         currentHealth = maxHealth;
-        //determine my weakness
-        switch(myElement)
-        {
-            case Element.Fire:
-                myWeakness = Element.Water;
-                break;
-            case Element.Water:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Air:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Earth:
-                myWeakness = Element.Fire;
-                break;
-        }
         currentHealth = maxHealth;
         floatingText = textSpawner.GetFeedbackOfType<MMF_FloatingText>();
         //fix this later, if the enemies have the same channel thier damage numbers will appear even if they are not hit =(
@@ -215,10 +197,6 @@ public class BasicEnemy : MonoBehaviour
             }
         }
         if(isHexed)
-        {
-            damage_ *= 1.5f;
-        }
-        if(element_==myWeakness&&element_!=Element.Neutral)
         {
             damage_ *= 1.5f;
         }

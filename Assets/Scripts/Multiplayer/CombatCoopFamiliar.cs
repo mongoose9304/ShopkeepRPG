@@ -72,7 +72,6 @@ public class CombatCoopFamiliar : MonoBehaviour
         [Header("Stats")]
     [SerializeField]  float currentHealth;
     public float maxHealth;
-    public Element myWeakness;
     public Element myElement;
     public float PhysicalAtk;
     public float MysticalAtk;
@@ -284,10 +283,6 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (combatControls.damageImmune)
             return;
         float newDamage = damage_;
-        if (element_ == myWeakness && element_ != Element.Neutral)
-        {
-            newDamage *= 1.5f;
-        }
         if (isMystical)
         {
             newDamage -= MysticalDef;

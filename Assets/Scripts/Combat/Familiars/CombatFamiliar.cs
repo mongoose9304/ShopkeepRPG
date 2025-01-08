@@ -37,7 +37,6 @@ public class CombatFamiliar : MonoBehaviour
     float currentHealth;
     //Stats Calculated based on Stat block
     public float maxHealth;
-    public Element myWeakness;
     public Element myElement;
     public float PhysicalAtk;
     public float MysticalAtk;
@@ -148,10 +147,6 @@ public class CombatFamiliar : MonoBehaviour
     public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, bool isMystical = false)
     {
         float newDamage = damage_;
-        if (element_ == myWeakness && element_ != Element.Neutral)
-        {
-            newDamage *= 1.5f;
-        }
         if (isMystical)
         {
             newDamage -= MysticalDef;

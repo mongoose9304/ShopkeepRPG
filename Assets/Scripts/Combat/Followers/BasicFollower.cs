@@ -38,7 +38,6 @@ public class BasicFollower : MonoBehaviour
 
     [Header("References")]
     public FollowerMaster myMaster;
-    Element myWeakness;
     public GameObject stunIcon;
     public GameObject target;
     [SerializeField] protected NavMeshAgent agent;
@@ -140,10 +139,6 @@ public class BasicFollower : MonoBehaviour
     public virtual void TakeDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
         float newDamage = damage_;
-        if (element_ == myWeakness && element_ != Element.Neutral)
-        {
-            newDamage *= 1.5f;
-        }
         if (isMystical)
         {
             newDamage -= mysticalDef;

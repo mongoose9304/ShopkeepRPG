@@ -48,7 +48,6 @@ public class CombatPlayerMovement : MonoBehaviour
     //Stats Calculated based on Stat block
     public float maxHealth;
     public float maxMana;
-    public Element myWeakness;
     public float PhysicalAtk;
     public float MysticalAtk;
     public float PhysicalDef;
@@ -135,7 +134,6 @@ public class CombatPlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         AddAllEquipmentMods();
         CalculateAllModifiers();
-        SetArmorElements();
         currentHealth = maxHealth;
         currentMana = maxMana;
         healthBar.SetBar01(currentHealth / maxHealth);
@@ -401,10 +399,6 @@ public class CombatPlayerMovement : MonoBehaviour
         if(isInSaveYourSoulMode){ return; }
         if (isGuarding) { return; }
         float newDamage = damage_;
-        if (element_ == myWeakness && element_ != Element.Neutral)
-        {
-            newDamage *= 1.5f;
-        }
         if(isMystical)
         {
             newDamage -= MysticalDef;
@@ -758,24 +752,7 @@ public class CombatPlayerMovement : MonoBehaviour
                 break;
         }
     }
-    private void SetArmorElements()
-    {
-        switch (myEquiptment.Armor.myElement)
-        {
-            case Element.Fire:
-                myWeakness = Element.Water;
-                break;
-            case Element.Water:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Air:
-                myWeakness = Element.Earth;
-                break;
-            case Element.Earth:
-                myWeakness = Element.Fire;
-                break;
-        }
-    }
+
     private float AddOrMultiply(bool multiply_,float A,float B)
     {
         if(multiply_)
