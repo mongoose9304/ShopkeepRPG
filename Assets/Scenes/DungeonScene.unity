@@ -7245,7 +7245,7 @@ Transform:
   m_GameObject: {fileID: 91680499}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 1.93, y: 9.451068, z: -9.831068}
+  m_LocalPosition: {x: 5.48, y: 9.451068, z: -10.051068}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11437,6 +11437,9 @@ MonoBehaviour:
   rangedPierce: 0
   coopPlayer: 0
   myFamiliar: {fileID: 238511050}
+  allFamiliars:
+  - {fileID: 1841314803}
+  - {fileID: 238511050}
   myCoopFamiliar: {fileID: 1596406815}
   specialCoolDownBarA: {fileID: 730443572}
   chargesUIBGA: {fileID: 1713701187}
@@ -11522,12 +11525,10 @@ MonoBehaviour:
   MaxLockOnDistance: 10
   maxHealth: 100
   maxMana: 100
-  myWeakness: 0
   PhysicalAtk: 0
   MysticalAtk: 0
   PhysicalDef: 0
   MysticalDef: 0
-  LevelModifier: 0.025
   HealthRegenPercent: 0
   ManaRegenPercent: 0
   playerLuck: 0
@@ -22428,7 +22429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1c4de7cc8e52646a1cde40d74fff6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentFamiliar: 1
+  currentFamiliar: 0
   playerLayers:
   - serializedVersion: 2
     m_Bits: 8192
@@ -56819,6 +56820,7 @@ MonoBehaviour:
   element: 0
   canPierceEnemies: 0
   damageTag: Melee
+  isMysticalDamage: 0
 --- !u!1 &1905949111
 GameObject:
   m_ObjectHideFlags: 0
@@ -57023,6 +57025,7 @@ MonoBehaviour:
   element: 0
   canPierceEnemies: 0
   damageTag: Melee
+  isMysticalDamage: 0
 --- !u!1 &1916948852
 GameObject:
   m_ObjectHideFlags: 0

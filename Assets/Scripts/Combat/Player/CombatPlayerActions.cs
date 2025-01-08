@@ -43,6 +43,7 @@ public class CombatPlayerActions : MonoBehaviour
     [Header("Familiar")]
     public bool coopPlayer;
     public CombatFamiliar myFamiliar;
+    public CombatFamiliar[] allFamiliars;
     public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
@@ -404,6 +405,25 @@ public class CombatPlayerActions : MonoBehaviour
             chargesUIBGB.SetActive(false);
         }
         combatMovement.CalculateAllModifiers();
+    }
+    public void ChangeFamiliar(Familiar fam_)
+    {
+        foreach (CombatFamiliar fam in allFamiliars)
+        {
+            fam.gameObject.SetActive(false);
+        }
+        switch (fam_)
+        {
+            case Familiar.Slime:
+                myFamiliar = allFamiliars[0];
+                break;
+            case Familiar.Skeleton:
+                myFamiliar = allFamiliars[1];
+                break;
+
+        }
+        //myFamiliar.gameObject.SetActive(true);
+
     }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)

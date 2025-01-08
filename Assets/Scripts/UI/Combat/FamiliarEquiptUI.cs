@@ -13,7 +13,7 @@ public class FamiliarEquiptUI : MonoBehaviour
     public TextMeshProUGUI descriptionTitle;
     public TextMeshProUGUI descriptionText;
     public List<FamStatObject> famStatObjects = new List<FamStatObject>();
-    public bool TryToLevelUp()
+    public bool TryToUseLevel()
     {
         if (famStatBlock.remainingSkillPoints > 0)
         {
@@ -22,9 +22,29 @@ public class FamiliarEquiptUI : MonoBehaviour
         }
         return false;
     }
-    public void LevelUp()
+    public bool TryToLevelUseTenLevels()
+    {
+        if (famStatBlock.remainingSkillPoints >= 10)
+        {
+
+            return true;
+        }
+        return false;
+    }
+    public void UseLevel()
     {
         famStatBlock.remainingSkillPoints -= 1;
+        skillPointsText.text = famStatBlock.remainingSkillPoints.ToString();
+        SaveChanges();
+        if (combatFam)
+            combatFam.CalculateAllModifiers();
+        if (combatCoopFam)
+            combatCoopFam.CalculateAllModifiers();
+    }
+
+    public void UseTenLevels()
+    {
+        famStatBlock.remainingSkillPoints -= 10;
         skillPointsText.text = famStatBlock.remainingSkillPoints.ToString();
         SaveChanges();
         if (combatFam)

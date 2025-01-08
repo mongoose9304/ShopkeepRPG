@@ -21,6 +21,7 @@ public class CombatSceneSpecificPlayerManager : SceneSpecificPlayerManager
             canv.worldCamera = controller.myCam;
         }
         player1.SetUpControls(controller.input);
+        player1.combatActions.ChangeFamiliar(PlayerManager.instance.currentFamiliar);
         player1.gameObject.SetActive(true);
     }
 

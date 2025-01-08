@@ -17,11 +17,19 @@ public class FamStatObject : MonoBehaviour
     }
     public void IncreaseStat()
     {
-        if (!famUI.TryToLevelUp())
+        if (!famUI.TryToUseLevel())
             return;
         amount += 1;
         amountText.text = amount.ToString();
-        famUI.LevelUp();
+        famUI.UseLevel();
+    }
+    public void IncreaseStatByTen()
+    {
+        if (!famUI.TryToLevelUseTenLevels())
+            return;
+        amount += 10;
+        amountText.text = amount.ToString();
+        famUI.UseTenLevels();
     }
     public void SetTitle()
     {

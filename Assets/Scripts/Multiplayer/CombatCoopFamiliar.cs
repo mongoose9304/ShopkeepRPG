@@ -482,11 +482,11 @@ public class CombatCoopFamiliar : MonoBehaviour
     /// </summary>
     protected virtual void CalculateStats()
     {
-        maxHealth = (monsterStats.Vitality * 2) * (1 + (monsterStats.Level * LevelModifier));
-        PhysicalAtk = (monsterStats.PhysicalProwess) * (1 + (monsterStats.Level * LevelModifier)) / 5;
-        MysticalAtk = (monsterStats.MysticalProwess) * (1 + (monsterStats.Level * LevelModifier)) / 5;
-        PhysicalDef = (monsterStats.PhysicalDefense) * (1 + (monsterStats.Level * LevelModifier)) / 5;
-        MysticalDef = (monsterStats.MysticalDefense) * (1 + (monsterStats.Level * LevelModifier)) / 5;
+        maxHealth = (monsterStats.Vitality * 5);
+        PhysicalAtk = (monsterStats.PhysicalProwess);
+        MysticalAtk = (monsterStats.MysticalProwess);
+        PhysicalDef = (monsterStats.PhysicalDefense);
+        MysticalDef = (monsterStats.MysticalDefense);
         HealthRegenPercent = 0;
     }
     /// <summary>
