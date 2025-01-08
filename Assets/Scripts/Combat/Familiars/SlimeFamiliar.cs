@@ -137,7 +137,7 @@ public class SlimeFamiliar : CombatFamiliar
             {
                 if (hitCollider.tag == "Enemy")
                 {
-                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, myElement, 0, this.gameObject);
+                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(UltimateSlamDamage(), 0, myElement, 0, this.gameObject,"",false);
                 }
             }
             isBusy = false;
@@ -150,7 +150,7 @@ public class SlimeFamiliar : CombatFamiliar
         {
             if (hitCollider.tag == "Enemy")
             {
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, myElement, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(SlamDamage(), 0, myElement, 0, this.gameObject,"",false);
             }
         }
     }

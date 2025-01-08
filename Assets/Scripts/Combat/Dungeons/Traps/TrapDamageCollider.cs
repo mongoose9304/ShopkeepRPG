@@ -30,7 +30,7 @@ public class TrapDamageCollider : MonoBehaviour
             {
                 if (other.gameObject.TryGetComponent<BasicEnemy>(out BasicEnemy basicEnemyRef))
                 {
-                    basicEnemyRef.ApplyDamage(damage, 0, element, 0, this.gameObject);
+                    basicEnemyRef.ApplyDamage(damage, 0, element, 0, this.gameObject,"",isMysicalDamage);
 
                 }
             }

@@ -299,7 +299,7 @@ public class SlimeCombatControls : FamiliarCombatControls
             {
                 if (hitCollider.tag == "Enemy")
                 {
-                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(ultimateDamage, 1.5f, Element.Neutral, 0, this.gameObject);
+                    hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(ultimateDamage, 1.5f, Element.Neutral, 0, this.gameObject,"",false );
                 }
             }
             return;
@@ -312,7 +312,7 @@ public class SlimeCombatControls : FamiliarCombatControls
             if (hitCollider.tag == "Enemy")
             {
                 //add actual element here
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(specialADamage, 1.5f, Element.Water, 0, this.gameObject, "Special");
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(specialADamage, 1.5f, Element.Water, 0, this.gameObject, "Special",false);
             }
         }
     }

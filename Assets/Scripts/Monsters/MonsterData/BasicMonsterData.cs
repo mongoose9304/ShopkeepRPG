@@ -22,16 +22,28 @@ public class BasicMonsterData : ScriptableObject
     //add battle stats
     public float baseHealth;
     public float baseDamage;
+    public float basePhysicalDefence;
+    public float baseMysticalDefence;
     public float healthPerLevel;
     public float damagePerLevel;
+    public float physicalDefencePerLevel;
+    public float mysticalDefencePerLevel;
 
-    public float CalculateHealth(bool isFamiliar = false,int level=1)
+    public float CalculateHealth(int level=1)
     {
         return baseHealth + (level - 1) * healthPerLevel;
     }
-    public float CalculateDamage(bool isFamiliar=false,int level=1)
+    public float CalculateDamage(int level=1)
     {
         return (baseDamage + (level - 1) * damagePerLevel);
+    }
+    public float CalculatePhysicalDefence(int level = 1)
+    {
+        return (basePhysicalDefence + (level - 1) * physicalDefencePerLevel);
+    }
+    public float CalculateMysticalDefence(int level = 1)
+    {
+        return (baseMysticalDefence + (level - 1) * mysticalDefencePerLevel);
     }
 
 

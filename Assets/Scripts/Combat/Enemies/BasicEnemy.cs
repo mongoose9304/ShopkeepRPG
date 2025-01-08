@@ -23,6 +23,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] protected float maxHitstun;
     [SerializeField] protected Element myElement;
     [SerializeField] protected float damage;
+    [SerializeField] protected float physicalDefence;
+    [SerializeField] protected float mysticalDefence;
     [SerializeField] protected bool isMysticalDamage;
     [Header("Status Effects")]
     protected bool isHexed;
@@ -178,7 +180,7 @@ public class BasicEnemy : MonoBehaviour
     /// <param name="element_">The element of the damage</param>
     /// <param name="knockBack_">The magnitude of the knockback</param>
     /// <param name="knockBackObject">The object initiating the knockback effect</param>
-    public virtual void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null,string playerAttackType="")
+    public virtual void ApplyDamage(float damage_,float hitstun_,Element element_,float knockBack_=0,GameObject knockBackObject=null,string playerAttackType="", bool isMystical = false)
     {
        if(knockBackObject)
         {
@@ -196,13 +198,26 @@ public class BasicEnemy : MonoBehaviour
                 KnockBack(knockBack_, knockBackObject);
             }
         }
+        float newDamage = damage_;
         if(isHexed)
         {
-            damage_ *= 1.5f;
+            newDamage *= 1.5f;
+        }
+        if(isMystical)
+        {
+            newDamage -= mysticalDefence;
+        }
+        else
+        {
+            newDamage -= physicalDefence;
         }
         EnemyManager.instance.ApplyHitEffect(element_,transform);
-        damage_ =Mathf.Round(damage_);
-        currentHealth -= damage_;
+        if(newDamage<=damage_*0.05f)
+        {
+            newDamage = damage_ * 0.05f;
+        }
+        damage_ = Mathf.Round(newDamage);
+        currentHealth -= newDamage;
         if(currentHealth<=0)
         {
             Death();
@@ -339,8 +354,10 @@ public class BasicEnemy : MonoBehaviour
     }
     protected void LoadMonsterData()
     {
-        maxHealth = myBaseData.CalculateHealth(false,Level);
-        damage = myBaseData.CalculateDamage(false, Level);
+        maxHealth = myBaseData.CalculateHealth(Level);
+        damage = myBaseData.CalculateDamage(Level);
+        physicalDefence = myBaseData.CalculatePhysicalDefence(Level);
+        mysticalDefence = myBaseData.CalculateMysticalDefence(Level);
     }
     public virtual void FindTarget()
     {

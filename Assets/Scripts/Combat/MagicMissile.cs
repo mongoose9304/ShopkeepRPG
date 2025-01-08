@@ -16,7 +16,7 @@ public class MagicMissile : PlayerDamageCollider
 
             if (other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
             {
-                basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject, "Ranged");
+                basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject, "Ranged",isMysticalDamage);
                 if (lifeSteal > 0)
                 {
                     CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);

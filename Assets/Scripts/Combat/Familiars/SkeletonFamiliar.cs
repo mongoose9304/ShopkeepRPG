@@ -132,7 +132,7 @@ public class SkeletonFamiliar : CombatFamiliar
         {
             if (hitCollider.tag == "Enemy")
             {
-                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(PhysicalAtk, 0, Element.Neutral, 0, this.gameObject);
+                hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(PhysicalAtk, 0, Element.Neutral, 0, this.gameObject,"",false);
             }
         }
     }

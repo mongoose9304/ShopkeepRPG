@@ -57,7 +57,7 @@ public class ThunderStorm : PlayerSpecialAttack
                 {
                     if (hitCollider.tag == "Enemy")
                     {
-                        hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(baseDamage, 0, myElement, 0, this.gameObject,"Special");
+                        hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(baseDamage, 0, myElement, 0, this.gameObject,"Special",isMysticalDamage);
                     }
                 }
 

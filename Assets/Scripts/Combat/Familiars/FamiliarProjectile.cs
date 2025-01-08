@@ -44,7 +44,7 @@ public class FamiliarProjectile : MonoBehaviour
             }
             else
             {
-                other.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject);
+                other.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject,"",isMysticalDamage);
             }
         }
         else if (other.tag == "Follower")

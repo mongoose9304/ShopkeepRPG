@@ -21,7 +21,7 @@ public class TutorialEnemy : BasicEnemy
     {
 
     }
-    public override void ApplyDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, string playerAttackType = "")
+    public override void ApplyDamage(float damage_, float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null, string playerAttackType = "",bool isMystical=false)
     {
         if(playerAttackType==correctString)
         {

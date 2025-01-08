@@ -21,6 +21,7 @@ public class PlayerSpecialAttack : MonoBehaviour
     public int maxCharges;
     public float currentCharges;
     public float hiddenTimerCurrent;
+    public bool isMysticalDamage;
 
     /// <summary>
     /// The behavior once the move is activated 

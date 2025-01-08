@@ -19,7 +19,7 @@ public class PlayerDamageColliderOnStay : PlayerDamageCollider
             {
                 if (other.gameObject.TryGetComponent<BasicEnemy>(out basicEnemyRef))
                 {
-                    basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject);
+                    basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject,"",isMysticalDamage);
                     currentTimeInterval = MaxTimeInterval;
                 }
             }
