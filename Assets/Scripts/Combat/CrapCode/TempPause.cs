@@ -24,23 +24,23 @@ public class TempPause : MonoBehaviour
         {
             Time.timeScale = 1;
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            pauseObject.SetActive(false);
             isPaused = false;
             foreach (GameObject obj in toggleOnPauseObjects)
             {
                 obj.SetActive(true);
             }
+            pauseObject.SetActive(false);
         }
         else
         {
             Time.timeScale = 0;
             Time.fixedDeltaTime = 0;
-            pauseObject.SetActive(true);
             isPaused = true;
             foreach (GameObject obj in toggleOnPauseObjects)
             {
                 obj.SetActive(false);
             }
+            pauseObject.SetActive(true);
         }
     }
 
