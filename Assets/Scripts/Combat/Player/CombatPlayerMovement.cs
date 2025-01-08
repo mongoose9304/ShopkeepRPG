@@ -238,7 +238,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void OnPause(InputAction.CallbackContext obj)
     {
-        if(TempPause.instance)
+        if(TempPause.instance&&!combatActions.isBusy)
         {
             TempPause.instance.TogglePause();
         }
