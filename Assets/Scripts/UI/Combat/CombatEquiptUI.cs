@@ -28,9 +28,26 @@ public class CombatEquiptUI : MonoBehaviour
         }
         return false;
     }
-    public void LevelUp()
+    public bool TryToLevelUpTen()
+    {
+        if (playerStatBlock.remainingSkillPoints >= 10)
+        {
+
+            return true;
+        }
+        return false;
+    }
+    public void UseLevel()
     {
         playerStatBlock.remainingSkillPoints -= 1;
+        skillPointsText.text = playerStatBlock.remainingSkillPoints.ToString();
+        SaveChanges();
+        if (player)
+            player.CalculateAllModifiers();
+    }
+    public void UseTenLevels()
+    {
+        playerStatBlock.remainingSkillPoints -= 10;
         skillPointsText.text = playerStatBlock.remainingSkillPoints.ToString();
         SaveChanges();
         if (player)

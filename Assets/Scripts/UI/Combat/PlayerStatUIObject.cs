@@ -21,7 +21,15 @@ public class PlayerStatUIObject : MonoBehaviour
             return;
         amount += 1;
         amountText.text = amount.ToString();
-        equiptUI.LevelUp();
+        equiptUI.UseLevel();
+    }
+    public void IncreaseStatByTen()
+    {
+        if (!equiptUI.TryToLevelUpTen())
+            return;
+        amount += 10;
+        amountText.text = amount.ToString();
+        equiptUI.UseTenLevels();
     }
     public void SetTitle()
     {
