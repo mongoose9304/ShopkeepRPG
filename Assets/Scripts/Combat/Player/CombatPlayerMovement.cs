@@ -52,7 +52,6 @@ public class CombatPlayerMovement : MonoBehaviour
     public float MysticalAtk;
     public float PhysicalDef;
     public float MysticalDef;
-    public float LevelModifier;
     public float HealthRegenPercent;
     public float ManaRegenPercent;
     public float playerLuck;
@@ -596,13 +595,13 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 2) * (1 + (myStats.Level * LevelModifier));
-        maxMana = (myStats.Soul * 2) * (1 + (myStats.Level * LevelModifier));
-        PhysicalAtk = (myStats.PhysicalProwess) * (1 + (myStats.Level * LevelModifier))/5;
-        MysticalAtk = (myStats.MysticalProwess) * (1 + (myStats.Level * LevelModifier))/5;
-        PhysicalDef = (myStats.PhysicalDefense) * (1 + (myStats.Level * LevelModifier))/5;
-        MysticalDef = (myStats.MysticalDefense) * (1 + (myStats.Level * LevelModifier))/5;
-        playerLuck = (myStats.Luck) * (1+(myStats.Level * LevelModifier));
+        maxHealth = (myStats.Vitality * 5);
+        maxMana = (myStats.Soul * 5);
+        PhysicalAtk = (myStats.PhysicalProwess);
+        MysticalAtk = (myStats.MysticalProwess);
+        PhysicalDef = (myStats.PhysicalDefense);
+        MysticalDef = (myStats.MysticalDefense);
+        playerLuck = (myStats.Luck);
         HealthRegenPercent = 0;
         ManaRegenPercent = 0;
         combatActions.attackSpeedMod = 1;
@@ -767,11 +766,11 @@ public class CombatPlayerMovement : MonoBehaviour
     public void LevelUp()
     {
         myStats.Level += 1;
-        myStats.remainingSkillPoints += 1;
-        myStats.totalSkillPoints += 1;
+        myStats.remainingSkillPoints += 5;
+        myStats.totalSkillPoints += 5;
         combatActions.myFamiliar.monsterStats.Level += 1;
-        combatActions.myFamiliar.monsterStats.remainingSkillPoints += 1;
-        combatActions.myFamiliar.monsterStats.totalSkillPoints += 1;
+        combatActions.myFamiliar.monsterStats.remainingSkillPoints += 5;
+        combatActions.myFamiliar.monsterStats.totalSkillPoints += 5;
         CalculateAllModifiers();
         Instantiate(levelUpEffect,transform.position,transform.rotation);
     }
