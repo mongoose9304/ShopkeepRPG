@@ -7,11 +7,12 @@ using UnityEngine.InputSystem;
 public class CombatPlayerMovement : MonoBehaviour
 {
     //FFYL stats
-    [SerializeField] bool isInSaveYourSoulMode;
+    [SerializeField] public bool isInSaveYourSoulMode;
     [SerializeField] bool isDying;
     [SerializeField]float maxSaveYourSoulTime;
     [SerializeField]float currentSaveYourSoulTime;
     [SerializeField] List<GameObject> saveYourSoulObjects=new List<GameObject>();
+    [SerializeField] List<GameObject> saveYourSoulObjectsCoopMode=new List<GameObject>();
     public int timesYouHaveDied;
     [SerializeField] float sosDecreasePerDeath;
 
@@ -149,6 +150,7 @@ public class CombatPlayerMovement : MonoBehaviour
         if(isInSaveYourSoulMode)
         {
             SaveYourSoulUpdate();
+            return;
         }
         ChargeMana();
         RegenHealth();
@@ -229,6 +231,8 @@ public class CombatPlayerMovement : MonoBehaviour
     private void OnDash(InputAction.CallbackContext obj)
     {
         if (TempPause.instance.isPaused)
+            return;
+        if (isInSaveYourSoulMode)
             return;
         if (dashCoolDown <= 0)
         {
@@ -445,13 +449,20 @@ public class CombatPlayerMovement : MonoBehaviour
         if(!isInSaveYourSoulMode)
         {
             isInSaveYourSoulMode = true;
-            currentSaveYourSoulTime = maxSaveYourSoulTime-timesYouHaveDied*sosDecreasePerDeath;
+            currentSaveYourSoulTime = maxSaveYourSoulTime;
             if (currentSaveYourSoulTime <= maxSaveYourSoulTime / 4)
                 currentSaveYourSoulTime = maxSaveYourSoulTime / 4;
             currentMana = maxMana;
             foreach(GameObject obj in saveYourSoulObjects)
             {
                 obj.SetActive(true);
+            }
+            if(DungeonManager.instance.in2PlayerMode)
+            {
+                foreach (GameObject obj in saveYourSoulObjectsCoopMode)
+                {
+                    obj.SetActive(true);
+                }
             }
             timesYouHaveDied += 1;
         }
@@ -510,22 +521,27 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             obj.SetActive(false);
         }
+        foreach (GameObject obj in saveYourSoulObjectsCoopMode)
+        {
+            obj.SetActive(false);
+        }
         DungeonManager.instance.WinLevel(true);
     }
-    private void ExitSaveYourSoul()
+    public void ExitSaveYourSoul()
     {
         if (isDying)
             return;
         isInSaveYourSoulMode = false;
-        float x = currentSaveYourSoulTime / maxSaveYourSoulTime;
-        if (x <= .5)
-            x = .5f;
 
-        currentHealth = maxHealth * x;
-        currentMana = maxMana * x;
+        currentHealth = maxHealth;
+        currentMana = maxMana;
         healthBar.SetBar01(currentHealth / maxHealth);
         manaBar.SetBar01(currentMana / maxMana);
         foreach (GameObject obj in saveYourSoulObjects)
+        {
+            obj.SetActive(false);
+        }
+        foreach (GameObject obj in saveYourSoulObjectsCoopMode)
         {
             obj.SetActive(false);
         }
@@ -541,10 +557,6 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void GetAKill()
     {
-        if (isInSaveYourSoulMode)
-        {
-            ExitSaveYourSoul();
-        }
     }
     public float GetCurrentMana()
     {

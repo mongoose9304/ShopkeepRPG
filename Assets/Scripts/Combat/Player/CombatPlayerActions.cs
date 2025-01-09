@@ -102,6 +102,8 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
+        if (combatMovement.isInSaveYourSoulMode)
+            return;
         isUsingBasicAttackRanged = false;
         isUsingBasicAttackMelee = false;
         if (specialA.isBusy||specialB.isBusy||myFamiliar.isBusy||myCoopFamiliar.combatControls.bothPlayersBusy)

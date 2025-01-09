@@ -10,6 +10,7 @@ using MoreMountains.Tools;
 /// </summary>
 public class DungeonManager : MonoBehaviour
 {
+    public bool in2PlayerMode;
     [Tooltip("The singleton instance")]
     public static DungeonManager instance;
     [Tooltip("The singleton instance")]
