@@ -27,6 +27,15 @@ public class SkeletonFamiliar : CombatFamiliar
         EnemyDetection();
         RegenHealth();
         WaitForAttacks();
+        if (combatPlayerMovement.isInSaveYourSoulMode)
+        {
+            if (agent.isOnNavMesh)
+                agent.SetDestination(player.transform.position + new Vector3(0, 0, 2));
+            if (Vector3.Distance(transform.position, player.transform.position) <= 3)
+            {
+                combatPlayerMovement.reviveHoldObject.Interact();
+            }
+        }
     }
     public override void SpecialAttack()
     {

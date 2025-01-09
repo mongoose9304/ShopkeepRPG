@@ -15,7 +15,7 @@ public class CombatFamiliar : MonoBehaviour
     public GameObject target;
     public bool isBusy;
     protected Animator anim;
-    private CombatPlayerMovement combatPlayerMovement;
+    protected CombatPlayerMovement combatPlayerMovement;
     private CombatPlayerActions combatPlayerActions;
     [SerializeField] public StatBlock monsterStats;
     [SerializeField] GameObject deathEffect;

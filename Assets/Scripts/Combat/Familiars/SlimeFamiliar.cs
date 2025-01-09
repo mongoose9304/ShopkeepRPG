@@ -71,10 +71,20 @@ public class SlimeFamiliar : CombatFamiliar
 
         if (!isJumping)
         {
+            
             FollowPlayer();
             EnemyDetection();
             WaitForAttacks();
             RegenHealth();
+            if (combatPlayerMovement.isInSaveYourSoulMode)
+            {
+                if(agent.isOnNavMesh)
+                agent.SetDestination(player.transform.position + new Vector3(0, 0, 2));
+                if(Vector3.Distance(transform.position,player.transform.position)<=3)
+                {
+                    combatPlayerMovement.reviveHoldObject.Interact();
+                }
+            }
             if (agent.velocity != Vector3.zero)
             {
                 anim.SetBool("isWalking", true);

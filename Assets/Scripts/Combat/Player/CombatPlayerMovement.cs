@@ -13,6 +13,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField]float currentSaveYourSoulTime;
     [SerializeField] List<GameObject> saveYourSoulObjects=new List<GameObject>();
     [SerializeField] List<GameObject> saveYourSoulObjectsCoopMode=new List<GameObject>();
+    public InteractableEventOnHold reviveHoldObject;
     public int timesYouHaveDied;
     [SerializeField] float sosDecreasePerDeath;
 
