@@ -415,6 +415,11 @@ public class CombatCoopFamiliar : MonoBehaviour
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
         {
+            if(!myInteractableObjects[i])
+            {
+                myInteractableObjects.RemoveAt(i);
+                continue;
+            }
             if (!myInteractableObjects[i].activeInHierarchy)
             {
                 if (interactableObjectTarget == myInteractableObjects[i])
