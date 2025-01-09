@@ -83,6 +83,7 @@ public class MiningPlayer : MonoBehaviour
     //put stats in a script where all player stats can be held later. Only here for temp testing
     public float maxHealth;
     float currentHealth;
+    public GameObject[] familiarOptions;
     [Header("UI")]
     public MMProgressBar healthBar;
     [Header("Inputs")]
@@ -126,6 +127,23 @@ public class MiningPlayer : MonoBehaviour
         playerActionMap.FindAction("StartAction").performed -= OnPause;
         playerActionMap.Disable();
         controlsDisabled = true;
+    }
+    public void SwapFamiliar(Familiar fam_)
+    {
+        foreach (GameObject obj in familiarOptions)
+        {
+            obj.gameObject.SetActive(false);
+        }
+        switch (fam_)
+        {
+            case Familiar.Slime:
+                familiarOptions[0].SetActive(true);
+                break;
+            case Familiar.Skeleton:
+                familiarOptions[1].SetActive(true);
+                break;
+
+        }
     }
 
     private void Start()

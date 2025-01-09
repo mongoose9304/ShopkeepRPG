@@ -61,7 +61,7 @@ public class LumberPlayer : MonoBehaviour
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
-
+    public GameObject[] familiarOptions;
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -92,6 +92,23 @@ public class LumberPlayer : MonoBehaviour
         playerActionMap.FindAction("LTAction").canceled -= OnPuzzleResetReleased;
         playerActionMap.FindAction("StartAction").performed -= OnPause;
 
+    }
+    public void SwapFamiliar(Familiar fam_)
+    {
+        foreach (GameObject obj in familiarOptions)
+        {
+            obj.gameObject.SetActive(false);
+        }
+        switch (fam_)
+        {
+            case Familiar.Slime:
+                familiarOptions[0].SetActive(true);
+                break;
+            case Familiar.Skeleton:
+                familiarOptions[1].SetActive(true);
+                break;
+
+        }
     }
 
 
