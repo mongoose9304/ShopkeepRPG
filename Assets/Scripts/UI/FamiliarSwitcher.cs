@@ -49,7 +49,7 @@ public class FamiliarSwitcher : MonoBehaviour
     }
     public void SwapFamiliar(Familiar fam_)
     {
-        PlayerManager.instance.currentFamiliar = fam_;
+        PlayerManager.instance.SwitchFamiliar(fam_);
         foreach (GameObject obj in Familiars)
         {
             obj.gameObject.SetActive(false);

@@ -7,6 +7,10 @@ public class OnDisableEvent : MonoBehaviour
 {
     public UnityEvent endEvent;
     bool quitting;
+    public void SetQuit()
+    {
+        quitting = true;
+    }
     private void OnDisable()
     {
         if (quitting)

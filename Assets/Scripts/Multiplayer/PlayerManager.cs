@@ -30,6 +30,17 @@ public class PlayerManager : MonoBehaviour
             playerInputManager = FindObjectOfType<PlayerInputManager>();
             DontDestroyOnLoad(gameObject);
             instance = this;
+            switch (PlayerPrefs.GetString("currentFamiliar", currentFamiliar.ToString()))
+            {
+                case "Slime":
+                    currentFamiliar = Familiar.Slime;
+                    break;
+                case "Skeleton":
+                    currentFamiliar = Familiar.Skeleton;
+                    break;
+
+            }
+
         }
         else if(instance!=this)
         {
@@ -95,5 +106,11 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerController> GetPlayers()
     {
         return players;
+    }
+    public void SwitchFamiliar(Familiar fam)
+    {
+        currentFamiliar = fam;
+        PlayerPrefs.SetString("currentFamiliar", currentFamiliar.ToString());
+        Debug.Log(currentFamiliar.ToString());
     }
 }
