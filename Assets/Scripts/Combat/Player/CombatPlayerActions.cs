@@ -356,6 +356,10 @@ public class CombatPlayerActions : MonoBehaviour
     public void DisableFamiliar(bool enable_)
     {
         myFamiliar.gameObject.SetActive(enable_);
+        if(enable_)
+        {
+         combatMovement.SetFamiliarHealth(myFamiliar.maxHealth/myFamiliar.maxHealth);
+        }
     }
     public void SetStats(float basicMeleeDamage,float basicRangedDamage_,Element rangedE_,Element meleeE_)
     {

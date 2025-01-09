@@ -34,7 +34,7 @@ public class CombatFamiliar : MonoBehaviour
     [SerializeField] float delayBeforeLookingForAnotherTargetMax;
     float delayBeforeLookingForAnotherTargetCurrent;
     //StatsFromData
-    float currentHealth;
+    public float currentHealth;
     //Stats Calculated based on Stat block
     public float maxHealth;
     public Element myElement;

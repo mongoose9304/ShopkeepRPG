@@ -572,10 +572,14 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void UpdateFamiliarHealth(float health_)
     {
+        if (health_ > 1)
+            health_ = 1;
         familiarHealthBar.UpdateBar01(health_);
     }
     public void SetFamiliarHealth(float health_)
     {
+        if (health_ > 1)
+            health_ = 1;
         familiarHealthBar.SetBar01(health_);
     }
     private void ChargeMana()

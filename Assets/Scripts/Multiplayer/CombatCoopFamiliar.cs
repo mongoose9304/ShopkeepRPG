@@ -135,7 +135,6 @@ public class CombatCoopFamiliar : MonoBehaviour
     private void OnEnable()
     {
         currentHealth = maxHealth;
-        combatPlayerMovement.UpdateFamiliarHealth(currentHealth / maxHealth);
         if(!controlsEnabled)
         {
             playerActionMap.FindAction("YAction").performed += InteractPressed;
