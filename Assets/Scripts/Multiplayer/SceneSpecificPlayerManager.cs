@@ -52,4 +52,11 @@ public class SceneSpecificPlayerManager : MonoBehaviour
     {
 
     }
+    /// <summary>
+    /// Swap A Familiar Mid scene
+    /// </summary>
+    public virtual void SwitchFamiliar()
+    {
+
+    }
 }

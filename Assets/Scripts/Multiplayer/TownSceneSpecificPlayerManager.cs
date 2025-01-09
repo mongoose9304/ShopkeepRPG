@@ -34,4 +34,8 @@ public class TownSceneSpecificPlayerManager : SceneSpecificPlayerManager
         player2.SwapFamiliar(PlayerManager.instance.currentFamiliar);
         player2.gameObject.SetActive(true);
     }
+    public override void SwitchFamiliar()
+    {
+        player2.SwapFamiliar(PlayerManager.instance.currentFamiliar);
+    }
 }
