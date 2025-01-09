@@ -16,7 +16,7 @@ public class SlimeEnemy : BasicEnemy
     bool isSlaming;
     [SerializeField] GameObject slamParticleEffect;
     [SerializeField] MMF_Player JumpEffect;
-   
+    public SkinnedMeshRenderer rend;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
@@ -117,6 +117,10 @@ public class SlimeEnemy : BasicEnemy
         FindTarget();
         isJumping = false;
         isSlaming = false;
+       if(rend)
+        {
+            rend.material.color = Color.white;
+        }
     }
     public override void Move()
     {

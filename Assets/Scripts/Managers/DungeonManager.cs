@@ -361,6 +361,8 @@ public class DungeonManager : MonoBehaviour
         if (PlayerInventory.instance)
         {
             y.Add(PlayerInventory.instance.GetHellCash());
+            PlayerInventory.instance.SaveFamiliarStats();
+            PlayerInventory.instance.SavePlayerStats();
         }
         else
             y.Add(0);
