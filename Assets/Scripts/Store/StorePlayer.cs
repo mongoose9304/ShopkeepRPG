@@ -76,6 +76,7 @@ public class StorePlayer : MonoBehaviour
     [SerializeField] AudioClip dashAudio;
     [SerializeField] bool isDead;
     public ParticleSystem tpEffect;
+    public GameObject[] familiarOptions;
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     public InputAction movement;
@@ -114,6 +115,24 @@ public class StorePlayer : MonoBehaviour
             playerActionMap.FindAction("StartAction").performed -= OnPause;
         }
         playerActionMap.Disable();
+    }
+
+    public void SwapFamiliar(Familiar fam_)
+    {
+        foreach (GameObject obj in familiarOptions)
+        {
+            obj.gameObject.SetActive(false);
+        }
+        switch (fam_)
+        {
+            case Familiar.Slime:
+                familiarOptions[0].SetActive(true);
+                break;
+            case Familiar.Skeleton:
+                familiarOptions[1].SetActive(true);
+                break;
+
+        }
     }
     private void Start()
     {
