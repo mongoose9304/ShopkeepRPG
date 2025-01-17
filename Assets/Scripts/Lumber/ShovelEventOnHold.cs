@@ -13,5 +13,10 @@ public class ShovelEventOnHold : InteractableEventOnHold
         }
         else
             currentHoldDuration += Time.deltaTime*2;
+
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
 }

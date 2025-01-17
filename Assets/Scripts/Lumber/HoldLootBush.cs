@@ -64,6 +64,10 @@ public class HoldLootBush : InteractableObject
         {
             DropItems();
         }
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
     void DropItems()
     {
