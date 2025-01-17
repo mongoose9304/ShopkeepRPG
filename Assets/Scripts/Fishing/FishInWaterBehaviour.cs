@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishInWaterBehaviour : MonoBehaviour {
+public class FishInWaterBehaviour : MonoBehaviour
+{
     private Rigidbody rb;
     public Rigidbody playerRB = null;
+    public GameObject playerRef;
 
     // How skittish this fish is: how much time you need to spend inside their radius before
     // they will swim deep under water
@@ -26,6 +28,7 @@ public class FishInWaterBehaviour : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody>();
         angle = Random.Range(0.0f, 360.0f);
+        RotateToFace();
         speed = Random.Range(1.0f, 5.0f);
         isFleeing = false;
     }
@@ -41,9 +44,12 @@ public class FishInWaterBehaviour : MonoBehaviour {
                 float bobberDistance = Vector3.Distance(rb.position, bobber.transform.position);
                 if (bobberDistance <= baitRadius)
                 {
-                    float bobberAngle = Vector3.Angle(rb.transform.forward, Vector3.Normalize(bobber.transform.position - rb.position));
-                    if (bobberAngle <= maxVisionAngle)
+                    float cosBobberAngle = Vector3.Dot(transform.forward, Vector3.Normalize(bobber.transform.position - transform.position));
+                        //Vector3.Angle(rb.transform.forward, Vector3.Normalize(bobber.transform.position - rb.position));
+                    if (cosBobberAngle <= Mathf.Cos(maxVisionAngle))
                     {
+                        Debug.Log("Start fishing minigame...");
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().InitiateMinigame();
                         Destroy(gameObject);
                         Destroy(bobber);
                     }
@@ -65,30 +71,32 @@ public class FishInWaterBehaviour : MonoBehaviour {
 
                 Vector3 runDirection = rb.position - playerRB.position;
                 angle = Mathf.Rad2Deg * Mathf.Atan2(runDirection.z, runDirection.x);
+                RotateToFace();
                 speed = 7.0f;
             }
         }
         else
         {
             // Check if player has joined
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
+            playerRef = GameObject.FindGameObjectWithTag("Player");
+            if (playerRef != null)
             {
-                playerRB = player.GetComponent<Rigidbody>();
+                playerRB = playerRef.GetComponent<Rigidbody>();
             }
         }
 
 
         speed = Mathf.Lerp(speed, 0.0f, 0.005f);
 
-        if (speed < 0.01f) 
+        if (speed < 0.01f)
         {
             moveDelay -= Time.deltaTime;
-            if (moveDelay <= 0.0f) 
+            if (moveDelay <= 0.0f)
             {
                 moveDelay = Random.Range(0.1f, 1.0f);
                 speed = Random.Range(1.0f, 6.0f);
                 angle = Random.Range(0.0f, 360.0f);
+                RotateToFace();
             }
         }
 
@@ -96,8 +104,17 @@ public class FishInWaterBehaviour : MonoBehaviour {
         if (isFleeing == true)
         {
             vertSpeed = -0.2f;
+            if (transform.position.y < -1.0f)
+            {
+                Destroy(gameObject);
+            }
         }
 
-        rb.velocity = new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), vertSpeed, Mathf.Sin(Mathf.Deg2Rad * angle)) * speed;
+        float angleRad = Mathf.Deg2Rad * angle;
+        rb.velocity = new Vector3(Mathf.Cos(angleRad), vertSpeed, Mathf.Sin(angleRad)) * speed;
+    }
+
+    void RotateToFace() {
+        transform.rotation = Quaternion.AngleAxis(angle - 90.0f, new Vector3(0.0f, -1.0f, 0.0f));
     }
 }

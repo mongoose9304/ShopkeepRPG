@@ -37,6 +37,7 @@ public class FishingPlayer : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private bool castHeld;
 
     public GameObject bobberPrefab;
     private GameObject currentBobber;
@@ -47,11 +48,17 @@ public class FishingPlayer : MonoBehaviour
     public float castSpeed = 4.0f;
     private int castMultiplier = 1;
     private Vector3 castDirection;
+
+    public bool canMove = true;
+    FishingMinigame menu = null;
+
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
         movement = playerActionMap.FindAction("Movement");
         playerActionMap.FindAction("Dash").performed += OnDash;
+        playerActionMap.FindAction("XAction").performed += OnCast;
+        playerActionMap.FindAction("XAction").canceled += OnCastReleased;
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("StartAction").performed += OnPause;
@@ -66,8 +73,9 @@ public class FishingPlayer : MonoBehaviour
         if (TempPause.instance.isPaused)
             return;
 
-        if (InteractHeld == true)
+        if (castHeld == true)
         {
+            canMove = false;
             castPower += castSpeed * Time.deltaTime * castMultiplier;
             if (castPower >= maxCast || castPower <= 0.0f)
             {
@@ -87,11 +95,9 @@ public class FishingPlayer : MonoBehaviour
                 castDirection = Vector3.Normalize(moveInput);
             }
             transform.LookAt(rb.position + castDirection);
-
-            // Show Ghost Bobber
-
         }
-        else // Only move if not casting
+
+        if (canMove == true)
         {
             GetInput();
             moveInput = PreventGoingThroughWalls(moveInput);
@@ -103,7 +109,6 @@ public class FishingPlayer : MonoBehaviour
 
                 if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
                 {
-                    //transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.deltaTime * moveSpeedModifier, ref velocity, dampModifier);
                     transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
                 }
                 else
@@ -112,7 +117,7 @@ public class FishingPlayer : MonoBehaviour
                     transform.forward = moveInput;
 
             }
-            else 
+            else
             {
                 if (dashTime > 0)
                 {
@@ -129,33 +134,38 @@ public class FishingPlayer : MonoBehaviour
                         return;
                     }
                     Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-                    // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                     transform.position = PreventGoingThroughWalls(temp);
                 }
+            }
+        }
+        else
+        {
+            if (menu != null)
+            {
+                menu.HandleInputs(movement.ReadValue<Vector2>());
             }
         }
     }
     /// <summary>
     /// The actions taken when the player presses the dash button
     /// </summary>
-    private void OnInteract(InputAction.CallbackContext obj)
+    private void OnCast(InputAction.CallbackContext obj)
     {
-        InteractHeld = true;
-
+        castHeld = true;
         if (currentBobber == null)
         {
             currentBobber = Instantiate(bobberPrefab);
-            currentBobber.GetComponent<BobberLogic>().isActive = false;
-            Color currentColour = currentBobber.GetComponent<Renderer>().material.color;
-            currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.5f);
+            //Color currentColour = currentBobber.GetComponent<Renderer>().material.color;
+            //currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.5f);
         }
+        currentBobber.GetComponent<BobberLogic>().isActive = false;
     }
     /// <summary>
     /// The actions taken when the player presses the dash button
     /// </summary>
-    private void OnInteractReleased(InputAction.CallbackContext obj)
+    private void OnCastReleased(InputAction.CallbackContext obj)
     {
-        InteractHeld = false;
+        castHeld = false;
 
         // Potentially cast fishing line
         if (castPower > minCast)
@@ -172,10 +182,21 @@ public class FishingPlayer : MonoBehaviour
         }
         else
         {
+            canMove = true;
             Destroy(currentBobber);
         }
         castPower = 0.0f;
     }
+
+    private void OnInteract(InputAction.CallbackContext obj)
+    {
+        InteractHeld = true;
+    }
+    private void OnInteractReleased(InputAction.CallbackContext obj)
+    {
+        InteractHeld = false;
+    }
+
     private void OnPause(InputAction.CallbackContext obj)
     {
         if (TempPause.instance)
@@ -344,5 +365,14 @@ public class FishingPlayer : MonoBehaviour
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
         interactableObjectLockOnObject.SetActive(false);
+    }
+
+    public void InitiateMinigame()
+    {
+        if (menu == null)
+        {
+            menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
+        }
+        menu.Activate();
     }
 }
