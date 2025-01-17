@@ -45,7 +45,7 @@ public class Tunnel : InteractableObject
     {
         obj_.transform.position = teleportLocation.position;
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         currentHoldDuration += Time.deltaTime*2;
     }

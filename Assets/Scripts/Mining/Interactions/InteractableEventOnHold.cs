@@ -32,10 +32,14 @@ public class InteractableEventOnHold : InteractableObject
     }
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+        //myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn=null)
     {
         currentHoldDuration += Time.deltaTime * 2;
+        if(btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
 }

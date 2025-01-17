@@ -5,7 +5,7 @@ using UnityEngine;
 public class CutTreeDownInteraction : InteractableObject
 {
     [SerializeField] Tree myTree;
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if (interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer playa))
         {

@@ -17,7 +17,7 @@ public class TreasureChest : InteractableObject
     [SerializeField] GameObject curseIcon;
 
 
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         InteractWithChest();
     }

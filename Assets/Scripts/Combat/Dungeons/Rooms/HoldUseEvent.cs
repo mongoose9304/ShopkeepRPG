@@ -40,7 +40,7 @@ public class HoldUseEvent : InteractableObject
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn= null)
     {
         currentHoldTime -= Time.deltaTime * 2;
         if (holdAudioSource)

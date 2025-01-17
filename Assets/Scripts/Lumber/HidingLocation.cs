@@ -11,7 +11,7 @@ public class HidingLocation : InteractableObject
         if(timeBeingUsed>0)
         timeBeingUsed -= Time.deltaTime;
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
     if( interactingObject_.TryGetComponent<LumberPlayer>(out LumberPlayer lumberPlayer_))
         {

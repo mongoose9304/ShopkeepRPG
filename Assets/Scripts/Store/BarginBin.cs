@@ -38,7 +38,7 @@ public class BarginBin : InteractableObject
     public TextMeshProUGUI discountText;
     [Tooltip("Is this bin currently in use")]
     public bool inUse;
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if (interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
         {

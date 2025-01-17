@@ -45,7 +45,7 @@ public class LootDigSpot : InteractableObject
             timeSinceInteration -= Time.deltaTime ;
         }
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         timeSinceInteration = 0.5f;
         diggingAudio.volume = startVolume;

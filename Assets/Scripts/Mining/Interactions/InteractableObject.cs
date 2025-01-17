@@ -13,7 +13,7 @@ public class InteractableObject : MonoBehaviour
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
-    public virtual void Interact(GameObject interactingObject_=null)
+    public virtual void Interact(GameObject interactingObject_=null,InteractLockOnButton btn=null)
     {
         Debug.Log("Interact");
     }

@@ -23,7 +23,7 @@ public class LootBush : InteractableObject
         if(!useSpecificItemDrop)
         SetUpLootDrop();
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn=null)
     {
         myDropper.DropItems();
         gameObject.SetActive(false);

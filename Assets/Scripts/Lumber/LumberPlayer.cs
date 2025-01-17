@@ -46,7 +46,7 @@ public class LumberPlayer : MonoBehaviour
     [SerializeField] GameObject axeLockOnTarget;
     //references and inputs
     [SerializeField] GameObject interactableObjectTarget;
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
     public List<GameObject> myInteractableObjects = new List<GameObject>();
     Vector3 moveInput;
     Vector3 newInput;
@@ -277,7 +277,7 @@ public class LumberPlayer : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact(gameObject);
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -346,7 +346,7 @@ public class LumberPlayer : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -364,7 +364,7 @@ public class LumberPlayer : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         if (myInteractableObjects.Count <= 1)
@@ -536,7 +536,7 @@ public class LumberPlayer : MonoBehaviour
         myInteractableObjects.Remove(obj_);
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
-        interactableObjectLockOnObject.SetActive(false);
+        interactableObjectLockOnObject.gameObject.SetActive(false);
     }
     public void ResetCurrentPuzzle()
     {

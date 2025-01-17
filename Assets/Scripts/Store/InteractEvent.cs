@@ -11,7 +11,7 @@ public class InteractEvent : InteractableObject
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn=null)
     {
         myEvent.Invoke();
     }
