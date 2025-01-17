@@ -48,6 +48,10 @@ public class Tunnel : InteractableObject
     public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         currentHoldDuration += Time.deltaTime*2;
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
     /// <summary>
     /// Will teleport the player and set the objects active/inactive as necessary 
