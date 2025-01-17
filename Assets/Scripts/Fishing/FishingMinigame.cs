@@ -19,12 +19,16 @@ public class FishingMinigame : MonoBehaviour
     private CanvasGroup canvas;
     private Slider progressBar;
 
+    public GameObject circleObject;
+    private RectTransform circleProgress;
+
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<CanvasGroup>();
         progressBar = GetComponent<Slider>();
-        catchProgress = catchLimit * 0.6f;
+        circleProgress = circleObject.GetComponent<RectTransform>();
+        catchProgress = catchLimit * 0.3f;
         Deactivate();
     }
 
@@ -75,7 +79,7 @@ public class FishingMinigame : MonoBehaviour
         canvas.blocksRaycasts = true;
 
         // Reset catch progress
-        catchProgress = catchLimit * 0.6f;
+        catchProgress = catchLimit * 0.3f;
     }
 
     public void Deactivate()
@@ -126,7 +130,6 @@ public class FishingMinigame : MonoBehaviour
         bobberPosition += directionToFish * fishDistance / 100.0f;
 
         // Check bobber distance to middle
-        Debug.Log(bobberPosition.magnitude);
         if (bobberPosition.magnitude < 100.0f)
         {
             catchProgress += 4.5f * Time.deltaTime;
@@ -135,7 +138,14 @@ public class FishingMinigame : MonoBehaviour
         {
             catchProgress -= 3.5f * Time.deltaTime;
         }
+         
         progressBar.value = catchProgress;
+
+        // Make graphic slightly smaller, so that as soon as the the circle touches its outline you'll win.
+        // Also makes losing slightly more generous (you will have a slight buffer after losing to come back).
+        // However because of that I need to clamp the value to not be less than 0, or negative scale would look weird.
+        float scale = Mathf.Max(catchProgress / catchLimit - 0.04f, 0.0f); 
+        circleProgress.localScale = new Vector2(scale, scale);
 
         if (catchProgress <= 0.0f)
         {
