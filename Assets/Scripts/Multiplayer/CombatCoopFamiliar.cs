@@ -33,7 +33,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     [Tooltip("REFERENCE to the effects played when the player is killed")]
     [SerializeField] GameObject deathEffect;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
     [Tooltip("REFERENCE to the wall layers")]
     public LayerMask wallMask;
 
@@ -409,7 +409,7 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -432,7 +432,7 @@ public class CombatCoopFamiliar : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         foreach (GameObject obj in myInteractableObjects)
@@ -450,7 +450,7 @@ public class CombatCoopFamiliar : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact();
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -478,7 +478,7 @@ public class CombatCoopFamiliar : MonoBehaviour
         if (interactableObjectTarget = obj_)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
         }
     }
     /// <summary>
