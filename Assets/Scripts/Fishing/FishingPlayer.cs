@@ -37,11 +37,28 @@ public class FishingPlayer : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private bool castHeld;
+
+    public GameObject bobberPrefab;
+    private GameObject currentBobber;
+
+    public float castPower = 0.0f;
+    public float maxCast = 10.0f;
+    public float minCast = 1.0f;
+    public float castSpeed = 4.0f;
+    private int castMultiplier = 1;
+    private Vector3 castDirection;
+
+    public bool canMove = true;
+    FishingMinigame menu = null;
+
     public void SetUpControls(PlayerInput myInput)
     {
         playerActionMap = myInput.actions.FindActionMap("Player");
         movement = playerActionMap.FindAction("Movement");
         playerActionMap.FindAction("Dash").performed += OnDash;
+        playerActionMap.FindAction("XAction").performed += OnCast;
+        playerActionMap.FindAction("XAction").canceled += OnCastReleased;
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
         playerActionMap.FindAction("StartAction").performed += OnPause;
@@ -56,69 +73,130 @@ public class FishingPlayer : MonoBehaviour
         if (TempPause.instance.isPaused)
             return;
 
-        GetInput();
-        moveInput = PreventGoingThroughWalls(moveInput);
-        GetClosestInteractableObject();
-        if (!isDashing)
+        if (castHeld == true)
         {
-
-
-            if (dashCoolDown > 0)
-                dashCoolDown -= Time.deltaTime;
-
-            if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
+            canMove = false;
+            castPower += castSpeed * Time.deltaTime * castMultiplier;
+            if (castPower >= maxCast || castPower <= 0.0f)
             {
-                //transform.position = Vector3.SmoothDamp(transform.position, transform.position + PreventFalling() * moveSpeed * Time.deltaTime * moveSpeedModifier, ref velocity, dampModifier);
-                transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                castMultiplier *= -1;
+            }
+
+            // Set bobber trial position
+            currentBobber.transform.position = rb.position + castDirection * castPower;
+            // Zero out the y so that it lies flat on the water surface
+            currentBobber.transform.position = new Vector3(currentBobber.transform.position.x, 0.0f, currentBobber.transform.position.z);
+
+            // Face in the direction of the input
+            GetInput();
+            // A deadzone for changing your rotation
+            if (Vector3.Magnitude(moveInput) > 0.5f)
+            {
+                castDirection = Vector3.Normalize(moveInput);
+            }
+            transform.LookAt(rb.position + castDirection);
+        }
+
+        if (canMove == true)
+        {
+            GetInput();
+            moveInput = PreventGoingThroughWalls(moveInput);
+            GetClosestInteractableObject();
+            if (!isDashing)
+            {
+                if (dashCoolDown > 0)
+                    dashCoolDown -= Time.deltaTime;
+
+                if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
+                {
+                    transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                }
+                else
+                    timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
+                if (moveInput != Vector3.zero)
+                    transform.forward = moveInput;
+
             }
             else
-                timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
-            if (moveInput != Vector3.zero)
-                transform.forward = moveInput;
+            {
+                if (dashTime > 0)
+                {
+                    dashTime -= Time.deltaTime;
+                    if (CheckForWallHit())
+                    {
+                        dashTime = 0;
 
+                    }
+                    if (dashTime <= 0)
+                    {
+                        isDashing = false;
+                        GroundCheck();
+                        return;
+                    }
+                    Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
+                    transform.position = PreventGoingThroughWalls(temp);
+                }
+            }
         }
         else
         {
-            if (dashTime > 0)
+            if (menu != null)
             {
-                dashTime -= Time.deltaTime;
-                if (CheckForWallHit())
-                {
-                    dashTime = 0;
-
-                }
-                if (dashTime <= 0)
-                {
-                    isDashing = false;
-                    GroundCheck();
-                    return;
-                }
-                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-                // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
-                transform.position = PreventGoingThroughWalls(temp);
-
-
+                menu.HandleInputs(movement.ReadValue<Vector2>());
             }
-
-
-
-
         }
     }
     /// <summary>
     /// The actions taken when the player presses the dash button
     /// </summary>
+    private void OnCast(InputAction.CallbackContext obj)
+    {
+        castHeld = true;
+        if (currentBobber == null)
+        {
+            currentBobber = Instantiate(bobberPrefab);
+            //Color currentColour = currentBobber.GetComponent<Renderer>().material.color;
+            //currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.5f);
+        }
+        currentBobber.GetComponent<BobberLogic>().isActive = false;
+    }
+    /// <summary>
+    /// The actions taken when the player presses the dash button
+    /// </summary>
+    private void OnCastReleased(InputAction.CallbackContext obj)
+    {
+        castHeld = false;
+
+        // Potentially cast fishing line
+        if (castPower > minCast)
+        {
+            // Bobber becomes solid
+            Color currentColour = currentBobber.GetComponent<Renderer>().material.color;
+            currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
+
+            // Set bobber final position
+            currentBobber.transform.position = rb.position + castDirection * castPower;
+            currentBobber.transform.position = new Vector3(currentBobber.transform.position.x, 0.0f, currentBobber.transform.position.z);
+
+            currentBobber.GetComponent<BobberLogic>().isActive = true;
+        }
+        else
+        {
+            canMove = true;
+            Destroy(currentBobber);
+        }
+        castPower = 0.0f;
+    }
+
     private void OnInteract(InputAction.CallbackContext obj)
     {
         InteractHeld = true;
     }
-    /// <summary>
-    /// The actions taken when the player presses the dash button
-    /// </summary>
     private void OnInteractReleased(InputAction.CallbackContext obj)
     {
         InteractHeld = false;
     }
+
     private void OnPause(InputAction.CallbackContext obj)
     {
         if (TempPause.instance)
@@ -139,14 +217,12 @@ public class FishingPlayer : MonoBehaviour
 
     void GetInput()
     {
-
         moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
         if (InteractHeld)
             InteractAction();
     }
     private void DashAction()
     {
-
         dashStartPos = transform.position;
         if (moveInput != Vector3.zero)
             transform.forward = moveInput;
@@ -258,7 +334,6 @@ public class FishingPlayer : MonoBehaviour
     }
     private bool CheckForWallHit()
     {
-
         var dir = transform.TransformDirection(Vector3.forward);
         if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
             return true;
@@ -269,7 +344,6 @@ public class FishingPlayer : MonoBehaviour
         if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
             return true;
         return false;
-
     }
     private void GroundCheck()
     {
@@ -291,5 +365,14 @@ public class FishingPlayer : MonoBehaviour
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
         interactableObjectLockOnObject.SetActive(false);
+    }
+
+    public void InitiateMinigame()
+    {
+        if (menu == null)
+        {
+            menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
+        }
+        menu.Activate();
     }
 }

@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("REFERENCE to the player input manager")]
     private PlayerInputManager playerInputManager;
 
-        private void Awake()
+    private void Awake()
     {
         if (!instance)
         {
