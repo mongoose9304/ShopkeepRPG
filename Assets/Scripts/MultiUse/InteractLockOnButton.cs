@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class InteractLockOnButton : MonoBehaviour
 {
     public Slider holdSlider;
+    public InteractLockOnButton otherPlayerButton;
     bool isQuitting;
     private void Update()
     {
@@ -38,5 +39,13 @@ public class InteractLockOnButton : MonoBehaviour
         }
         holdSlider.maxValue = maxHoldTime;
         holdSlider.value = currentHoldTime;
+        if (otherPlayerButton)
+        {
+            if (Vector3.Distance(transform.position, otherPlayerButton.transform.position) < 1)
+            {
+                otherPlayerButton.holdSlider.maxValue = maxHoldTime;
+                otherPlayerButton.holdSlider.value = currentHoldTime;
+            }
+        }
     }
 }

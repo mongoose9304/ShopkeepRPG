@@ -112,7 +112,7 @@ public class Tunnel : InteractableObject
     /// </summary>
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+        //myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
     }
     public void PlayAudio()
     {
