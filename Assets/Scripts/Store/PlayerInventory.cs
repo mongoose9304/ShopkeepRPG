@@ -132,6 +132,18 @@ public class PlayerInventory : MonoBehaviour
             masterItemList.Add(itemX);
         }
     }
+    public void ConsumeItem(string name_, int amount_)
+    {
+        foreach (InventoryItem masterItem_ in masterItemList)
+        {
+
+            if (masterItem_.myItemName == name_)
+            {
+                masterItem_.amount -= amount_;
+                break;
+            }
+        }
+    }
     /// <summary>
     /// all all the ui moveable objects to the master list
     /// </summary>
