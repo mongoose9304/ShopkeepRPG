@@ -1,10 +1,45 @@
+using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using static TimeManager;
+ 
+public struct SpecialEvent
+{
+    private TimeManager.TimePeriod TimePeriod;
+    private TimeManager.Day Day;
+    private TimeManager.Week Week;
+    private TimeManager.Season Season;
+
+    public SpecialEvent(TimeManager.TimePeriod TimePeriod_, TimeManager.Day Day_, TimeManager.Week Week_, TimeManager.Season Season_)
+    {
+        TimePeriod = TimePeriod_;
+        Day = Day_;
+        Week = Week_;
+        Season = Season_;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is SpecialEvent other)
+        {
+            return TimePeriod == other.TimePeriod &&
+                   Day == other.Day &&
+                   Week == other.Week &&
+                   Season == other.Season;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(TimePeriod, Day, Week, Season);
+    }
+}
 
 public class TimeManager : MonoBehaviour
 {
+    //Morning, Noon, Evening and Night are 4 times of day with EndPeriod being a more restricted time.
     public enum TimePeriod{ Morning, Noon, Evening, Night, EndPeriod };
     int numTimePeriods = 5;
 
@@ -15,25 +50,81 @@ public class TimeManager : MonoBehaviour
     int numWeeks = 4;
 
     public enum Season { Spring, Summer, Autumn, Winter };
-    int numSeason = 4;
+    int numSeasons = 4;
 
-    public int totalDays = 0;
+    public int totalDays = 1;
 
     public TimePeriod currentTimeBlock = TimePeriod.Morning;
-    public Day currentDay = Day.Sunday;
+    public Day currentDay = Day.Monday;
     public Week currentWeek = Week.First;
     public Season currentSeason = Season.Spring;
 
+    public Dictionary<SpecialEvent, Action> specialEvents = new Dictionary<SpecialEvent, Action>();
 
-    private void ProgressTime(int amount){
+    public Dictionary<SpecialEvent, Dictionary<string, NPCBehavior>> calendar = new Dictionary<SpecialEvent, Dictionary<string, NPCBehavior>>();
+
+    public static TimeManager instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start() 
+    {
+        /*
+        To add a special event to the calendar do this:
+
+        specialEvents[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
+        {
+            Debug.Log("Test Event");
+            ...
+        }; 
+
+        Alternatively:
+
+        specialEvents[new TimeEventKey(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = YourFunctionHere;
+         */
+
+        specialEvents[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
+        {
+            Debug.Log("Event 1 Test");
+        };
+
+        specialEvents[new SpecialEvent(TimePeriod.Evening, Day.Friday, Week.First, Season.Spring)] = TestEvent;
+
+    }
+    private void TestEvent()
+    {
+        Debug.Log("Event 2 Test");
+    }
+
+    private void CheckIfSpecialEvent()
+    {
+        SpecialEvent currentTime = new SpecialEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
+        if (specialEvents.TryGetValue(currentTime, out Action specialEvent))
+        {
+            specialEvent.Invoke();
+        }
+    }
+
+    private void ProgressTimeByAmount(int amount){
         if(currentTimeBlock == TimePeriod.EndPeriod) 
         {
             ProgressDay(1);
             return;
         }
-        int newProgress = (int)currentTimeBlock + amount;
-        newProgress = Mathf.Clamp(newProgress, 0, numTimePeriods - 1);
-        currentTimeBlock = (TimePeriod)newProgress;      
+        int newTimeBlock = (int)currentTimeBlock + amount;
+        newTimeBlock = Mathf.Clamp(newTimeBlock, 0, numTimePeriods - 1);
+        currentTimeBlock = (TimePeriod)newTimeBlock;      
     }
 
     private void ProgressDay(int days) 
@@ -49,8 +140,8 @@ public class TimeManager : MonoBehaviour
                 allocatedDays++;
                 continue;
             }
-            int newProgress = (int)currentDay + 1;
-            currentDay = (Day)newProgress;
+            int newDay = (int)currentDay + 1;
+            currentDay = (Day)newDay;
             allocatedDays++;
         }
         currentTimeBlock = TimePeriod.Morning;
@@ -62,12 +153,10 @@ public class TimeManager : MonoBehaviour
         {
             currentWeek = Week.First;
             ProgressSeason();
+            return;
         }
-
-        int newProgress = (int)currentWeek + 1;
-        int newProgressClamp = Mathf.Clamp(newProgress, 0, numWeeks - 1);
-
-        currentWeek = (Week)newProgress;
+        int newWeek = (int)currentWeek + 1;
+        currentWeek = (Week)newWeek;
         currentDay = Day.Monday;
         currentTimeBlock = TimePeriod.Morning;
     }
@@ -77,12 +166,12 @@ public class TimeManager : MonoBehaviour
         if (currentSeason == Season.Winter)
         {
             currentSeason = Season.Spring;
-            return;
         }
-
-        int newProgress = (int)currentSeason + 1;
-
-        currentSeason = (Season)newProgress;
+        else 
+        {
+            int newSeason = (int)currentSeason + 1;
+            currentSeason = (Season)newSeason;
+        }
         currentWeek = Week.First;
         currentDay = Day.Monday;
         currentTimeBlock = TimePeriod.Morning;
@@ -90,6 +179,20 @@ public class TimeManager : MonoBehaviour
 
     public void PassTime() 
     {
-        ProgressTime(1);
+        ProgressTimeByAmount(1);
+        CheckIfSpecialEvent();
     }
+
+    public NPCBehavior GetBehavior(string id) 
+    {
+        SpecialEvent currentTime = new SpecialEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
+        Dictionary<string, NPCBehavior> NPCBehaviors;
+        calendar.TryGetValue(currentTime, out NPCBehaviors);
+
+        NPCBehavior behavior;
+        NPCBehaviors.TryGetValue(id, out behavior);
+
+        return behavior;
+    }
+
 }

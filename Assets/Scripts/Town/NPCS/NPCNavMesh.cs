@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
 public class NPCNavMesh : MonoBehaviour
 {
@@ -18,24 +17,30 @@ public class NPCNavMesh : MonoBehaviour
     [SerializeField]
     private Transform NPCtarget;
 
-    private void Start() {
-        if (anim == null) {
+    private void Start()
+    {
+        if (anim == null)
+        {
             anim = GetComponent<Animator>();
         }
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update() {
+    private void Update()
+    {
         // just for testing
         agent.destination = NPCtarget.position;
         bool isMoving = agent.remainingDistance > agent.stoppingDistance;
-        
-        if (!isMoving){
+
+        if (!isMoving)
+        {
             //check if waypoints aren't empty, choose random waypoint
-            if (waypoints.Count > 0) {
+            if (waypoints.Count > 0)
+            {
                 int randomIndex = Random.Range(0, waypoints.Count);
                 NPCtarget.position = waypoints[randomIndex].transform.position;
             }
