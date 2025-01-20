@@ -76,10 +76,7 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start() 
-    {
         /*
         To add a special event to the calendar do this:
 
@@ -97,9 +94,27 @@ public class TimeManager : MonoBehaviour
         specialEvents[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
         {
             Debug.Log("Event 1 Test");
+
+            Dictionary<string, NPCBehavior> event1 = new Dictionary<string, NPCBehavior>();
+
+            NPCBehavior test;
+            List<Vector3> testList = new List<Vector3>();
+            testList.Add(new Vector3(-13.53f, 0, -23.65f));
+            testList.Add(new Vector3(0, 0, -22.55f));
+            testList.Add(new Vector3(-5.69f, 0, -36.71f));
+            test.patrolWaypoints = testList;
+
+            event1.Add("linfordTest", test);
+
+            calendar[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = event1;
         };
 
         specialEvents[new SpecialEvent(TimePeriod.Evening, Day.Friday, Week.First, Season.Spring)] = TestEvent;
+    }
+
+    private void Start() 
+    {
+        
 
     }
     private void TestEvent()
@@ -176,6 +191,8 @@ public class TimeManager : MonoBehaviour
         currentDay = Day.Monday;
         currentTimeBlock = TimePeriod.Morning;
     }
+
+    //public functions
 
     public void PassTime() 
     {

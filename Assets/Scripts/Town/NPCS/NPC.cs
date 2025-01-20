@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public struct NPCBehavior 
 {
-    public List<GameObject> patrolWaypoints;
+    public List<Vector3> patrolWaypoints;
 }
 
 public class NPC : MonoBehaviour
@@ -15,13 +15,12 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        navMesh = gameObject.GetComponent<NPCNavMesh>();
-
-        //gameObject.transform.position = behavior.patrolWaypoints[0].transform.position;       
+        navMesh = gameObject.GetComponent<NPCNavMesh>();     
     }
-
-    void Update()
+    public void CheckSchedule() 
     {
-        
+        behavior = TimeManager.instance.GetBehavior(id);
+        gameObject.transform.position = behavior.patrolWaypoints[0];
+        navMesh.waypoints = behavior.patrolWaypoints;
     }
 }

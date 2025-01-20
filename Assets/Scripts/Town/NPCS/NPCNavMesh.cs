@@ -6,10 +6,7 @@ public class NPCNavMesh : MonoBehaviour
 {
     private NavMeshAgent agent;
 
-    // testing for now, this will be every location in the game
-    // need to make a schedule for the npcs
-    [SerializeField]
-    private List<GameObject> waypoints = new List<GameObject>();
+    public List<Vector3> waypoints = new List<Vector3>();
 
     [SerializeField]
     private Animator anim;
@@ -42,7 +39,7 @@ public class NPCNavMesh : MonoBehaviour
             if (waypoints.Count > 0)
             {
                 int randomIndex = Random.Range(0, waypoints.Count);
-                NPCtarget.position = waypoints[randomIndex].transform.position;
+                NPCtarget.position = waypoints[randomIndex];
             }
         }
 
