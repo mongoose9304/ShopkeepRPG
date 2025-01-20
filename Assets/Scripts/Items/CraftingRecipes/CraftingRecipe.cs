@@ -12,5 +12,6 @@ public class CraftingRecipe : ScriptableObject
     public int hellCraftingCost;
     public int woodCraftingCost;
     public int stoneCraftingCost;
+    public float timeToCraft;
     public ItemData itemToCraft;
 }
