@@ -766,6 +766,9 @@ public class CombatPlayerMovement : MonoBehaviour
             case UniqueEquipEffect.LifeSteal:
                 combatActions.lifeStealPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.special:
+                mod_.SpecialEffects.Invoke(this);
+                break;
         }
     }
 
