@@ -27,9 +27,10 @@ public class EventConfig
 [Serializable]
 public class NPCBehavior
 {
-    public string ID; 
+    public string ID;
 
     [Header("Behavior")]
+    public string conversationName;
     public List<Vector3> patrolWaypoints = new List<Vector3>(); 
 }
 
