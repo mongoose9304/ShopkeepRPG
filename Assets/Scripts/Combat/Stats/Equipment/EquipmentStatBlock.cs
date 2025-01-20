@@ -9,7 +9,7 @@ public enum EquipType
 };
 public enum Stat
 {
-    HP,SP,PATK,PDEF,MATK,MDEF,LUCK
+    HP,SP,PATK,PDEF,MATK,MDEF,LUCK, SPECIAL
 };
 public enum UniqueEquipEffect
 {
@@ -23,7 +23,7 @@ public struct EquipModifier
     public Stat affectedStat;
     public float amount;
     public UniqueEquipEffect uniqueEffect;
-    public UnityEvent<CombatPlayerMovement> SpecialEffects;
+    public UnityEvent<CombatControllerInterface> SpecialEffects;
 
 };
 /// <summary>

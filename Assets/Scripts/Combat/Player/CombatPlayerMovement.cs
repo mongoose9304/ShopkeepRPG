@@ -4,7 +4,7 @@ using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 using UnityEngine.InputSystem;
-public class CombatPlayerMovement : MonoBehaviour
+public class CombatPlayerMovement : CombatControllerInterface
 {
     //FFYL stats
     [SerializeField] public bool isInSaveYourSoulMode;
@@ -806,6 +806,7 @@ public class CombatPlayerMovement : MonoBehaviour
     public void SkillTreeEffects()
     {
         //Create the empty mods first here , then in the for loops you set up the exact stats based on points invested 
+
         //Slime
         EquipModifier slimeIncreasedPDef = new EquipModifier();
         slimeIncreasedPDef.isMultiplicative = true;
@@ -862,6 +863,13 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             switch(tal_.ID)
             {
+                case "Malice":
+                    for(int i = 0; i < tal_.levelInvested; i++) {
+                        if(i > 0) {
+                            if (curseAuraRef == null) { curseAuraRef = CreateCurseAura(); }
+                        }
+                    }
+                    break;
                 case "Necromancer":
                     mySkeltonMaster.enabled = false;
                     mySkeltonMaster.maxMageFollowers = 0;
@@ -949,8 +957,6 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                     }
                     break;
-
-
 
             }
         }
