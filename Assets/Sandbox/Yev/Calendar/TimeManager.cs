@@ -2,54 +2,15 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using static TimeManager;
- 
-public struct SpecialEvent
-{
-    private TimeManager.TimePeriod TimePeriod;
-    private TimeManager.Day Day;
-    private TimeManager.Week Week;
-    private TimeManager.Season Season;
-
-    public SpecialEvent(TimeManager.TimePeriod TimePeriod_, TimeManager.Day Day_, TimeManager.Week Week_, TimeManager.Season Season_)
-    {
-        TimePeriod = TimePeriod_;
-        Day = Day_;
-        Week = Week_;
-        Season = Season_;
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj is SpecialEvent other)
-        {
-            return TimePeriod == other.TimePeriod &&
-                   Day == other.Day &&
-                   Week == other.Week &&
-                   Season == other.Season;
-        }
-        return false;
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(TimePeriod, Day, Week, Season);
-    }
-}
+using System.Globalization;
 
 public class TimeManager : MonoBehaviour
 {
-    //Morning, Noon, Evening and Night are 4 times of day with EndPeriod being a more restricted time.
-    public enum TimePeriod{ Morning, Noon, Evening, Night, EndPeriod };
+    [SerializeField] private CalendarConfig calendarConfig;
+
     int numTimePeriods = 5;
-
-    public enum Day{ Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday};
     int numDays = 7;
-
-    public enum Week { First, Second, Third, Fourth };
     int numWeeks = 4;
-
-    public enum Season { Spring, Summer, Autumn, Winter };
     int numSeasons = 4;
 
     public int totalDays = 1;
@@ -59,9 +20,9 @@ public class TimeManager : MonoBehaviour
     public Week currentWeek = Week.First;
     public Season currentSeason = Season.Spring;
 
-    public Dictionary<SpecialEvent, Action> specialEvents = new Dictionary<SpecialEvent, Action>();
+    public Dictionary<CalendarEvent, Action> calendarEvents = new Dictionary<CalendarEvent, Action>();
 
-    public Dictionary<SpecialEvent, Dictionary<string, NPCBehavior>> calendar = new Dictionary<SpecialEvent, Dictionary<string, NPCBehavior>>();
+    public Dictionary<CalendarEvent, Dictionary<string, NPCBehavior>> calendar = new Dictionary<CalendarEvent, Dictionary<string, NPCBehavior>>();
 
     public static TimeManager instance;
 
@@ -91,32 +52,14 @@ public class TimeManager : MonoBehaviour
         specialEvents[new TimeEventKey(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = YourFunctionHere;
          */
 
-        specialEvents[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
+        calendarEvents[new CalendarEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
         {
             Debug.Log("Event 1 Test");
-
-            Dictionary<string, NPCBehavior> event1 = new Dictionary<string, NPCBehavior>();
-
-            NPCBehavior test;
-            List<Vector3> testList = new List<Vector3>();
-            testList.Add(new Vector3(-13.53f, 0, -23.65f));
-            testList.Add(new Vector3(0, 0, -22.55f));
-            testList.Add(new Vector3(-5.69f, 0, -36.71f));
-            test.patrolWaypoints = testList;
-
-            event1.Add("linfordTest", test);
-
-            calendar[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = event1;
         };
 
-        specialEvents[new SpecialEvent(TimePeriod.Evening, Day.Friday, Week.First, Season.Spring)] = TestEvent;
+        calendarEvents[new CalendarEvent(TimePeriod.Evening, Day.Friday, Week.First, Season.Spring)] = TestEvent;
     }
 
-    private void Start() 
-    {
-        
-
-    }
     private void TestEvent()
     {
         Debug.Log("Event 2 Test");
@@ -124,10 +67,10 @@ public class TimeManager : MonoBehaviour
 
     private void CheckIfSpecialEvent()
     {
-        SpecialEvent currentTime = new SpecialEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
-        if (specialEvents.TryGetValue(currentTime, out Action specialEvent))
+        CalendarEvent currentTime = new CalendarEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
+        if (calendarEvents.TryGetValue(currentTime, out Action calendarEvent))
         {
-            specialEvent.Invoke();
+            calendarEvent.Invoke();
         }
     }
 
@@ -202,14 +145,20 @@ public class TimeManager : MonoBehaviour
 
     public NPCBehavior GetBehavior(string id) 
     {
-        SpecialEvent currentTime = new SpecialEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
-        Dictionary<string, NPCBehavior> NPCBehaviors;
-        calendar.TryGetValue(currentTime, out NPCBehaviors);
-
-        NPCBehavior behavior;
-        NPCBehaviors.TryGetValue(id, out behavior);
-
-        return behavior;
+        foreach (var calEvent in calendarConfig.events)
+        {
+            if (calEvent.timePeriod == currentTimeBlock && calEvent.day == currentDay && calEvent.week == currentWeek && calEvent.season == currentSeason)
+            {
+                foreach (var npc in calEvent.NPC)
+                {
+                    if (npc.ID == id)
+                    {
+                        return npc; 
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }

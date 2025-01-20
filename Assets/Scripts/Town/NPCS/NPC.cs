@@ -1,10 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public struct NPCBehavior 
-{
-    public List<Vector3> patrolWaypoints;
-}
 
 public class NPC : MonoBehaviour
 {
@@ -15,7 +11,8 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        navMesh = gameObject.GetComponent<NPCNavMesh>();     
+        navMesh = gameObject.GetComponent<NPCNavMesh>();
+        CheckSchedule();
     }
     public void CheckSchedule() 
     {
