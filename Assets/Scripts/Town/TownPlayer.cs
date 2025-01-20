@@ -33,6 +33,7 @@ public class TownPlayer : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
     [SerializeField] GameObject menuObject;
+    [SerializeField] GameObject craftingObject;
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
@@ -53,6 +54,7 @@ public class TownPlayer : MonoBehaviour
         playerActionMap.FindAction("StartAction").performed += OnPause;
         if(!isPlayer2)
         playerActionMap.FindAction("RBAction").performed += OnOpenMenu;
+        playerActionMap.FindAction("LBAction").performed += OnOpenCraftingMenu;
         playerActionMap.Enable();
     }
     public void SwapFamiliar(Familiar fam_)
@@ -80,6 +82,8 @@ public class TownPlayer : MonoBehaviour
         playerActionMap.FindAction("StartAction").performed -= OnPause;
         if (!isPlayer2)
             playerActionMap.FindAction("RBAction").performed -= OnOpenMenu;
+        if (!isPlayer2)
+            playerActionMap.FindAction("LBAction").performed -= OnOpenCraftingMenu;
     }
     private void Start()
     {
@@ -183,6 +187,17 @@ public class TownPlayer : MonoBehaviour
         else
             CloseMenuAction();
     }
+    private void OnOpenCraftingMenu(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        if (isPlayer2)
+            return;
+        if (!menuOpen)
+            OpenCraftingMenuAction();
+        else
+            CloseMenuAction();
+    }
 
     void GetInput()
     {
@@ -212,7 +227,13 @@ public class TownPlayer : MonoBehaviour
     private void CloseMenuAction()
     {
         menuObject.SetActive(false);
+        craftingObject.SetActive(false);
         menuOpen = false;
+    }
+    private void OpenCraftingMenuAction()
+    {
+        craftingObject.SetActive(true);
+        menuOpen = true;
     }
 
     private void InteractAction()

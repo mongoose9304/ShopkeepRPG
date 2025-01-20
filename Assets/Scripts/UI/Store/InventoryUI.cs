@@ -21,7 +21,7 @@ public class InventoryUI : MonoBehaviour
     public TextMeshProUGUI stoneText;
     public TextMeshProUGUI humanCashText;
     public TextMeshProUGUI hellCashText;
-    private void Start()
+    private void OnEnable()
     {
         LoadInventory();
         LoadSavedResouces();

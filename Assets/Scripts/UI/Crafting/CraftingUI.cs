@@ -15,6 +15,9 @@ public class CraftingUI : MonoBehaviour
     public RecipeRequirementSlot lumberSlot;
     public int amountToCraft;
     public TextMeshProUGUI amountToCraftText;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemValueText;
+    public Image itemImage;
 
     private void OnEnable()
     {
@@ -140,6 +143,9 @@ public class CraftingUI : MonoBehaviour
         stoneSlot.gameObject.SetActive(false);
         lumberSlot.gameObject.SetActive(false);
         SetAmountText(1);
+        itemName.text = recipe_.itemToCraft.itemName;
+        itemImage.sprite = recipe_.itemToCraft.itemSprite;
+        itemValueText.text = recipe_.itemToCraft.basePrice.ToString();
         foreach (RecipeRequirementSlot btn in requirementSlots)
         {
             btn.gameObject.SetActive(false);
