@@ -29,6 +29,18 @@ public class CraftingUI : MonoBehaviour
             recipeBtns[i].gameObject.SetActive(true);
         }
     }
+    public void TryToCraft()
+    {
+
+    }
+    public void IncreaseCraftAmount()
+    {
+
+    }
+    public void DecreaseCraftAmount()
+    {
+
+    }
     public void SwitchActiveRecipe(CraftingRecipe recipe_)
     {
         humanCashSlot.gameObject.SetActive(false);
