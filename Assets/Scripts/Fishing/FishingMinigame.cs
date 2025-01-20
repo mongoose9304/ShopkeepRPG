@@ -15,6 +15,7 @@ public class FishingMinigame : MonoBehaviour
     private float catchProgress;
 
     public bool isActive;
+    public float winRadius = 60.0f;
 
     private CanvasGroup canvas;
     private Slider progressBar;
@@ -68,6 +69,8 @@ public class FishingMinigame : MonoBehaviour
 
     public void Activate()
     {
+        FishBehaviours.Initialize();
+
         // Default positions for the 3 objects. 0, 0 is the center of the screen.
         playerPosition = new Vector2(-100.0f, 0.0f);
         fishPosition = new Vector2(100.0f, 0.0f);
@@ -111,9 +114,9 @@ public class FishingMinigame : MonoBehaviour
 
     private void MoveFish()
     {
-        // Jitter around, later each fish will have a unique behaviour here.
-        fishPosition += new Vector2(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f));
-
+        // Call on this fish's unique behaviour. All stored in FishBehaviours file.
+        fishPosition = FishBehaviours.Carp(fishPosition);
+        // Should be redundant, but just in case a fish behaviour places you outside the circle.
         fishPosition = ClampToRadius(fishPosition);
     }
 
@@ -130,7 +133,7 @@ public class FishingMinigame : MonoBehaviour
         bobberPosition += directionToFish * fishDistance / 100.0f;
 
         // Check bobber distance to middle
-        if (bobberPosition.magnitude < 100.0f)
+        if (bobberPosition.magnitude <= winRadius)
         {
             catchProgress += 4.5f * Time.deltaTime;
         }
@@ -142,7 +145,7 @@ public class FishingMinigame : MonoBehaviour
         progressBar.value = catchProgress;
 
         // Make graphic slightly smaller, so that as soon as the the circle touches its outline you'll win.
-        // Also makes losing slightly more generous (you will have a slight buffer after losing to come back).
+        // Also makes losing slightly more generous (it loks like you have a slight buffer after losing to come back).
         // However because of that I need to clamp the value to not be less than 0, or negative scale would look weird.
         float scale = Mathf.Max(catchProgress / catchLimit - 0.04f, 0.0f); 
         circleProgress.localScale = new Vector2(scale, scale);
@@ -161,9 +164,9 @@ public class FishingMinigame : MonoBehaviour
 
     private Vector2 ClampToRadius(Vector2 inputPosition)
     {
+        // 250 looks very good with the current sprite. When art is finalized I'll need to update this
         const float radius = 250.0f;
 
-        // 250 max radius for now, can update this with testing.
         // Should just keep the fish icon within the circle graphic.
         if (inputPosition.magnitude > radius)
         {
