@@ -318,4 +318,13 @@ public class PlayerInventory : MonoBehaviour
     public int GetStone() { return stoneTotal; }
     public int GetHumanCash() { return humanCashTotal; }
     public int GetHellCash() { return hellCashTotal; }
+    public int GetItemAmount(string itemName_)
+    {
+        foreach(InventoryItem item_ in masterItemList)
+        {
+            if (item_.myItemName == itemName_)
+                return item_.amount;
+        }
+        return 0;
+    }
 }

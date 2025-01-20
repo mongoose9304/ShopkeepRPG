@@ -6,6 +6,7 @@ using TMPro;
 
 public class RecipeButton : MonoBehaviour
 {
+    public CraftingUI craftUI;
     public CraftingRecipe myRecipe;
     public Image myImage;
     public TextMeshProUGUI myName;
@@ -17,6 +18,10 @@ public class RecipeButton : MonoBehaviour
     }
     public void ButtonPressed()
     {
-
+        craftUI.SwitchActiveRecipe(myRecipe);
+    }
+    public void OnHover()
+    {
+        craftUI.SwitchActiveRecipe(myRecipe);
     }
 }
