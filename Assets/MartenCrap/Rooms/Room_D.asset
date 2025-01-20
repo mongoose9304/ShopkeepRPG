@@ -13,12 +13,25 @@ MonoBehaviour:
   m_Name: Room_D
   m_EditorClassIdentifier: 
   m_Area:
-  - x: 0
+  - serializedVersion: 2
+    x: 0
     y: 0
     width: 6
     height: 3
   m_Doors:
+  - m_Name: decor
+    m_Position: {x: 3, y: 1.5}
+    m_Direction: 4
+    m_Adjacent: {fileID: 11400000, guid: f1261713f37116e41b3503d2d88cd832, type: 2}
+    m_AdjacentFallback: {fileID: 0}
   - m_Name: closet
     m_Position: {x: 2, y: 0}
     m_Direction: 3
+    m_Adjacent: {fileID: 11400000, guid: b9286713eeea4f7459344bfe50ffef1b, type: 2}
+    m_AdjacentFallback: {fileID: 11400000, guid: 33a438f5b05c3944c9d348e70b819424, type: 2}
+  - m_Name: closet
+    m_Position: {x: 2, y: 3}
+    m_Direction: 1
+    m_Adjacent: {fileID: 0}
+    m_AdjacentFallback: {fileID: 11400000, guid: 33a438f5b05c3944c9d348e70b819424, type: 2}
   m_Prefab: {fileID: 2015479685217688848, guid: bab7823bb6f221d438257e6ac17b3850, type: 3}

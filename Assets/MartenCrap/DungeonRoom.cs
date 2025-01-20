@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DungeonRoom : MonoBehaviour {
+public sealed class DungeonRoom : MonoBehaviour {
     private void OnDrawGizmos() {
         if (m_Layout) {
             Random.InitState(m_Layout.GetInstanceID());

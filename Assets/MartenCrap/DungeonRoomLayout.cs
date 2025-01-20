@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class DungeonRoomLayout : DungeonRoomLayoutSelector {
+[CreateAssetMenu(menuName = "Dungeon/Room")]
+public sealed class DungeonRoomLayout : DungeonRoomLayoutSelector {
     /// <summary>
     /// Defines the area that the room consumes; The dungeon generator will not generate overlapping rooms.
     /// </summary>
-    public ReadOnlySpan<RectInt> Area {
+    public ReadOnlySpan<Rect> Area {
         get => m_Area;
     }
     /// <summary>
@@ -15,9 +15,28 @@ public class DungeonRoomLayout : DungeonRoomLayoutSelector {
     public ReadOnlySpan<Door> Doors {
         get => m_Doors;
     }
+    /// <summary>
+    /// Defines the prefab that will be placed into the scene when the room is placed in the dungeon.
+    /// </summary>
+    public GameObject Prefab {
+        get => m_Prefab;
+    }
     
     public override DungeonRoomLayout GetDungeonRoom(DungeonGeneratorContext context) {
         return this;
+    }
+    public static bool DoorDirectionsCanConnect(DoorDirection a, DoorDirection b) {
+        if (a == DoorDirection.decorative && b == DoorDirection.decorative)
+            return true;
+        if (a == DoorDirection.xNegative && b == DoorDirection.xPositive)
+            return true;
+        if (a == DoorDirection.xPositive && b == DoorDirection.xNegative)
+            return true;
+        if (a == DoorDirection.zNegative && b == DoorDirection.zPositive)
+            return true;
+        if (a == DoorDirection.zPositive && b == DoorDirection.zNegative)
+            return true;
+        return false;
     }
 
     [Serializable]
@@ -31,14 +50,16 @@ public class DungeonRoomLayout : DungeonRoomLayoutSelector {
         /// <summary>
         /// The position of the door; Rooms are attached at doorways.
         /// </summary>
-        public readonly Vector2Int Position {
-            get => m_Position;
+        public Vector2 Position {
+            readonly get => m_Position;
+            set => m_Position = value;
         }
         /// <summary>
         /// The direction of the door; Rooms only attach to doors with opposing directions. For more details see <see cref="DoorDirection"/>.
         /// </summary>
-        public readonly DoorDirection Direction {
-            get => m_Direction;
+        public DoorDirection Direction {
+            readonly get => m_Direction;
+            set => m_Direction = value;
         }
         /// <summary>
         /// The rooms that can be spawned from this door; This is used by the dungeon generator to decide which room will be attached to this door.
@@ -46,15 +67,23 @@ public class DungeonRoomLayout : DungeonRoomLayoutSelector {
         public readonly DungeonRoomLayoutSelector Adjacent {
             get => m_Adjacent;
         }
+        /// <summary>
+        /// The rooms that can be spawned from this door when the adjacent room is invalid; This is used by the dungeon generator to decide which room will be attached to this door.
+        /// </summary>
+        public readonly DungeonRoomLayoutSelector AdjacentFallback {
+            get => m_AdjacentFallback;
+        }
 
         [SerializeField]
         private string m_Name;
         [SerializeField]
-        private Vector2Int m_Position;
+        private Vector2 m_Position;
         [SerializeField]
         private DoorDirection m_Direction;
         [SerializeField]
         private DungeonRoomLayoutSelector m_Adjacent;
+        [SerializeField]
+        private DungeonRoomLayoutSelector m_AdjacentFallback;
     }
     [Serializable]
     public enum DoorDirection {
@@ -81,7 +110,7 @@ public class DungeonRoomLayout : DungeonRoomLayoutSelector {
     }
 
     [SerializeField]
-    private RectInt[] m_Area;
+    private Rect[] m_Area;
     [SerializeField]
     private Door[] m_Doors;
     [SerializeField]
