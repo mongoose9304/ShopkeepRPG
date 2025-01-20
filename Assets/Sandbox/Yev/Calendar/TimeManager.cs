@@ -22,8 +22,6 @@ public class TimeManager : MonoBehaviour
 
     public Dictionary<CalendarEvent, Action> calendarEvents = new Dictionary<CalendarEvent, Action>();
 
-    public Dictionary<CalendarEvent, Dictionary<string, NPCBehavior>> calendar = new Dictionary<CalendarEvent, Dictionary<string, NPCBehavior>>();
-
     public static TimeManager instance;
 
     void Awake()
