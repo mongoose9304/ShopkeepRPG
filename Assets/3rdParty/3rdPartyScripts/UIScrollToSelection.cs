@@ -178,10 +178,21 @@ namespace UnityEngine.UI.Extensions
 
             // get the element offset value depending on the cursor move direction
             float offlimitsValue = GetScrollOffset(selectionPosition, listAnchorPosition, elementHeight, maskHeight);
+           
+            float normalizedPos = TargetScrollRect.verticalNormalizedPosition + (offlimitsValue / LayoutListGroup.rect.height);
 
+            if (offlimitsValue < 0)
+            {
+                normalizedPos -= (Mathf.Abs(offlimitsValue) / LayoutListGroup.rect.height);
+            }
+            else if(offlimitsValue>0)
+            {
+                normalizedPos += (offlimitsValue / LayoutListGroup.rect.height);
+            }
+
+            normalizedPos = Mathf.Clamp01(normalizedPos);
             // move the target scroll rect
-            TargetScrollRect.verticalNormalizedPosition +=
-                (offlimitsValue / LayoutListGroup.rect.height) * Time.unscaledDeltaTime * scrollSpeed;
+            TargetScrollRect.verticalNormalizedPosition = Mathf.SmoothStep(TargetScrollRect.verticalNormalizedPosition, normalizedPos, Time.unscaledDeltaTime * scrollSpeed);
         }
 
         private void UpdateHorizontalScrollPosition(RectTransform selection)
