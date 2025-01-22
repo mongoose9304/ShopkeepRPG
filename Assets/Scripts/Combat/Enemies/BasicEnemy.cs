@@ -65,7 +65,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [Tooltip("REFERNCE to the team I am on")]
-    [SerializeField] TeamUser myTeamUser;
+    [SerializeField]protected TeamUser myTeamUser;
     public GameObject hexStatusEffect;
     [Tooltip("REFERNCE to the script that allows for items to drop ")]
     LootDropper lootDropper;
