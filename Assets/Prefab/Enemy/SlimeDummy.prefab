@@ -928,9 +928,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 4658827452453938793}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 0.1
+  m_Speed: 7
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2
@@ -940,7 +940,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!54 &6064075630194287261
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 0
   Level: 0
-  moveSpeed: 10
+  moveSpeed: 15
   attackDistance: 5
   knockBackMax: 0.2
   maxAttackCooldown: 3
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   jumpSpeed: {x: 0, y: 6, z: 0}
   jumpHeight: 4
   lowestJumpPercentage: 0.25
-  slamRange: 2.5
+  slamRange: 5
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   JumpEffect: {fileID: 4004696566595043345}
   rend: {fileID: 2435166057637512102}
