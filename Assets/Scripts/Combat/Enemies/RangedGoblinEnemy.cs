@@ -47,8 +47,8 @@ public class RangedGoblinEnemy : BasicEnemy
                 target = CheckIfPlayerIsCloserThanFamiliar();
             if (!target.activeInHierarchy)
                 target = CheckIfPlayerIsCloserThanFamiliar();
-            transform.LookAt(lookAt, Vector3.up);
             lookAt = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            transform.LookAt(lookAt, Vector3.up);
             PrepShot();
         }
         else
