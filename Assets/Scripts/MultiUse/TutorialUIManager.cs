@@ -15,6 +15,8 @@ public class TutorialUIManager : MonoBehaviour
    [SerializeField] Sprite[] joyStickTypes;
     //A,B,X,Y,LB,RB,LT,RT
    [SerializeField] Sprite[] gamePadButtons;
+    [SerializeField] protected Image characterImage;
+    [SerializeField]  protected Sprite[] characterEmotions;
 
     public void ResetTutorialMessage()
     {
@@ -54,6 +56,13 @@ public class TutorialUIManager : MonoBehaviour
         tutorialText.gameObject.SetActive(false);
         tutorialText.text = text;
         tutorialText.gameObject.SetActive(true);
+    }
+    /// <summary>
+    /// TChange the emotion of the speaker sprite, 0=normal, 1=happy, 2 =anger,3=sad
+    /// </summary>
+    public void ChangeSpeakerEmotion(int emotion_=0)
+    {
+        characterImage.sprite = characterEmotions[emotion_];
     }
 
 }
