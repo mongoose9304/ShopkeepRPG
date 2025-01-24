@@ -100,6 +100,7 @@ public class CombatPlayerMovement : CombatControllerInterface
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
+
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -864,19 +865,27 @@ public class CombatPlayerMovement : CombatControllerInterface
             switch(tal_.ID)
             {
                 case "Malice":
-                    if (curseAuraRef) { Destroy(curseAuraRef.gameObject); }
                     float totalDamageBonus = 0.0f;
                     float totalAttackIntervalBonus = 0.0f;
                     float totalRadiusBonus = 0.0f;
                     bool blockProj = false;
 
                     for(int i = 0; i < tal_.levelInvested; i++) {
+                        //Also create it for the familiar because it's easier here. Sorry
+                        //-Adriel
                         if(i == 0) {
                            
+                           //Has to be reset everytime
+                           //For the player
                            curseAuraRef = CreateCurseAura();
-                           curseAuraRef.Init(); 
-                           
-                           Debug.Log("Created the curse aura");
+                           curseAuraRef.Init();
+
+                            //For the familiar
+                            combatActions.myCoopFamiliar.curseAuraRef = combatActions.myCoopFamiliar.CreateCurseAura();
+                            combatActions.myCoopFamiliar.curseAuraRef.Init();
+                            
+
+                            Debug.Log("Created the curse aura");
                         }
 
                         if(curseAuraRef == null) {
@@ -899,10 +908,12 @@ public class CombatPlayerMovement : CombatControllerInterface
                         }
                     }
 
+                    if (curseAuraRef == null) { break; }
                     curseAuraRef.damageBonus = totalDamageBonus;
                     curseAuraRef.attackIntervalBonus = totalAttackIntervalBonus;
                     curseAuraRef.radiusBonus = totalRadiusBonus;
                     curseAuraRef.blockProjectiles = blockProj;
+                    combatActions.myCoopFamiliar.curseAuraRef.SetAuraProperties(curseAuraRef);
 
                     break;
                 case "Necromancer":
@@ -1012,13 +1023,13 @@ public class CombatPlayerMovement : CombatControllerInterface
         combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
+
         //Sword mods
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
         combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
         AddExternalMod(swordLifeSteal);
-
 
         combatActions.myFamiliar.CalculateAllModifiers();
         combatActions.myCoopFamiliar.CalculateAllModifiers();

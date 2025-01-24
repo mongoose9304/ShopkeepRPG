@@ -11,7 +11,6 @@ public class CombatCurseAura : MonoBehaviour
     float radius = 1.0f;
     float attackTimer;
     
-
     public float attackIntervalBonus;
     public float damageBonus;
     public float radiusBonus;
@@ -77,5 +76,12 @@ public class CombatCurseAura : MonoBehaviour
         }
 
         Debug.Log(result);
+    }
+
+    public void SetAuraProperties(CombatCurseAura c) {
+        attackIntervalBonus = c.attackIntervalBonus;
+        damageBonus = c.damageBonus;
+        radiusBonus = c.radiusBonus;
+        blockProjectiles = c.blockProjectiles;
     }
 }
