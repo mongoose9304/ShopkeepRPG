@@ -54,10 +54,12 @@ public class PatrolRotateState : MonoBehaviour, IState {
     private float changeInAngle = 25.0f;
     private float currentAngle = 0.0f;
     private float targetAngle = 0.0f;
-    private float rotationSpeed = 5.0f;
+    private float rotationSpeed = 25.0f;
     private bool pauseRotation = false;
 
-    private float rotationTick = 0.3f;
+
+    float startingAngle = 0.0f;
+    private float rotationTick = 10.0f;
 
 
     private float[] angles = { 0.0f, 45.0f, 90.0f, 135.0f, 180.0f };
@@ -73,8 +75,11 @@ public class PatrolRotateState : MonoBehaviour, IState {
         Debug.Log("Entering Patrol State");
         RayOrigin = transform.position;
         RayDirection = new Vector3(10.0f, 0.0f, 0.0f);
-        currentAngle = transform.rotation.eulerAngles.y;
-        targetAngle = angles[0];
+        
+        startingAngle = transform.rotation.eulerAngles.y;
+        currentAngle = startingAngle;
+
+        targetAngle = angles[1] + startingAngle;
         Debug.Log(currentAngle);
 
     }
@@ -102,7 +107,7 @@ public class PatrolRotateState : MonoBehaviour, IState {
                 //choose next angle depending on the index
                 index = (index + 1) % angles.Length;
 
-                targetAngle = angles[index];
+                targetAngle = angles[index]+ startingAngle;
             }
         }
         else
@@ -149,19 +154,6 @@ public class PatrolRotateState : MonoBehaviour, IState {
 
 
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        // Visualize the cone in the editor
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, viewDistance);
-
-        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2, 0) * transform.rotation * Vector3.forward * viewDistance;
-        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2, 0) * transform.rotation * Vector3.forward * viewDistance;
-
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
     }
 }
 
