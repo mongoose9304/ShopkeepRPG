@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class InteractableObject : MonoBehaviour
 {
-
-
-
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
