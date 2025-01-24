@@ -78,13 +78,6 @@ public class CombatPlayerMovement : MonoBehaviour
     private GameObject tempObj;
     public GameObject levelUpEffect;
     //guard settings
-    public GameObject guardObject;
-    public float maxGuardTime;
-    float currentGuardTime;
-    public float secondsToRechargeGuardTime;
-    public float guardChargeDelayMax;
-    float guardChargeDelay;
-    bool isGuarding;
 
     [Header("Interactions")]
     [Tooltip("All the objects the player is currently in range to interact with")]
@@ -92,7 +85,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [Tooltip("The object the player is currently locked onto")]
     [SerializeField] GameObject interactableObjectTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
 
     [Header("UI")]
     public MMProgressBar healthBar;
@@ -155,7 +148,6 @@ public class CombatPlayerMovement : MonoBehaviour
         }
         ChargeMana();
         RegenHealth();
-        ChargeGuardTime();
         if (combatActions.isBusy)
             return;
         GetClosestInteractableObject();
@@ -168,7 +160,6 @@ public class CombatPlayerMovement : MonoBehaviour
             if(combatActions.isUsingBasicAttackMelee)
             {
                 moveInput /= 1.2f;
-                TryGuarding();
                
             }
             else if(combatActions.isUsingBasicAttackRanged)
@@ -179,7 +170,6 @@ public class CombatPlayerMovement : MonoBehaviour
         }
         if(!combatActions.isUsingBasicAttackMelee)
         {
-            StopGuarding();
         }
      moveInput=PreventGoingThroughWalls(moveInput);
        
@@ -401,7 +391,6 @@ public class CombatPlayerMovement : MonoBehaviour
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
         if(isInSaveYourSoulMode){ return; }
-        if (isGuarding) { return; }
         float newDamage = damage_;
         if(isMystical)
         {
@@ -468,44 +457,9 @@ public class CombatPlayerMovement : MonoBehaviour
             timesYouHaveDied += 1;
         }
     }
-    public void TryGuarding()
-    {
-        guardChargeDelay = guardChargeDelayMax;
-        if(currentGuardTime>0)
-        {
-            currentGuardTime -= Time.deltaTime;
-            shieldBar.SetBar01(currentGuardTime/maxGuardTime);
-            guardObject.SetActive(true);
-            isGuarding = true;
-        }
-        else
-        {
-            StopGuarding();
-        }
-        
-    }
-    public void StopGuarding()
-    {
-        guardObject.SetActive(false);
-        isGuarding = false;
-    }
-    private void ChargeGuardTime()
-    {
-        if (combatActions.isUsingBasicAttackMelee)
-        {
-            return;
 
-        }
-        if(guardChargeDelay>0)
-        {
-            guardChargeDelay -= Time.deltaTime;
-            return;
-        }
-        currentGuardTime += Time.deltaTime*(maxGuardTime / secondsToRechargeGuardTime);
-        if (currentGuardTime > maxGuardTime)
-            currentGuardTime = maxGuardTime;
-        shieldBar.SetBar01(currentGuardTime / maxGuardTime);
-    }
+
+
     public void TrueDeath()
     {
         if(extraLife)
@@ -994,7 +948,7 @@ public class CombatPlayerMovement : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -1017,7 +971,7 @@ public class CombatPlayerMovement : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         foreach (GameObject obj in myInteractableObjects)
@@ -1035,7 +989,7 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact();
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -1053,7 +1007,7 @@ public class CombatPlayerMovement : MonoBehaviour
         if (interactableObjectTarget = obj_)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
         }
     }
 }

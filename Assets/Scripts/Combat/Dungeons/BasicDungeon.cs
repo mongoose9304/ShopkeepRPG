@@ -74,6 +74,7 @@ public class BasicDungeon : MonoBehaviour
     /// </summary>
     public void SetUpEnemies()
     {
+        EnemyManager.instance.ClearEnemyItems();
         foreach (BasicEnemy enemy in regularEnemies)
         {
             EnemyManager.instance.CreateEnemyItem(enemy.myBaseData.originalName, enemy.gameObject);

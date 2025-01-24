@@ -61,7 +61,11 @@ public class DungeonManager : MonoBehaviour
     private void Start()
     {
         ClearBlessings();
+
+        //Turning off the tutorial
         StartTutorial();
+        //NextLevel(SinType.Greed);
+
         //For Testing purchases, use responsibly 
         LootManager.instance.AddDemonMoney(1000);
 

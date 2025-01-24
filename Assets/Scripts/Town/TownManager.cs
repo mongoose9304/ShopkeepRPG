@@ -7,6 +7,19 @@ using UnityEngine.SceneManagement;
 public class TownManager : MonoBehaviour
 {
     public List<AudioClip> BGMs = new List<AudioClip>();
+    [Tooltip("test items")]
+    public List<InventoryItem> debugItemsToAdd = new List<InventoryItem>();
+    public void AddDebugItems()
+    {
+        foreach (InventoryItem item_ in debugItemsToAdd)
+            PlayerInventory.instance.AddItemToInventory(item_.myItemName, item_.amount);
+
+        PlayerInventory.instance.AddHumanCash(1000);
+        PlayerInventory.instance.AddStone(1000);
+        PlayerInventory.instance.AddWood(1000);
+        PlayerInventory.instance.SaveAllResources();
+        PlayerInventory.instance.SaveItems();
+    }
     private void Start()
     {
         PlayRandomBGM();

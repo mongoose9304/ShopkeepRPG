@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class InteractableEventOnHold : InteractableObject
 {
     [Tooltip("The time you must hold the interact button before the tunnel will teleport a player")]
-    [SerializeField] float maxHoldDuration;
+    [SerializeField]protected float maxHoldDuration;
     protected float currentHoldDuration;
     [Tooltip("REFERNCE to the UI bar that fills up as held")]
     public MMProgressBar myUIBar;
@@ -32,10 +32,14 @@ public class InteractableEventOnHold : InteractableObject
     }
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+        //myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn=null)
     {
         currentHoldDuration += Time.deltaTime * 2;
+        if(btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
 }

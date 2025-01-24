@@ -243,6 +243,290 @@ Transform:
   - {fileID: 6434607254702708489}
   m_Father: {fileID: 3750668822299423146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4164924196370259896
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 292475221062303117}
+  - component: {fileID: 2798158069802282829}
+  - component: {fileID: 1379179311358995066}
+  m_Layer: 0
+  m_Name: vfxgraph_TsunamiWave_v1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &292475221062303117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164924196370259896}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5635243674909574907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!2083052967 &2798158069802282829
+VisualEffect:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164924196370259896}
+  m_Enabled: 1
+  m_Asset: {fileID: 8926484042661614526, guid: 149d89fc476055d43adc973b4f413f8a, type: 3}
+  m_InitialEventName: OnPlay
+  m_InitialEventNameOverriden: 0
+  m_StartSeed: 0
+  m_ResetSeedOnPlay: 1
+  m_AllowInstancing: 1
+  m_ResourceVersion: 1
+  m_PropertySheet:
+    m_Float:
+      m_Array:
+      - m_Value: 1
+        m_Name: TsunamiLifetime
+        m_Overridden: 1
+      - m_Value: 30
+        m_Name: CircleSoftEdge
+        m_Overridden: 1
+      - m_Value: 2.2
+        m_Name: CircleSize
+        m_Overridden: 1
+      - m_Value: 4
+        m_Name: GroundWaterShaderScale
+        m_Overridden: 1
+      - m_Value: 1.1
+        m_Name: WaterImpactParticlesLifetime
+        m_Overridden: 1
+      - m_Value: 8
+        m_Name: WaterImpactShaderScale
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: WaterImpactLifetime
+        m_Overridden: 1
+      - m_Value: 0.85
+        m_Name: WaterImpactRadius
+        m_Overridden: 1
+      - m_Value: 1.75
+        m_Name: WaterImpactSize
+        m_Overridden: 1
+      - m_Value: 25
+        m_Name: WaterImpactRate
+        m_Overridden: 1
+      - m_Value: 55
+        m_Name: WaterImpactParticlesRate
+        m_Overridden: 1
+      - m_Value: 50
+        m_Name: GroundWaterSoftEdge
+        m_Overridden: 1
+      - m_Value: 2.3
+        m_Name: PuddleSize
+        m_Overridden: 1
+      - m_Value: 0.66
+        m_Name: WaterStartRadius
+        m_Overridden: 1
+      - m_Value: 10
+        m_Name: WaterParticlesStartForce
+        m_Overridden: 1
+      - m_Value: 0.9
+        m_Name: GroundWaterRadius
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: GroundWaterLifetime
+        m_Overridden: 1
+      - m_Value: 1.9
+        m_Name: GroundWaterSize
+        m_Overridden: 1
+      - m_Value: 40
+        m_Name: WaterParticlesStartRate
+        m_Overridden: 1
+      - m_Value: 1
+        m_Name: WaterParticlesStartLifetime
+        m_Overridden: 0
+    m_Vector2f:
+      m_Array:
+      - m_Value: {x: 0, y: 0}
+        m_Name: WaveDistortionSpeed
+        m_Overridden: 1
+    m_Vector3f:
+      m_Array:
+      - m_Value: {x: 1.2, y: 1.6, z: 0.8}
+        m_Name: TsunamiScale
+        m_Overridden: 0
+      - m_Value: {x: 0, y: 0, z: 0}
+        m_Name: TsunamiVelocity
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.15, z: 0.5}
+        m_Name: ImpactOffset
+        m_Overridden: 1
+      - m_Value: {x: 1.4, y: 1.6, z: 0.8}
+        m_Name: WaveScale
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0, z: -0.28}
+        m_Name: PuddleOffset
+        m_Overridden: 1
+    m_Vector4f:
+      m_Array:
+      - m_Value: {x: 0.31, y: 1.15, z: 3.03, w: 0.34901962}
+        m_Name: CircleTextureColor
+        m_Overridden: 1
+      - m_Value: {x: 0, y: 0.24, z: 1, w: 0.043137256}
+        m_Name: CircleBaseColor
+        m_Overridden: 1
+      - m_Value: {x: 0.1433848, y: 0.50526077, z: 1.3041189, w: 1}
+        m_Name: WaterImpactColor
+        m_Overridden: 1
+    m_Uint:
+      m_Array: []
+    m_Int:
+      m_Array: []
+    m_Matrix4x4f:
+      m_Array: []
+    m_AnimationCurve:
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0.35787964
+            inSlope: 16.51822
+            outSlope: 16.51822
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.060353875
+            value: 1.3548182
+            inSlope: 7.841146
+            outSlope: 7.841146
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.36663687
+            value: 1.0987875
+            inSlope: -2.3668773
+            outSlope: -2.3668773
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.34997293
+          - serializedVersion: 3
+            time: 0.52283466
+            value: 0.8496977
+            inSlope: 0.029317351
+            outSlope: 0.029317351
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.66982865
+            value: 1.0374331
+            inSlope: 0.19993424
+            outSlope: 0.19993424
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.83935905
+            value: 0.8887049
+            inSlope: -0.1179032
+            outSlope: -0.1179032
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9589238
+            value: 0.9654044
+            inSlope: -10.287037
+            outSlope: -10.287037
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1.0044283
+            value: 0.0000018589199
+            inSlope: -21.215563
+            outSlope: -21.215563
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        m_Name: WaveZScale
+        m_Overridden: 1
+    m_Gradient:
+      m_Array: []
+    m_NamedObject:
+      m_Array:
+      - m_Value: {fileID: 2800000, guid: 5409123ff03f48d4ca20015b879dceca, type: 3}
+        m_Name: CircleMaskTexture
+        m_Overridden: 1
+      - m_Value: {fileID: 3356395143027640023, guid: 07edbd596adc4ec4c9126e31ccb78c7c, type: 3}
+        m_Name: WaveMesh
+        m_Overridden: 1
+    m_Bool:
+      m_Array: []
+--- !u!73398921 &1379179311358995066
+VFXRenderer:
+  serializedVersion: 1
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4164924196370259896}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &4390442326397100703
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,6 +1180,7 @@ Transform:
   - {fileID: 2071063212262689836}
   - {fileID: 7475818529260720904}
   - {fileID: 5446622720509039934}
+  - {fileID: 5635243674909574907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6314173209146273319
@@ -928,9 +1213,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 4658827452453938793}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 0.1
+  m_Speed: 7
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2
@@ -940,7 +1225,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!54 &6064075630194287261
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1003,10 +1288,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isElite: 0
   Level: 0
-  moveSpeed: 10
+  moveSpeed: 15
   attackDistance: 5
   knockBackMax: 0.2
   maxAttackCooldown: 3
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 64
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
   myBaseData: {fileID: 11400000, guid: 9f76a84ea08e95e49a3a4e5cfd639661, type: 2}
   maxHealth: 50
   maxHitstun: 5
@@ -1034,10 +1325,13 @@ MonoBehaviour:
   jumpSpeed: {x: 0, y: 6, z: 0}
   jumpHeight: 4
   lowestJumpPercentage: 0.25
-  slamRange: 2.5
+  slamRange: 4
+  dashDistance: 0.5
   slamParticleEffect: {fileID: 1474294762337050929, guid: 13c1a18bf36e3104490cf2806cd1876a, type: 3}
   JumpEffect: {fileID: 4004696566595043345}
   rend: {fileID: 2435166057637512102}
+  slimeDashEffect: {fileID: 2798158069802282829}
+  slimeDashCollider: {fileID: 3903243027851392680}
 --- !u!114 &7289725986723413572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6361,6 +6655,77 @@ Transform:
   - {fileID: 3750668822299423146}
   m_Father: {fileID: 627962914815523414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7846824312128239780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5635243674909574907}
+  - component: {fileID: 4529842440542378631}
+  - component: {fileID: 3903243027851392680}
+  m_Layer: 0
+  m_Name: vfx_TsunamiWave_v2_blue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5635243674909574907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846824312128239780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 292475221062303117}
+  m_Father: {fileID: 3856738759050230793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4529842440542378631
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846824312128239780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 2.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3903243027851392680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846824312128239780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88adaa1616e68f14287dcfc7153f5353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  myElement: 1
+  isMysticalDamage: 0
+  myTeam: 
 --- !u!1 &8634182001094996640
 GameObject:
   m_ObjectHideFlags: 0

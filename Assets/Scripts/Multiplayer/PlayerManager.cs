@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 public enum Familiar
 {
@@ -23,7 +24,13 @@ public class PlayerManager : MonoBehaviour
     [Tooltip("REFERENCE to the player input manager")]
     private PlayerInputManager playerInputManager;
 
-    private void Awake()
+    //Events for when a specific player has joined
+    //Used for cross object/cross scripting use only
+    //Invoked after the create1/2 player 
+    [HideInInspector] public UnityEvent player1Joined;
+    [HideInInspector] public UnityEvent player2Joined;
+
+        private void Awake()
     {
         if (!instance)
         {
@@ -92,11 +99,13 @@ public class PlayerManager : MonoBehaviour
         int layerToAdd = (int)Mathf.Log(playerLayers[players.Count - 1].value, 2);
         player.GetComponentInChildren<Camera>().cullingMask |= 1 << layerToAdd;
         player.GetComponent<PlayerController>().input = player;
-        if (players.Count==1)
-        SceneSpecificPlayerManager.instance.CreatePlayer1(players[0]);
-        else
-        {
+        if (players.Count == 1) {
+            SceneSpecificPlayerManager.instance.CreatePlayer1(players[0]);
+            player1Joined.Invoke();
+
+        } else {
             SceneSpecificPlayerManager.instance.CreatePlayer2(players[1]);
+            player2Joined.Invoke();
         }
 
     }

@@ -9,7 +9,7 @@ public class ThiefInteraction : InteractableObject
 {
     public Thief myThief;
 
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         myThief.Caught();
         ShopManager.instance.RemoveInteractableObject(gameObject);

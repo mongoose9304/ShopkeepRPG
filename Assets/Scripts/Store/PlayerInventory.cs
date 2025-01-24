@@ -132,6 +132,18 @@ public class PlayerInventory : MonoBehaviour
             masterItemList.Add(itemX);
         }
     }
+    public void ConsumeItem(string name_, int amount_)
+    {
+        foreach (InventoryItem masterItem_ in masterItemList)
+        {
+
+            if (masterItem_.myItemName == name_)
+            {
+                masterItem_.amount -= amount_;
+                break;
+            }
+        }
+    }
     /// <summary>
     /// all all the ui moveable objects to the master list
     /// </summary>
@@ -318,4 +330,13 @@ public class PlayerInventory : MonoBehaviour
     public int GetStone() { return stoneTotal; }
     public int GetHumanCash() { return humanCashTotal; }
     public int GetHellCash() { return hellCashTotal; }
+    public int GetItemAmount(string itemName_)
+    {
+        foreach(InventoryItem item_ in masterItemList)
+        {
+            if (item_.myItemName == itemName_)
+                return item_.amount;
+        }
+        return 0;
+    }
 }

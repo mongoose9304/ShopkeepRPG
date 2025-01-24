@@ -45,9 +45,13 @@ public class Tunnel : InteractableObject
     {
         obj_.transform.position = teleportLocation.position;
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         currentHoldDuration += Time.deltaTime*2;
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
     /// <summary>
     /// Will teleport the player and set the objects active/inactive as necessary 
@@ -108,7 +112,7 @@ public class Tunnel : InteractableObject
     /// </summary>
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+        //myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
     }
     public void PlayAudio()
     {

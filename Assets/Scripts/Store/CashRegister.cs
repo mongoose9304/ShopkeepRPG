@@ -27,7 +27,7 @@ public class CashRegister : InteractableObject
             Interact();
         }
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if(timeBetweenUses<=0)
         Use();
