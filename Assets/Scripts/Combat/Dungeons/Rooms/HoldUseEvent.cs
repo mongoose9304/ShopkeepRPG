@@ -22,9 +22,9 @@ public class HoldUseEvent : InteractableObject
     public bool RemoveFromPlayerList;
     virtual protected void Update()
     {
-        if (currentHoldTime < maxHoldTime)
+        if (currentHoldTime > 0)
         {
-            currentHoldTime += Time.deltaTime;
+            currentHoldTime -= Time.deltaTime;
         }
         else
         {
@@ -42,7 +42,7 @@ public class HoldUseEvent : InteractableObject
     /// </summary>
     public override void Interact(GameObject interactingObject_ = null,InteractLockOnButton btn= null)
     {
-        currentHoldTime -= Time.deltaTime * 2;
+        currentHoldTime += Time.deltaTime * 2;
         if (holdAudioSource)
         {
             if (!holdAudioSource.isPlaying)
@@ -50,13 +50,17 @@ public class HoldUseEvent : InteractableObject
                 holdAudioSource.Play();
             }
         }
-        if (currentHoldTime <= 0)
+        if (currentHoldTime >= maxHoldTime)
         {
             triggeredEvent.Invoke();
             if (RemoveFromPlayerList)
             {
                 CombatPlayerManager.instance.RemoveInteractableObject(gameObject);
             }
+        }
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldTime, currentHoldTime);
         }
     }
   
@@ -65,6 +69,6 @@ public class HoldUseEvent : InteractableObject
     /// </summary>
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldTime / maxHoldTime);
+        //myUIBar.UpdateBar01(currentHoldTime / maxHoldTime);
     }
 }

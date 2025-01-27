@@ -68,6 +68,9 @@ public class CombatPlayerMovement : CombatControllerInterface
     [SerializeField] GameObject skullHead;
     public bool extraLife;
     bool hasUsedExtraLife;
+    //DashAttacks
+    public float dashDamageModifier;
+    public float dashDamageBase;
 
 
     public float maxManaRechargeDelay;
@@ -78,13 +81,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     private GameObject tempObj;
     public GameObject levelUpEffect;
     //guard settings
-    public GameObject guardObject;
-    public float maxGuardTime;
-    float currentGuardTime;
-    public float secondsToRechargeGuardTime;
-    public float guardChargeDelayMax;
-    float guardChargeDelay;
-    bool isGuarding;
 
     [Header("Interactions")]
     [Tooltip("All the objects the player is currently in range to interact with")]
@@ -92,7 +88,7 @@ public class CombatPlayerMovement : CombatControllerInterface
     [Tooltip("The object the player is currently locked onto")]
     [SerializeField] GameObject interactableObjectTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
 
     [Header("UI")]
     public MMProgressBar healthBar;
@@ -105,6 +101,12 @@ public class CombatPlayerMovement : CombatControllerInterface
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    [Header("References")]
+    //Physical Dash Attack
+    [Tooltip("REFERENCE to the AOE splash attacks when the player dashes")]
+    public MMMiniObjectPooler physicalDashAttackPool;
+    public Transform physicalDashAttackSpawn;
+
     //used to take control of object when player 1 joins
     public void SetUpControls(PlayerInput myInput)
     {
@@ -156,7 +158,6 @@ public class CombatPlayerMovement : CombatControllerInterface
         }
         ChargeMana();
         RegenHealth();
-        ChargeGuardTime();
         if (combatActions.isBusy)
             return;
         GetClosestInteractableObject();
@@ -169,7 +170,6 @@ public class CombatPlayerMovement : CombatControllerInterface
             if(combatActions.isUsingBasicAttackMelee)
             {
                 moveInput /= 1.2f;
-                TryGuarding();
                
             }
             else if(combatActions.isUsingBasicAttackRanged)
@@ -180,7 +180,6 @@ public class CombatPlayerMovement : CombatControllerInterface
         }
         if(!combatActions.isUsingBasicAttackMelee)
         {
-            StopGuarding();
         }
      moveInput=PreventGoingThroughWalls(moveInput);
        
@@ -215,7 +214,10 @@ public class CombatPlayerMovement : CombatControllerInterface
                 if (dashTime <= 0)
                 {
                     isDashing = false;
-                    GroundCheck();
+                    if(GroundCheck())
+                    {
+                        DashPhysicalAttack();
+                    }
                     return;
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
@@ -241,6 +243,13 @@ public class CombatPlayerMovement : CombatControllerInterface
             dashCoolDown = maxdashCoolDown;
             DashAction();
         }
+    }
+    private void DashPhysicalAttack()
+    {
+        GameObject obj = physicalDashAttackPool.GetPooledGameObject();
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase;
+        obj.transform.position = physicalDashAttackSpawn.position;
+        obj.SetActive(true);
     }
     private void OnPause(InputAction.CallbackContext obj)
     {
@@ -338,7 +347,7 @@ public class CombatPlayerMovement : CombatControllerInterface
 
 
     }
-    private void GroundCheck()
+    private bool GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10,groundMask))
         {
@@ -346,7 +355,9 @@ public class CombatPlayerMovement : CombatControllerInterface
             transform.position = dashStartPos;
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
+            return false;
         }
+        return true;
     }
 
     void CheckForSoftLockOn()
@@ -402,7 +413,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
         if(isInSaveYourSoulMode){ return; }
-        if (isGuarding) { return; }
         float newDamage = damage_;
         if(isMystical)
         {
@@ -469,44 +479,9 @@ public class CombatPlayerMovement : CombatControllerInterface
             timesYouHaveDied += 1;
         }
     }
-    public void TryGuarding()
-    {
-        guardChargeDelay = guardChargeDelayMax;
-        if(currentGuardTime>0)
-        {
-            currentGuardTime -= Time.deltaTime;
-            shieldBar.SetBar01(currentGuardTime/maxGuardTime);
-            guardObject.SetActive(true);
-            isGuarding = true;
-        }
-        else
-        {
-            StopGuarding();
-        }
-        
-    }
-    public void StopGuarding()
-    {
-        guardObject.SetActive(false);
-        isGuarding = false;
-    }
-    private void ChargeGuardTime()
-    {
-        if (combatActions.isUsingBasicAttackMelee)
-        {
-            return;
 
-        }
-        if(guardChargeDelay>0)
-        {
-            guardChargeDelay -= Time.deltaTime;
-            return;
-        }
-        currentGuardTime += Time.deltaTime*(maxGuardTime / secondsToRechargeGuardTime);
-        if (currentGuardTime > maxGuardTime)
-            currentGuardTime = maxGuardTime;
-        shieldBar.SetBar01(currentGuardTime / maxGuardTime);
-    }
+
+
     public void TrueDeath()
     {
         if(extraLife)
@@ -1049,7 +1024,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -1072,7 +1047,7 @@ public class CombatPlayerMovement : CombatControllerInterface
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         foreach (GameObject obj in myInteractableObjects)
@@ -1090,7 +1065,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact();
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -1108,7 +1083,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         if (interactableObjectTarget = obj_)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
         }
     }
 }

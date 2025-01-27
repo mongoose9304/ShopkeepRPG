@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -251,15 +251,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -268,6 +277,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 4088732446014001032}
   useFlicker: 0
@@ -524,7 +534,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -712,15 +722,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -729,6 +748,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 2815200256687438231}
   useFlicker: 0
@@ -2280,7 +2300,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2543,7 +2563,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2763,7 +2783,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8792,7 +8812,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10460,15 +10480,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -10477,6 +10506,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 6866097481060001182}
   useFlicker: 0
@@ -10623,15 +10653,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -10640,6 +10679,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 4329983493869670117}
   useFlicker: 0
@@ -10880,7 +10920,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11083,7 +11123,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11720,7 +11760,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12280,7 +12320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12544,7 +12584,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19520,7 +19560,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19867,7 +19907,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26927,7 +26967,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27831,15 +27871,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -27848,6 +27897,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 2648271059802586840}
   useFlicker: 0
@@ -33604,7 +33654,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -33859,15 +33909,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -33876,6 +33935,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 2907708485215989711}
   useFlicker: 0
@@ -34759,7 +34819,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -35072,7 +35132,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36356,7 +36416,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -37940,7 +38000,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -38781,7 +38841,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44143,15 +44203,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -44160,6 +44229,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 4600289363355612512}
   useFlicker: 0
@@ -45184,7 +45254,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -56014,7 +56084,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -56987,15 +57057,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -57004,6 +57083,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 8771531166248603596}
   useFlicker: 0
@@ -62574,15 +62654,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -62591,6 +62680,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 3452634035558274207}
   useFlicker: 0
@@ -62674,7 +62764,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -63046,7 +63136,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -63464,7 +63554,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -69613,15 +69703,24 @@ MonoBehaviour:
   attackDistance: 0
   knockBackMax: 0
   maxAttackCooldown: 0
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
   myBaseData: {fileID: 0}
   maxHealth: 0
   maxHitstun: 0
   myElement: 0
   damage: 0
+  physicalDefence: 0
+  mysticalDefence: 0
   isMysticalDamage: 0
   canMove: 0
   stunIcon: {fileID: 0}
   player: {fileID: 0}
+  playerFamiliar: {fileID: 0}
   target: {fileID: 0}
   myEnemyCounter: {fileID: 0}
   agent: {fileID: 0}
@@ -69630,6 +69729,7 @@ MonoBehaviour:
   currentTimeBeforeDamageTextFades: 0
   fadeTimeMultiplier: 0
   myTeamUser: {fileID: 0}
+  hexStatusEffect: {fileID: 0}
   textSpawner: {fileID: 0}
   hitEffects: {fileID: 1849182760828146253}
   useFlicker: 0
@@ -69744,7 +69844,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70035,7 +70135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -70708,7 +70808,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72430,7 +72530,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72669,7 +72769,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78742,7 +78842,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79105,7 +79205,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7ba30281595b4194bb8acac0aba69d98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

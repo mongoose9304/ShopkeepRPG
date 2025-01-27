@@ -77,10 +77,10 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void EnableActions()
     {
-        combatMovement.playerActionMap.FindAction("XAction").performed += OnMeleePressed;
-        combatMovement.playerActionMap.FindAction("XAction").canceled += OnMeleeReleased;
-        combatMovement.playerActionMap.FindAction("AAction").performed += OnRangedPressed;
-        combatMovement.playerActionMap.FindAction("AAction").canceled += OnRangedReleased;
+        combatMovement.playerActionMap.FindAction("AAction").performed += OnMeleePressed;
+        combatMovement.playerActionMap.FindAction("AAction").canceled += OnMeleeReleased;
+        combatMovement.playerActionMap.FindAction("XAction").performed += OnRangedPressed;
+        combatMovement.playerActionMap.FindAction("XAction").canceled += OnRangedReleased;
         combatMovement.playerActionMap.FindAction("LBAction").performed += OnSpecial1Pressed;
         combatMovement.playerActionMap.FindAction("LBAction").canceled += OnSpecial1Released;
         combatMovement.playerActionMap.FindAction("RBAction").performed += OnSpecial2Pressed;
@@ -92,10 +92,10 @@ public class CombatPlayerActions : MonoBehaviour
     {
         if (combatMovement.playerActionMap!=null)
         {
-            combatMovement.playerActionMap.FindAction("XAction").performed -= OnMeleePressed;
-            combatMovement.playerActionMap.FindAction("XAction").canceled -= OnMeleeReleased;
-            combatMovement.playerActionMap.FindAction("AAction").performed -= OnRangedPressed;
-            combatMovement.playerActionMap.FindAction("AAction").canceled -= OnRangedReleased;
+            combatMovement.playerActionMap.FindAction("AAction").performed -= OnMeleePressed;
+            combatMovement.playerActionMap.FindAction("AAction").canceled -= OnMeleeReleased;
+            combatMovement.playerActionMap.FindAction("XAction").performed -= OnRangedPressed;
+            combatMovement.playerActionMap.FindAction("XAction").canceled -= OnRangedReleased;
             combatMovement.playerActionMap.FindAction("LBAction").performed -= OnSpecial1Pressed;
             combatMovement.playerActionMap.FindAction("LBAction").canceled -= OnSpecial1Released;
             combatMovement.playerActionMap.FindAction("RBAction").performed -= OnSpecial2Pressed;

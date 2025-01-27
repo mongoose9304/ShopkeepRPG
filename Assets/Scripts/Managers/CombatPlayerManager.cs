@@ -10,6 +10,7 @@ public class CombatPlayerManager : MonoBehaviour
     [SerializeField] CombatCoopFamiliar familiarPlayer;
     public bool coopPlayer;
     public Hotbar playerHotbar;
+    public bool debugDisableFamiliar;
     private void Awake()
     {
         instance = this;
@@ -25,6 +26,10 @@ public class CombatPlayerManager : MonoBehaviour
     public void EnableFamiliars(bool enable_)
     {
         if(coopPlayer)
+        {
+            return;
+        }
+        if(debugDisableFamiliar)
         {
             return;
         }

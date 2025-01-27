@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 /// <summary>
 /// A jump/slam aoe attack
@@ -9,6 +10,7 @@ public class ThunderStorm : PlayerSpecialAttack
 {
     [Header("Referecnes")]
     public GameObject particleEffect;
+    public VisualEffect startLightningEffect;
     bool isJumping;
     bool isLanding;
     float jumpEnd;
@@ -27,6 +29,14 @@ public class ThunderStorm : PlayerSpecialAttack
         jumpStart = Player.transform.position.y;
         jumpEnd = jumpStart + jumpHeight;
         currentJumpPercentage = 1.0f;
+        startLightningEffect.transform.position = transform.position;
+        startLightningEffect.gameObject.SetActive(true);
+        startLightningEffect.Play();
+    }
+    private void Start()
+    {
+        GameObject obj = GameObject.Instantiate(startLightningEffect.gameObject);
+        startLightningEffect = obj.GetComponent<VisualEffect>();
     }
     private void Update()
     {

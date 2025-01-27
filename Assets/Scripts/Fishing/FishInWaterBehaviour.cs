@@ -85,7 +85,6 @@ public class FishInWaterBehaviour : MonoBehaviour
             }
         }
 
-
         speed = Mathf.Lerp(speed, 0.0f, 0.005f);
 
         if (speed < 0.01f)

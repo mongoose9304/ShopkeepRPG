@@ -92,6 +92,22 @@ public class EnemyManager : MonoBehaviour
             eliteEnemies.Add(obj.GetComponent<EnemyItem>());
     }
     /// <summary>
+    /// Create an enemy item so we can pool this enemy
+    /// </summary>
+    public void ClearEnemyItems()
+    {
+        foreach (EnemyItem item_ in enemies)
+        {
+            Destroy(item_.gameObject);
+        }
+        foreach (EnemyItem item_ in eliteEnemies)
+        {
+            Destroy(item_.gameObject);
+        }
+        enemies.Clear();
+        eliteEnemies.Clear();
+    }
+    /// <summary>
     /// Create an enemy at a location
     /// </summary>
     public void SpawnEnemy(string name_,Transform pos_,EnemyCounter counter_=null,int enemyLevel=1,string team="")
