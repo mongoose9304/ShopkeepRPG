@@ -53,7 +53,7 @@ public class RangedGoblinEnemy : BasicEnemy
         obj.transform.position = attackSpawn.position;
         obj.transform.rotation = attackSpawn.rotation;
         obj.GetComponent<EnemyDamageCollider>().myElement = myElement;
-        obj.GetComponent<EnemyDamageCollider>().damage = damage;
+        obj.GetComponent<EnemyDamageCollider>().damage = damage*0.75f;
         obj.GetComponent<EnemyDamageCollider>().myTeam = GetTeam();
         if(target)
         obj.GetComponent<HomingAttack>().target = target.transform;
