@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShipWheelInteractable : InteractableObject
 {
-    public override void Interact(GameObject interactingObject = null)
+    public override void Interact(GameObject interactingObject = null,InteractLockOnButton btn=null)
     {
         if (interactingObject == null)
             return;
