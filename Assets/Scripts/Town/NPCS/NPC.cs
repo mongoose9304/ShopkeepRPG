@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
         navMesh = gameObject.GetComponent<NPCNavMesh>();
         trigger = gameObject.GetComponent<DialogueSystemTrigger>();
         CheckSchedule();
+        
     }
     public void CheckSchedule() 
     {
@@ -23,5 +24,7 @@ public class NPC : MonoBehaviour
         gameObject.transform.position = behavior.patrolWaypoints[0];
         trigger.conversation = behavior.conversationName;
         navMesh.waypoints = behavior.patrolWaypoints;
+        transform.position = behavior.patrolWaypoints[0];
+        navMesh.SetupNPC();
     }
 }
