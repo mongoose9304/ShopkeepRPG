@@ -91,9 +91,7 @@ public class CombatEquiptUI : MonoBehaviour
         playerStatBlock.PhysicalDefense = playerStatObjects[4].amount;
         playerStatBlock.MysticalDefense = playerStatObjects[5].amount;
         if (PlayerInventory.instance)
-        {
             PlayerInventory.instance.SavePlayerStats();
-        }
     }
     private void OnEnable()
     {
@@ -123,6 +121,8 @@ public class CombatEquiptUI : MonoBehaviour
     public void ResetPlayerStats()
     {
         playerStatBlock.ResetStats();
+        if (PlayerInventory.instance)
+            PlayerInventory.instance.SavePlayerStats();
         if (player)
             player.CalculateAllModifiers();
     }

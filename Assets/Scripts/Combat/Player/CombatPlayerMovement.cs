@@ -68,6 +68,9 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] GameObject skullHead;
     public bool extraLife;
     bool hasUsedExtraLife;
+    //DashAttacks
+    public float dashDamageModifier;
+    public float dashDamageBase;
 
 
     public float maxManaRechargeDelay;
@@ -243,7 +246,7 @@ public class CombatPlayerMovement : MonoBehaviour
     private void DashPhysicalAttack()
     {
         GameObject obj = physicalDashAttackPool.GetPooledGameObject();
-        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk;
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase;
         obj.transform.position = physicalDashAttackSpawn.position;
         obj.SetActive(true);
     }
