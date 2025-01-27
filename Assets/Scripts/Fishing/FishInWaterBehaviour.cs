@@ -27,14 +27,13 @@ public class FishInWaterBehaviour : MonoBehaviour
     // Randomized after each movement.
     public float moveDelay = 1.8f;
 
-    
-
     public float baitRadius = 3.0f;
     public float maxVisionAngle = 25.0f;
 
     private float angle;
     private float speed;
     private bool isFleeing;
+    public float targetY;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +48,8 @@ public class FishInWaterBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, targetY, 0.01f), transform.position.z);
+
         GameObject bobber = GameObject.FindGameObjectWithTag("Bobber");
         if (bobber != null)
         {
