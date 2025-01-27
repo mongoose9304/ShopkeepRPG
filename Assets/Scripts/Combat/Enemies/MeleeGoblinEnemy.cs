@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MeleeGoblinEnemy : BasicEnemy
 {
     public Animator anim;
     [Tooltip("REFERENCE to the particle effect that plays when I use my basic attack")]
-    public ParticleSystem basicAttackSystem;
+    public VisualEffect basicAttackSystem;
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
