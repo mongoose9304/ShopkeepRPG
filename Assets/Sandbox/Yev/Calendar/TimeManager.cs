@@ -143,19 +143,19 @@ public class TimeManager : MonoBehaviour
 
     public NPCBehavior GetBehavior(string id) 
     {
-        foreach (var calEvent in calendarConfig.events)
-        {
-            if (calEvent.timePeriod == currentTimeBlock && calEvent.day == currentDay && calEvent.week == currentWeek && calEvent.season == currentSeason)
-            {
-                foreach (var npc in calEvent.NPC)
-                {
-                    if (npc.ID == id)
-                    {
-                        return npc; 
-                    }
-                }
-            }
-        }
+        //foreach (var calEvent in calendarConfig.events)
+        //{
+        //    if (calEvent.timePeriod == currentTimeBlock && calEvent.day == currentDay && calEvent.week == currentWeek && calEvent.season == currentSeason)
+        //    {
+        //        foreach (var npc in calEvent.NPC)
+        //        {
+        //            if (npc.ID == id)
+        //            {
+        //                return npc; 
+        //            }
+        //        }
+        //    }
+        //}
         return null;
     }
 
