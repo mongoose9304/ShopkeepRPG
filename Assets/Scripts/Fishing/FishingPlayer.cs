@@ -191,6 +191,7 @@ public class FishingPlayer : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext obj)
     {
         InteractHeld = true;
+
     }
     private void OnInteractReleased(InputAction.CallbackContext obj)
     {
@@ -367,12 +368,12 @@ public class FishingPlayer : MonoBehaviour
         interactableObjectLockOnObject.SetActive(false);
     }
 
-    public void InitiateMinigame()
+    public void InitiateMinigame(FishType behaviourType)
     {
         if (menu == null)
         {
             menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
         }
-        menu.Activate();
+        menu.Activate(behaviourType);
     }
 }

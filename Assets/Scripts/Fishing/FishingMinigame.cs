@@ -14,6 +14,9 @@ public class FishingMinigame : MonoBehaviour
     public float catchLimit = 50.0f;
     private float catchProgress;
 
+    // Experimental - a turbulent current pushes objects around
+    public float currentStrength = 1.0f;
+
     public bool isActive;
     public float winRadius = 60.0f;
 
@@ -22,6 +25,9 @@ public class FishingMinigame : MonoBehaviour
 
     public GameObject circleObject;
     private RectTransform circleProgress;
+
+    public delegate Vector2 BehaviourDelegate(Vector2 currentPosition);
+    public BehaviourDelegate behaviour;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +49,7 @@ public class FishingMinigame : MonoBehaviour
         MovePlayer();
         MoveFish();
         MoveBobber();
+        FishBehaviours.UpdateGameState(playerPosition, catchProgress);
 
         // Synchronize graphics with logic.
         Transform[] pictureTransforms = GetComponentsInChildren<Transform>();
@@ -67,9 +74,23 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
-    public void Activate()
+    public void Activate(FishType behaviorType)
     {
         FishBehaviours.Initialize();
+        switch (behaviorType) 
+        {
+            case FishType.Pike:
+                behaviour = FishBehaviours.Pike;
+                break;
+            case FishType.Carp:
+                behaviour = FishBehaviours.Carp;
+                break;
+
+            default:
+                Debug.LogWarning("Trying to use the unfinished fish behaviour " + behaviorType + ".");
+                break;
+        }
+
 
         // Default positions for the 3 objects. 0, 0 is the center of the screen.
         playerPosition = new Vector2(-100.0f, 0.0f);
@@ -114,8 +135,17 @@ public class FishingMinigame : MonoBehaviour
 
     private void MoveFish()
     {
-        // Call on this fish's unique behaviour. All stored in FishBehaviours file.
-        fishPosition = FishBehaviours.Carp(fishPosition);
+        // Call on this fish's unique behaviour. All stored in FishBehaviours file. 
+        // FishInWaterBehaviour.cs defines a delegate for a function that takes a vec2 and then returns a vec2
+        fishPosition = behaviour(fishPosition);
+        if (behaviour == FishBehaviours.Pike)
+        {
+            Debug.Log("Pike");
+        }
+        else if (behaviour == FishBehaviours.Carp)
+        {
+            Debug.Log("Carp");
+        }
         // Should be redundant, but just in case a fish behaviour places you outside the circle.
         fishPosition = ClampToRadius(fishPosition);
     }
@@ -145,7 +175,7 @@ public class FishingMinigame : MonoBehaviour
         progressBar.value = catchProgress;
 
         // Make graphic slightly smaller, so that as soon as the the circle touches its outline you'll win.
-        // Also makes losing slightly more generous (it loks like you have a slight buffer after losing to come back).
+        // Also makes losing slightly more generous (it looks like you have a slight buffer after losing to come back).
         // However because of that I need to clamp the value to not be less than 0, or negative scale would look weird.
         float scale = Mathf.Max(catchProgress / catchLimit - 0.04f, 0.0f); 
         circleProgress.localScale = new Vector2(scale, scale);
