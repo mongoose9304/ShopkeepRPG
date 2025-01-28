@@ -41,8 +41,6 @@ public class TrapChestStateMachine {
 
 
 public class PatrolRotateState : MonoBehaviour, IState {
-
-    TrapChestStateMachine trapChestStateMachine;
     //Ray casting
     Vector3 RayOrigin;
     Vector3 RayDirection;
@@ -67,10 +65,12 @@ public class PatrolRotateState : MonoBehaviour, IState {
     private float[] angles = { 0.0f, 45.0f, 90.0f, 135.0f, 180.0f };
     private int index = 0;
 
-    float viewDistance = 5.0f;
+
+    //information needed for the field of view 
+    [SerializeField] float viewDistance = 5.8f;
     private float viewAngle = 90.0f;
     private int amountOfRays = 10;
-    bool playerInViewRange = false;
+
     public void Enter() {
         Debug.Log("Entering Patrol State");
         RayOrigin = transform.position;
@@ -83,19 +83,14 @@ public class PatrolRotateState : MonoBehaviour, IState {
         Debug.Log(currentAngle);
 
     }
-    public void ExecuteState()
-    {
-        Rotate();
-        CastRays();
-
-        if (PlayerFound())
-        {
-            trapChestStateMachine.ChangeState(GetComponent<ChasePlayerState>());
-        }
+    public void ExecuteState() {
+       Rotate();
+       CastRays();
+      // OnDrawGizmos();
     }
     public void Exit() {
 
-        Debug.Log("Exiting Patrol State");
+        Debug.Log("Entering Patrol State");
     }
 
 
@@ -119,13 +114,13 @@ public class PatrolRotateState : MonoBehaviour, IState {
         {
             rotationTick = rotationSpeed * Time.deltaTime;
 
-            
+            Debug.Log(currentAngle);
             float angle = Mathf.MoveTowards(currentAngle, targetAngle, rotationTick);
 
             currentAngle = angle;
-  
+            //Debug.Log(String::Format()angle);
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-          
+            //transform.rotation =  new Vector3(0.0f, currentAngle, 0.0f);
 
             if (Mathf.Approximately(currentAngle, targetAngle))
             {
@@ -133,8 +128,6 @@ public class PatrolRotateState : MonoBehaviour, IState {
             }
         }
     }
-
-
     void CastRays() {
         RayOrigin = transform.position;
         //this is to ganerate the cone- like field of view. 
@@ -148,60 +141,19 @@ public class PatrolRotateState : MonoBehaviour, IState {
             float newAngle = startingPoint + angleBetweenRays * i;
             RayDirection = Quaternion.Euler(0, newAngle, 0) * transform.forward;
            
-            Debug.DrawRay(transform.position, RayDirection * viewDistance , Color.red);
+            Debug.DrawRay(transform.position, RayDirection, Color.red);
 
             if (Physics.Raycast(RayOrigin, RayDirection, out RaycastHit hit, viewDistance))
             {
                 if (hit.collider.CompareTag("Player"))
                 {
                     Debug.Log("Player detected");
-                    playerInViewRange = true;
                 }
 
             }
+
+
         }
-    }
-
-    bool PlayerFound() { return playerInViewRange; }
-}
-
-
-public class ChasePlayerState : MonoBehaviour, IState {
-
-    float chaseTime = 10.0f;
-    float timer = 0.0f;
-    float chaseSpeed = 5.0f;
-
-    Transform playerTransform;
-    public void Enter() {
-        Debug.Log("Entering Chase State");
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        playerTransform = playerObject.transform;
-    }
-
-    public void Exit()
-    {
-        Debug.Log("Exiting Chase State");
-    }
-
-    public void ExecuteState() {
-        StartChase();
-    }
-
-
-    public void StartChase() { 
-        timer += Time.deltaTime;
-        Vector3 direction = (playerTransform.position - transform.position).normalized;
-        transform.position += direction * chaseSpeed * Time.deltaTime;
-        Quaternion facePlayer = Quaternion.LookRotation(direction);
-        transform.rotation = facePlayer;
-
-
-        if (timer >= chaseTime) {
-            Debug.Log("Chase Ended");
-           //give up/fade mechanic;
-        }
-        
     }
 }
 
@@ -210,13 +162,10 @@ public class TrapChestState : MonoBehaviour
 {
     TrapChestStateMachine trapChestStateMachine;
     public PatrolRotateState patrolState;
-    public ChasePlayerState chasePlayerState;
-
     void Start()
     {
-        trapChestStateMachine = new TrapChestStateMachine();
+        trapChestStateMachine = new TrapChestStateMachine(patrolState);
         patrolState = gameObject.AddComponent<PatrolRotateState>();
-        chasePlayerState = gameObject.AddComponent<ChasePlayerState>();
         trapChestStateMachine.ChangeState(patrolState);
     }
 
@@ -225,7 +174,7 @@ public class TrapChestState : MonoBehaviour
     {
 
         trapChestStateMachine.Update();
-  
+
     }
 
 
