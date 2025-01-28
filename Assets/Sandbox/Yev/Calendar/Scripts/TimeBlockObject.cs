@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TimeBlock", menuName = "ScriptableObjects/TimeBlock")]
+[CreateAssetMenu(fileName = "TimeBlock", menuName = "Calendar/TimeBlock")]
 [Serializable]
 public class TimeBlockObject : ScriptableObject
 {

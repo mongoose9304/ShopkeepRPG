@@ -20,8 +20,6 @@ public class TimeManager : MonoBehaviour
     public Week currentWeek = Week.First;
     public Season currentSeason = Season.Spring;
 
-    public Dictionary<CalendarEvent, Action> calendarEvents = new Dictionary<CalendarEvent, Action>();
-
     public static TimeManager instance;
 
     void Awake()
@@ -35,41 +33,11 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        /*
-        To add a special event to the calendar do this:
-
-        specialEvents[new SpecialEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
-        {
-            Debug.Log("Test Event");
-            ...
-        }; 
-
-        Alternatively:
-
-        specialEvents[new TimeEventKey(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = YourFunctionHere;
-         */
-
-        calendarEvents[new CalendarEvent(TimePeriod.Noon, Day.Monday, Week.First, Season.Spring)] = () =>
-        {
-            Debug.Log("Event 1 Test");
-        };
-
-        calendarEvents[new CalendarEvent(TimePeriod.Evening, Day.Friday, Week.First, Season.Spring)] = TestEvent;
     }
 
     private void TestEvent()
     {
         Debug.Log("Event 2 Test");
-    }
-
-    private void CheckIfSpecialEvent()
-    {
-        CalendarEvent currentTime = new CalendarEvent(currentTimeBlock, currentDay, currentWeek, currentSeason);
-        if (calendarEvents.TryGetValue(currentTime, out Action calendarEvent))
-        {
-            calendarEvent.Invoke();
-        }
     }
 
     private void ProgressTimeByAmount(int amount){
@@ -133,29 +101,34 @@ public class TimeManager : MonoBehaviour
         currentTimeBlock = TimePeriod.Morning;
     }
 
-    //public functions
-
     public void PassTime() 
     {
         ProgressTimeByAmount(1);
-        CheckIfSpecialEvent();
     }
 
     public NPCBehavior GetBehavior(string id) 
     {
-        //foreach (var calEvent in calendarConfig.events)
-        //{
-        //    if (calEvent.timePeriod == currentTimeBlock && calEvent.day == currentDay && calEvent.week == currentWeek && calEvent.season == currentSeason)
-        //    {
-        //        foreach (var npc in calEvent.NPC)
-        //        {
-        //            if (npc.ID == id)
-        //            {
-        //                return npc; 
-        //            }
-        //        }
-        //    }
-        //}
+        foreach(var specialEvent in calendarConfig.SpecialEvents) 
+        {
+            if(specialEvent.timePeriod == currentTimeBlock && specialEvent.day == currentDay && specialEvent.week == currentWeek && specialEvent.season == currentSeason) 
+            {
+                foreach (var npc in specialEvent.NPC)
+                {
+                    if (npc.ID == id)
+                    {
+                        return npc;
+                    }
+                }
+            }
+        }
+
+        foreach (var npc in calendarConfig.Seasons[(int)currentSeason].Days[(int)currentWeek].TimeBlocks[(int)currentDay].NPC)
+        {
+            if(npc.ID == id) 
+            {
+                return npc;
+            }
+        }
         return null;
     }
 
