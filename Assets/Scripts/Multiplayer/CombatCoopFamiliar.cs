@@ -281,17 +281,15 @@ public class CombatCoopFamiliar : MonoBehaviour
     {
         if (combatControls.damageImmune)
             return;
-        float newDamage = damage_;
+        float newDamage = 0;
         if (isMystical)
         {
-            newDamage -= MysticalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, MysticalDef);
         }
         else
         {
-            newDamage -= PhysicalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, PhysicalDef);
         }
-        if (newDamage < damage_ * 0.05f)
-            newDamage = damage_ * 0.05f;
         currentHealth -= newDamage;
 
         if (currentHealth <= 0)

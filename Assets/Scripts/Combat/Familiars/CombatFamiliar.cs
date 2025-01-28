@@ -149,14 +149,12 @@ public class CombatFamiliar : MonoBehaviour
         float newDamage = damage_;
         if (isMystical)
         {
-            newDamage -= MysticalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, MysticalDef);
         }
         else
         {
-            newDamage -= PhysicalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, PhysicalDef);
         }
-        if (newDamage < damage_ * 0.05f)
-            newDamage = damage_ * 0.05f;
         currentHealth -= newDamage;
         if (currentHealth <= 0)
         {
