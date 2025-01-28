@@ -146,7 +146,7 @@ public class FishBehaviours
             if (moveDelay <= 0.0f)
             {
                 // Choose between a normal move, or a chase move
-                if (Random.value <= 0.2f && catchProgress > 0.8f)
+                if (Random.value <= 0.2f)
                 {
                     moveType = MoveType.Chase;
                 }
@@ -205,24 +205,6 @@ public class FishBehaviours
                 return Vector2.Lerp(currentPos, playerPosition, 0.01f);
             }
         }
-
-        // Reconstruct the position vector using current angle and distance
-        return new Vector2(Mathf.Cos(currentAngleDegrees * Mathf.Deg2Rad), Mathf.Sin(currentAngleDegrees * Mathf.Deg2Rad)) * currentDistance;
-    }
-
-    // Carp are tricky fish, once they know they're on a fishing line they'll
-    // try to wrap it around rocks or logs to get away. This fish will move in long
-    // arcs, 70-90% of the way from the center to try and throw you off.
-    public static Vector2 Trout(Vector2 currentPos)
-    {
-        Debug.Log("Trout");
-
-        // Relative angle to right
-        float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
-        float currentDistance = currentPos.magnitude;
-
-        currentAngleDegrees += 0.5f;
-        currentDistance = Mathf.Abs(Mathf.Sin(Time.fixedTime * 0.3f)) * 190.0f + 20.0f;
 
         // Reconstruct the position vector using current angle and distance
         return new Vector2(Mathf.Cos(currentAngleDegrees * Mathf.Deg2Rad), Mathf.Sin(currentAngleDegrees * Mathf.Deg2Rad)) * currentDistance;

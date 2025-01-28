@@ -328,7 +328,7 @@ public class BasicEnemy : MonoBehaviour
     /// <summary>
     /// Attack cooldowns
     /// </summary>
-    public void WaitingToAttack()
+    public virtual void WaitingToAttack()
     {
         
         currentAttackCooldown -= Time.deltaTime;

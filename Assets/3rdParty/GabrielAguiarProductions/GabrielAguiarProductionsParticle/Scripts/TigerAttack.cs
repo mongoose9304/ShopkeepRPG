@@ -17,7 +17,7 @@ public class TigerAttack : MonoBehaviour
     public float erodeRefreshRate = 0.01f;
     public float erodeAwayDelay = 1.25f;
     public List<SkinnedMeshRenderer> objectsToErode = new List<SkinnedMeshRenderer>();
-
+    public bool keepObject;
     private Rigidbody rb;
     private bool stopped;
 
@@ -39,7 +39,7 @@ public class TigerAttack : MonoBehaviour
 
         if (objectsToErode != null)
             StartCoroutine(ErodeObjects());
-
+        if(!keepObject)
         Destroy(gameObject, destroyDelay);
     }
 
@@ -81,6 +81,7 @@ public class TigerAttack : MonoBehaviour
         for (int i=0; i<objectsToDetach.Count; i++)
         {
             objectsToDetach[i].transform.parent = null;
+            if(keepObject)
             Destroy(objectsToDetach[i], objectsToDetachDelay);
         }
     }

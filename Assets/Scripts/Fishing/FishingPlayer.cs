@@ -50,10 +50,7 @@ public class FishingPlayer : MonoBehaviour
     private Vector3 castDirection;
 
     public bool canMove = true;
-    public bool shipMode = false;
     FishingMinigame menu = null;
-    public GameObject steeringWheel;
-    public GameObject ship;
 
     public void SetUpControls(PlayerInput myInput)
     {
@@ -112,15 +109,7 @@ public class FishingPlayer : MonoBehaviour
 
                 if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
                 {
-                    if (shipMode == false)
-                    {
-                        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                    }
-                    else
-                    {
-                        ship.transform.position += PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                    }
+                    transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
                 }
                 else
                     timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
@@ -203,18 +192,6 @@ public class FishingPlayer : MonoBehaviour
     {
         InteractHeld = true;
 
-        if (shipMode == false)
-        {
-            if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 5.0f)
-            {
-                GoShipMode();
-            }
-        }
-        else
-        {
-            shipMode = false;
-            canMove = true;
-        }
     }
     private void OnInteractReleased(InputAction.CallbackContext obj)
     {
@@ -329,6 +306,7 @@ public class FishingPlayer : MonoBehaviour
     }
     private Vector3 PreventGoingThroughWalls(Vector3 temp_)
     {
+
         var dir = -transform.up;
         newInput = temp_;
         // Up
@@ -388,11 +366,6 @@ public class FishingPlayer : MonoBehaviour
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
         interactableObjectLockOnObject.gameObject.SetActive(false);
-    }
-
-    public void GoShipMode()
-    {
-        shipMode = true;
     }
 
     public void InitiateMinigame(FishType behaviourType)
