@@ -102,6 +102,11 @@ public class CombatPlayerManager : MonoBehaviour
     {
         players[0].combatMovement.HealthPickup(healAmount);
     }
+    public void PlayerLifeSteal(float healAmount)
+    {
+        Debug.Log("Lifesteal +" + healAmount);
+        players[0].combatMovement.LifeStealHeal(healAmount);
+    }
     public void RestorePlayerMana(float healAmount)
     {
         players[0].combatMovement.ManaPickup(healAmount);

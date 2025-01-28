@@ -35,6 +35,7 @@ public class CombatPlayerMovement : MonoBehaviour
    [SerializeField] LayerMask wallMask;
    [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    private int physicalDashLevel;
     public CombatPlayerActions combatActions;
     //targeting and lock on
     [SerializeField] GameObject currentTarget;
@@ -444,6 +445,15 @@ public class CombatPlayerMovement : MonoBehaviour
             healthBar.UpdateBar01(currentHealth / maxHealth);
         
     }
+    public void LifeStealHeal(float amount_)
+    {
+        currentHealth += amount_;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetBar01(currentHealth / maxHealth);
+    }
     public void ManaPickup(float amount_)
     {
 
@@ -598,7 +608,7 @@ public class CombatPlayerMovement : MonoBehaviour
         ManaRegenPercent = 0;
         combatActions.attackSpeedMod = 1;
         combatActions.fireRateMod = 1;
-        combatActions.lifeStealPercent = 0;
+        combatActions.basicMeleelifeStealPercent = 0;
     }
     public void CalculateAllModifiers()
     {
@@ -738,8 +748,8 @@ public class CombatPlayerMovement : MonoBehaviour
             case UniqueEquipEffect.basicRangedSpeed:
                 combatActions.fireRateMod += mod_.amount;
                 break;
-            case UniqueEquipEffect.LifeSteal:
-                combatActions.lifeStealPercent += mod_.amount;
+            case UniqueEquipEffect.basicMeleeLifeSteal:
+                combatActions.basicMeleelifeStealPercent += mod_.amount;
                 break;
         }
     }
@@ -810,11 +820,17 @@ public class CombatPlayerMovement : MonoBehaviour
         swordPDamage.amount = 1;
         swordPDamage.uniqueEffect = UniqueEquipEffect.None;
 
+        EquipModifier swordNegativeMDamage = new EquipModifier();
+        swordNegativeMDamage.isMultiplicative = true;
+        swordNegativeMDamage.modName = "swordMysticalDamageReduction";
+        swordNegativeMDamage.amount = 1;
+        swordNegativeMDamage.uniqueEffect = UniqueEquipEffect.None;
+
         EquipModifier swordLifeSteal = new EquipModifier();
-        swordPDamage.isMultiplicative = false;
-        swordPDamage.modName = "swordLifeSteal";
-        swordPDamage.amount = 0;
-        swordPDamage.uniqueEffect = UniqueEquipEffect.LifeSteal;
+        swordLifeSteal.isMultiplicative = false;
+        swordLifeSteal.modName = "swordLifeSteal";
+        swordLifeSteal.amount = 0;
+        swordLifeSteal.uniqueEffect = UniqueEquipEffect.basicMeleeLifeSteal;
 
         //Dragon
         EquipModifier dragonSpeed = new EquipModifier();
@@ -915,7 +931,43 @@ public class CombatPlayerMovement : MonoBehaviour
                     }
                     break;
                 case "Sword":
-
+                    physicalDashLevel = 0;
+                    switch (tal_.levelInvested)
+                    {
+                        case 0:
+                            swordSpeed.amount += 0.2f;
+                            break;
+                        case 1:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 2:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 3:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 4:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                        case 5:
+                            swordSpeed.amount += 0.5f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 2;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                    }
                     for (int i = 0; i < tal_.levelInvested; i++)
                     {
                         if (i < 5)

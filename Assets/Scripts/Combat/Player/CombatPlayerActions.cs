@@ -37,7 +37,7 @@ public class CombatPlayerActions : MonoBehaviour
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
     public float attackSpeedMod = 1;
-    public float lifeStealPercent = 0;
+    public float basicMeleelifeStealPercent = 0;
     public bool rangedPierce;
 
     [Header("Familiar")]
@@ -363,7 +363,7 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void SetStats(float basicMeleeDamage,float basicRangedDamage_,Element rangedE_,Element meleeE_)
     {
-        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,lifeStealPercent);
+        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,basicMeleelifeStealPercent);
         basicRangedDamage = basicRangedDamage_;
         basicRangedElement = rangedE_;
     }
