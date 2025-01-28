@@ -5,6 +5,8 @@ using UnityEngine;
 public class DragonEnemy : BasicEnemy
 {
     public GameObject flamethrower;
+    public GameObject flyFlamethrower;
+    public GameObject flyFlameDamageCollider;
     bool flameThrowerActive;
     public Animator anim;
     public float flameTurnSpeed;
@@ -21,11 +23,29 @@ public class DragonEnemy : BasicEnemy
         flamethrower.gameObject.SetActive(true);
         agent.isStopped = true;
     }
+    public void FlyFlameBreathStart()
+    {
+        anim.SetBool("FlyFlameAttack", true);
+        Invoke("SpawnSlyingFlamethrower", 1.0f);
+        flameThrowerDurationCurrent = flameThrowerDurationMax;
+        agent.isStopped = true;
+    }
+    private void SpawnSlyingFlamethrower()
+    {
+        flyFlameDamageCollider.GetComponent<EnemyDamageColliderOnStay>().damage = damage;
+        flyFlameDamageCollider.GetComponent<EnemyDamageColliderOnStay>().myTeam = myTeamUser.myTeam;
+        flameThrowerActive = true;
+        flyFlamethrower.gameObject.SetActive(true);
+        flyFlameDamageCollider.gameObject.SetActive(true);
+    }
     public void FlameBreathEnd()
     {
         anim.SetBool("FlameAttack", false);
+        anim.SetBool("FlyFlameAttack", false);
         flameThrowerActive = false;
         flamethrower.gameObject.SetActive(false);
+        flyFlamethrower.gameObject.SetActive(false);
+        flyFlameDamageCollider.gameObject.SetActive(false);
         agent.isStopped = false;
     }
     protected override void OnEnable()
@@ -71,8 +91,11 @@ public class DragonEnemy : BasicEnemy
     public override void Attack()
     {
         if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
+        {
+            FlameBreathStart();
             return;
-        FlameBreathStart();
+        }
+        FlyFlameBreathStart();
     }
 
 }

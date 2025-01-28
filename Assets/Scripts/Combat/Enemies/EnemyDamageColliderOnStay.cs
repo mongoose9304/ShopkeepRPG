@@ -6,12 +6,20 @@ public class EnemyDamageColliderOnStay : EnemyDamageCollider
 {
     public float MaxTimeInterval;
     float currentTimeInterval;
+    public float onEnableDamageDelay;
+    float onEnableDamageDelayCurrent;
+    private void OnEnable()
+    {
+        onEnableDamageDelayCurrent = onEnableDamageDelay;
+    }
     protected override void OnTriggerEnter(Collider other)
     {
 
     }
     protected virtual void OnTriggerStay(Collider other)
     {
+        if (onEnableDamageDelayCurrent > 0)
+            return;
          if (other.gameObject.tag == "Player"|| other.gameObject.tag == "PlayerFamiliar"|| other.gameObject.tag == "Familiar" || other.gameObject.tag == "Enemy" || other.gameObject.tag == "Follower")
         {
             currentTimeInterval -= Time.deltaTime;
