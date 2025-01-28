@@ -839,23 +839,34 @@ public class CombatPlayerMovement : MonoBehaviour
                     mySkeltonMaster.maxMageFollowers = 0;
                     mySkeltonMaster.maxFollowers = 0;
                     mySkeltonMaster.maxSuperFollowers = 0;
-                    extraLife = false;
-                    for(int i=0;i<tal_.levelInvested;i++)
+                    switch(tal_.levelInvested)
                     {
-                        if(i<5)
-                        {
+                        case 0:
+                            break;
+                        case 1:
                             mySkeltonMaster.enabled = true;
                             mySkeltonMaster.maxFollowers += 1;
-                        }
-                        else if (i < 10)
-                        {
+                            break;
+                        case 2:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            break;
+                        case 3:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
                             mySkeltonMaster.maxMageFollowers += 1;
-                        }
-                        else if (i == 10)
-                        {
+                            break;
+                        case 4:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
+                            break;
+                        case 5:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
                             mySkeltonMaster.maxSuperFollowers += 1;
-                            extraLife = true;
-                        }
+                            break;
                     }
                     mySkeltonMaster.Reset();
                     break;
