@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// The 2nd player will ocntrol the familiar of the player
 /// </summary>
-public class CombatCoopFamiliar : MonoBehaviour
+public class CombatCoopFamiliar : CombatControllerInterface 
 {
         [Header("References")]
     [Tooltip("The saved stats of this player")]
@@ -47,7 +47,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     [Tooltip("currently unused, would be for manual lock ons")]
     [SerializeField] bool hardLockOn;
     
-        [Header("Dash")]
+    [Header("Dash")]
     [Tooltip("how long before the player can move after falling off a platform")]
     public float timeBeforePlayerCanMoveAfterFallingOffPlatform;
     [Tooltip("how far the player can dash")]
