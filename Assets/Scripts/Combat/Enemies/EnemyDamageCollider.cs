@@ -8,7 +8,7 @@ public class EnemyDamageCollider : MonoBehaviour
     public Element myElement;
     public bool isMysticalDamage;
     public string myTeam;
-    protected virtual void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
             if (collision.gameObject.tag == "Player")
             {

@@ -86,8 +86,6 @@ public class FamiliarEquiptUI : MonoBehaviour
     public void ResetFamiliarStats()
     {
         famStatBlock.ResetStats();
-        if (PlayerInventory.instance)
-            PlayerInventory.instance.SaveFamiliarStats();
         if (combatFam)
             combatFam.CalculateAllModifiers();
         if (combatCoopFam)

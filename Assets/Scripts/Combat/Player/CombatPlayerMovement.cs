@@ -68,9 +68,6 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] GameObject skullHead;
     public bool extraLife;
     bool hasUsedExtraLife;
-    //DashAttacks
-    public float dashDamageModifier;
-    public float dashDamageBase;
 
 
     public float maxManaRechargeDelay;
@@ -100,12 +97,6 @@ public class CombatPlayerMovement : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
-    [Header("References")]
-    //Physical Dash Attack
-    [Tooltip("REFERENCE to the AOE splash attacks when the player dashes")]
-    public MMMiniObjectPooler physicalDashAttackPool;
-    public Transform physicalDashAttackSpawn;
-
     //used to take control of object when player 1 joins
     public void SetUpControls(PlayerInput myInput)
     {
@@ -213,10 +204,7 @@ public class CombatPlayerMovement : MonoBehaviour
                 if (dashTime <= 0)
                 {
                     isDashing = false;
-                    if(GroundCheck())
-                    {
-                        DashPhysicalAttack();
-                    }
+                    GroundCheck();
                     return;
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
@@ -242,13 +230,6 @@ public class CombatPlayerMovement : MonoBehaviour
             dashCoolDown = maxdashCoolDown;
             DashAction();
         }
-    }
-    private void DashPhysicalAttack()
-    {
-        GameObject obj = physicalDashAttackPool.GetPooledGameObject();
-        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase;
-        obj.transform.position = physicalDashAttackSpawn.position;
-        obj.SetActive(true);
     }
     private void OnPause(InputAction.CallbackContext obj)
     {
@@ -346,7 +327,7 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
     }
-    private bool GroundCheck()
+    private void GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10,groundMask))
         {
@@ -354,9 +335,7 @@ public class CombatPlayerMovement : MonoBehaviour
             transform.position = dashStartPos;
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
-            return false;
         }
-        return true;
     }
 
     void CheckForSoftLockOn()

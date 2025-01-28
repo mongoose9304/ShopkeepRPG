@@ -15,7 +15,7 @@ public class BasicTrap : MonoBehaviour
     [Tooltip("Level of the trap based on what dungeon you are in")]
     public float level;
     [Tooltip("REFERENCE to all the damage colliders")]
-    [SerializeField]protected TrapDamageCollider[] damageColliders;
+    [SerializeField] TrapDamageCollider[] damageColliders;
 
     private void Start()
     {

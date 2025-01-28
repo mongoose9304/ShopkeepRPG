@@ -268,17 +268,17 @@ public class PlayerInventory : MonoBehaviour
             return;
         if (PlayerPrefs.GetInt("FamiliarLevel", 0) == 0)
             return;
-        familiarStats.Level = PlayerPrefs.GetInt("FamiliarLevel", 0);
-        familiarStats.Vitality = PlayerPrefs.GetInt("FamiliarVitality", 0);
-        familiarStats.Soul = PlayerPrefs.GetInt("FamiliarSoul", 0);
-        familiarStats.PhysicalProwess = PlayerPrefs.GetInt("FamiliarPhysicalProwess", 0);
-        familiarStats.MysticalProwess = PlayerPrefs.GetInt("FamiliarMysticalProwess", 0);
-        familiarStats.PhysicalDefense = PlayerPrefs.GetInt("FamiliarPhysicalDefense", 0);
-        familiarStats.MysticalDefense = PlayerPrefs.GetInt("FamiliarMysticalDefense", 0);
-        familiarStats.Luck = PlayerPrefs.GetInt("FamiliarLuck", 0);
-        familiarStats.savedExp = PlayerPrefs.GetInt("FamiliarSavedExp", 0);
-        familiarStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 0);
-        familiarStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 0);
+        playerStats.Level = PlayerPrefs.GetInt("FamiliarLevel", 0);
+        playerStats.Vitality = PlayerPrefs.GetInt("FamiliarVitality", 0);
+        playerStats.Soul = PlayerPrefs.GetInt("FamiliarSoul", 0);
+        playerStats.PhysicalProwess = PlayerPrefs.GetInt("FamiliarPhysicalProwess", 0);
+        playerStats.MysticalProwess = PlayerPrefs.GetInt("FamiliarMysticalProwess", 0);
+        playerStats.PhysicalDefense = PlayerPrefs.GetInt("FamiliarPhysicalDefense", 0);
+        playerStats.MysticalDefense = PlayerPrefs.GetInt("FamiliarMysticalDefense", 0);
+        playerStats.Luck = PlayerPrefs.GetInt("FamiliarLuck", 0);
+        playerStats.savedExp = PlayerPrefs.GetInt("FamiliarSavedExp", 0);
+        playerStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 0);
+        playerStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 0);
     }
     public void SaveFamiliarStats()
     {

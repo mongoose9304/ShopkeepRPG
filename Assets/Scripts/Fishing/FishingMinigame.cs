@@ -85,6 +85,9 @@ public class FishingMinigame : MonoBehaviour
             case FishType.Carp:
                 behaviour = FishBehaviours.Carp;
                 break;
+            case FishType.Trout:
+                behaviour = FishBehaviours.Trout;
+                break;
 
             default:
                 Debug.LogWarning("Trying to use the unfinished fish behaviour " + behaviorType + ".");
@@ -159,8 +162,8 @@ public class FishingMinigame : MonoBehaviour
         float fishDistance = directionToFish.magnitude;
         directionToFish.Normalize();
 
-        bobberPosition += directionToPlayer * playerDistance / 100.0f;
-        bobberPosition += directionToFish * fishDistance / 100.0f;
+        bobberPosition += directionToPlayer * playerDistance * 0.015f;
+        bobberPosition += directionToFish * fishDistance * 0.01f;
 
         // Check bobber distance to middle
         if (bobberPosition.magnitude <= winRadius)
