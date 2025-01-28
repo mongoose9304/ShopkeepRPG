@@ -7,19 +7,30 @@ public class DragonEnemy : BasicEnemy
     public GameObject flamethrower;
     bool flameThrowerActive;
     public Animator anim;
+    public float flameTurnSpeed;
+    public float flameThrowerDurationMax;
+    float flameThrowerDurationCurrent;
+    Vector3 lookAt;
     public void FlameBreathStart()
     {
-        anim.SetBool("FlameThrower",true);
+        anim.SetBool("FlameAttack", true);
+        flameThrowerDurationCurrent = flameThrowerDurationMax;
+        flamethrower.GetComponent<EnemyDamageColliderOnStay>().damage = damage;
+        flamethrower.GetComponent<EnemyDamageColliderOnStay>().myTeam = myTeamUser.myTeam;
         flameThrowerActive = true;
+        flamethrower.gameObject.SetActive(true);
+        agent.isStopped = true;
     }
     public void FlameBreathEnd()
     {
-        anim.SetBool("FlameThrower", false);
+        anim.SetBool("FlameAttack", false);
         flameThrowerActive = false;
+        flamethrower.gameObject.SetActive(false);
+        agent.isStopped = false;
     }
     protected override void OnEnable()
     {
-        anim.SetBool("FlameThrower", false);
+        anim.SetBool("FlameAttack", false);
         flameThrowerActive = false;
         base.OnEnable();
     }
@@ -36,11 +47,32 @@ public class DragonEnemy : BasicEnemy
             }
             WaitingToAttack();
             Move();
+            anim.SetFloat("WalkSpeed", agent.velocity.magnitude / agent.speed);
         }
         else
         {
-
+            flameThrowerDurationCurrent -= Time.deltaTime;
+            if(flameThrowerDurationCurrent<=0)
+            {
+                FlameBreathEnd();
+            }
+            if (target)
+            {
+                if (target.activeInHierarchy)
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), Time.deltaTime*flameTurnSpeed);
+                }
+            }
         }
     }
-    
+    /// <summary>
+    /// The enemy's basic attack
+    /// </summary>
+    public override void Attack()
+    {
+        if (Vector3.Distance(transform.position, target.transform.position) > attackDistance)
+            return;
+        FlameBreathStart();
+    }
+
 }
