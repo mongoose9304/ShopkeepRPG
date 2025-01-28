@@ -7,13 +7,11 @@ using UnityEngine.InputSystem;
 public class CombatPlayerActions : MonoBehaviour
 {
     public CombatPlayerMovement combatMovement;
-    
     [Header("BasicMelee")]
     [SerializeField] private float BasicMeleeCooldownMax;
     private float BasicMeleeCooldown = 0.0f;
     [SerializeField] private GameObject BasicMeleePivotObject;
     public BasicMeleeObject meleeObject;
-    
     [Header("BasicRanged")]
     [SerializeField] float basicRangedDamage;
     public Element basicRangedElement;
@@ -35,7 +33,6 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
-    
     [Header("Modifiers")]
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
@@ -50,7 +47,6 @@ public class CombatPlayerActions : MonoBehaviour
     public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
-
     [Header("Feel")]
     public MMProgressBar specialCoolDownBarA;
     public GameObject chargesUIBGA;
@@ -59,10 +55,8 @@ public class CombatPlayerActions : MonoBehaviour
     public GameObject chargesUIBGB;
     public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
-
     [Header("Audio")]
     public AudioClip basicRangedAudio;
-    
     [Header("Inputs")]
     private bool PlayerIsHoldingMelee;
     private bool PlayerIsHoldingRanged;
@@ -104,7 +98,7 @@ public class CombatPlayerActions : MonoBehaviour
             combatMovement.playerActionMap.FindAction("LTAction").canceled -= OnUltimateReleased;
         }
         }
-    private void Update()
+        private void Update()
     {
         if (TempPause.instance.isPaused)
             return;
@@ -335,7 +329,7 @@ public class CombatPlayerActions : MonoBehaviour
         }
         return null;
     }
-    public void FamiliarDeath(float respawnTime_)
+   public void FamiliarDeath(float respawnTime_)
     {
         familarRespawnTimer = respawnTime_;
     }

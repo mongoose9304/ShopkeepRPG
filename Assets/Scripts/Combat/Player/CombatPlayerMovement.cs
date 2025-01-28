@@ -4,7 +4,7 @@ using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 using UnityEngine.InputSystem;
-public class CombatPlayerMovement : CombatControllerInterface
+public class CombatPlayerMovement : MonoBehaviour
 {
     //FFYL stats
     [SerializeField] public bool isInSaveYourSoulMode;
@@ -93,7 +93,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
-
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -700,9 +699,6 @@ public class CombatPlayerMovement : CombatControllerInterface
                 case Stat.LUCK:
                     playerLuck = AddOrMultiply(mod_.isMultiplicative, playerLuck, mod_.amount);
                     break;
-                case Stat.SPECIAL:
-                    mod_.SpecialEffects.Invoke(this);
-                    break;
             }
         }
         switch (mod_.uniqueEffect)
@@ -761,7 +757,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     public void SkillTreeEffects()
     {
         //Create the empty mods first here , then in the for loops you set up the exact stats based on points invested 
-
         //Slime
         EquipModifier slimeIncreasedPDef = new EquipModifier();
         slimeIncreasedPDef.isMultiplicative = true;
@@ -818,58 +813,6 @@ public class CombatPlayerMovement : CombatControllerInterface
         {
             switch(tal_.ID)
             {
-                case "Malice":
-                    float totalDamageBonus = 0.0f;
-                    float totalAttackIntervalBonus = 0.0f;
-                    float totalRadiusBonus = 0.0f;
-                    bool blockProj = false;
-
-                    for(int i = 0; i < tal_.levelInvested; i++) {
-                        //Also create it for the familiar because it's easier here. Sorry
-                        //-Adriel
-                        if(i == 0) {
-                           
-                           //Has to be reset everytime
-                           //For the player
-                           curseAuraRef = CreateCurseAura();
-                           curseAuraRef.Init();
-
-                            //For the familiar
-                            combatActions.myCoopFamiliar.curseAuraRef = combatActions.myCoopFamiliar.CreateCurseAura();
-                            combatActions.myCoopFamiliar.curseAuraRef.Init();
-                            
-
-                            Debug.Log("Created the curse aura");
-                        }
-
-                        if(curseAuraRef == null) {
-                            continue;
-                        }
-
-                        if(i > 0 && i < 5) {
-                            totalDamageBonus += 8.0f;
-                           
-                        }
-
-                        if(i >= 5 && i < 10) {
-                            totalAttackIntervalBonus += 0.2f;
-                            totalRadiusBonus += 0.6f;
-
-                        }
-
-                        if(i == 10) {
-                            blockProj = true;
-                        }
-                    }
-
-                    if (curseAuraRef == null) { break; }
-                    curseAuraRef.damageBonus = totalDamageBonus;
-                    curseAuraRef.attackIntervalBonus = totalAttackIntervalBonus;
-                    curseAuraRef.radiusBonus = totalRadiusBonus;
-                    curseAuraRef.blockProjectiles = blockProj;
-                    combatActions.myCoopFamiliar.curseAuraRef.SetAuraProperties(curseAuraRef);
-
-                    break;
                 case "Necromancer":
                     mySkeltonMaster.enabled = false;
                     mySkeltonMaster.maxMageFollowers = 0;
@@ -958,6 +901,8 @@ public class CombatPlayerMovement : CombatControllerInterface
                     }
                     break;
 
+
+
             }
         }
         //add the mods to players and fams here
@@ -977,13 +922,13 @@ public class CombatPlayerMovement : CombatControllerInterface
         combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
-
         //Sword mods
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
         combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
         AddExternalMod(swordLifeSteal);
+
 
         combatActions.myFamiliar.CalculateAllModifiers();
         combatActions.myCoopFamiliar.CalculateAllModifiers();

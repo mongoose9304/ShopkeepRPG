@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum EquipType
 {
@@ -9,11 +8,11 @@ public enum EquipType
 };
 public enum Stat
 {
-    HP,SP,PATK,PDEF,MATK,MDEF,LUCK, SPECIAL
+    HP,SP,PATK,PDEF,MATK,MDEF,LUCK
 };
 public enum UniqueEquipEffect
 {
-    None, LifeSteal,SoulSteal,Thorns,HealthRegen,ManaRegen,basicRangedSpeed,basicMeleeSpeed, projectileSpeedIncreae, projectileRadiusIncrease, projectileSpecial
+    None, LifeSteal,SoulSteal,Thorns,HealthRegen,ManaRegen,basicRangedSpeed,basicMeleeSpeed
 };
 [System.Serializable]
 public struct EquipModifier
@@ -23,7 +22,7 @@ public struct EquipModifier
     public Stat affectedStat;
     public float amount;
     public UniqueEquipEffect uniqueEffect;
-    public UnityEvent<CombatControllerInterface> SpecialEffects;
+
 
 };
 /// <summary>
