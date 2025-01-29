@@ -19,7 +19,10 @@ public class EnemyDamageColliderOnStay : EnemyDamageCollider
     protected virtual void OnTriggerStay(Collider other)
     {
         if (onEnableDamageDelayCurrent > 0)
+        {
+            onEnableDamageDelay -= Time.deltaTime;
             return;
+        }
          if (other.gameObject.tag == "Player"|| other.gameObject.tag == "PlayerFamiliar"|| other.gameObject.tag == "Familiar" || other.gameObject.tag == "Enemy" || other.gameObject.tag == "Follower")
         {
             currentTimeInterval -= Time.deltaTime;
@@ -45,7 +48,7 @@ public class EnemyDamageColliderOnStay : EnemyDamageCollider
         else if (other.gameObject.tag == "Familiar")
         {
 
-            other.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            other.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, myElement, 0, this.gameObject, isMysticalDamage);
             currentTimeInterval = MaxTimeInterval;
 
         }
@@ -68,7 +71,7 @@ public class EnemyDamageColliderOnStay : EnemyDamageCollider
                     return;
 
             }
-            other.gameObject.GetComponent<BasicFollower>().TakeDamage(damage, 0, myElement, 0, this.gameObject);
+            other.gameObject.GetComponent<BasicFollower>().TakeDamage(damage, 0, myElement, 0, this.gameObject,isMysticalDamage);
             currentTimeInterval = MaxTimeInterval;
         }
     }

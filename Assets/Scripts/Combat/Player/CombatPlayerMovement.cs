@@ -216,7 +216,7 @@ public class CombatPlayerMovement : MonoBehaviour
                     isDashing = false;
                     if(GroundCheck())
                     {
-                        DashPhysicalAttack();
+                        //DashPhysicalAttack();
                     }
                     return;
                 }
@@ -412,7 +412,7 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
-        if(isInSaveYourSoulMode){ return; }
+        if(isInSaveYourSoulMode||isDashing){ return; }
         float newDamage = 0;
         if(isMystical)
         {
@@ -595,8 +595,8 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 5);
-        maxMana = (myStats.Soul * 5);
+        maxHealth = (myStats.Vitality * 10);
+        maxMana = (myStats.Soul * 10);
         PhysicalAtk = (myStats.PhysicalProwess);
         MysticalAtk = (myStats.MysticalProwess);
         PhysicalDef = (myStats.PhysicalDefense);
@@ -842,7 +842,6 @@ public class CombatPlayerMovement : MonoBehaviour
         dragonMDamage.modName = "dragonMysticalDamage";
         dragonMDamage.amount = 1;
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
-        combatActions.rangedPierce = false;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -924,7 +923,7 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                         else if (i == 10)
                         {
-                            combatActions.rangedPierce = true;
+                            
                         }
                     }
                     break;

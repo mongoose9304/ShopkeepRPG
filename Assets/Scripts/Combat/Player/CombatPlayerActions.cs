@@ -38,7 +38,6 @@ public class CombatPlayerActions : MonoBehaviour
     public float fireRateMod = 1;
     public float attackSpeedMod = 1;
     public float basicMeleelifeStealPercent = 0;
-    public bool rangedPierce;
 
     [Header("Familiar")]
     public bool coopPlayer;
@@ -236,7 +235,6 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = null;
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
-            tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;
             currentFireRate = fireRate;
             MMSoundManager.Instance.PlaySound(basicRangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
