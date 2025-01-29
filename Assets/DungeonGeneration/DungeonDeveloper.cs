@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Dungeons {
-    public class Dungeon : MonoBehaviour {
+    public class DungeonDeveloper : MonoBehaviour {
         [SerializeField]
         private DungeonLayout layout;
         [SerializeField]
