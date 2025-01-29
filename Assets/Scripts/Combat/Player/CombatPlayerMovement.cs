@@ -573,7 +573,7 @@ public class CombatPlayerMovement : MonoBehaviour
             return;
         }
       
-        currentMana += manaRechargeRate * Time.deltaTime;
+        currentMana += (manaRechargeRate * maxMana) * Time.deltaTime;
         if(ManaRegenPercent!=0)
         {
             currentMana += ManaRegenPercent*maxMana * Time.deltaTime;

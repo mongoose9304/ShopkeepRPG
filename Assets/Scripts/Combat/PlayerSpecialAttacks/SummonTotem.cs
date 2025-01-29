@@ -20,7 +20,7 @@ public class SummonTotem : PlayerSpecialAttack
     }
     public override void CalculateDamage(float PATK, float MATK)
     {
-        baseDamage = MATK * damageMulti;
+        baseDamage = (MATK * damageMulti);
         
     }
     private void Update()
