@@ -484,7 +484,7 @@ public class CombatCoopFamiliar : MonoBehaviour
     /// </summary>
     protected virtual void CalculateStats()
     {
-        maxHealth = (monsterStats.Vitality * 5);
+        maxHealth = (monsterStats.Vitality * 10);
         PhysicalAtk = (monsterStats.PhysicalProwess);
         MysticalAtk = (monsterStats.MysticalProwess);
         PhysicalDef = (monsterStats.PhysicalDefense);
