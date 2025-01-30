@@ -251,6 +251,9 @@ public class CombatPlayerActions : MonoBehaviour
             float projSize = 1 + projectileSizeMod;
             tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
 
+            //setting the special mod
+            tempObj.GetComponent<MagicMissile>().canRicochet = projectileSpecial;
+
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
             tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;

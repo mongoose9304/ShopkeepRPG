@@ -29,14 +29,18 @@ public class MagicMissile : PlayerDamageCollider
                 }
                 if (canPierceEnemies)
                     hAttack.target = null;
+
                 else
                     canRicochet = true;
+                    hAttack.homingType = HomingAttack.HomingType.smooth;
                     gameObject.SetActive(false);
             }
         }
     }
 
     void Ricochet() {
+        //Setting the homing to sharp 
+        hAttack.homingType = HomingAttack.HomingType.sharp;
         //Check radius
         float radius = 10.0f;
         RaycastHit[] hit = Physics.SphereCastAll(transform.position, radius, Vector3.up);

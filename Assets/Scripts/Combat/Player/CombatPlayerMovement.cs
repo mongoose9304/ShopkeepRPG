@@ -751,6 +751,9 @@ public class CombatPlayerMovement : CombatControllerInterface
             case UniqueEquipEffect.projectileRadiusIncrease:
                 combatActions.projectileSizeMod += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileSpecial:
+                combatActions.projectileSpecial = (mod_.amount > 0) ? true : false;
+                break;
         }
     }
 
@@ -853,6 +856,12 @@ public class CombatPlayerMovement : CombatControllerInterface
         megidoProjSize.modName = "megidoProjSize";
         megidoProjSize.amount = 0;
         megidoProjSize.uniqueEffect = UniqueEquipEffect.projectileRadiusIncrease;
+
+        EquipModifier megidoProjSpecial = new EquipModifier();
+        megidoProjSpecial.isMultiplicative = false;
+        megidoProjSpecial.modName = "megidoProjSpecial";
+        megidoProjSpecial.amount = 1;
+        megidoProjSpecial.uniqueEffect = UniqueEquipEffect.projectileSpecial;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -1010,6 +1019,9 @@ public class CombatPlayerMovement : CombatControllerInterface
                         else if (i < 10) {
                             megidoProjSize.amount += 0.5f;
                         }
+                        else if(i == 10) {
+                            megidoProjSpecial.amount += 1.0f;
+                        }
 
                     }
                     break;
@@ -1046,6 +1058,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         //Megido
         AddExternalMod(megidoProjSpeed);
         AddExternalMod(megidoProjSize);
+        AddExternalMod(megidoProjSpecial);
 
     }
     public void UndeadExtraLife()
