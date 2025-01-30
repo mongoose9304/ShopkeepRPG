@@ -218,7 +218,7 @@ public class CombatPlayerActions : MonoBehaviour
         if (manaPotionCurrentCooldown > 0)
         {
             manaPotionCurrentCooldown -= Time.deltaTime;
-            manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionCurrentCooldown);
+            manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
         }
 
 
@@ -463,7 +463,7 @@ public class CombatPlayerActions : MonoBehaviour
             return;
         healthPotionCurrentCooldown = healthPotionMaxCooldown;
         combatMovement.HealthPickup(healthPotionPercent);
-        healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionCurrentCooldown);
+        healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
     }
     private void UseManaPotion()
     {
@@ -471,7 +471,7 @@ public class CombatPlayerActions : MonoBehaviour
             return;
         manaPotionCurrentCooldown = manaPotionMaxCooldown;
         combatMovement.ManaPickup(manaPotionPercent);
-        manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionCurrentCooldown);
+        manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
     }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)

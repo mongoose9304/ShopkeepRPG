@@ -19,6 +19,6 @@ public class PlayerFireballShooter : PlayerSpecialAttack
     }
     public override void CalculateDamage(float PATK, float MATK)
     {
-        baseDamage = (MATK * 10)+20;
+        baseDamage = (MATK * 8)+20;
     }
 }
