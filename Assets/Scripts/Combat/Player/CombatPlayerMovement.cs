@@ -72,6 +72,8 @@ public class CombatPlayerMovement : MonoBehaviour
     //DashAttacks
     public float dashDamageModifier;
     public float dashDamageBase;
+    public float physicalDashAttackCooldownMax;
+    float physicalDashAttackCooldownCurrent;
 
 
     public float maxManaRechargeDelay;
@@ -189,6 +191,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
+            if(physicalDashAttackCooldownCurrent>0)
+                physicalDashAttackCooldownCurrent -= Time.deltaTime;
 
 
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
@@ -216,7 +220,10 @@ public class CombatPlayerMovement : MonoBehaviour
                     isDashing = false;
                     if(GroundCheck())
                     {
-                        //DashPhysicalAttack();
+                        if (physicalDashLevel > 0)
+                        {
+                            DashPhysicalAttack();
+                        }
                     }
                     return;
                 }
@@ -238,6 +245,7 @@ public class CombatPlayerMovement : MonoBehaviour
             return;
         if (isInSaveYourSoulMode)
             return;
+
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
@@ -246,8 +254,19 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void DashPhysicalAttack()
     {
+        if(physicalDashAttackCooldownCurrent>0)
+        {
+            return;
+        }
+        physicalDashAttackCooldownCurrent = physicalDashAttackCooldownMax;
         GameObject obj = physicalDashAttackPool.GetPooledGameObject();
-        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase;
+        if(physicalDashLevel==1)
+        obj.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+        else if(physicalDashLevel == 2)
+        {
+            obj.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase*physicalDashLevel;
         obj.transform.position = physicalDashAttackSpawn.position;
         obj.SetActive(true);
     }
