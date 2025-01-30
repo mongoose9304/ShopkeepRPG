@@ -860,7 +860,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         EquipModifier megidoProjSpecial = new EquipModifier();
         megidoProjSpecial.isMultiplicative = false;
         megidoProjSpecial.modName = "megidoProjSpecial";
-        megidoProjSpecial.amount = 1;
+        megidoProjSpecial.amount = 0;
         megidoProjSpecial.uniqueEffect = UniqueEquipEffect.projectileSpecial;
 
         foreach (Talent tal_ in myTalents.talents)
