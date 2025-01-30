@@ -36,9 +36,12 @@ public class CombatPlayerActions : MonoBehaviour
     [Header("Potions")]
     public float healthPotionMaxCooldown;
     float healthPotionCurrentCooldown;
+    public float healthPotionPercent;
 
     public float manaPotionMaxCooldown;
     float manaPotionCurrentCooldown;
+    public float manaPotionPercent;
+
     [Header("Modifiers")]
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
@@ -459,12 +462,16 @@ public class CombatPlayerActions : MonoBehaviour
         if (healthPotionCurrentCooldown > 0)
             return;
         healthPotionCurrentCooldown = healthPotionMaxCooldown;
+        combatMovement.HealthPickup(healthPotionPercent);
+        healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionCurrentCooldown);
     }
     private void UseManaPotion()
     {
         if (manaPotionCurrentCooldown > 0)
             return;
         manaPotionCurrentCooldown = manaPotionMaxCooldown;
+        combatMovement.ManaPickup(manaPotionPercent);
+        manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionCurrentCooldown);
     }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)
