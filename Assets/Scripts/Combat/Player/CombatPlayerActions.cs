@@ -33,6 +33,12 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
+    [Header("Potions")]
+    public float healthPotionMaxCooldown;
+    float healthPotionCurrentCooldown;
+
+    public float manaPotionMaxCooldown;
+    float manaPotionCurrentCooldown;
     [Header("Modifiers")]
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
@@ -54,6 +60,8 @@ public class CombatPlayerActions : MonoBehaviour
     public GameObject chargesUIBGB;
     public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
+    public MMProgressBar healthPotionBar;
+    public MMProgressBar manaPotionBar;
     [Header("Audio")]
     public AudioClip basicRangedAudio;
     [Header("Inputs")]
@@ -80,6 +88,8 @@ public class CombatPlayerActions : MonoBehaviour
         combatMovement.playerActionMap.FindAction("RBAction").canceled += OnSpecial2Released;
         combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
         combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
+        combatMovement.playerActionMap.FindAction("DPadRight").performed += OnHealthPotionPressed;
+        combatMovement.playerActionMap.FindAction("DPadLeft").performed += OnManaPotionPressed;
     }
     private void OnDisable()
     {
@@ -95,6 +105,8 @@ public class CombatPlayerActions : MonoBehaviour
             combatMovement.playerActionMap.FindAction("RBAction").canceled -= OnSpecial2Released;
             combatMovement.playerActionMap.FindAction("LTAction").performed -= OnUltimatePressed;
             combatMovement.playerActionMap.FindAction("LTAction").canceled -= OnUltimateReleased;
+            combatMovement.playerActionMap.FindAction("DPadRight").performed -= OnHealthPotionPressed;
+            combatMovement.playerActionMap.FindAction("DPadLeft").performed -= OnManaPotionPressed;
         }
         }
         private void Update()
@@ -195,7 +207,20 @@ public class CombatPlayerActions : MonoBehaviour
         }
         ultimateCoolDownBar.SetBar01(myFamiliar.GetUltimateAttackCooldown());
      
-        if(familarRespawnTimer>0)
+        if(healthPotionCurrentCooldown>0)
+        {
+            healthPotionCurrentCooldown -= Time.deltaTime;
+            healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
+        }
+        if (manaPotionCurrentCooldown > 0)
+        {
+            manaPotionCurrentCooldown -= Time.deltaTime;
+            manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionCurrentCooldown);
+        }
+
+
+
+        if (familarRespawnTimer>0)
         {
          
             familarRespawnTimer -= Time.deltaTime;
@@ -429,6 +454,18 @@ public class CombatPlayerActions : MonoBehaviour
         //myFamiliar.gameObject.SetActive(true);
 
     }
+    private void UseHealthPotion()
+    {
+        if (healthPotionCurrentCooldown > 0)
+            return;
+        healthPotionCurrentCooldown = healthPotionMaxCooldown;
+    }
+    private void UseManaPotion()
+    {
+        if (manaPotionCurrentCooldown > 0)
+            return;
+        manaPotionCurrentCooldown = manaPotionMaxCooldown;
+    }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)
     {
@@ -470,5 +507,17 @@ public class CombatPlayerActions : MonoBehaviour
     private void OnUltimateReleased(InputAction.CallbackContext obj)
     {
         PlayerIsHoldingUlitmate = false;
+    }
+    private void OnHealthPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseHealthPotion();
+    }
+    private void OnManaPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseManaPotion();
     }
 }

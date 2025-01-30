@@ -1112,6 +1112,7 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         InteractHeld = false;
     }
+    
     public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);
