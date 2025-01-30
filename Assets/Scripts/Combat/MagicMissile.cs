@@ -1,10 +1,11 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicMissile : PlayerDamageCollider
 {
     HomingAttack hAttack;
+    public bool canRicochet = false;
     private void Awake()
     {
         hAttack = GetComponent<HomingAttack>();
@@ -21,10 +22,34 @@ public class MagicMissile : PlayerDamageCollider
                 {
                     CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);
                 }
+
+                if (canRicochet) {
+                    Ricochet();
+                    return;
+                }
                 if (canPierceEnemies)
                     hAttack.target = null;
                 else
+                    canRicochet = true;
                     gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void Ricochet() {
+        //Check radius
+        float radius = 10.0f;
+        RaycastHit[] hit = Physics.SphereCastAll(transform.position, radius, Vector3.up);
+        foreach(RaycastHit h in hit) {
+            if(h.collider.gameObject.tag == "Enemy") {
+                if(hAttack.target == h.collider.gameObject) {
+                    continue;
+                }
+                hAttack.target = h.collider.gameObject.transform;
+                Debug.Log(string.Format("Found new target: {0}", h.collider.name));
+                Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
+                canRicochet = false;
+                return;
             }
         }
     }

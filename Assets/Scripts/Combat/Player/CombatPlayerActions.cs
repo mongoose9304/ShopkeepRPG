@@ -42,6 +42,9 @@ public class CombatPlayerActions : MonoBehaviour
     public float attackSpeedMod = 1;
     public float lifeStealPercent = 0;
     public bool rangedPierce;
+    public float projectileSpeedMod;
+    public float projectileSizeMod;
+    public bool projectileSpecial = false;
 
     [Header("Familiar")]
     public bool coopPlayer;
@@ -240,6 +243,14 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = combatMovement.GetCurrentTarget().transform;
             else
                 tempObj.GetComponent<HomingAttack>().target = null;
+
+            //Setting the speed mod
+            tempObj.GetComponent<HomingAttack>().moveSpeedBonus = projectileSpeedMod;
+
+            //setting the size mod
+            float projSize = 1 + projectileSizeMod;
+            tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
+
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
             tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;

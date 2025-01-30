@@ -9,6 +9,7 @@ public class HomingAttack : MonoBehaviour
     [SerializeField] float lookSpeed;
     [SerializeField] bool isHoming;
     public Transform target;
+    public float moveSpeedBonus;
     Quaternion rotation;
     Vector3 direction;
     float currentLifeTime;
@@ -29,7 +30,7 @@ public class HomingAttack : MonoBehaviour
         }
        
 
-        transform.position += (transform.forward * Time.deltaTime * moveSpeed);
+        transform.position += (transform.forward * Time.deltaTime * (moveSpeed + moveSpeed * moveSpeedBonus));
         currentLifeTime -= Time.deltaTime;
         if(currentLifeTime<=0)
         {

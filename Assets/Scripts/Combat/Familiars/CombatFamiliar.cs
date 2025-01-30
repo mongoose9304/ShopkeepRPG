@@ -45,6 +45,12 @@ public class CombatFamiliar : MonoBehaviour
     public float LevelModifier;
     public float HealthRegenPercent;
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
+
+    //projectile modifiers
+    [HideInInspector] public float projectileSpeedMod;
+    [HideInInspector] public float projectileSizeMod;
+    [HideInInspector] public bool projectileSpecial = false;
+
     [Header("Feel")]
     [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;

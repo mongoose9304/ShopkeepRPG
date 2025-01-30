@@ -29,6 +29,13 @@ public class FamiliarCombatControls : MonoBehaviour
     public float ultimateDamage;
     [Tooltip("REFERENCE to the effects played when the player is hit")]
     [SerializeField]public MMF_Player hitEffects;
+
+    //projectile modifiers
+    [HideInInspector] public float projectileSpeedMod;
+    [HideInInspector] public float projectileSizeMod;
+    [HideInInspector] public bool projectileSpecial = false;
+
+
     /// <summary>
     /// Set up my controls to perform attack actions
     /// </summary>

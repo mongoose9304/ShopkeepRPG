@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 2529361715311810267}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1636785114731735080}
@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2509804, g: 0.2509804, b: 0.2509804, a: 1}
+  m_Color: {r: 0.7609963, g: 0, b: 0.8301887, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -92,7 +92,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsInvested: 0
-  ID: Slime
+  scrollTarget: 0
+  ID: Malice
   myTalentUI: {fileID: 0}
   mySlots:
   - {fileID: 6635742876923167999}
@@ -106,6 +107,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9167947430978257372}
     m_Modifications:
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6635742876923167999}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ShowText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TalentSlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2581838952990711826, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -186,9 +219,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TalentTree, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3485063659156825332, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Name
       value: PlayerTalentHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: title
+      value: Plaguebringer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: myTree
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: description
+      value: You now have a curse aura around you that damages enemies after a set
+        interval. Increase damage for every point
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -219,6 +293,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9167947430978257372}
     m_Modifications:
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6137200183581979303}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ShowText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TalentSlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2581838952990711826, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -299,9 +405,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TalentTree, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3485063659156825332, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Name
       value: PlayerTalentHolder (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: title
+      value: Plaguebringer+2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: myTree
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: description
+      value: Your curse aura now block projectiles
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -332,6 +478,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9167947430978257372}
     m_Modifications:
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2211938713032737750}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ShowText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TalentSlot, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2526507332847553179, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: selectEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2581838952990711826, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -412,9 +590,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TalentTree, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3485063659156825332, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Name
       value: PlayerTalentHolder (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: title
+      value: Plaguebringer+1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: myTree
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: description
+      value: Your curse aura's radius and speed is increased
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

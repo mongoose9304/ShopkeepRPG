@@ -554,6 +554,12 @@ public class CombatCoopFamiliar : CombatControllerInterface
             case UniqueEquipEffect.HealthRegen:
                 HealthRegenPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileSpeedIncrease:
+                combatControls.projectileSpeedMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.projectileRadiusIncrease:
+                combatControls.projectileSizeMod += mod_.amount;
+                break;
         }
     }
     /// <summary>
