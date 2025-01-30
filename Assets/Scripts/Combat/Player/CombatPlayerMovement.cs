@@ -1022,11 +1022,22 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
+
         //Sword mods
+        combatActions.myFamiliar.AddExternalMod(swordSpeed);
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myFamiliar.AddExternalMod(swordLifeSteal);
+
+        combatActions.myCoopFamiliar.AddExternalMod(swordSpeed);
         combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordLifeSteal);
+        combatActions.myCoopFamiliar.physicalDashLevel = physicalDashLevel;
+
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
+        AddExternalMod(swordNegativeMDamage);
         AddExternalMod(swordLifeSteal);
 
 

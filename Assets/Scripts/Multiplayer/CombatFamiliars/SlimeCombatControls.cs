@@ -155,6 +155,10 @@ public class SlimeCombatControls : FamiliarCombatControls
             {
                 //add real damage later
                 hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(meleeDamage, 0.5f, Element.Neutral, 0, this.gameObject,"Melee");
+                if (basicMeleelifeStealPercent > 0)
+                {
+                    CombatPlayerManager.instance.FamiliarLifeSteal(meleeDamage * basicMeleelifeStealPercent);
+                }
             }
         }
         basicAttackSystem.Play();
@@ -255,9 +259,9 @@ public class SlimeCombatControls : FamiliarCombatControls
         if(slamCooldown>0)
         slamCooldown -= Time.deltaTime;
         if(meleeCooldown>0)
-        meleeCooldown -= Time.deltaTime;
+        meleeCooldown -= Time.deltaTime*attackSpeedMod;
         if(rangedCooldown>0)
-        rangedCooldown -= Time.deltaTime;
+        rangedCooldown -= Time.deltaTime*fireRateMod;
         if (ultimateCooldown > 0)
             ultimateCooldown -= Time.deltaTime;
         if (whirlwindCooldown > 0)

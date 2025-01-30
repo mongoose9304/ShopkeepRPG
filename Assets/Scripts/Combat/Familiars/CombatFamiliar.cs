@@ -45,6 +45,10 @@ public class CombatFamiliar : MonoBehaviour
     public float LevelModifier;
     public float HealthRegenPercent;
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
+    [Header("Modifiers")]
+    public float fireRateMod = 1;
+    public float attackSpeedMod = 1;
+    public float basicMeleelifeStealPercent = 0;
     [Header("Feel")]
     [SerializeField] MMF_Player textSpawner;
     [SerializeField] MMF_Player hitEffects;
@@ -229,6 +233,9 @@ public class CombatFamiliar : MonoBehaviour
         PhysicalDef = (monsterStats.PhysicalDefense);
         MysticalDef = (monsterStats.MysticalDefense);
         HealthRegenPercent = 0;
+        attackSpeedMod = 1;
+        fireRateMod = 1;
+        basicMeleelifeStealPercent = 0;
     }
     public virtual void CalculateAllModifiers()
     {
@@ -285,6 +292,15 @@ public class CombatFamiliar : MonoBehaviour
             case UniqueEquipEffect.HealthRegen:
                 HealthRegenPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.basicMeleeSpeed:
+                attackSpeedMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.basicRangedSpeed:
+                fireRateMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.basicMeleeLifeSteal:
+                basicMeleelifeStealPercent += mod_.amount;
+                break;
         }
     }
     private float AddOrMultiply(bool multiply_, float A, float B)
@@ -311,6 +327,7 @@ public class CombatFamiliar : MonoBehaviour
         }
         externalModifiers.Add(mod_);
     }
+
     protected void RegenHealth()
     {
         if (HealthRegenPercent == 0)
@@ -321,5 +338,14 @@ public class CombatFamiliar : MonoBehaviour
             currentHealth = maxHealth;
         combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
 
+    }
+    public void LifeStealHeal(float amount_)
+    {
+        currentHealth += amount_;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
     }
 }

@@ -29,6 +29,15 @@ public class FamiliarCombatControls : MonoBehaviour
     public float ultimateDamage;
     [Tooltip("REFERENCE to the effects played when the player is hit")]
     [SerializeField]public MMF_Player hitEffects;
+
+    [Header("Modifiers")]
+    public float fireRateMod = 1;
+    public float attackSpeedMod = 1;
+    public float basicMeleelifeStealPercent = 0;
+
+
+
+
     /// <summary>
     /// Set up my controls to perform attack actions
     /// </summary>

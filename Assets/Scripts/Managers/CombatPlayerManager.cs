@@ -104,8 +104,14 @@ public class CombatPlayerManager : MonoBehaviour
     }
     public void PlayerLifeSteal(float healAmount)
     {
-        Debug.Log("Lifesteal +" + healAmount);
         players[0].combatMovement.LifeStealHeal(healAmount);
+    }
+    public void FamiliarLifeSteal(float healAmount)
+    {
+        if (players[0].myCoopFamiliar.gameObject.activeInHierarchy)
+        players[0].myCoopFamiliar.LifeStealHeal(healAmount);
+        if (players[0].myFamiliar.gameObject.activeInHierarchy)
+            players[0].myFamiliar.LifeStealHeal(healAmount);
     }
     public void RestorePlayerMana(float healAmount)
     {
