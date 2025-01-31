@@ -269,7 +269,7 @@ public class CombatPlayerActions : MonoBehaviour
             tempObj.GetComponent<HomingAttack>().moveSpeedBonus = projectileSpeedMod;
 
             //setting the size mod
-            float projSize = tempObj.transform.localScale.x + projectileSizeMod;
+            float projSize = 1 + projectileSizeMod;
             tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
 
             //setting the special mod

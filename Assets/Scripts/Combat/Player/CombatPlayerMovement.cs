@@ -1087,19 +1087,19 @@ public class CombatPlayerMovement : CombatControllerInterface
 
                 //New magic skill tree
                 case "Megido":
-                    for (int i = 0; i < tal_.levelInvested; i++) {
-                        if (i < 5) {
-                            megidoProjSpeed.amount += 0.5f;
-
-                        } 
-                        else if (i < 10) {
-                            megidoProjSize.amount += 0.5f;
-                        }
-                        else if(i == 10) {
-                            megidoProjSpecial.amount += 1.0f;
-                        }
-
+                    if (tal_.levelInvested >= 1) {
+                        megidoProjSpeed.amount += 2.5f;
                     }
+
+                    if(tal_.levelInvested >= 2) {
+                        megidoProjSize.amount += 2.5f;
+                    }
+
+                    if(tal_.levelInvested >= 3) {
+                        megidoProjSpecial.amount += 1.0f;
+                    }
+
+                    
                     break;
             }
         }
@@ -1139,13 +1139,16 @@ public class CombatPlayerMovement : CombatControllerInterface
         AddExternalMod(swordLifeSteal);
 
 
-        combatActions.myFamiliar.CalculateAllModifiers();
-        combatActions.myCoopFamiliar.CalculateAllModifiers();
-
         //Megido
         AddExternalMod(megidoProjSpeed);
         AddExternalMod(megidoProjSize);
         AddExternalMod(megidoProjSpecial);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpeed);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSize);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpecial);
+
+        combatActions.myFamiliar.CalculateAllModifiers();
+        combatActions.myCoopFamiliar.CalculateAllModifiers();
 
     }
     public void UndeadExtraLife()
