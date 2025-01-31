@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// The 2nd player will ocntrol the familiar of the player
 /// </summary>
-public class CombatCoopFamiliar : CombatControllerInterface 
+public class CombatCoopFamiliar : MonoBehaviour
 {
         [Header("References")]
     [Tooltip("The saved stats of this player")]
@@ -36,6 +36,10 @@ public class CombatCoopFamiliar : CombatControllerInterface
     [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
     [Tooltip("REFERENCE to the wall layers")]
     public LayerMask wallMask;
+    //Physical Dash Attack
+    [Tooltip("REFERENCE to the AOE splash attacks when the player dashes")]
+    public MMMiniObjectPooler physicalDashAttackPool;
+    public Transform physicalDashAttackSpawn;
 
     [Header("LockOn")]
     [Tooltip("how far this player can remain locked onto an enemy")]
@@ -47,7 +51,7 @@ public class CombatCoopFamiliar : CombatControllerInterface
     [Tooltip("currently unused, would be for manual lock ons")]
     [SerializeField] bool hardLockOn;
     
-    [Header("Dash")]
+        [Header("Dash")]
     [Tooltip("how long before the player can move after falling off a platform")]
     public float timeBeforePlayerCanMoveAfterFallingOffPlatform;
     [Tooltip("how far the player can dash")]
@@ -84,8 +88,14 @@ public class CombatCoopFamiliar : CombatControllerInterface
     public List<EquipModifier> externalModifiers = new List<EquipModifier>();
     [Tooltip("How long before the 2nd player can respawn")]
     public float respawnTimeMax;
+    //DashAttacks
+    public float dashDamageModifier;
+    public float dashDamageBase;
+    public float physicalDashAttackCooldownMax;
+    float physicalDashAttackCooldownCurrent;
+    public int physicalDashLevel;
 
-     [Header("Inputs")]
+    [Header("Inputs")]
     [Tooltip("The player's controls")]
     public InputActionMap playerActionMap;
     [Tooltip("used to quickly get movement inputs ")]
@@ -177,6 +187,8 @@ public class CombatCoopFamiliar : CombatControllerInterface
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
+            if (physicalDashAttackCooldownCurrent > 0)
+                physicalDashAttackCooldownCurrent -= Time.deltaTime;
 
 
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
@@ -206,6 +218,10 @@ public class CombatCoopFamiliar : CombatControllerInterface
                 {
                     isDashing = false;
                     GroundCheck();
+                    if (physicalDashLevel > 0)
+                    {
+                        DashPhysicalAttack();
+                    }
                     return;
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
@@ -281,17 +297,15 @@ public class CombatCoopFamiliar : CombatControllerInterface
     {
         if (combatControls.damageImmune)
             return;
-        float newDamage = damage_;
+        float newDamage = 0;
         if (isMystical)
         {
-            newDamage -= MysticalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, MysticalDef);
         }
         else
         {
-            newDamage -= PhysicalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, PhysicalDef);
         }
-        if (newDamage < damage_ * 0.05f)
-            newDamage = damage_ * 0.05f;
         currentHealth -= newDamage;
 
         if (currentHealth <= 0)
@@ -469,6 +483,24 @@ public class CombatCoopFamiliar : CombatControllerInterface
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
           1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    private void DashPhysicalAttack()
+    {
+        if (physicalDashAttackCooldownCurrent > 0)
+        {
+            return;
+        }
+        physicalDashAttackCooldownCurrent = physicalDashAttackCooldownMax;
+        GameObject obj = physicalDashAttackPool.GetPooledGameObject();
+        if (physicalDashLevel == 1)
+            obj.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+        else if (physicalDashLevel == 2)
+        {
+            obj.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk * dashDamageModifier * dashDamageBase * physicalDashLevel;
+        obj.transform.position = physicalDashAttackSpawn.position;
+        obj.SetActive(true);
+    }
     /// <summary>
     /// Remove an object from the interaction list if its being disabled to prevent errors
     /// </summary>
@@ -486,12 +518,15 @@ public class CombatCoopFamiliar : CombatControllerInterface
     /// </summary>
     protected virtual void CalculateStats()
     {
-        maxHealth = (monsterStats.Vitality * 5);
+        maxHealth = (monsterStats.Vitality * 10);
         PhysicalAtk = (monsterStats.PhysicalProwess);
         MysticalAtk = (monsterStats.MysticalProwess);
         PhysicalDef = (monsterStats.PhysicalDefense);
         MysticalDef = (monsterStats.MysticalDefense);
         HealthRegenPercent = 0;
+       combatControls.attackSpeedMod = 1;
+        combatControls.fireRateMod = 1;
+        combatControls.basicMeleelifeStealPercent = 0;
     }
     /// <summary>
     /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.
@@ -559,6 +594,14 @@ public class CombatCoopFamiliar : CombatControllerInterface
                 break;
             case UniqueEquipEffect.projectileRadiusIncrease:
                 combatControls.projectileSizeMod += mod_.amount;
+            case UniqueEquipEffect.basicMeleeSpeed:
+                combatControls.attackSpeedMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.basicRangedSpeed:
+                combatControls.fireRateMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.basicMeleeLifeSteal:
+                combatControls.basicMeleelifeStealPercent += mod_.amount;
                 break;
         }
     }
@@ -605,6 +648,15 @@ public class CombatCoopFamiliar : CombatControllerInterface
             currentHealth = maxHealth;
         combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
 
+    }
+    public void LifeStealHeal(float amount_)
+    {
+        currentHealth += amount_;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        combatPlayerMovement.SetFamiliarHealth(currentHealth / maxHealth);
     }
 
 

@@ -4903,15 +4903,15 @@ MonoBehaviour:
   myMageSkeletons: []
   mySuperSkeletons: []
   skeletonHealthPerLevel: 20
-  skeletonPhysicalDamagePerLevel: 1
-  skeletonMysticalDamagePerLevel: 1
-  skeletonPhysicalDefencePerLevel: 1
-  skeletonMysticalDefencePerLevel: 1
+  skeletonPhysicalDamagePerLevel: 2
+  skeletonMysticalDamagePerLevel: 2
+  skeletonPhysicalDefencePerLevel: 1.2
+  skeletonMysticalDefencePerLevel: 1.2
   skeletonBaseHealth: 200
-  skeletonBasePhysicalDamage: 10
-  skeletonBaseMysticalDamage: 10
-  skeletonBasePhysicalDefence: 10
-  skeletonBaseMysticalDefence: 10
+  skeletonBasePhysicalDamage: 20
+  skeletonBaseMysticalDamage: 12
+  skeletonBasePhysicalDefence: 12
+  skeletonBaseMysticalDefence: 12
 --- !u!114 &2978444338262538703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25834,7 +25834,7 @@ MonoBehaviour:
   dashDistance: 4
   dashCoolDown: 0
   dashTime: 0
-  dashCost: 10
+  dashCost: 15
   isDashing: 0
   minMeleeDistance: 0.9
   dashStartPos: {x: 0, y: 0, z: 0}
@@ -25870,9 +25870,10 @@ MonoBehaviour:
   skullHead: {fileID: 8663839775449255318}
   extraLife: 1
   dashDamageModifier: 1
-  dashDamageBase: 2.5
+  dashDamageBase: 1.25
+  physicalDashAttackCooldownMax: 0.3
   maxManaRechargeDelay: 2
-  manaRechargeRate: 25
+  manaRechargeRate: 0.2
   currentHealth: 0
   levelUpEffect: {fileID: 2305207463001764316, guid: 557b070cc36d09e468569466cd2106b2, type: 3}
   myInteractableObjects: []
@@ -25936,7 +25937,7 @@ MonoBehaviour:
   meleeObject: {fileID: 6700458265170957193}
   basicRangedDamage: 0
   basicRangedElement: 0
-  fireCost: 4
+  fireCost: 5
   rangedProjectile: {fileID: 8230403905138075863, guid: 9f9f61fa2d561e3488d6754fd6afb31c, type: 3}
   projectiles: []
   projectileLimit: 40
@@ -25948,11 +25949,14 @@ MonoBehaviour:
   isUsingBasicAttackMelee: 0
   specialAbilityHolder: {fileID: 1760093713484007934}
   specialAbilities: {fileID: 11400000, guid: 76306bc68a344754493436f92421900e, type: 2}
+  healthPotionMaxCooldown: 10
+  healthPotionPercent: 0.33
+  manaPotionMaxCooldown: 10
+  manaPotionPercent: 0.33
   fireRate: 0.3
   fireRateMod: 1
   attackSpeedMod: 1
-  lifeStealPercent: 1
-  rangedPierce: 0
+  basicMeleelifeStealPercent: 0
   coopPlayer: 0
   myFamiliar: {fileID: 0}
   allFamiliars:
@@ -25966,6 +25970,8 @@ MonoBehaviour:
   chargesUIBGB: {fileID: 0}
   chargesTextB: {fileID: 0}
   ultimateCoolDownBar: {fileID: 0}
+  healthPotionBar: {fileID: 0}
+  manaPotionBar: {fileID: 0}
   basicRangedAudio: {fileID: 8300000, guid: 97788ef5d361f7740bdd7a278a3aab6d, type: 3}
 --- !u!1 &5001174565017991805
 GameObject:
@@ -37574,7 +37580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  hitStun: 1
+  hitStun: 0.4
   knockBack: 50
   lifeSteal: 0
   element: 0

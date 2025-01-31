@@ -9565,7 +9565,7 @@ GameObject:
   - component: {fileID: 6546397413658775699}
   - component: {fileID: 6671906240383085429}
   - component: {fileID: 5276132718872095036}
-  - component: {fileID: 1595897173985161460}
+  - component: {fileID: 8265546561914452244}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -9661,7 +9661,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &1595897173985161460
+--- !u!114 &8265546561914452244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9670,13 +9670,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5286044624155155695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c3b285e97ec8547b6caebfbbdf7f57, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ed87d7032999e24688fe7b23f0253a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 60
+  damage: 0
   canDamageEnemies: 0
   element: 0
   isMysicalDamage: 1
+  MaxTimeInterval: 0.4
+  onEnableDamageDelay: 0.2
 --- !u!1 &5297086675401942511
 GameObject:
   m_ObjectHideFlags: 0

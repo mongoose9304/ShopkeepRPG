@@ -7,13 +7,11 @@ using UnityEngine.InputSystem;
 public class CombatPlayerActions : MonoBehaviour
 {
     public CombatPlayerMovement combatMovement;
-    
     [Header("BasicMelee")]
     [SerializeField] private float BasicMeleeCooldownMax;
     private float BasicMeleeCooldown = 0.0f;
     [SerializeField] private GameObject BasicMeleePivotObject;
     public BasicMeleeObject meleeObject;
-    
     [Header("BasicRanged")]
     [SerializeField] float basicRangedDamage;
     public Element basicRangedElement;
@@ -35,13 +33,20 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
-    
+    [Header("Potions")]
+    public float healthPotionMaxCooldown;
+    float healthPotionCurrentCooldown;
+    public float healthPotionPercent;
+
+    public float manaPotionMaxCooldown;
+    float manaPotionCurrentCooldown;
+    public float manaPotionPercent;
+
     [Header("Modifiers")]
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
     public float attackSpeedMod = 1;
-    public float lifeStealPercent = 0;
-    public bool rangedPierce;
+    public float basicMeleelifeStealPercent = 0;
     public float projectileSpeedMod;
     public float projectileSizeMod;
     public bool projectileSpecial = false;
@@ -53,7 +58,6 @@ public class CombatPlayerActions : MonoBehaviour
     public CombatCoopFamiliar myCoopFamiliar;
     float familarRespawnTimer;
     private GameObject tempObj;
-
     [Header("Feel")]
     public MMProgressBar specialCoolDownBarA;
     public GameObject chargesUIBGA;
@@ -62,10 +66,10 @@ public class CombatPlayerActions : MonoBehaviour
     public GameObject chargesUIBGB;
     public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
-
+    public MMProgressBar healthPotionBar;
+    public MMProgressBar manaPotionBar;
     [Header("Audio")]
     public AudioClip basicRangedAudio;
-    
     [Header("Inputs")]
     private bool PlayerIsHoldingMelee;
     private bool PlayerIsHoldingRanged;
@@ -90,6 +94,8 @@ public class CombatPlayerActions : MonoBehaviour
         combatMovement.playerActionMap.FindAction("RBAction").canceled += OnSpecial2Released;
         combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
         combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
+        combatMovement.playerActionMap.FindAction("DPadRight").performed += OnHealthPotionPressed;
+        combatMovement.playerActionMap.FindAction("DPadLeft").performed += OnManaPotionPressed;
     }
     private void OnDisable()
     {
@@ -105,9 +111,11 @@ public class CombatPlayerActions : MonoBehaviour
             combatMovement.playerActionMap.FindAction("RBAction").canceled -= OnSpecial2Released;
             combatMovement.playerActionMap.FindAction("LTAction").performed -= OnUltimatePressed;
             combatMovement.playerActionMap.FindAction("LTAction").canceled -= OnUltimateReleased;
+            combatMovement.playerActionMap.FindAction("DPadRight").performed -= OnHealthPotionPressed;
+            combatMovement.playerActionMap.FindAction("DPadLeft").performed -= OnManaPotionPressed;
         }
         }
-    private void Update()
+        private void Update()
     {
         if (TempPause.instance.isPaused)
             return;
@@ -205,7 +213,20 @@ public class CombatPlayerActions : MonoBehaviour
         }
         ultimateCoolDownBar.SetBar01(myFamiliar.GetUltimateAttackCooldown());
      
-        if(familarRespawnTimer>0)
+        if(healthPotionCurrentCooldown>0)
+        {
+            healthPotionCurrentCooldown -= Time.deltaTime;
+            healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
+        }
+        if (manaPotionCurrentCooldown > 0)
+        {
+            manaPotionCurrentCooldown -= Time.deltaTime;
+            manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
+        }
+
+
+
+        if (familarRespawnTimer>0)
         {
          
             familarRespawnTimer -= Time.deltaTime;
@@ -256,7 +277,6 @@ public class CombatPlayerActions : MonoBehaviour
 
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
-            tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;
             currentFireRate = fireRate;
             MMSoundManager.Instance.PlaySound(basicRangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
@@ -349,7 +369,7 @@ public class CombatPlayerActions : MonoBehaviour
         }
         return null;
     }
-    public void FamiliarDeath(float respawnTime_)
+   public void FamiliarDeath(float respawnTime_)
     {
         familarRespawnTimer = respawnTime_;
     }
@@ -383,7 +403,7 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void SetStats(float basicMeleeDamage,float basicRangedDamage_,Element rangedE_,Element meleeE_)
     {
-        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,lifeStealPercent);
+        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,basicMeleelifeStealPercent);
         basicRangedDamage = basicRangedDamage_;
         basicRangedElement = rangedE_;
     }
@@ -451,6 +471,22 @@ public class CombatPlayerActions : MonoBehaviour
         //myFamiliar.gameObject.SetActive(true);
 
     }
+    private void UseHealthPotion()
+    {
+        if (healthPotionCurrentCooldown > 0)
+            return;
+        healthPotionCurrentCooldown = healthPotionMaxCooldown;
+        combatMovement.HealthPickup(healthPotionPercent);
+        healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
+    }
+    private void UseManaPotion()
+    {
+        if (manaPotionCurrentCooldown > 0)
+            return;
+        manaPotionCurrentCooldown = manaPotionMaxCooldown;
+        combatMovement.ManaPickup(manaPotionPercent);
+        manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
+    }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)
     {
@@ -492,5 +528,17 @@ public class CombatPlayerActions : MonoBehaviour
     private void OnUltimateReleased(InputAction.CallbackContext obj)
     {
         PlayerIsHoldingUlitmate = false;
+    }
+    private void OnHealthPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseHealthPotion();
+    }
+    private void OnManaPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseManaPotion();
     }
 }

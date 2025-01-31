@@ -35,6 +35,10 @@ public class FamiliarCombatControls : MonoBehaviour
     [HideInInspector] public float projectileSizeMod;
     [HideInInspector] public bool projectileSpecial = false;
 
+    [Header("Modifiers")]
+    public float fireRateMod = 1;
+    public float attackSpeedMod = 1;
+    public float basicMeleelifeStealPercent = 0;
 
     /// <summary>
     /// Set up my controls to perform attack actions

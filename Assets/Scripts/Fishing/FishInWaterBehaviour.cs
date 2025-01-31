@@ -1,20 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public enum FishType
+{
+    Bass,
+    Trout,
+    Carp,
+    Pike
+}
 
 public class FishInWaterBehaviour : MonoBehaviour
 {
     private Rigidbody rb;
     public Rigidbody playerRB = null;
     public GameObject playerRef;
+    public FishType type;
 
     // How skittish this fish is: how much time you need to spend inside their radius before
     // they will swim deep under water
     public float skittishness = 0.4f;
+    // How close you can get without the fish swimming away
     public float scareRadius = 4.0f;
     // The time this fish will wait after moving before moving again.
     // Randomized after each movement.
     public float moveDelay = 1.8f;
+
+    
 
     public float baitRadius = 3.0f;
     public float maxVisionAngle = 25.0f;
@@ -45,11 +58,10 @@ public class FishInWaterBehaviour : MonoBehaviour
                 if (bobberDistance <= baitRadius)
                 {
                     float cosBobberAngle = Vector3.Dot(transform.forward, Vector3.Normalize(bobber.transform.position - transform.position));
-                        //Vector3.Angle(rb.transform.forward, Vector3.Normalize(bobber.transform.position - rb.position));
                     if (cosBobberAngle <= Mathf.Cos(maxVisionAngle))
                     {
                         Debug.Log("Start fishing minigame...");
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().InitiateMinigame();
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().InitiateMinigame(type);
                         Destroy(gameObject);
                         Destroy(bobber);
                     }

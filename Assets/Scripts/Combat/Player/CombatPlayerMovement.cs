@@ -4,7 +4,7 @@ using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 using UnityEngine.InputSystem;
-public class CombatPlayerMovement : CombatControllerInterface
+public class CombatPlayerMovement : MonoBehaviour
 {
     //FFYL stats
     [SerializeField] public bool isInSaveYourSoulMode;
@@ -35,6 +35,7 @@ public class CombatPlayerMovement : CombatControllerInterface
    [SerializeField] LayerMask wallMask;
    [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    private int physicalDashLevel;
     public CombatPlayerActions combatActions;
     //targeting and lock on
     [SerializeField] GameObject currentTarget;
@@ -71,6 +72,8 @@ public class CombatPlayerMovement : CombatControllerInterface
     //DashAttacks
     public float dashDamageModifier;
     public float dashDamageBase;
+    public float physicalDashAttackCooldownMax;
+    float physicalDashAttackCooldownCurrent;
 
 
     public float maxManaRechargeDelay;
@@ -96,7 +99,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     public MMProgressBar manaBar;
     public MMProgressBar familiarHealthBar;
     public AudioClip dashAudio;
-
     [Header("Inputs")]
     public InputActionMap playerActionMap;
     private InputAction movement;
@@ -189,6 +191,8 @@ public class CombatPlayerMovement : CombatControllerInterface
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
+            if(physicalDashAttackCooldownCurrent>0)
+                physicalDashAttackCooldownCurrent -= Time.deltaTime;
 
 
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
@@ -216,7 +220,10 @@ public class CombatPlayerMovement : CombatControllerInterface
                     isDashing = false;
                     if(GroundCheck())
                     {
-                        DashPhysicalAttack();
+                        if (physicalDashLevel > 0)
+                        {
+                            DashPhysicalAttack();
+                        }
                     }
                     return;
                 }
@@ -238,6 +245,7 @@ public class CombatPlayerMovement : CombatControllerInterface
             return;
         if (isInSaveYourSoulMode)
             return;
+
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
@@ -246,8 +254,19 @@ public class CombatPlayerMovement : CombatControllerInterface
     }
     private void DashPhysicalAttack()
     {
+        if(physicalDashAttackCooldownCurrent>0)
+        {
+            return;
+        }
+        physicalDashAttackCooldownCurrent = physicalDashAttackCooldownMax;
         GameObject obj = physicalDashAttackPool.GetPooledGameObject();
-        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase;
+        if(physicalDashLevel==1)
+        obj.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+        else if(physicalDashLevel == 2)
+        {
+            obj.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase*physicalDashLevel;
         obj.transform.position = physicalDashAttackSpawn.position;
         obj.SetActive(true);
     }
@@ -412,18 +431,16 @@ public class CombatPlayerMovement : CombatControllerInterface
     }
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
-        if(isInSaveYourSoulMode){ return; }
-        float newDamage = damage_;
+        if(isInSaveYourSoulMode||isDashing){ return; }
+        float newDamage = 0;
         if(isMystical)
         {
-            newDamage -= MysticalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, MysticalDef);
         }
         else
         {
-            newDamage -= PhysicalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, PhysicalDef);
         }
-        if (newDamage < damage_ * 0.05f)
-            newDamage = damage_ * 0.05f;
         currentHealth -= newDamage;
         if (currentHealth <= 0)
         {
@@ -444,6 +461,15 @@ public class CombatPlayerMovement : CombatControllerInterface
             }
             healthBar.UpdateBar01(currentHealth / maxHealth);
         
+    }
+    public void LifeStealHeal(float amount_)
+    {
+        currentHealth += amount_;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetBar01(currentHealth / maxHealth);
     }
     public void ManaPickup(float amount_)
     {
@@ -566,7 +592,7 @@ public class CombatPlayerMovement : CombatControllerInterface
             return;
         }
       
-        currentMana += manaRechargeRate * Time.deltaTime;
+        currentMana += (manaRechargeRate * maxMana) * Time.deltaTime;
         if(ManaRegenPercent!=0)
         {
             currentMana += ManaRegenPercent*maxMana * Time.deltaTime;
@@ -588,8 +614,8 @@ public class CombatPlayerMovement : CombatControllerInterface
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 5);
-        maxMana = (myStats.Soul * 5);
+        maxHealth = (myStats.Vitality * 10);
+        maxMana = (myStats.Soul * 10);
         PhysicalAtk = (myStats.PhysicalProwess);
         MysticalAtk = (myStats.MysticalProwess);
         PhysicalDef = (myStats.PhysicalDefense);
@@ -599,8 +625,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         ManaRegenPercent = 0;
         combatActions.attackSpeedMod = 1;
         combatActions.fireRateMod = 1;
-        combatActions.lifeStealPercent = 0;
-
+        combatActions.basicMeleelifeStealPercent = 0;
         combatActions.projectileSizeMod = 0;
         combatActions.projectileSpeedMod = 0;
     }
@@ -742,8 +767,8 @@ public class CombatPlayerMovement : CombatControllerInterface
             case UniqueEquipEffect.basicRangedSpeed:
                 combatActions.fireRateMod += mod_.amount;
                 break;
-            case UniqueEquipEffect.LifeSteal:
-                combatActions.lifeStealPercent += mod_.amount;
+            case UniqueEquipEffect.basicMeleeLifeSteal:
+                combatActions.basicMeleelifeStealPercent += mod_.amount;
                 break;
             case UniqueEquipEffect.projectileSpeedIncrease:
                 combatActions.projectileSpeedMod += mod_.amount;
@@ -791,7 +816,6 @@ public class CombatPlayerMovement : CombatControllerInterface
     public void SkillTreeEffects()
     {
         //Create the empty mods first here , then in the for loops you set up the exact stats based on points invested 
-
         //Slime
         EquipModifier slimeIncreasedPDef = new EquipModifier();
         slimeIncreasedPDef.isMultiplicative = true;
@@ -824,11 +848,17 @@ public class CombatPlayerMovement : CombatControllerInterface
         swordPDamage.amount = 1;
         swordPDamage.uniqueEffect = UniqueEquipEffect.None;
 
+        EquipModifier swordNegativeMDamage = new EquipModifier();
+        swordNegativeMDamage.isMultiplicative = true;
+        swordNegativeMDamage.modName = "swordMysticalDamageReduction";
+        swordNegativeMDamage.amount = 1;
+        swordNegativeMDamage.uniqueEffect = UniqueEquipEffect.None;
+
         EquipModifier swordLifeSteal = new EquipModifier();
-        swordPDamage.isMultiplicative = false;
-        swordPDamage.modName = "swordLifeSteal";
-        swordPDamage.amount = 0;
-        swordPDamage.uniqueEffect = UniqueEquipEffect.LifeSteal;
+        swordLifeSteal.isMultiplicative = false;
+        swordLifeSteal.modName = "swordLifeSteal";
+        swordLifeSteal.amount = 0;
+        swordLifeSteal.uniqueEffect = UniqueEquipEffect.basicMeleeLifeSteal;
 
         //Dragon
         EquipModifier dragonSpeed = new EquipModifier();
@@ -842,7 +872,6 @@ public class CombatPlayerMovement : CombatControllerInterface
         dragonMDamage.modName = "dragonMysticalDamage";
         dragonMDamage.amount = 1;
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
-        combatActions.rangedPierce = false;
 
         //Megido
         EquipModifier megidoProjSpeed = new EquipModifier();
@@ -872,23 +901,34 @@ public class CombatPlayerMovement : CombatControllerInterface
                     mySkeltonMaster.maxMageFollowers = 0;
                     mySkeltonMaster.maxFollowers = 0;
                     mySkeltonMaster.maxSuperFollowers = 0;
-                    extraLife = false;
-                    for(int i=0;i<tal_.levelInvested;i++)
+                    switch(tal_.levelInvested)
                     {
-                        if(i<5)
-                        {
+                        case 0:
+                            break;
+                        case 1:
                             mySkeltonMaster.enabled = true;
                             mySkeltonMaster.maxFollowers += 1;
-                        }
-                        else if (i < 10)
-                        {
+                            break;
+                        case 2:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            break;
+                        case 3:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
                             mySkeltonMaster.maxMageFollowers += 1;
-                        }
-                        else if (i == 10)
-                        {
+                            break;
+                        case 4:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
+                            break;
+                        case 5:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
                             mySkeltonMaster.maxSuperFollowers += 1;
-                            extraLife = true;
-                        }
+                            break;
                     }
                     mySkeltonMaster.Reset();
                     break;
@@ -932,12 +972,48 @@ public class CombatPlayerMovement : CombatControllerInterface
                         }
                         else if (i == 10)
                         {
-                            combatActions.rangedPierce = true;
+                            
                         }
                     }
                     break;
                 case "Sword":
-
+                    physicalDashLevel = 0;
+                    switch (tal_.levelInvested)
+                    {
+                        case 0:
+                            swordSpeed.amount += 0.2f;
+                            break;
+                        case 1:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 2:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 3:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 4:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                        case 5:
+                            swordSpeed.amount += 0.5f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 2;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                    }
                     for (int i = 0; i < tal_.levelInvested; i++)
                     {
                         if (i < 5)
@@ -1046,11 +1122,22 @@ public class CombatPlayerMovement : CombatControllerInterface
         AddExternalMod(dragonMDamage);
 
         //Sword mods
+        combatActions.myFamiliar.AddExternalMod(swordSpeed);
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myFamiliar.AddExternalMod(swordLifeSteal);
+
+        combatActions.myCoopFamiliar.AddExternalMod(swordSpeed);
         combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordLifeSteal);
+        combatActions.myCoopFamiliar.physicalDashLevel = physicalDashLevel;
+
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
+        AddExternalMod(swordNegativeMDamage);
         AddExternalMod(swordLifeSteal);
+
 
         combatActions.myFamiliar.CalculateAllModifiers();
         combatActions.myCoopFamiliar.CalculateAllModifiers();
@@ -1128,6 +1215,7 @@ public class CombatPlayerMovement : CombatControllerInterface
     {
         InteractHeld = false;
     }
+    
     public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);

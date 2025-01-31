@@ -4,7 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.AI.Navigation;
 using MoreMountains.Tools;
-
+public static class CombatDamageCalculator
+{
+    
+    public static float DamageToEnemyCalculator(float damage,float defence)
+    {
+        float attackScale = 2.0f;
+        float defenceScale = 1.5f;
+        float minDamagePercent=0.05f;
+        float x = (damage * attackScale) - (defence * defenceScale);
+        if(x<minDamagePercent*damage)
+        {
+            x = damage * minDamagePercent;
+        }
+        return x;
+    }
+}
 /// <summary>
 /// The singleton class that will handle loading the dungeon levels, winning and losing the game and Player buffs/Debuffs
 /// </summary>

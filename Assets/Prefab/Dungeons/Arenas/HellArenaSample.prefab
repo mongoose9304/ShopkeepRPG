@@ -3345,9 +3345,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   regularEnemies:
+  - {fileID: 6618822763816982608, guid: 2b4726ad8c86c2449a216e3d97a921d5, type: 3}
   - {fileID: 6551820595359314126, guid: 0d1d7cc44c8487249b081aea504fbff9, type: 3}
+  - {fileID: 2519484865883213000, guid: f5efe8eaf1c238848a7c7f5f92952cba, type: 3}
   eliteEnemies:
   - {fileID: 8064418402044043358, guid: 9ceb2310ed2a4c54eb7602c39533b3d5, type: 3}
+  - {fileID: 1124081786286459366, guid: af435d886d6c4cd459ec6a7b352058cf, type: 3}
   enemyLevel: 1
   eliteEnemyLevel: 5
   trapLevel: 1
@@ -8825,9 +8828,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2610200364638163127}
     m_Modifications:
+    - target: {fileID: 380300938502977953, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1645317293761257375, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
       propertyPath: m_Name
       value: DragonStormTrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645317293761257375, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4687045225062436835, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8868,6 +8879,10 @@ PrefabInstance:
     - target: {fileID: 4687045225062436835, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7643401704029710521, guid: 3387fdd519208ad4493e99fba23612b2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

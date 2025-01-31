@@ -339,4 +339,23 @@ public class PlayerInventory : MonoBehaviour
         }
         return 0;
     }
+    public void DebugResetPlayerAndFamiliarLevel()
+    {
+        PlayerPrefs.SetInt("FamiliarSavedExp", 0);
+        PlayerPrefs.SetInt("FamiliarRemainingSkillPoints", 0);
+        PlayerPrefs.SetInt("FamiliarTotalSkillPoints",0);
+
+        PlayerPrefs.SetInt("PlayerSavedExp", playerStats.savedExp);
+        PlayerPrefs.SetInt("PlayerRemainingSkillPoints", playerStats.remainingSkillPoints);
+        PlayerPrefs.SetInt("PlayerTotalSkillPoints", playerStats.totalSkillPoints);
+
+
+        familiarStats.savedExp = PlayerPrefs.GetInt("FamiliarSavedExp", 0);
+        familiarStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 0);
+        familiarStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 0);
+
+        playerStats.savedExp = PlayerPrefs.GetInt("PlayerSavedExp", 0);
+        playerStats.remainingSkillPoints = PlayerPrefs.GetInt("PlayerRemainingSkillPoints", 0);
+        playerStats.totalSkillPoints = PlayerPrefs.GetInt("PlayerTotalSkillPoints", 0);
+    }
 }

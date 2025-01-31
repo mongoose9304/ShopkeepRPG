@@ -18,7 +18,7 @@ public class FishingPlayer : MonoBehaviour
 
     //references and inputs
     [SerializeField] GameObject interactableObjectTarget;
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
     public List<GameObject> myInteractableObjects = new List<GameObject>();
     Vector3 moveInput;
     Vector3 newInput;
@@ -191,6 +191,7 @@ public class FishingPlayer : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext obj)
     {
         InteractHeld = true;
+
     }
     private void OnInteractReleased(InputAction.CallbackContext obj)
     {
@@ -240,7 +241,7 @@ public class FishingPlayer : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact(gameObject);
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -249,7 +250,7 @@ public class FishingPlayer : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -267,7 +268,7 @@ public class FishingPlayer : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         if (myInteractableObjects.Count <= 1)
@@ -364,15 +365,15 @@ public class FishingPlayer : MonoBehaviour
         myInteractableObjects.Remove(obj_);
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
-        interactableObjectLockOnObject.SetActive(false);
+        interactableObjectLockOnObject.gameObject.SetActive(false);
     }
 
-    public void InitiateMinigame()
+    public void InitiateMinigame(FishType behaviourType)
     {
         if (menu == null)
         {
             menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
         }
-        menu.Activate();
+        menu.Activate(behaviourType);
     }
 }

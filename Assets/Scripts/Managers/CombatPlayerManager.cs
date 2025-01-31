@@ -102,6 +102,17 @@ public class CombatPlayerManager : MonoBehaviour
     {
         players[0].combatMovement.HealthPickup(healAmount);
     }
+    public void PlayerLifeSteal(float healAmount)
+    {
+        players[0].combatMovement.LifeStealHeal(healAmount);
+    }
+    public void FamiliarLifeSteal(float healAmount)
+    {
+        if (players[0].myCoopFamiliar.gameObject.activeInHierarchy)
+        players[0].myCoopFamiliar.LifeStealHeal(healAmount);
+        if (players[0].myFamiliar.gameObject.activeInHierarchy)
+            players[0].myFamiliar.LifeStealHeal(healAmount);
+    }
     public void RestorePlayerMana(float healAmount)
     {
         players[0].combatMovement.ManaPickup(healAmount);

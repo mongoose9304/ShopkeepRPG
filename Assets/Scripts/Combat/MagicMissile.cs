@@ -20,7 +20,7 @@ public class MagicMissile : PlayerDamageCollider
                 basicEnemyRef.ApplyDamage(damage, hitStun, element, knockBack, this.gameObject, "Ranged",isMysticalDamage);
                 if (lifeSteal > 0)
                 {
-                    CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);
+                    CombatPlayerManager.instance.PlayerLifeSteal(damage * lifeSteal);
                 }
 
                 if (canRicochet) {

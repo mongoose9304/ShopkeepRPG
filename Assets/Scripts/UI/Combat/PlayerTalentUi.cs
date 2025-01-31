@@ -73,4 +73,11 @@ public class PlayerTalentUi : MonoBehaviour
         if (myPlayer)
             myPlayer.CalculateAllModifiers();
     }
+    public void DebugResetPlayerLevel()
+    {
+        if (PlayerInventory.instance)
+        {
+            PlayerInventory.instance.DebugResetPlayerAndFamiliarLevel();
+        }
+    }
 }

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ShipWheelInteractable : InteractableObject
 {
-    public override void Interact(GameObject interactingObject = null,InteractLockOnButton btn=null)
+    public virtual void Interact(GameObject interactingObject_ = null)
     {
-        if (interactingObject == null)
+        Debug.Log("Interacting!");
+
+        if (interactingObject_ == null)
             return;
 
-        if (interactingObject.TryGetComponent<FishingPlayer>(out FishingPlayer playa))
+        if (interactingObject_.TryGetComponent<FishingPlayer>(out FishingPlayer playa))
         {
             playa.canMove = false;
         }

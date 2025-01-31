@@ -200,23 +200,20 @@ public class BasicEnemy : MonoBehaviour
                 KnockBack(knockBack_, knockBackObject);
             }
         }
-        float newDamage = damage_;
-        if(isHexed)
+        float newDamage = 0;
+
+        EnemyManager.instance.ApplyHitEffect(element_,transform);
+        if (isMystical)
         {
-            newDamage *= 1.5f;
-        }
-        if(isMystical)
-        {
-            newDamage -= mysticalDefence;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, mysticalDefence);
         }
         else
         {
-            newDamage -= physicalDefence;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, physicalDefence);
         }
-        EnemyManager.instance.ApplyHitEffect(element_,transform);
-        if(newDamage<=damage_*0.05f)
+        if (isHexed)
         {
-            newDamage = damage_ * 0.05f;
+            newDamage *= 1.5f;
         }
         damage_ = Mathf.Round(newDamage);
         currentHealth -= newDamage;
