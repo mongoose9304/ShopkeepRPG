@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
+//this is the interface for every state for this enemys
 public interface IState
 {
     void Enter();
@@ -12,7 +13,8 @@ public interface IState
     void Exit();
 }
 
-public class TrapChestStateMachine {
+//In here the logic of switching states will be handled
+public class TrapChestStateMachine : MonoBehaviour {
 
     IState currentState;
     public TrapChestStateMachine(IState initialState = null)
@@ -42,45 +44,47 @@ public class TrapChestStateMachine {
 
 public class PatrolRotateState : MonoBehaviour, IState {
 
+    //Everything needed for the state machine
     TrapChestStateMachine trapChestStateMachine;
-    //Ray casting
+    public ChasePlayerState chasePlayerState;
+
+
+    //Ray casting for the cone-like field of views
     Vector3 RayOrigin;
     Vector3 RayDirection;
-    Quaternion orignalRot;
-
+    private float viewDistance = 5.0f;
+    private float viewAngle = 90.0f;
+    private int amountOfRays = 10;
 
 
     private float timer = 0.0f;
     private float rotationCD = 4.0f;
-    private bool startCooldown = false;
-    private float changeInAngle = 25.0f;
     private float currentAngle = 0.0f;
     private float targetAngle = 0.0f;
-    private float rotationSpeed = 25.0f;
-    private bool pauseRotation = false;
-
-
-    float startingAngle = 0.0f;
-    private float rotationTick = 10.0f;
+    private float rotationSpeed = 25.0f;//how fast rotation happpens
+    private bool pauseRotation = false; 
+    float startingAngle = 0.0f;//needed to take into the account initial on level rotation
+    private float rotationTick = 0.0f; //max change in angle per deltaTime
 
 
     private float[] angles = { 0.0f, 45.0f, 90.0f, 135.0f, 180.0f };
-    private int index = 0;
+    private int index = 0; //index of the angle 
 
-    float viewDistance = 5.0f;
-    private float viewAngle = 90.0f;
-    private int amountOfRays = 10;
     bool playerInViewRange = false;
     public void Enter() {
         Debug.Log("Entering Patrol State");
         RayOrigin = transform.position;
         RayDirection = new Vector3(10.0f, 0.0f, 0.0f);
         
-        startingAngle = transform.rotation.eulerAngles.y;
+        startingAngle = transform.rotation.eulerAngles.y; //using euler because i need degrees and not radians
         currentAngle = startingAngle;
 
         targetAngle = angles[1] + startingAngle;
-        Debug.Log(currentAngle);
+
+
+        //for the state machine
+        trapChestStateMachine = GetComponent<TrapChestStateMachine>();
+        chasePlayerState = gameObject.AddComponent<ChasePlayerState>();
 
     }
     public void ExecuteState()
@@ -90,7 +94,8 @@ public class PatrolRotateState : MonoBehaviour, IState {
 
         if (PlayerFound())
         {
-            trapChestStateMachine.ChangeState(GetComponent<ChasePlayerState>());
+            trapChestStateMachine.ChangeState(chasePlayerState);
+            //trapChestStateMachine.ChangeState(GetComponent<ChasePlayerState>());
         }
     }
     public void Exit() {
@@ -153,8 +158,7 @@ public class PatrolRotateState : MonoBehaviour, IState {
             if (Physics.Raycast(RayOrigin, RayDirection, out RaycastHit hit, viewDistance))
             {
                 if (hit.collider.CompareTag("Player"))
-                {
-                    Debug.Log("Player detected");
+                { 
                     playerInViewRange = true;
                 }
 
@@ -210,13 +214,13 @@ public class TrapChestState : MonoBehaviour
 {
     TrapChestStateMachine trapChestStateMachine;
     public PatrolRotateState patrolState;
-    public ChasePlayerState chasePlayerState;
+   
 
     void Start()
     {
-        trapChestStateMachine = new TrapChestStateMachine();
+        trapChestStateMachine = gameObject.AddComponent<TrapChestStateMachine>();
         patrolState = gameObject.AddComponent<PatrolRotateState>();
-        chasePlayerState = gameObject.AddComponent<ChasePlayerState>();
+      
         trapChestStateMachine.ChangeState(patrolState);
     }
 
