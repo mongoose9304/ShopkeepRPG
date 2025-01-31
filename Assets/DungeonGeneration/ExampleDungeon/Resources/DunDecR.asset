@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a331fb071b67d8b46b14647aadae2f26, type: 3}
-  m_Name: DunElmCapX
+  m_Name: DunDecR
   m_EditorClassIdentifier: 
-  m_Prefab: {fileID: 6525546525908049742, guid: 91fbf0bf13ff2cc4f83d1894f5023546, type: 3}
+  m_Prefab: DunDecR
   m_Bounds: []
   m_Anchors:
-  - name: edge
-    mode: 0
-    offset: {x: 0.125, y: 0}
+  - name: dec
+    mode: 5
+    offset: {x: 0, y: 0}
     pool: {fileID: 0}
-  - name: edge
-    mode: 2
-    offset: {x: -0.125, y: 0}
-    pool: {fileID: 0}
-  m_Conditions: []
-  m_Operations: []
+    fallback: {fileID: 0}
+  m_Conditions:
+  - m_Name: steve
+    m_Mode: 2
+    m_Value: 7
+  m_Operations:
+  - m_Name: steve
+    m_Mode: 0
+    m_Value: 1

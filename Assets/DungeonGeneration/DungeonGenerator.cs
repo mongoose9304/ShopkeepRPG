@@ -6,6 +6,38 @@ using UnityEngine;
 namespace Dungeons {
     public class DungeonGenerator {
         /// <summary>
+        /// The current number of rooms in the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementCount = "elementCount";
+        /// <summary>
+        /// The maximum number of rooms in the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementCountMaximum = "elementCountMaximum";
+        /// <summary>
+        /// The maximum remaining number of rooms to generate in the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementCountRemaining = "elementCountRemaining";
+        
+        /// <summary>
+        /// The length of the current branch of the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementDepth = "elementDepth";
+        /// <summary>
+        /// The maximum length of any branch of the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementDepthMaximum = "elementDepthMaximum";
+        /// <summary>
+        /// The maximum remaining length of the current branch of the dungeon.
+        /// This variable should not be modified by dungeon elements.
+        /// </summary>
+        private const string VarElementDepthRemaining = "elementDepthRemaining";
+
+        /// <summary>
         /// The layout.
         /// </summary>
         public DungeonLayout Layout {
@@ -37,15 +69,14 @@ namespace Dungeons {
         public DungeonGenerator(DungeonLayout layout) {
             //Initalize the generator structures.
             m_Layout = layout;
-            m_Pending = new();
-            m_Counters = new();
             m_BoundingRectangleHierarchy = new(default, 100, 100);
             m_ElementSpawningPotentials = new(100);
             m_Elements = new DungeonGeneratorElement[100];
             m_ElementsCount = 0;
             m_ElementsCapacity = 100;
             m_ElementsInstantiated = 0;
-            //Enqueue the initial anchor point.
+            //Initialize pending anchors.
+            m_Pending = new();
             PushPending(new() {
                 name = "root",
                 pool = layout.Root,
@@ -54,6 +85,10 @@ namespace Dungeons {
                 index = 0,
                 depth = 0,
             });
+            //Initialize generator variables.
+            m_Counters = new();
+            m_Counters[VarElementDepthMaximum] = m_Layout.MaximumDepth;
+            m_Counters[VarElementCountMaximum] = m_Layout.MaximumRooms;
         }
 
         /// <summary>
@@ -116,6 +151,11 @@ namespace Dungeons {
                 //Validate anchor.
                 if (!anchor.pool)
                     continue;
+                //Initalize variables.
+                m_Counters[VarElementDepth] = anchor.depth;
+                m_Counters[VarElementDepthRemaining] = m_Layout.MaximumDepth - anchor.depth;
+                m_Counters[VarElementCount] = m_Layout.MaximumRooms - m_ElementsCountExcludingFallbacksAndChildren;
+                m_Counters[VarElementCountRemaining] = m_Layout.MaximumRooms - m_ElementsCountExcludingFallbacksAndChildren;
                 //Collect and sample potentials.
                 var potentialIsFallback = false;
                 if (anchor.mode == DungeonLayout.AnchorMode.Parent || (anchor.depth < m_Layout.MaximumDepth && m_ElementsCountExcludingFallbacksAndChildren < m_Layout.MaximumRooms))
@@ -249,18 +289,31 @@ namespace Dungeons {
                     return counter > right;
                 case ComparisonMode.GreaterOrEqual:
                     return counter >= right;
-                case ComparisonMode.DivEven:
+                case ComparisonMode.DividesEvenly:
                     return (counter % right) == 0.0f;
-                case ComparisonMode.DivOdd:
+                case ComparisonMode.DividesOddly:
                     return (counter % right) != 0.0f;
             }
             return false;
         }
 
+        /// <summary>
+        /// Validates the dungeon.
+        /// </summary>
+        /// <returns>True if the dungeon is valid; False if the dungeon is invalid and should be regenerated.</returns>
+        public bool Validate() {
+            var conditions = m_Layout.Conditions;
+            var conditionsLength = conditions.Length;
+            for (int i = 0; i < conditionsLength; ++i)
+                if (!CompareCounter(conditions[i].Name, conditions[i].Value, conditions[i].Mode))
+                    return false;
+            return true;
+        }
+
         [Serializable]
         public enum OperationMode { Add, Sub, Mul, Div, Mod }
         [Serializable]
-        public enum ComparisonMode { Equal, NotEqual, Less, LessOrEqual, Greater, GreaterOrEqual, DivEven, DivOdd }
+        public enum ComparisonMode { Equal, NotEqual, Less, LessOrEqual, Greater, GreaterOrEqual, DividesEvenly, DividesOddly }
         [Serializable]
         public struct Operation {
             public readonly string Name {

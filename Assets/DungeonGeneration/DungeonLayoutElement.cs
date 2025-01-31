@@ -11,7 +11,7 @@ namespace Dungeons {
         /// The prefab that will be instantiated when this element is placed into a dungeon.
         /// </summary>
         public GameObject Prefab {
-            get => m_Prefab;
+            get => Resources.Load<GameObject>(m_Prefab);
         }
         /// <summary>
         /// The bounds used when checking for collisions between this element and the dungeon.
@@ -57,8 +57,8 @@ namespace Dungeons {
             }
         }
         
-        [SerializeField, Tooltip("The prefab that will be instantiated when this element is placed into a dungeon.")]
-        private GameObject m_Prefab;
+        [SerializeField, Tooltip("The prefab that will be instantiated when this element is placed into a dungeon. Dungeon element prefabs must be in any 'Resources/' folder. This variable contains the path relative to any 'Resources/' folder.")]
+        private string m_Prefab;
         [SerializeField, Tooltip("The bounds used when checking for collisions between this element and the dungeon.")]
         private Rect[] m_Bounds;
         [SerializeField, Tooltip("The anchors used when connecting this element with other elements in the dungeon.")]

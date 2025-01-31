@@ -25,6 +25,18 @@ namespace Dungeons {
         public int MaximumDepth {
             get => m_MaximumDepth;
         }
+        /// <summary>
+        /// The dungeon variables; These are used as initial values for the values accessed by element conditions and operations.
+        /// </summary>
+        public ReadOnlySpan<Variable> Variables {
+            get => m_Variables;
+        }
+        /// <summary>
+        /// The dungeon conditions; These are used to validate dungeons. Failed dungeons will be regenerated.
+        /// </summary>
+        public ReadOnlySpan<DungeonGenerator.Condition> Conditions {
+            get => m_Conditions;
+        }
 
         /// <summary>
         /// Returns true if the anchors can attach to eachother.
@@ -156,6 +168,20 @@ namespace Dungeons {
             /// </summary>
             public int depth;
         }
+        [Serializable]
+        public struct Variable {
+            public readonly string Name {
+                get => m_Name;
+            }
+            public readonly float Value {
+                get => m_Value;
+            }
+            
+            [SerializeField]
+            private string m_Name;
+            [SerializeField]
+            private float m_Value;
+        }
 
         [SerializeField]
         private DungeonLayoutElementProvider m_Root;
@@ -163,5 +189,9 @@ namespace Dungeons {
         private int m_MaximumRooms;
         [SerializeField]
         private int m_MaximumDepth;
+        [SerializeField]
+        private Variable[] m_Variables;
+        [SerializeField]
+        private DungeonGenerator.Condition[] m_Conditions;
     }
 }

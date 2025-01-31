@@ -3,11 +3,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Dungeons {
+    /// <summary>
+    /// The DungeonDeveloper is used when developing dungeons; It basically provides utilities for geenerating, resetting, and stepping through the dungeon generation process while modifying assets.
+    /// The hotkeys, setup by the DungeonDeveloper prefab, are as follows.
+    /// 
+    /// R - start / resume.
+    /// P - pause.
+    /// G - generate.
+    /// S - generate step.
+    /// T - generate steps as defined by <see cref="steps"/>.
+    /// 
+    /// </summary>
     public class DungeonDeveloper : MonoBehaviour {
         [SerializeField]
         private DungeonLayout layout;
         [SerializeField]
         private float speed;
+        [SerializeField]
+        private int steps;
         [SerializeField]
         private Vector2 point;
 
@@ -15,7 +28,8 @@ namespace Dungeons {
         private DungeonGenerator generator;
 
         private void OnDrawGizmos() {
-            if (generator != null) {
+            //Draws some debug utilities that was used while developing the dungeon generation algorithm.
+            if (false && generator != null) {
                 void DrawNode(int node, int depth) {
                     if (node >= generator.Collision.Nodes.Length)
                         return;
@@ -56,20 +70,6 @@ namespace Dungeons {
             }
         }
         
-        public void Test(InputAction.CallbackContext context) {
-            if (context.phase != InputActionPhase.Started)
-                return;
-            if (generator == null)
-                generator = new(layout);
-            System.Diagnostics.Stopwatch w = System.Diagnostics.Stopwatch.StartNew();
-            var roomCountGenerating = 1000;
-            var roomCountPre = generator.Elements.Length;
-            generator.Generate(roomCountGenerating);
-            var roomCountPost = generator.Elements.Length;
-            w.Stop();
-            Debug.Log(string.Format("Generating {0} took {1}ms", roomCountPost - roomCountPre, w.Elapsed.TotalMilliseconds));
-            generator.Instantiate(transform);
-        }
         public void Step(InputAction.CallbackContext context) {
             if (context.phase != InputActionPhase.Started)
                 return;
@@ -116,6 +116,20 @@ namespace Dungeons {
             System.Diagnostics.Stopwatch w = System.Diagnostics.Stopwatch.StartNew();
             var roomCountPre = generator.Elements.Length;
             generator.Generate();
+            var roomCountPost = generator.Elements.Length;
+            w.Stop();
+            Debug.Log(string.Format("Generating {0} took {1}ms", roomCountPost - roomCountPre, w.Elapsed.TotalMilliseconds));
+            generator.Instantiate(transform);
+        }
+        public void GenerateSteps(InputAction.CallbackContext context) {
+            if (context.phase != InputActionPhase.Started)
+                return;
+            if (generator == null)
+                generator = new(layout);
+            System.Diagnostics.Stopwatch w = System.Diagnostics.Stopwatch.StartNew();
+            var roomCountGenerating = steps;
+            var roomCountPre = generator.Elements.Length;
+            generator.Generate(roomCountGenerating);
             var roomCountPost = generator.Elements.Length;
             w.Stop();
             Debug.Log(string.Format("Generating {0} took {1}ms", roomCountPost - roomCountPre, w.Elapsed.TotalMilliseconds));
