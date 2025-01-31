@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// The 2nd player will ocntrol the familiar of the player
 /// </summary>
-public class CombatCoopFamiliar : MonoBehaviour
+public class CombatCoopFamiliar : CombatControllerInterface
 {
         [Header("References")]
     [Tooltip("The saved stats of this player")]
@@ -594,6 +594,7 @@ public class CombatCoopFamiliar : MonoBehaviour
                 break;
             case UniqueEquipEffect.projectileRadiusIncrease:
                 combatControls.projectileSizeMod += mod_.amount;
+                break;
             case UniqueEquipEffect.basicMeleeSpeed:
                 combatControls.attackSpeedMod += mod_.amount;
                 break;

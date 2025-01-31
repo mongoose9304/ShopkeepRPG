@@ -4,7 +4,7 @@ using UnityEngine;
 using MoreMountains.Tools;
 using MoreMountains.Feedbacks;
 using UnityEngine.InputSystem;
-public class CombatPlayerMovement : MonoBehaviour
+public class CombatPlayerMovement : CombatControllerInterface
 {
     //FFYL stats
     [SerializeField] public bool isInSaveYourSoulMode;
