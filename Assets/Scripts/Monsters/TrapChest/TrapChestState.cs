@@ -176,11 +176,12 @@ public class PatrolRotateState : MonoBehaviour, IState {
 
 public class ChasePlayerState : MonoBehaviour, IState {
 
-    float chaseTime = 10.0f;
+    float chaseTime = 5.0f;
     float timer = 0.0f;
     float chaseSpeed = 1.0f;
 
-    float minCloseDistance = 0.1f; 
+    float runAway = 3.0f;
+    float minCloseDistance = 1.0f; 
     bool playerCaught = false; 
 
     Transform playerTransform;
@@ -209,10 +210,18 @@ public class ChasePlayerState : MonoBehaviour, IState {
             StartChase();
         }
         else {
+            if (timer >= chaseTime) {
+                if (timer <= chaseTime + 5.0f) {
+                    RunAway();
+                }
+              
+            }
+            transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 3.0f);
+            //if (transform.localScale.magnitude <= 0.01f) {
+            //    Destroy(gameObject);
+            //}
 
-            Debug.Log("Give up");
 
-        
         }
     }
 
@@ -221,6 +230,13 @@ public class ChasePlayerState : MonoBehaviour, IState {
         transform.position += direction * chaseSpeed * Time.deltaTime;
         Quaternion facePlayer = Quaternion.LookRotation(direction);
         transform.rotation = facePlayer;
+    }
+
+    public void RunAway() {
+        Vector3 direction = (transform.position- playerTransform.position).normalized;
+        transform.position += direction * chaseSpeed* 1.5f * Time.deltaTime;
+        Quaternion faceAway = Quaternion.LookRotation(-direction);
+        transform.rotation = faceAway;
     }
 }
 
