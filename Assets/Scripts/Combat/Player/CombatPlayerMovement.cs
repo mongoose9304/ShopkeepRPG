@@ -35,6 +35,7 @@ public class CombatPlayerMovement : MonoBehaviour
    [SerializeField] LayerMask wallMask;
    [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    private int physicalDashLevel;
     public CombatPlayerActions combatActions;
     //targeting and lock on
     [SerializeField] GameObject currentTarget;
@@ -68,6 +69,11 @@ public class CombatPlayerMovement : MonoBehaviour
     [SerializeField] GameObject skullHead;
     public bool extraLife;
     bool hasUsedExtraLife;
+    //DashAttacks
+    public float dashDamageModifier;
+    public float dashDamageBase;
+    public float physicalDashAttackCooldownMax;
+    float physicalDashAttackCooldownCurrent;
 
 
     public float maxManaRechargeDelay;
@@ -78,13 +84,6 @@ public class CombatPlayerMovement : MonoBehaviour
     private GameObject tempObj;
     public GameObject levelUpEffect;
     //guard settings
-    public GameObject guardObject;
-    public float maxGuardTime;
-    float currentGuardTime;
-    public float secondsToRechargeGuardTime;
-    public float guardChargeDelayMax;
-    float guardChargeDelay;
-    bool isGuarding;
 
     [Header("Interactions")]
     [Tooltip("All the objects the player is currently in range to interact with")]
@@ -92,7 +91,7 @@ public class CombatPlayerMovement : MonoBehaviour
     [Tooltip("The object the player is currently locked onto")]
     [SerializeField] GameObject interactableObjectTarget;
     [Tooltip("REFERENCE to gameobject used to show what you are locked onto")]
-    [SerializeField] GameObject interactableObjectLockOnObject;
+    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
 
     [Header("UI")]
     public MMProgressBar healthBar;
@@ -104,6 +103,12 @@ public class CombatPlayerMovement : MonoBehaviour
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    [Header("References")]
+    //Physical Dash Attack
+    [Tooltip("REFERENCE to the AOE splash attacks when the player dashes")]
+    public MMMiniObjectPooler physicalDashAttackPool;
+    public Transform physicalDashAttackSpawn;
+
     //used to take control of object when player 1 joins
     public void SetUpControls(PlayerInput myInput)
     {
@@ -155,7 +160,6 @@ public class CombatPlayerMovement : MonoBehaviour
         }
         ChargeMana();
         RegenHealth();
-        ChargeGuardTime();
         if (combatActions.isBusy)
             return;
         GetClosestInteractableObject();
@@ -168,7 +172,6 @@ public class CombatPlayerMovement : MonoBehaviour
             if(combatActions.isUsingBasicAttackMelee)
             {
                 moveInput /= 1.2f;
-                TryGuarding();
                
             }
             else if(combatActions.isUsingBasicAttackRanged)
@@ -179,7 +182,6 @@ public class CombatPlayerMovement : MonoBehaviour
         }
         if(!combatActions.isUsingBasicAttackMelee)
         {
-            StopGuarding();
         }
      moveInput=PreventGoingThroughWalls(moveInput);
        
@@ -189,6 +191,8 @@ public class CombatPlayerMovement : MonoBehaviour
 
             if (dashCoolDown > 0)
                 dashCoolDown -= Time.deltaTime;
+            if(physicalDashAttackCooldownCurrent>0)
+                physicalDashAttackCooldownCurrent -= Time.deltaTime;
 
 
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
@@ -214,7 +218,13 @@ public class CombatPlayerMovement : MonoBehaviour
                 if (dashTime <= 0)
                 {
                     isDashing = false;
-                    GroundCheck();
+                    if(GroundCheck())
+                    {
+                        if (physicalDashLevel > 0)
+                        {
+                            DashPhysicalAttack();
+                        }
+                    }
                     return;
                 }
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
@@ -235,11 +245,30 @@ public class CombatPlayerMovement : MonoBehaviour
             return;
         if (isInSaveYourSoulMode)
             return;
+
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
         }
+    }
+    private void DashPhysicalAttack()
+    {
+        if(physicalDashAttackCooldownCurrent>0)
+        {
+            return;
+        }
+        physicalDashAttackCooldownCurrent = physicalDashAttackCooldownMax;
+        GameObject obj = physicalDashAttackPool.GetPooledGameObject();
+        if(physicalDashLevel==1)
+        obj.transform.localScale = new Vector3(0.45f, 0.45f, 0.45f);
+        else if(physicalDashLevel == 2)
+        {
+            obj.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+        obj.GetComponent<PlayerDamageCollider>().damage = PhysicalAtk*dashDamageModifier*dashDamageBase*physicalDashLevel;
+        obj.transform.position = physicalDashAttackSpawn.position;
+        obj.SetActive(true);
     }
     private void OnPause(InputAction.CallbackContext obj)
     {
@@ -337,7 +366,7 @@ public class CombatPlayerMovement : MonoBehaviour
 
 
     }
-    private void GroundCheck()
+    private bool GroundCheck()
     {
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10,groundMask))
         {
@@ -345,7 +374,9 @@ public class CombatPlayerMovement : MonoBehaviour
             transform.position = dashStartPos;
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
+            return false;
         }
+        return true;
     }
 
     void CheckForSoftLockOn()
@@ -400,19 +431,16 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     public void TakeDamage(float damage_,float hitstun_, Element element_, float knockBack_ = 0, GameObject knockBackObject = null,bool isMystical=false)
     {
-        if(isInSaveYourSoulMode){ return; }
-        if (isGuarding) { return; }
-        float newDamage = damage_;
+        if(isInSaveYourSoulMode||isDashing){ return; }
+        float newDamage = 0;
         if(isMystical)
         {
-            newDamage -= MysticalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, MysticalDef);
         }
         else
         {
-            newDamage -= PhysicalDef;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, PhysicalDef);
         }
-        if (newDamage < damage_ * 0.05f)
-            newDamage = damage_ * 0.05f;
         currentHealth -= newDamage;
         if (currentHealth <= 0)
         {
@@ -433,6 +461,15 @@ public class CombatPlayerMovement : MonoBehaviour
             }
             healthBar.UpdateBar01(currentHealth / maxHealth);
         
+    }
+    public void LifeStealHeal(float amount_)
+    {
+        currentHealth += amount_;
+        if (currentHealth >= maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        healthBar.SetBar01(currentHealth / maxHealth);
     }
     public void ManaPickup(float amount_)
     {
@@ -468,44 +505,9 @@ public class CombatPlayerMovement : MonoBehaviour
             timesYouHaveDied += 1;
         }
     }
-    public void TryGuarding()
-    {
-        guardChargeDelay = guardChargeDelayMax;
-        if(currentGuardTime>0)
-        {
-            currentGuardTime -= Time.deltaTime;
-            shieldBar.SetBar01(currentGuardTime/maxGuardTime);
-            guardObject.SetActive(true);
-            isGuarding = true;
-        }
-        else
-        {
-            StopGuarding();
-        }
-        
-    }
-    public void StopGuarding()
-    {
-        guardObject.SetActive(false);
-        isGuarding = false;
-    }
-    private void ChargeGuardTime()
-    {
-        if (combatActions.isUsingBasicAttackMelee)
-        {
-            return;
 
-        }
-        if(guardChargeDelay>0)
-        {
-            guardChargeDelay -= Time.deltaTime;
-            return;
-        }
-        currentGuardTime += Time.deltaTime*(maxGuardTime / secondsToRechargeGuardTime);
-        if (currentGuardTime > maxGuardTime)
-            currentGuardTime = maxGuardTime;
-        shieldBar.SetBar01(currentGuardTime / maxGuardTime);
-    }
+
+
     public void TrueDeath()
     {
         if(extraLife)
@@ -590,7 +592,7 @@ public class CombatPlayerMovement : MonoBehaviour
             return;
         }
       
-        currentMana += manaRechargeRate * Time.deltaTime;
+        currentMana += (manaRechargeRate * maxMana) * Time.deltaTime;
         if(ManaRegenPercent!=0)
         {
             currentMana += ManaRegenPercent*maxMana * Time.deltaTime;
@@ -612,8 +614,8 @@ public class CombatPlayerMovement : MonoBehaviour
     }
     private void CalculateStats()
     {
-        maxHealth = (myStats.Vitality * 5);
-        maxMana = (myStats.Soul * 5);
+        maxHealth = (myStats.Vitality * 10);
+        maxMana = (myStats.Soul * 10);
         PhysicalAtk = (myStats.PhysicalProwess);
         MysticalAtk = (myStats.MysticalProwess);
         PhysicalDef = (myStats.PhysicalDefense);
@@ -623,7 +625,7 @@ public class CombatPlayerMovement : MonoBehaviour
         ManaRegenPercent = 0;
         combatActions.attackSpeedMod = 1;
         combatActions.fireRateMod = 1;
-        combatActions.lifeStealPercent = 0;
+        combatActions.basicMeleelifeStealPercent = 0;
     }
     public void CalculateAllModifiers()
     {
@@ -763,8 +765,8 @@ public class CombatPlayerMovement : MonoBehaviour
             case UniqueEquipEffect.basicRangedSpeed:
                 combatActions.fireRateMod += mod_.amount;
                 break;
-            case UniqueEquipEffect.LifeSteal:
-                combatActions.lifeStealPercent += mod_.amount;
+            case UniqueEquipEffect.basicMeleeLifeSteal:
+                combatActions.basicMeleelifeStealPercent += mod_.amount;
                 break;
         }
     }
@@ -835,11 +837,17 @@ public class CombatPlayerMovement : MonoBehaviour
         swordPDamage.amount = 1;
         swordPDamage.uniqueEffect = UniqueEquipEffect.None;
 
+        EquipModifier swordNegativeMDamage = new EquipModifier();
+        swordNegativeMDamage.isMultiplicative = true;
+        swordNegativeMDamage.modName = "swordMysticalDamageReduction";
+        swordNegativeMDamage.amount = 1;
+        swordNegativeMDamage.uniqueEffect = UniqueEquipEffect.None;
+
         EquipModifier swordLifeSteal = new EquipModifier();
-        swordPDamage.isMultiplicative = false;
-        swordPDamage.modName = "swordLifeSteal";
-        swordPDamage.amount = 0;
-        swordPDamage.uniqueEffect = UniqueEquipEffect.LifeSteal;
+        swordLifeSteal.isMultiplicative = false;
+        swordLifeSteal.modName = "swordLifeSteal";
+        swordLifeSteal.amount = 0;
+        swordLifeSteal.uniqueEffect = UniqueEquipEffect.basicMeleeLifeSteal;
 
         //Dragon
         EquipModifier dragonSpeed = new EquipModifier();
@@ -853,7 +861,6 @@ public class CombatPlayerMovement : MonoBehaviour
         dragonMDamage.modName = "dragonMysticalDamage";
         dragonMDamage.amount = 1;
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
-        combatActions.rangedPierce = false;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -864,23 +871,34 @@ public class CombatPlayerMovement : MonoBehaviour
                     mySkeltonMaster.maxMageFollowers = 0;
                     mySkeltonMaster.maxFollowers = 0;
                     mySkeltonMaster.maxSuperFollowers = 0;
-                    extraLife = false;
-                    for(int i=0;i<tal_.levelInvested;i++)
+                    switch(tal_.levelInvested)
                     {
-                        if(i<5)
-                        {
+                        case 0:
+                            break;
+                        case 1:
                             mySkeltonMaster.enabled = true;
                             mySkeltonMaster.maxFollowers += 1;
-                        }
-                        else if (i < 10)
-                        {
+                            break;
+                        case 2:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            break;
+                        case 3:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
                             mySkeltonMaster.maxMageFollowers += 1;
-                        }
-                        else if (i == 10)
-                        {
+                            break;
+                        case 4:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
+                            break;
+                        case 5:
+                            mySkeltonMaster.enabled = true;
+                            mySkeltonMaster.maxFollowers += 3;
+                            mySkeltonMaster.maxMageFollowers += 3;
                             mySkeltonMaster.maxSuperFollowers += 1;
-                            extraLife = true;
-                        }
+                            break;
                     }
                     mySkeltonMaster.Reset();
                     break;
@@ -924,12 +942,48 @@ public class CombatPlayerMovement : MonoBehaviour
                         }
                         else if (i == 10)
                         {
-                            combatActions.rangedPierce = true;
+                            
                         }
                     }
                     break;
                 case "Sword":
-
+                    physicalDashLevel = 0;
+                    switch (tal_.levelInvested)
+                    {
+                        case 0:
+                            swordSpeed.amount += 0.2f;
+                            break;
+                        case 1:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 2:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.1f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 3:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            break;
+                        case 4:
+                            swordSpeed.amount += 0.2f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 1;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                        case 5:
+                            swordSpeed.amount += 0.5f;
+                            swordPDamage.amount += 0.3f;
+                            swordNegativeMDamage.amount -= 0.2f;
+                            physicalDashLevel = 2;
+                            swordLifeSteal.amount = 0.1f;
+                            break;
+                    }
                     for (int i = 0; i < tal_.levelInvested; i++)
                     {
                         if (i < 5)
@@ -968,11 +1022,22 @@ public class CombatPlayerMovement : MonoBehaviour
         combatActions.myCoopFamiliar.AddExternalMod(dragonMDamage);
         AddExternalMod(dragonSpeed);
         AddExternalMod(dragonMDamage);
+
         //Sword mods
+        combatActions.myFamiliar.AddExternalMod(swordSpeed);
         combatActions.myFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myFamiliar.AddExternalMod(swordLifeSteal);
+
+        combatActions.myCoopFamiliar.AddExternalMod(swordSpeed);
         combatActions.myCoopFamiliar.AddExternalMod(swordPDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordNegativeMDamage);
+        combatActions.myCoopFamiliar.AddExternalMod(swordLifeSteal);
+        combatActions.myCoopFamiliar.physicalDashLevel = physicalDashLevel;
+
         AddExternalMod(swordSpeed);
         AddExternalMod(swordPDamage);
+        AddExternalMod(swordNegativeMDamage);
         AddExternalMod(swordLifeSteal);
 
 
@@ -994,7 +1059,7 @@ public class CombatPlayerMovement : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -1017,7 +1082,7 @@ public class CombatPlayerMovement : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.SetActive(true);
+            interactableObjectLockOnObject.gameObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         foreach (GameObject obj in myInteractableObjects)
@@ -1035,7 +1100,7 @@ public class CombatPlayerMovement : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact();
+                obj.Interact(gameObject,interactableObjectLockOnObject);
             }
         }
     }
@@ -1047,13 +1112,14 @@ public class CombatPlayerMovement : MonoBehaviour
     {
         InteractHeld = false;
     }
+    
     public void RemoveInteractableObject(GameObject obj_)
     {
         myInteractableObjects.Remove(obj_);
         if (interactableObjectTarget = obj_)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.SetActive(false);
+            interactableObjectLockOnObject.gameObject.SetActive(false);
         }
     }
 }

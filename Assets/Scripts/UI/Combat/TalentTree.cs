@@ -12,7 +12,7 @@ public class TalentTree : MonoBehaviour
     public void InvestPoint()
     {
         
-        if (pointsInvested >= 11)
+        if (pointsInvested >= 5)
             return;
         if (myTalentUI.playerTalents.unspentTalents <= 0)
             return;
@@ -38,18 +38,8 @@ public class TalentTree : MonoBehaviour
             return;
         for(int i=0;i<points_;i++)
         {
-            if(i<5)
-            {
-                mySlots[0].AddPoint();
-            }
-            else if(i<10)
-            {
-                mySlots[1].AddPoint();
-            }
-            else if(i < 11)
-            {
-                mySlots[2].AddPoint();
-            }
+
+            mySlots[i].AddPoint();      
         }
 
     }

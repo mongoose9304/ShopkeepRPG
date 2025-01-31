@@ -19,8 +19,11 @@ public class Hotbar : MonoBehaviour
     private bool actionsEnabled;
     private void Start()
     {
+        //Checking the inputs for testing
+        PlayerManager.instance.player1Joined.AddListener(EnableActions);
+
         //Adding test items for debug pruposes, remove when ready 
-        foreach(ItemData data in TESTITEMS)
+        foreach (ItemData data in TESTITEMS)
         {
             AddItemToHotbar(data, 10);
         }
@@ -28,7 +31,7 @@ public class Hotbar : MonoBehaviour
     }
     private void OnEnable()
     {
-        EnableActions();
+        
     }
     private void OnDisable()
     {
@@ -47,6 +50,7 @@ public class Hotbar : MonoBehaviour
         if (CombatPlayerManager.instance.GetPlayer(0).isActiveAndEnabled)
         {
             CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("RTAction").performed += UseItemPressed;
+
             movement = CombatPlayerManager.instance.GetPlayer(0).combatMovement.playerActionMap.FindAction("Dpad");
             actionsEnabled = false;
         }
@@ -62,6 +66,12 @@ public class Hotbar : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
+
+
+        //If the input doesn't exist, then no need to execute the rest
+        if (movement == null)
+            return;
+
         GetInput();
         if (delayBetweenItemUsages > 0)
         {

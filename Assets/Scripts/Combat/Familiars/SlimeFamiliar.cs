@@ -32,6 +32,10 @@ public class SlimeFamiliar : CombatFamiliar
             if (hitCollider.tag == "Enemy")
             {
                 hitCollider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(PhysicalAtk, 0, Element.Neutral, 0, this.gameObject);
+                if (basicMeleelifeStealPercent > 0)
+                {
+                    CombatPlayerManager.instance.FamiliarLifeSteal(PhysicalAtk * basicMeleelifeStealPercent);
+                }
             }
         }
     }
@@ -199,7 +203,7 @@ public class SlimeFamiliar : CombatFamiliar
     private void WaitForAttacks()
     {
        
-        AttackCooldowncurrent -= Time.deltaTime;
+        AttackCooldowncurrent -= Time.deltaTime*attackSpeedMod;
         specialAttackCooldowncurrent -= Time.deltaTime;
         ultimateAttackCooldowncurrent -= Time.deltaTime;
         if (!target)

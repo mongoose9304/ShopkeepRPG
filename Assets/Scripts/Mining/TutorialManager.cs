@@ -65,12 +65,15 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 2:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
+                tutUIManager.ChangeSpeakerEmotion(1);
                 break;
             case 3:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.ChangeSpeakerEmotion(0);
                 break;
             case 4:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.ChangeSpeakerEmotion(0);
                 break;
             case 5:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 1, true);
@@ -81,6 +84,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 7:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
+                tutUIManager.ChangeSpeakerEmotion(1);
                 break;
 
         }
@@ -101,6 +105,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 2:
                 tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState], 2, true);
+                tutUIManager.ChangeSpeakerEmotion(2);
                 break;
             case 3:
                 tutUIManager.SetMessage(tutorialAlternateMessages[tutorialState]);

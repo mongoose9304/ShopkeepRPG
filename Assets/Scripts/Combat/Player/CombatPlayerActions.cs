@@ -33,12 +33,20 @@ public class CombatPlayerActions : MonoBehaviour
     float currentSpecialBCooldown;
     public GameObject specialAbilityHolder;
     public PlayerSpecialAbilities specialAbilities;
+    [Header("Potions")]
+    public float healthPotionMaxCooldown;
+    float healthPotionCurrentCooldown;
+    public float healthPotionPercent;
+
+    public float manaPotionMaxCooldown;
+    float manaPotionCurrentCooldown;
+    public float manaPotionPercent;
+
     [Header("Modifiers")]
     [SerializeField] private float fireRate;
     public float fireRateMod = 1;
     public float attackSpeedMod = 1;
-    public float lifeStealPercent = 0;
-    public bool rangedPierce;
+    public float basicMeleelifeStealPercent = 0;
 
     [Header("Familiar")]
     public bool coopPlayer;
@@ -55,6 +63,8 @@ public class CombatPlayerActions : MonoBehaviour
     public GameObject chargesUIBGB;
     public TextMeshProUGUI chargesTextB;
     public MMProgressBar ultimateCoolDownBar;
+    public MMProgressBar healthPotionBar;
+    public MMProgressBar manaPotionBar;
     [Header("Audio")]
     public AudioClip basicRangedAudio;
     [Header("Inputs")]
@@ -71,31 +81,35 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void EnableActions()
     {
-        combatMovement.playerActionMap.FindAction("XAction").performed += OnMeleePressed;
-        combatMovement.playerActionMap.FindAction("XAction").canceled += OnMeleeReleased;
-        combatMovement.playerActionMap.FindAction("AAction").performed += OnRangedPressed;
-        combatMovement.playerActionMap.FindAction("AAction").canceled += OnRangedReleased;
+        combatMovement.playerActionMap.FindAction("AAction").performed += OnMeleePressed;
+        combatMovement.playerActionMap.FindAction("AAction").canceled += OnMeleeReleased;
+        combatMovement.playerActionMap.FindAction("XAction").performed += OnRangedPressed;
+        combatMovement.playerActionMap.FindAction("XAction").canceled += OnRangedReleased;
         combatMovement.playerActionMap.FindAction("LBAction").performed += OnSpecial1Pressed;
         combatMovement.playerActionMap.FindAction("LBAction").canceled += OnSpecial1Released;
         combatMovement.playerActionMap.FindAction("RBAction").performed += OnSpecial2Pressed;
         combatMovement.playerActionMap.FindAction("RBAction").canceled += OnSpecial2Released;
         combatMovement.playerActionMap.FindAction("LTAction").performed += OnUltimatePressed;
         combatMovement.playerActionMap.FindAction("LTAction").canceled += OnUltimateReleased;
+        combatMovement.playerActionMap.FindAction("DPadRight").performed += OnHealthPotionPressed;
+        combatMovement.playerActionMap.FindAction("DPadLeft").performed += OnManaPotionPressed;
     }
     private void OnDisable()
     {
         if (combatMovement.playerActionMap!=null)
         {
-            combatMovement.playerActionMap.FindAction("XAction").performed -= OnMeleePressed;
-            combatMovement.playerActionMap.FindAction("XAction").canceled -= OnMeleeReleased;
-            combatMovement.playerActionMap.FindAction("AAction").performed -= OnRangedPressed;
-            combatMovement.playerActionMap.FindAction("AAction").canceled -= OnRangedReleased;
+            combatMovement.playerActionMap.FindAction("AAction").performed -= OnMeleePressed;
+            combatMovement.playerActionMap.FindAction("AAction").canceled -= OnMeleeReleased;
+            combatMovement.playerActionMap.FindAction("XAction").performed -= OnRangedPressed;
+            combatMovement.playerActionMap.FindAction("XAction").canceled -= OnRangedReleased;
             combatMovement.playerActionMap.FindAction("LBAction").performed -= OnSpecial1Pressed;
             combatMovement.playerActionMap.FindAction("LBAction").canceled -= OnSpecial1Released;
             combatMovement.playerActionMap.FindAction("RBAction").performed -= OnSpecial2Pressed;
             combatMovement.playerActionMap.FindAction("RBAction").canceled -= OnSpecial2Released;
             combatMovement.playerActionMap.FindAction("LTAction").performed -= OnUltimatePressed;
             combatMovement.playerActionMap.FindAction("LTAction").canceled -= OnUltimateReleased;
+            combatMovement.playerActionMap.FindAction("DPadRight").performed -= OnHealthPotionPressed;
+            combatMovement.playerActionMap.FindAction("DPadLeft").performed -= OnManaPotionPressed;
         }
         }
         private void Update()
@@ -196,7 +210,20 @@ public class CombatPlayerActions : MonoBehaviour
         }
         ultimateCoolDownBar.SetBar01(myFamiliar.GetUltimateAttackCooldown());
      
-        if(familarRespawnTimer>0)
+        if(healthPotionCurrentCooldown>0)
+        {
+            healthPotionCurrentCooldown -= Time.deltaTime;
+            healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
+        }
+        if (manaPotionCurrentCooldown > 0)
+        {
+            manaPotionCurrentCooldown -= Time.deltaTime;
+            manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
+        }
+
+
+
+        if (familarRespawnTimer>0)
         {
          
             familarRespawnTimer -= Time.deltaTime;
@@ -236,7 +263,6 @@ public class CombatPlayerActions : MonoBehaviour
                 tempObj.GetComponent<HomingAttack>().target = null;
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
-            tempObj.GetComponent<PlayerDamageCollider>().canPierceEnemies = rangedPierce;
             currentFireRate = fireRate;
             MMSoundManager.Instance.PlaySound(basicRangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
           false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
@@ -363,7 +389,7 @@ public class CombatPlayerActions : MonoBehaviour
     }
     public void SetStats(float basicMeleeDamage,float basicRangedDamage_,Element rangedE_,Element meleeE_)
     {
-        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,lifeStealPercent);
+        meleeObject.SetDamage(basicMeleeDamage, meleeE_,attackSpeedMod,basicMeleelifeStealPercent);
         basicRangedDamage = basicRangedDamage_;
         basicRangedElement = rangedE_;
     }
@@ -431,6 +457,22 @@ public class CombatPlayerActions : MonoBehaviour
         //myFamiliar.gameObject.SetActive(true);
 
     }
+    private void UseHealthPotion()
+    {
+        if (healthPotionCurrentCooldown > 0)
+            return;
+        healthPotionCurrentCooldown = healthPotionMaxCooldown;
+        combatMovement.HealthPickup(healthPotionPercent);
+        healthPotionBar.SetBar01((healthPotionMaxCooldown - healthPotionCurrentCooldown) / healthPotionMaxCooldown);
+    }
+    private void UseManaPotion()
+    {
+        if (manaPotionCurrentCooldown > 0)
+            return;
+        manaPotionCurrentCooldown = manaPotionMaxCooldown;
+        combatMovement.ManaPickup(manaPotionPercent);
+        manaPotionBar.SetBar01((manaPotionMaxCooldown - manaPotionCurrentCooldown) / manaPotionMaxCooldown);
+    }
     //New Inputs, the pressed and released funtions allow us to check for holding buttons
     private void OnMeleePressed(InputAction.CallbackContext obj)
     {
@@ -472,5 +514,17 @@ public class CombatPlayerActions : MonoBehaviour
     private void OnUltimateReleased(InputAction.CallbackContext obj)
     {
         PlayerIsHoldingUlitmate = false;
+    }
+    private void OnHealthPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseHealthPotion();
+    }
+    private void OnManaPotionPressed(InputAction.CallbackContext objdd)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        UseManaPotion();
     }
 }

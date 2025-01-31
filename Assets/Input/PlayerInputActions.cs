@@ -152,6 +152,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DPadRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb9e2218-ccef-44cf-85e9-082a3cf8a338"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DPadLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""c13f0f05-daa8-4931-8701-8015f26898cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -269,6 +287,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6e4bda21-c3dc-41cf-86ff-dbb8b158181e"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a34804a1-f412-4791-8dd1-212167318c79"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -398,6 +427,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""cf36e7b6-1873-4df3-919d-6959723ce3bb"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""2D Vector"",
                     ""id"": ""19e21432-fd78-4f2e-a95d-1b47dde631a5"",
                     ""path"": ""2DVector"",
@@ -473,6 +513,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f57c590-e1cf-4c65-b7e1-cca41b6ed193"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9237006f-5e74-4dd3-bb8e-4dfd8a3612b3"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DPadLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -495,6 +557,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Dpad = m_Player.FindAction("Dpad", throwIfNotFound: true);
         m_Player_SelectAction = m_Player.FindAction("SelectAction", throwIfNotFound: true);
         m_Player_UIMovement = m_Player.FindAction("UIMovement", throwIfNotFound: true);
+        m_Player_DPadRight = m_Player.FindAction("DPadRight", throwIfNotFound: true);
+        m_Player_DPadLeft = m_Player.FindAction("DPadLeft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -570,6 +634,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dpad;
     private readonly InputAction m_Player_SelectAction;
     private readonly InputAction m_Player_UIMovement;
+    private readonly InputAction m_Player_DPadRight;
+    private readonly InputAction m_Player_DPadLeft;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -588,6 +654,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Dpad => m_Wrapper.m_Player_Dpad;
         public InputAction @SelectAction => m_Wrapper.m_Player_SelectAction;
         public InputAction @UIMovement => m_Wrapper.m_Player_UIMovement;
+        public InputAction @DPadRight => m_Wrapper.m_Player_DPadRight;
+        public InputAction @DPadLeft => m_Wrapper.m_Player_DPadLeft;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -639,6 +707,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UIMovement.started += instance.OnUIMovement;
             @UIMovement.performed += instance.OnUIMovement;
             @UIMovement.canceled += instance.OnUIMovement;
+            @DPadRight.started += instance.OnDPadRight;
+            @DPadRight.performed += instance.OnDPadRight;
+            @DPadRight.canceled += instance.OnDPadRight;
+            @DPadLeft.started += instance.OnDPadLeft;
+            @DPadLeft.performed += instance.OnDPadLeft;
+            @DPadLeft.canceled += instance.OnDPadLeft;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -685,6 +759,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @UIMovement.started -= instance.OnUIMovement;
             @UIMovement.performed -= instance.OnUIMovement;
             @UIMovement.canceled -= instance.OnUIMovement;
+            @DPadRight.started -= instance.OnDPadRight;
+            @DPadRight.performed -= instance.OnDPadRight;
+            @DPadRight.canceled -= instance.OnDPadRight;
+            @DPadLeft.started -= instance.OnDPadLeft;
+            @DPadLeft.performed -= instance.OnDPadLeft;
+            @DPadLeft.canceled -= instance.OnDPadLeft;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -718,5 +798,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnDpad(InputAction.CallbackContext context);
         void OnSelectAction(InputAction.CallbackContext context);
         void OnUIMovement(InputAction.CallbackContext context);
+        void OnDPadRight(InputAction.CallbackContext context);
+        void OnDPadLeft(InputAction.CallbackContext context);
     }
 }

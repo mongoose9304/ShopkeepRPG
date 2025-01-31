@@ -14,7 +14,7 @@ public class TrapDamageCollider : MonoBehaviour
     public Element element;
     [Tooltip("Will the damage be mystical")]
     public bool isMysicalDamage;
-    private void OnTriggerEnter(Collider other)
+    protected  virtual void OnTriggerEnter(Collider other)
     {
         if(other.tag=="Player")
         {
@@ -22,9 +22,13 @@ public class TrapDamageCollider : MonoBehaviour
         }
         else if(other.tag == "Familiar")
         {
-            other.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, element, 0, this.gameObject);
+            other.gameObject.GetComponent<CombatFamiliar>().TakeDamage(damage, 0, element, 0, this.gameObject, isMysicalDamage);
         }
-        if(canDamageEnemies)
+        else if(other.tag == "PlayerFamiliar")
+        {
+            other.gameObject.GetComponent<CombatCoopFamiliar>().TakeDamage(damage, 0, element, 0, this.gameObject, isMysicalDamage);
+        }
+        if (canDamageEnemies)
         {
             if (other.tag == "Enemy")
             {

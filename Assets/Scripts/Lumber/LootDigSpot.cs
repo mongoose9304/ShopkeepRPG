@@ -45,7 +45,7 @@ public class LootDigSpot : InteractableObject
             timeSinceInteration -= Time.deltaTime ;
         }
     }
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         timeSinceInteration = 0.5f;
         diggingAudio.volume = startVolume;
@@ -64,6 +64,10 @@ public class LootDigSpot : InteractableObject
             DropItems();
         }
         AdjustBar();
+        if (btn)
+        {
+            btn.IsInteracting(maxHoldDuration, currentHoldDuration);
+        }
     }
     void DropItems()
     {
@@ -87,7 +91,7 @@ public class LootDigSpot : InteractableObject
     }
     private void AdjustBar()
     {
-        myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
+        //myUIBar.UpdateBar01(currentHoldDuration / maxHoldDuration);
     }
     IEnumerator FadeAudio()
     {

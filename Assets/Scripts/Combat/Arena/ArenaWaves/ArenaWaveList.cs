@@ -13,6 +13,7 @@ public class ArenaWaveList : ScriptableObject
     public int extraEnemiesPerWave;
     public int startingEnemyLevel;
     public int extraEnemyLevelPerWave;
+    [Tooltip("0-1 as 0 to 100%")]
     public float eliteChance;
 
     

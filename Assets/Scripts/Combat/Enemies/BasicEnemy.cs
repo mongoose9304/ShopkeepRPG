@@ -17,6 +17,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] protected float attackDistance;
     [SerializeField] protected float knockBackMax;
     [SerializeField] protected float maxAttackCooldown;
+    [SerializeField] protected LayerMask wallMask;
+    [SerializeField] protected LayerMask groundMask;
     [Tooltip("The data for a monsters stats. All the be")]
     public BasicMonsterData myBaseData;
     [SerializeField] protected float maxHealth;
@@ -63,7 +65,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] float currentTimeBeforeDamageTextFades;
     [SerializeField] float fadeTimeMultiplier;
     [Tooltip("REFERNCE to the team I am on")]
-    [SerializeField] TeamUser myTeamUser;
+    [SerializeField]protected TeamUser myTeamUser;
     public GameObject hexStatusEffect;
     [Tooltip("REFERNCE to the script that allows for items to drop ")]
     LootDropper lootDropper;
@@ -198,23 +200,20 @@ public class BasicEnemy : MonoBehaviour
                 KnockBack(knockBack_, knockBackObject);
             }
         }
-        float newDamage = damage_;
-        if(isHexed)
+        float newDamage = 0;
+
+        EnemyManager.instance.ApplyHitEffect(element_,transform);
+        if (isMystical)
         {
-            newDamage *= 1.5f;
-        }
-        if(isMystical)
-        {
-            newDamage -= mysticalDefence;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, mysticalDefence);
         }
         else
         {
-            newDamage -= physicalDefence;
+            newDamage = CombatDamageCalculator.DamageToEnemyCalculator(damage_, physicalDefence);
         }
-        EnemyManager.instance.ApplyHitEffect(element_,transform);
-        if(newDamage<=damage_*0.05f)
+        if (isHexed)
         {
-            newDamage = damage_ * 0.05f;
+            newDamage *= 1.5f;
         }
         damage_ = Mathf.Round(newDamage);
         currentHealth -= newDamage;
@@ -297,6 +296,7 @@ public class BasicEnemy : MonoBehaviour
             return;
     }
 
+
     /// <summary>
     /// Reset super armor once the enemy has got a a chance to attack
     /// </summary>
@@ -325,7 +325,7 @@ public class BasicEnemy : MonoBehaviour
     /// <summary>
     /// Attack cooldowns
     /// </summary>
-    public void WaitingToAttack()
+    public virtual void WaitingToAttack()
     {
         
         currentAttackCooldown -= Time.deltaTime;
@@ -427,6 +427,30 @@ public class BasicEnemy : MonoBehaviour
             return myT.myTeam;
         }
         return "";
+    }
+    protected bool CheckForWallHit()
+    {
+
+        var dir = transform.TransformDirection(Vector3.forward);
+        if (Physics.Raycast(transform.position, dir, 1.0f, wallMask))
+            return true;
+        dir = transform.TransformDirection(Vector3.right);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
+            return true;
+        dir = transform.TransformDirection(Vector3.left);
+        if (Physics.Raycast(transform.position, dir, 0.5f, wallMask))
+            return true;
+        return false;
+
+    }
+    protected bool GroundCheck()
+    {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10, groundMask))
+        {
+            // transform.position = new Vector3.(0, 0.66f, 0);
+            return true;
+        }
+        return false;
     }
 
 }

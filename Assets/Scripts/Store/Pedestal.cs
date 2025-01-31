@@ -35,7 +35,7 @@ public class Pedestal : InteractableObject
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>
-    public override void Interact(GameObject interactingObject_ = null)
+    public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if (interactingObject_ == null)
             return;

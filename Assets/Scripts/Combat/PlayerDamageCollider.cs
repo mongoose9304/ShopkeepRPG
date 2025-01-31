@@ -24,7 +24,7 @@ public class PlayerDamageCollider : MonoBehaviour
                 basicEnemyRef.ApplyDamage(damage, hitStun, element,knockBack,this.gameObject,damageTag,isMysticalDamage) ;
               if(lifeSteal>0)
                 {
-                    CombatPlayerManager.instance.HealPlayer(damage * lifeSteal);
+                    CombatPlayerManager.instance.PlayerLifeSteal(damage * lifeSteal);
                 }
             }
         }

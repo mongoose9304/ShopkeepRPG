@@ -1,18 +1,30 @@
+using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private string id;
+    private NPCNavMesh navMesh;
+    private NPCBehavior behavior;
+    private DialogueSystemTrigger trigger;
+
     void Start()
     {
+        navMesh = gameObject.GetComponent<NPCNavMesh>();
+        trigger = gameObject.GetComponent<DialogueSystemTrigger>();
+        CheckSchedule();
         
     }
-
-    // Update is called once per frame
-    void Update()
+    public void CheckSchedule() 
     {
-        
+        behavior = TimeManager.instance.GetBehavior(id);
+        gameObject.transform.position = behavior.patrolWaypoints[0];
+        trigger.conversation = behavior.conversationName;
+        navMesh.waypoints = behavior.patrolWaypoints;
+        transform.position = behavior.patrolWaypoints[0];
+        navMesh.SetupNPC();
     }
 }

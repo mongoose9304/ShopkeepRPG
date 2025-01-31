@@ -14,6 +14,7 @@ public class LumberTutorialManager : TutorialManager
         {
             case 0:
                 tutUIManager.SetJoystickMessage(tutorialMessages[tutorialState]);
+                tutUIManager.ChangeSpeakerEmotion(0);
                 break;
             case 1:
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
@@ -22,18 +23,23 @@ public class LumberTutorialManager : TutorialManager
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 3:
+                tutUIManager.ChangeSpeakerEmotion(1);
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 4:
+                tutUIManager.ChangeSpeakerEmotion(0);
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
                 break;
             case 5:
+                tutUIManager.ChangeSpeakerEmotion(1);
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 3, true);
                 break;
             case 6:
+                tutUIManager.ChangeSpeakerEmotion(0);
                 tutUIManager.SetMessage(tutorialMessages[tutorialState], 2, true);
                 break;
             case 7:
+                tutUIManager.ChangeSpeakerEmotion(1);
                 tutUIManager.SetMessage(tutorialMessages[tutorialState]);
                 break;
 
