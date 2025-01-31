@@ -52,9 +52,9 @@ public class PatrolRotateState : MonoBehaviour, IState {
     //Ray casting for the cone-like field of views
     Vector3 RayOrigin;
     Vector3 RayDirection;
-    private float viewDistance = 5.0f;
+    private float viewDistance = 10.0f;
     private float viewAngle = 90.0f;
-    private int amountOfRays = 10;
+    private int amountOfRays = 15;
 
 
     private float timer = 0.0f;
@@ -73,14 +73,14 @@ public class PatrolRotateState : MonoBehaviour, IState {
     bool playerInViewRange = false;
     public void Enter() {
         Debug.Log("Entering Patrol State");
-        RayOrigin = transform.position;
-        RayDirection = new Vector3(10.0f, 0.0f, 0.0f);
-        
+
+
         startingAngle = transform.rotation.eulerAngles.y; //using euler because i need degrees and not radians
         currentAngle = startingAngle;
 
         targetAngle = angles[1] + startingAngle;
-
+        RayOrigin = transform.position;
+        RayDirection = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
 
         //for the state machine
         trapChestStateMachine = GetComponent<TrapChestStateMachine>();
@@ -140,7 +140,8 @@ public class PatrolRotateState : MonoBehaviour, IState {
     }
 
 
-    void CastRays() {
+    void CastRays()
+    {
         RayOrigin = transform.position;
         //this is to ganerate the cone- like field of view. 
         //Since for this mob we cant use simple colliders
@@ -152,19 +153,22 @@ public class PatrolRotateState : MonoBehaviour, IState {
         {
             float newAngle = startingPoint + angleBetweenRays * i;
             RayDirection = Quaternion.Euler(0, newAngle, 0) * transform.forward;
-           
-            Debug.DrawRay(transform.position, RayDirection * viewDistance , Color.red);
 
-            if (Physics.Raycast(RayOrigin, RayDirection, out RaycastHit hit, viewDistance))
+            Debug.DrawRay(RayOrigin, RayDirection * viewDistance, Color.red);
+
+            RaycastHit[] hit = Physics.RaycastAll(RayOrigin, RayDirection * viewDistance, viewDistance);
+            for (int j = 0; j < hit.Length; j++)
             {
-                if (hit.collider.CompareTag("Player"))
-                { 
+                if (hit[j].collider.CompareTag("Player"))
+                {
+                    Debug.Log("Player Found!");
                     playerInViewRange = true;
+                    break;
                 }
-
             }
         }
     }
+
 
     bool PlayerFound() { return playerInViewRange; }
 }
@@ -174,7 +178,10 @@ public class ChasePlayerState : MonoBehaviour, IState {
 
     float chaseTime = 10.0f;
     float timer = 0.0f;
-    float chaseSpeed = 5.0f;
+    float chaseSpeed = 1.0f;
+
+    float minCloseDistance = 0.1f; 
+    bool playerCaught = false; 
 
     Transform playerTransform;
     public void Enter() {
@@ -188,24 +195,32 @@ public class ChasePlayerState : MonoBehaviour, IState {
         Debug.Log("Exiting Chase State");
     }
 
-    public void ExecuteState() {
-        StartChase();
+    public void ExecuteState()
+    {
+        if (timer <= chaseTime && playerCaught == false)
+        {
+            timer += Time.deltaTime;
+            Debug.Log(timer);
+            if (Vector3.Distance(transform.position, playerTransform.position) < minCloseDistance)
+            {
+                Debug.Log("Player Caught");
+                playerCaught = true;
+            }
+            StartChase();
+        }
+        else {
+
+            Debug.Log("Give up");
+
+        
+        }
     }
 
-
     public void StartChase() { 
-        timer += Time.deltaTime;
         Vector3 direction = (playerTransform.position - transform.position).normalized;
         transform.position += direction * chaseSpeed * Time.deltaTime;
         Quaternion facePlayer = Quaternion.LookRotation(direction);
         transform.rotation = facePlayer;
-
-
-        if (timer >= chaseTime) {
-            Debug.Log("Chase Ended");
-           //give up/fade mechanic;
-        }
-        
     }
 }
 
