@@ -188,11 +188,13 @@ public class SlimeCombatControls : FamiliarCombatControls
         //Applying the proj speed mod there
         if (target_!=null)
         {
-        objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f + (0.01f * projectileSpeedMod)), ForceMode.VelocityChange);
+            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f);
+        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
         }
         else
         {
-            objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position,transform.position+transform.forward*5, -0.1f + (0.01f * projectileSpeedMod)), ForceMode.VelocityChange);
+            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f);
+            objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
         }
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
