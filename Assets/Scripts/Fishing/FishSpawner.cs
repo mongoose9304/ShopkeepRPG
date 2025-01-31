@@ -17,7 +17,6 @@ public class FishSpawner : MonoBehaviour
     private float totalWeight;
 
     private List<GameObject> allFish;
-    private float time;
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +39,8 @@ public class FishSpawner : MonoBehaviour
             newFish.transform.position = transform.position + new Vector3(xz.x, fishSpawnHeight - 3.0f, xz.y);
             FishInWaterBehaviour fwb = newFish.GetComponent<FishInWaterBehaviour>();
             fwb.targetY = fishSpawnHeight;
-            fwb.type = GetRandomFish();
+            fwb.fish.species = GetRandomFish();
+            fwb.fish.size = GetSize(fwb.fish.species);
             allFish.Add(newFish);
         }
 
@@ -70,5 +70,33 @@ public class FishSpawner : MonoBehaviour
 
         Debug.LogWarning("Should not reach here.");
         return FishType.Bass;
+    }
+
+    // Returns a reasonable size for a fish of the given species.
+    float GetSize(FishType species)
+    {
+
+        // I know the breaks are unreachable but they should still be there. Supressing.
+#pragma warning disable CS0162 // Unreachable code detected
+        switch (species)
+        {
+            case FishType.Trout:
+                return Random.Range(12.0f, 31.0f);
+                break;
+            case FishType.Pike:
+                return Random.Range(16.0f, 24.0f);
+                break;
+            case FishType.Bass:
+                return Random.Range(12.0f, 22.0f);
+                break;
+            case FishType.Carp:
+                return Random.Range(7.5f, 15.5f);
+                break;
+            default:
+                Debug.LogWarning("Getting size of an invalid species. Returning 1.0f.");
+                return 1.0f;
+                break;
+        }
+#pragma warning restore CS0162 // Unreachable code detected
     }
 }

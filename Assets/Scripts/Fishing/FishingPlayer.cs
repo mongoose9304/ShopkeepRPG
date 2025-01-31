@@ -1,3 +1,4 @@
+using Cinemachine;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,6 +55,9 @@ public class FishingPlayer : MonoBehaviour
     FishingMinigame menu = null;
     public GameObject steeringWheel;
     public GameObject ship;
+    public GameObject cooler;
+
+    public float raycastDistance = 15.0f;
 
     public void SetUpControls(PlayerInput myInput)
     {
@@ -87,6 +91,7 @@ public class FishingPlayer : MonoBehaviour
 
             // Set bobber trial position
             currentBobber.transform.position = rb.position + castDirection * castPower;
+
             // Zero out the y so that it lies flat on the water surface
             currentBobber.transform.position = new Vector3(currentBobber.transform.position.x, 0.0f, currentBobber.transform.position.z);
 
@@ -98,6 +103,7 @@ public class FishingPlayer : MonoBehaviour
                 castDirection = Vector3.Normalize(moveInput);
             }
             transform.LookAt(rb.position + castDirection);
+
         }
 
         if (canMove == true)
@@ -118,8 +124,12 @@ public class FishingPlayer : MonoBehaviour
                     }
                     else
                     {
+                        if (Vector3.Magnitude(moveInput) > 0.5f)
+                        {
+                            ship.transform.forward = Vector3.Lerp(ship.transform.forward, transform.forward, 0.1f);
+                        }
                         ship.transform.position += PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                        //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
                     }
                 }
                 else
@@ -205,15 +215,18 @@ public class FishingPlayer : MonoBehaviour
 
         if (shipMode == false)
         {
-            if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 5.0f)
+            if (Vector2.Distance(cooler.transform.position, transform.position) < 1.0f)
+            {
+                //ShowCoolerUI();
+            }
+            else if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 1.0f)
             {
                 GoShipMode();
             }
         }
         else
         {
-            shipMode = false;
-            canMove = true;
+            ExitShipMode();
         }
     }
     private void OnInteractReleased(InputAction.CallbackContext obj)
@@ -332,28 +345,27 @@ public class FishingPlayer : MonoBehaviour
         var dir = -transform.up;
         newInput = temp_;
         // Up
-        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, -0.5f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, -0.5f), dir, raycastDistance, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
 
         // Down
         //Debug.DrawLine(transform.position + new Vector3(0f, 5.0f, 0.5f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, .5f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, .5f), dir, raycastDistance, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
         //Debug.DrawLine(transform.position + new Vector3(0.5f, 5.0f, 0f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(0.5f, 10.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 10.0f, 0f), dir, raycastDistance, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
         //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 10.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 10.0f, 0f), dir, raycastDistance, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;
+
         return newInput;
-
-
     }
     private bool CheckForWallHit()
     {
@@ -393,14 +405,46 @@ public class FishingPlayer : MonoBehaviour
     public void GoShipMode()
     {
         shipMode = true;
+        raycastDistance = 90.0f;
+        transform.SetParent(ship.transform);
+
+        CinemachineVirtualCamera camera = GameObject.Find("VCamLookAtPlayer").GetComponent<CinemachineVirtualCamera>();
+        camera.Follow = ship.transform;
+        var componentBase = camera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        if (componentBase is CinemachineFramingTransposer)
+        {
+            (componentBase as CinemachineFramingTransposer).m_CameraDistance = 32.0f;
+        }
+    }
+    
+    private void ExitShipMode()
+    {
+        shipMode = false;
+        canMove = true;
+        raycastDistance = 15.0f;
+        transform.SetParent(null);
+
+        CinemachineVirtualCamera camera = GameObject.Find("VCamLookAtPlayer").GetComponent<CinemachineVirtualCamera>();
+        camera.Follow = transform;
+        var componentBase = camera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        if (componentBase is CinemachineFramingTransposer)
+        {
+            (componentBase as CinemachineFramingTransposer).m_CameraDistance = 15.0f;
+        }
     }
 
-    public void InitiateMinigame(FishType behaviourType)
+    private void ShowCoolerUI()
+    {
+        GameObject storage = GameObject.Find("FishStorage");
+        storage.GetComponent<StorageUIScript>().Activate();
+    }
+
+    public void InitiateMinigame(Fish _fish)
     {
         if (menu == null)
         {
             menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
         }
-        menu.Activate(behaviourType);
+        menu.Activate(_fish);
     }
 }

@@ -1,6 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,8 @@ public class FishingMinigame : MonoBehaviour
 
     public delegate Vector2 BehaviourDelegate(Vector2 currentPosition);
     public BehaviourDelegate behaviour;
+
+    Fish fish;
 
     // Start is called before the first frame update
     void Start()
@@ -74,10 +77,11 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
-    public void Activate(FishType behaviorType)
+    public void Activate(Fish f)
     {
+        fish = f;
         FishBehaviours.Initialize();
-        switch (behaviorType) 
+        switch (f.species) 
         {
             case FishType.Pike:
                 behaviour = FishBehaviours.Pike;
@@ -90,7 +94,7 @@ public class FishingMinigame : MonoBehaviour
                 break;
 
             default:
-                Debug.LogWarning("Trying to use the unfinished fish behaviour " + behaviorType + ".");
+                Debug.LogWarning("Trying to use the unfinished fish behaviour " + f.species + ".");
                 break;
         }
 
@@ -215,11 +219,12 @@ public class FishingMinigame : MonoBehaviour
     {
         if (hasWon)
         {
-            // TODO: Add a fish to your inventory
+            StorageUIScript storage = GameObject.Find("FishStorage").GetComponent<StorageUIScript>();
+            storage.AddFish(fish);
         }
         else
         {
-            // TODO: Negative consequences for losing?
+            // TODO: Negative consequences for losing? For now just close the game.
         }
 
         GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().canMove = true;
