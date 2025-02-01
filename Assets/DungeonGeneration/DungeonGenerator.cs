@@ -89,6 +89,8 @@ namespace Dungeons {
             m_Counters = new();
             m_Counters[VarElementDepthMaximum] = m_Layout.MaximumDepth;
             m_Counters[VarElementCountMaximum] = m_Layout.MaximumRooms;
+            foreach (var variable in m_Layout.Variables)
+                m_Counters[variable.Name] = variable.Value;
         }
 
         /// <summary>
