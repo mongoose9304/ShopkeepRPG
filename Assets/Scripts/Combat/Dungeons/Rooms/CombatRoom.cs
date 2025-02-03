@@ -14,6 +14,7 @@ public class CombatRoom : BasicRoom
     [SerializeField] private bool useEliteEnemies;
     [SerializeField] private float spawnDelayMin;
     [SerializeField] private float spawnDelayMax;
+    [SerializeField] private int startingEnemies;
     private float currentSpawnDelay;
     private int spawnedEnemies;
     [Header("References")]
@@ -24,11 +25,17 @@ public class CombatRoom : BasicRoom
 
     public override void StartRoomActivity()
     {
-        CombatPlayerManager.instance.ReturnFamiliars();
-        CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
-        LockRoom(willLockOnEnter);
+        
+       
+        if(willLockOnEnter)
+        {
+            CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
+            CombatPlayerManager.instance.ReturnFamiliars();
+        }
+        LockRoom(true);
         myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
+        SpawnStartingEnemies();
     }
     public void CoopFamiliarEnter()
     {
@@ -67,6 +74,13 @@ public class CombatRoom : BasicRoom
             }
 
            
+        }
+    }
+    private void SpawnStartingEnemies()
+    {
+        for(int i=0;i<startingEnemies;i++)
+        {
+            SpawnBasicEnemy();
         }
     }
 

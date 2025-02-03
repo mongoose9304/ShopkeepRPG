@@ -148,7 +148,7 @@ public class DungeonManager : MonoBehaviour
         yield return new WaitForSeconds(0.001f);
         BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject, levelSpawn).GetComponent<BasicDungeon>();
         ChangeLevel(d);
-        yield return new WaitForSeconds(0.201f);
+        yield return new WaitForSeconds(0.501f);
         surface.BuildNavMesh();
         yield return new WaitForSeconds(0.01f);
         AddSinBlessing(currentSin);

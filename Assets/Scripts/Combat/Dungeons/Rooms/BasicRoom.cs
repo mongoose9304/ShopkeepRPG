@@ -45,5 +45,13 @@ public class BasicRoom : MonoBehaviour
     {
         myDungeon = d_;
     }
+    public virtual void OnEnable()
+    {
+        if(!myDungeon)
+        {
+            if(DungeonManager.instance)
+            myDungeon = DungeonManager.instance.currentDungeon;
+        }
+    }
 
 }
