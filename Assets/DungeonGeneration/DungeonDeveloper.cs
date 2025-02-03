@@ -108,6 +108,14 @@ namespace Dungeons {
                 StopCoroutine(coroutine);
             coroutine = StartCoroutine(Generate());
         }
+        public void GenerateDungeon()
+        {
+            if (generator == null)
+                generator = new(layout);
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+            coroutine = StartCoroutine(Generate());
+        }
         public void Generate(InputAction.CallbackContext context) {
             if (context.phase != InputActionPhase.Started)
                 return;

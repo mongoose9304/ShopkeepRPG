@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Dungeons;
 /// <summary>
 /// All the avilable sins 
 /// </summary>
@@ -59,14 +60,13 @@ public class BasicDungeon : MonoBehaviour
     [SerializeField] public List<string> availableTeams = new List<string>();
     [Tooltip("REFERNCE to the team if there is only one")]
     public string onlyTeam;
-    
+    public DungeonDeveloper dungeonDev;
 
     private void OnEnable()
     {
-        regularRooms = GetComponentsInChildren<BasicRoom>(true);
-        foreach(BasicRoom room in regularRooms)
+       if(dungeonDev)
         {
-            room.SetDungeon(this);
+            dungeonDev.GenerateDungeon();
         }
     }
     /// <summary>
