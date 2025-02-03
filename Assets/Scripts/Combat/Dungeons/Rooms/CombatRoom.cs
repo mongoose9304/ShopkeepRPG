@@ -26,7 +26,7 @@ public class CombatRoom : BasicRoom
     {
         CombatPlayerManager.instance.ReturnFamiliars();
         CombatPlayerManager.instance.TeleportCoopPlayerToMainPlayer();
-        LockRoom(true);
+        LockRoom(willLockOnEnter);
         myCounter.currentEnemies = maxEnemies;
         spawnedEnemies = 0;
     }
