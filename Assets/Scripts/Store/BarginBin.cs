@@ -38,6 +38,19 @@ public class BarginBin : InteractableObject
     public TextMeshProUGUI discountText;
     [Tooltip("Is this bin currently in use")]
     public bool inUse;
+
+    [Range(-1, 1)]
+    public int averageWarmFactor;
+    [Range(-1, 1)]
+    public int averageOccultFactor;
+    [Range(-1, 1)]
+    public int averageLivingFactor;
+    [Range(-1, 1)]
+    public int averageViolentFactor;
+    [Range(-1, 1)]
+    public int averageGrossFactor;
+
+
     public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if (interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
@@ -114,13 +127,34 @@ public class BarginBin : InteractableObject
     public void UpdateSlotsWithItems()
     {
         binSlotsWithItems.Clear();
-        foreach(BarginBinSlot slot_ in binSlots)
+
+        float warmFactor = 0;
+        float occultFactor = 0;
+        float livingFactor = 0;
+        float violentFactor = 0;
+        float grossFactor = 0;
+
+        int totalItems = 0;
+
+        foreach (BarginBinSlot slot_ in binSlots)
         {
             if(slot_.myItem&&slot_.amount>0)
             {
+                warmFactor += slot_.myItem.WarmFactor * slot_.amount;
+                occultFactor += slot_.myItem.OccultFactor * slot_.amount;
+                livingFactor += slot_.myItem.LivingFactor * slot_.amount;
+                violentFactor += slot_.myItem.ViolentFactor * slot_.amount;
+                grossFactor += slot_.myItem.GrossFactor * slot_.amount;
                 binSlotsWithItems.Add(slot_);
+                totalItems += slot_.amount;
             }
         }
+
+        averageWarmFactor = Mathf.RoundToInt(warmFactor / totalItems);
+        averageOccultFactor = Mathf.RoundToInt(occultFactor / totalItems);
+        averageLivingFactor = Mathf.RoundToInt(livingFactor / totalItems);
+        averageViolentFactor = Mathf.RoundToInt(violentFactor / totalItems);
+        averageGrossFactor = Mathf.RoundToInt(grossFactor / totalItems);
     }
     /// <summary>
     /// Change the item discount

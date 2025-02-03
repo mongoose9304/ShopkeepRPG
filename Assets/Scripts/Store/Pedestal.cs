@@ -10,6 +10,8 @@ public class Pedestal : InteractableObject
 {
     [Tooltip("Is this pedestal located in Hell")]
     public bool inHell;
+    [Tooltip("Is this pedestal located near a window")]
+    public bool nearWindow;
     [Tooltip("The Item that has been placed on the pedestal")]
     public ItemData myItem;
     [Tooltip("The amount of the item placed on this pedestal")]

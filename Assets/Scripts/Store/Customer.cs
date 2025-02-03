@@ -81,6 +81,23 @@ public class Customer : MonoBehaviour
     public List<string> bitTooHigh = new List<string>();
     [Tooltip("REFERENCE to the things I can say when haggling when small talk button is pressed ")]
     public List<string> smallTalks = new List<string>();
+
+    [Tooltip("Do I like warm items?")]
+    [Range(-1, 1)]
+    public int WarmFavorability;
+    [Tooltip("Do I like occult items?")]
+    [Range(-1, 1)]
+    public int OccultFavorability;
+    [Tooltip("Do I like living items?")]
+    [Range(-1, 1)]
+    public int LivingFavorability;
+    [Tooltip("Do I like violent items?")]
+    [Range(-1, 1)]
+    public int ViolentFavorability;
+    [Tooltip("Do I like gross items?")]
+    [Range(-1, 1)]
+    public int GrossFavorability;
+
     protected virtual void Update()
     {
         //SetTarget(tempTarget);
@@ -537,31 +554,69 @@ public class Customer : MonoBehaviour
     /// </summary>
     private void TargetHasAlreadyBeenSeen()
     {
-        GameObject target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
-        int x = 0;
-        while(pedestalsSeen.Contains(target_))
+        if (!isInHell)
         {
-            x += 1;
-            target_ = CustomerManager.instance.GenerateTargetPedestalWithItem(isInHell);
-            if (x>=6)
+            GameObject target_ = CustomerManager.instance.ChoosePedestal(this, CustomerManager.instance.pedestalsWithItems,
+                        CustomerManager.instance.barginBinsWithItems);
+            int x = 0;
+            while (pedestalsSeen.Contains(target_))
             {
-                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
-                break;
+                x += 1;
+                target_ = CustomerManager.instance.ChoosePedestal(this, CustomerManager.instance.pedestalsWithItems,
+                        CustomerManager.instance.barginBinsWithItems);
+                if (x >= 6)
+                {
+                    target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                    break;
+                }
             }
+            if (target_ == null)
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+            myAgent.SetDestination(target_.transform.position);
+            tempTarget = target_;
+            if (target_.TryGetComponent<Pedestal>(out Pedestal p))
+            {
+                hagglePedestal = p;
+            }
+            if (target_.TryGetComponent<BarginBin>(out BarginBin b))
+            {
+                currentBarginBin = b;
+            }
+            isMoving = true;
         }
-        if(target_==null)
-            target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
-        myAgent.SetDestination(target_.transform.position);
-        tempTarget = target_;
-        if (target_.TryGetComponent<Pedestal>(out Pedestal p))
+
+        else 
         {
-            hagglePedestal = p;
+            GameObject target_ = CustomerManager.instance.ChoosePedestal(this, CustomerManager.instance.pedestalsWithItemsHell,
+                        CustomerManager.instance.barginBinsWithItemsHell);
+            int x = 0;
+            while (pedestalsSeen.Contains(target_))
+            {
+                x += 1;
+                target_ = CustomerManager.instance.ChoosePedestal(this, CustomerManager.instance.pedestalsWithItemsHell,
+                        CustomerManager.instance.barginBinsWithItemsHell);
+                if (x >= 6)
+                {
+                    target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                    break;
+                }
+            }
+            if (target_ == null)
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+            myAgent.SetDestination(target_.transform.position);
+            tempTarget = target_;
+            if (target_.TryGetComponent<Pedestal>(out Pedestal p))
+            {
+                hagglePedestal = p;
+            }
+            if (target_.TryGetComponent<BarginBin>(out BarginBin b))
+            {
+                currentBarginBin = b;
+            }
+            isMoving = true;
         }
-        if (target_.TryGetComponent<BarginBin>(out BarginBin b))
-        {
-            currentBarginBin = b;
-        }
-        isMoving = true;
+
+       
     }
     /// <summary>
     /// Give the npc a budget

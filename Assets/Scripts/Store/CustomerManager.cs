@@ -64,14 +64,10 @@ public class CustomerManager : MonoBehaviour
     [Tooltip("REFERNCE to the spawns for customers in hell")]
     public Transform[] customerSpawnsHell;
     [Tooltip("all the pedestals with items, needs to be calculated any time there is a change")]
-    public List<Pedestal> regularPedestalsWithItems = new List<Pedestal>();
+    public List<Pedestal> pedestalsWithItems = new List<Pedestal>();
     [Tooltip("all the pedestals with items in hell, needs to be calculated any time there is a change")]
-    public List<Pedestal> regularPedestalsWithItemsHell = new List<Pedestal>();
+    public List<Pedestal> pedestalsWithItemsHell = new List<Pedestal>();
     [Tooltip("all the pedestals with items at windows, needs to be calculated any time there is a change")]
-    public List<Pedestal> windowPedestalsWithItems = new List<Pedestal>();
-    [Tooltip("all the pedestals with items at windows in hell, needs to be calculated any time there is a change")]
-    public List<Pedestal> windowPedestalsWithItemsHell = new List<Pedestal>();
-    [Tooltip("all the bargin bins with items, needs to be calculated any time there is a change")]
     public List<BarginBin> barginBinsWithItems = new List<BarginBin>();
     [Tooltip("all the bargin bins with items in hell, needs to be calculated any time there is a change")]
     public List<BarginBin> barginBinsWithItemsHell = new List<BarginBin>();
@@ -181,7 +177,7 @@ public class CustomerManager : MonoBehaviour
             {
                 lastNPCSpawnIndex = 0;
             }
-            GameObject target = GenerateTargetPedestalWithItem();
+            GameObject target = ChoosePedestal(c, pedestalsWithItems, barginBinsWithItems);
             if (target == null)
             {
                 target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
@@ -203,7 +199,7 @@ public class CustomerManager : MonoBehaviour
             {
                 lastNPCSpawnIndexHell = 0;
             }
-            GameObject target = GenerateTargetPedestalWithItem(true);
+            GameObject target = ChoosePedestal(c, pedestalsWithItemsHell, barginBinsWithItemsHell);
             if (target == null)
             {
                 target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst,true);
@@ -214,100 +210,112 @@ public class CustomerManager : MonoBehaviour
             currentCustomersInStore.Add(c);
         }
     }
-    /// <summary>
-    /// Get a pedestal with items for an NPC to go to if they exist
-    /// </summary>
-    public GameObject GenerateTargetPedestalWithItem(bool inHell=false)
-    {
-        if (!inHell)
-        {
 
-
-            if (windowPedestalsWithItems.Count > 0)
-            {
-                if (Random.Range(0, 1.0f) < chanceToCheckWindowsFirst)
-                    return windowPedestalsWithItems[Random.Range(0, windowPedestalsWithItems.Count)].gameObject;
-            }
-            if (regularPedestalsWithItems.Count > 0)
-            {
-                return regularPedestalsWithItems[Random.Range(0, regularPedestalsWithItems.Count)].gameObject;
-            }
-            return null;
-        }
-        else
-        {
-            if (windowPedestalsWithItemsHell.Count > 0)
-            {
-                if (Random.Range(0, 1.0f) < chanceToCheckWindowsFirst)
-                    return windowPedestalsWithItemsHell[Random.Range(0, windowPedestalsWithItemsHell.Count)].gameObject;
-            }
-            if (regularPedestalsWithItemsHell.Count > 0)
-            {
-                return regularPedestalsWithItemsHell[Random.Range(0, regularPedestalsWithItemsHell.Count)].gameObject;
-            }
-            return null;
-        }
-    }
-    /// <summary>
-    /// Get a bin with items for an NPC to go towards if they exist
-    /// </summary>
-    public GameObject GenerateTargetBarginBinWithItem(bool inHell = false)
+    //atm outputs either 0.5 for undesireable, 1.5 for neutral, 3.0 for desireable
+    public float GetWeight(int customerFavorability, int itemFactor)
     {
-        if (!inHell)
+        float weight = 0;
+        if (customerFavorability == 0 && itemFactor == 0)
         {
-            if (barginBinsWithItems.Count > 0)
-            {
-                return barginBinsWithItems[Random.Range(0, barginBinsWithItems.Count)].gameObject;
-            }
-            return null;
+            weight = 2;
         }
-        else
+        else 
         {
-            if (barginBinsWithItemsHell.Count > 0)
-            {
-                return barginBinsWithItemsHell[Random.Range(0, barginBinsWithItemsHell.Count)].gameObject;
-            }
-            return null;
+            weight = Mathf.Abs(customerFavorability + itemFactor);
         }
+        if(weight == 2) 
+        {
+            weight += 0.5f;
+        }
+        return weight + 0.5f; 
     }
+
+    //lots of hardcoded values for now
+    public GameObject ChoosePedestal(Customer customer, List<Pedestal> pedestals, List<BarginBin> bins) 
+    {
+        //placeholder variables
+        float windowModifier = 2.0f;
+
+        float favorabilityModifier = 1.0f;
+
+        float totalWeight = 0f;
+
+        Dictionary<GameObject, float> objectWeights = new Dictionary<GameObject, float>();
+
+        if (pedestals.Count > 0)
+        {
+            foreach (var pedestal in pedestals)
+            {
+                //first we need to check how strongly the customer aligns with the item on the pedestal
+                float warmWeight = GetWeight(customer.WarmFavorability, pedestal.myItem.WarmFactor);
+                float occultWeight = GetWeight(customer.OccultFavorability, pedestal.myItem.OccultFactor);
+                float livingWeight = GetWeight(customer.LivingFavorability, pedestal.myItem.LivingFactor);
+                float violentWeight = GetWeight(customer.ViolentFavorability, pedestal.myItem.ViolentFactor);
+                float grossWeight = GetWeight(customer.GrossFavorability, pedestal.myItem.GrossFactor);
+
+                float totalPedestalWeight = (warmWeight + occultWeight + livingWeight + violentWeight + grossWeight) * favorabilityModifier;
+
+                //now we include window modifier
+                totalPedestalWeight *= pedestal.nearWindow ? windowModifier : 1.0f;
+
+                //additionalModifiers
+                //totalPedestalWeight *= pedestal.quality * additionalModifier;
+
+                objectWeights[pedestal.gameObject] = totalPedestalWeight;
+                totalWeight += totalPedestalWeight;
+            }
+        }
+
+        if(bins.Count > 0) 
+        {
+            foreach(var bin in bins) 
+            {
+                float totalBinWeight = 1;
+                objectWeights[bin.gameObject] = totalBinWeight;
+                totalWeight += totalBinWeight;
+            }
+
+        }
+
+        if (totalWeight == 0) return null;
+
+        float randomValue = Random.Range(0f, totalWeight);
+
+        float cumulativeWeight = 0;
+
+        foreach (var weight in objectWeights)
+        {
+            cumulativeWeight += weight.Value;
+
+            if (randomValue <= cumulativeWeight)
+            {
+                return weight.Key;
+            }
+        }
+
+        return null;
+    }
+
     /// <summary>
     /// Find all pedestals with items
     /// </summary>
     public void CheckPedestalsforItems()
     {
-       
-            windowPedestalsWithItems.Clear();
-            regularPedestalsWithItems.Clear();
-            foreach (Pedestal p in ShopManager.instance.windowPedestals)
-            {
-                if (p.myItem != null && p.amount > 0)
-                {
-                    windowPedestalsWithItems.Add(p);
-                }
-            }
+            pedestalsWithItems.Clear();
             foreach (Pedestal p in ShopManager.instance.regularPedestals)
             {
                 if (p.myItem != null && p.amount > 0)
                 {
-                    regularPedestalsWithItems.Add(p);
+                    pedestalsWithItems.Add(p);
                 }
             }
-        
-       
-            windowPedestalsWithItemsHell.Clear();
-            regularPedestalsWithItemsHell.Clear();
-            foreach (Pedestal p in ShopManager.instance.windowPedestalsHell)
-            {
-                if (p.myItem != null && p.amount > 0)
-                {
-                    windowPedestalsWithItemsHell.Add(p);
-                }
-            }
+
+            pedestalsWithItemsHell.Clear();
             foreach (Pedestal p in ShopManager.instance.regularPedestalsHell)
             {
                 if (p.myItem != null && p.amount > 0)
                 {
-                    regularPedestalsWithItemsHell.Add(p);
+                    pedestalsWithItemsHell.Add(p);
                 }
             }
         
@@ -340,19 +348,7 @@ public class CustomerManager : MonoBehaviour
     {
         if (!inHell)
         {
-            if (Random.Range(0, 1.0f) < c_.chanceToLookAtBArginBin)
-            {
-                //look at bargin bin and return
-                GameObject targetBin = GenerateTargetBarginBinWithItem();
-                if (targetBin == null)
-                {
-                    targetBin = ShopManager.instance.GetRandomTargetBarginBin();
-                }
-                c_.SetTarget(targetBin);
-                return;
-
-            }
-            GameObject target = GenerateTargetPedestalWithItem();
+            GameObject target = ChoosePedestal(c_, pedestalsWithItems, barginBinsWithItems); ;
             if (target == null)
             {
                 target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
@@ -361,19 +357,8 @@ public class CustomerManager : MonoBehaviour
         }
         else
         {
-            if (Random.Range(0, 1.0f) < c_.chanceToLookAtBArginBin)
-            {
-                //look at bargin bin and return
-                GameObject targetBin = GenerateTargetBarginBinWithItem(true);
-                if (targetBin == null)
-                {
-                    targetBin = ShopManager.instance.GetRandomTargetBarginBin(true);
-                }
-                c_.SetTarget(targetBin);
-                return;
-
-            }
-            GameObject target = GenerateTargetPedestalWithItem(true);
+            
+            GameObject target = ChoosePedestal(c_, pedestalsWithItemsHell, barginBinsWithItemsHell); 
             if (target == null)
             {
                 target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst,true);

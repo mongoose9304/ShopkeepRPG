@@ -16,6 +16,17 @@ public class ItemData : ScriptableObject
         consumable
     }
 
+    [Range(-1, 1)]
+    public int WarmFactor;
+    [Range(-1, 1)]
+    public int OccultFactor;
+    [Range(-1, 1)]
+    public int LivingFactor;
+    [Range(-1, 1)]
+    public int ViolentFactor;
+    [Range(-1, 1)]
+    public int GrossFactor;
+
     public string itemName;
     public string description;
     public int basePrice;
