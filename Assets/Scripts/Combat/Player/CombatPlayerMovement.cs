@@ -103,6 +103,7 @@ public class CombatPlayerMovement : CombatControllerInterface
     public InputActionMap playerActionMap;
     private InputAction movement;
     private bool InteractHeld;
+    private Vector3 externalMovement;
     [Header("References")]
     //Physical Dash Attack
     [Tooltip("REFERENCE to the AOE splash attacks when the player dashes")]
@@ -198,6 +199,11 @@ public class CombatPlayerMovement : CombatControllerInterface
             if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
             {
               transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                if(externalMovement!=Vector3.zero)
+                {
+                   transform.position += externalMovement;
+                   externalMovement = Vector3.zero;
+                }
             }
             else
                 timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
@@ -238,6 +244,11 @@ public class CombatPlayerMovement : CombatControllerInterface
 
 
         }
+    }
+    //used for moving platforms to move the player the same way they do.
+    public void ExternalMoveForce(Vector3 pos_)
+    {
+        externalMovement += pos_;
     }
     private void OnDash(InputAction.CallbackContext obj)
     {
