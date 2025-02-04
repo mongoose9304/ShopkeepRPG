@@ -5,12 +5,28 @@ using UnityEngine;
 public class ObjectRandomizer : MonoBehaviour
 {
     public List<GameObject> objectOptions;
+    public bool useMultipleRandomObjects;
+    public float randomChance;
     private void OnEnable()
     {
+       
         foreach(GameObject obj in objectOptions)
         {
             obj.SetActive(false);
         }
-        objectOptions[Random.Range(0, objectOptions.Count)].SetActive(true);
+        if (!useMultipleRandomObjects)
+        {
+            objectOptions[Random.Range(0, objectOptions.Count)].SetActive(true);
+        }
+        else
+        {
+            foreach (GameObject obj in objectOptions)
+            {
+                if(Random.Range(0.0f,1.0f)<randomChance)
+                {
+                    obj.SetActive(true);
+                }
+            }
+        }
     }
 }
