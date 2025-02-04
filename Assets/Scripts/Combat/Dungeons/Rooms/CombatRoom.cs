@@ -11,7 +11,7 @@ public class CombatRoom : BasicRoom
     [Tooltip("The maximum amount of enemies to spawn")]
     [SerializeField] private int maxEnemies;
     [Tooltip("Should the enemies be elite")]
-    [SerializeField] private bool useEliteEnemies;
+    [SerializeField] private bool onlyEliteEnemies;
     [SerializeField] private float spawnDelayMin;
     [SerializeField] private float spawnDelayMax;
     [SerializeField] private int startingEnemies;
@@ -66,8 +66,13 @@ public class CombatRoom : BasicRoom
             currentSpawnDelay -= Time.deltaTime;
             if (currentSpawnDelay <= 0)
             {
-                if (!useEliteEnemies)
-                    SpawnBasicEnemy();
+                if (!onlyEliteEnemies)
+                {
+                    if(Random.Range(0,1)<DungeonManager.instance.currentDungeon.eliteChance)
+                        SpawnEliteEnemy();
+                    else
+                        SpawnBasicEnemy();
+                }
                 else
                     SpawnEliteEnemy();
                 currentSpawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);

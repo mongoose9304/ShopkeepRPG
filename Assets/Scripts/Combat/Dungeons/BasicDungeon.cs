@@ -32,6 +32,7 @@ public class BasicDungeon : MonoBehaviour
     public int enemyLevel;
     [Tooltip("The level to spawn enemies at, for arenas this comes from the wave list")]
     public int eliteEnemyLevel;
+    public float eliteChance;
     [Tooltip("The level to spawn traps at")]
     [SerializeField] int trapLevel;
     [Tooltip("The value of treasure chests")]
