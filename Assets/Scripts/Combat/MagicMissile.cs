@@ -52,7 +52,6 @@ public class MagicMissile : PlayerDamageCollider
                 hAttack.target = h.collider.gameObject.transform;
                 Debug.Log(string.Format("Found new target: {0}", h.collider.name));
                 Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
-                canRicochet = false;
                 return;
             }
         }

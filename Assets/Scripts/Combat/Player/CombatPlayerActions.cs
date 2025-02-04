@@ -49,6 +49,7 @@ public class CombatPlayerActions : MonoBehaviour
     public float basicMeleelifeStealPercent = 0;
     public float projectileSpeedMod;
     public float projectileSizeMod;
+    public float projectileLifeMod;
     public bool projectileSpecial = false;
 
     [Header("Familiar")]
@@ -269,11 +270,14 @@ public class CombatPlayerActions : MonoBehaviour
             tempObj.GetComponent<HomingAttack>().moveSpeedBonus = projectileSpeedMod;
 
             //setting the size mod
-            float projSize = tempObj.transform.localScale.x + projectileSizeMod;
+            float projSize = 1 + projectileSizeMod;
             tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
 
             //setting the special mod
             tempObj.GetComponent<MagicMissile>().canRicochet = projectileSpecial;
+
+            //Setting the lifetime mod
+            tempObj.GetComponent<HomingAttack>().lifeTimeBonus = projectileLifeMod;
 
             tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
             tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;

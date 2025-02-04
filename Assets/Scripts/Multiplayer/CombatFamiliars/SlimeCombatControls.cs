@@ -65,12 +65,27 @@ public class SlimeCombatControls : FamiliarCombatControls
     public float ultimateCooldownMax;
     public float ultimateCooldown;
     
-        [Header("Inputs")]
+    [Header("Inputs")]
     public bool isHoldingMelee;
     public bool isHoldingRanged;
     bool isJumping;
     bool isSlaming;
     bool isUltimateJumping;
+
+    //FOR TESTING THE COMBAT FAMILIAR'S PROJECTILE
+    //-Adriel
+    Coroutine projectileCoroutine;
+    private void FixedUpdate() {
+        if(projectileCoroutine == null) {
+            projectileCoroutine = StartCoroutine(fireProjectile());
+        }
+    }
+    IEnumerator fireProjectile() {
+        yield return new WaitForSeconds(0.6f);
+        RangedAttack();
+        projectileCoroutine = null;
+    }
+
     private void OnEnable()
     {
         EndWhirlWind();
@@ -182,17 +197,19 @@ public class SlimeCombatControls : FamiliarCombatControls
 
         //Applying some Mods here
         //SizeMod
-        float projSize = objB.transform.localScale.x + projectileSizeMod;
+        float projSize = 1 + projectileSizeMod;
         objB.transform.localScale = new Vector3(projSize, projSize, projSize);
 
         //Applying the proj speed mod there
         if (target_!=null)
         {
-        objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f + (-0.1f * projectileSpeedMod)), ForceMode.VelocityChange);
+            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f);
+        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod * 2.0f, ForceMode.VelocityChange);
         }
         else
         {
-            objB.GetComponent<Rigidbody>().AddForce(Projectile.VelocityByA(objB.transform.position,transform.position+transform.forward*5, -0.1f + (-0.1f * projectileSpeedMod)), ForceMode.VelocityChange);
+            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f);
+            objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod , ForceMode.VelocityChange);
         }
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,

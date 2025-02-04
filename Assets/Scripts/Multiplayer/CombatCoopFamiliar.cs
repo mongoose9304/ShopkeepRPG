@@ -524,9 +524,11 @@ public class CombatCoopFamiliar : CombatControllerInterface
         PhysicalDef = (monsterStats.PhysicalDefense);
         MysticalDef = (monsterStats.MysticalDefense);
         HealthRegenPercent = 0;
-       combatControls.attackSpeedMod = 1;
+        combatControls.attackSpeedMod = 1;
         combatControls.fireRateMod = 1;
         combatControls.basicMeleelifeStealPercent = 0;
+        combatControls.projectileSizeMod = 0;
+        combatControls.projectileSpeedMod = 0;
     }
     /// <summary>
     /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.
@@ -595,6 +597,9 @@ public class CombatCoopFamiliar : CombatControllerInterface
             case UniqueEquipEffect.projectileRadiusIncrease:
                 combatControls.projectileSizeMod += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileSpecial:
+                combatControls.projectileSpecial = (mod_.amount > 0) ? true : false;
+                break;
             case UniqueEquipEffect.basicMeleeSpeed:
                 combatControls.attackSpeedMod += mod_.amount;
                 break;
@@ -604,6 +609,10 @@ public class CombatCoopFamiliar : CombatControllerInterface
             case UniqueEquipEffect.basicMeleeLifeSteal:
                 combatControls.basicMeleelifeStealPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileLifeIncrease:
+                combatControls.projectileLifeMod += mod_.amount;
+                break;
+
         }
     }
     /// <summary>

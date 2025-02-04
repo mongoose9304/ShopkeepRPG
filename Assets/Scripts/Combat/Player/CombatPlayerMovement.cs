@@ -627,7 +627,9 @@ public class CombatPlayerMovement : CombatControllerInterface
         combatActions.fireRateMod = 1;
         combatActions.basicMeleelifeStealPercent = 0;
         combatActions.projectileSizeMod = 0;
+        combatActions.projectileLifeMod = 0;
         combatActions.projectileSpeedMod = 0;
+        combatActions.projectileSpecial = false;
     }
     public void CalculateAllModifiers()
     {
@@ -779,6 +781,9 @@ public class CombatPlayerMovement : CombatControllerInterface
             case UniqueEquipEffect.projectileSpecial:
                 combatActions.projectileSpecial = (mod_.amount > 0) ? true : false;
                 break;
+            case UniqueEquipEffect.projectileLifeIncrease:
+                combatActions.projectileLifeMod += mod_.amount;
+                break;
         }
     }
 
@@ -891,6 +896,12 @@ public class CombatPlayerMovement : CombatControllerInterface
         megidoProjSpecial.modName = "megidoProjSpecial";
         megidoProjSpecial.amount = 0;
         megidoProjSpecial.uniqueEffect = UniqueEquipEffect.projectileSpecial;
+
+        EquipModifier megidoProjLife = new EquipModifier();
+        megidoProjLife.isMultiplicative = false;
+        megidoProjLife.modName = "megidoProjLife";
+        megidoProjLife.amount = 0;
+        megidoProjLife.uniqueEffect = UniqueEquipEffect.projectileLifeIncrease;
 
         foreach (Talent tal_ in myTalents.talents)
         {
@@ -1038,42 +1049,37 @@ public class CombatPlayerMovement : CombatControllerInterface
                     float totalRadiusBonus = 0.0f;
                     bool blockProj = false;
 
-                    for (int i = 0; i < tal_.levelInvested; i++) {
+                    if (tal_.levelInvested >= 1) {
                         //Also create it for the familiar because it's easier here. Sorry
                         //-Adriel
-                        if (i == 0) {
 
-                            //Has to be reset everytime
-                            //For the player
-                            curseAuraRef = CreateCurseAura();
-                            curseAuraRef.Init();
+                        //Has to be reset everytime
+                        //For the player
+                        curseAuraRef = CreateCurseAura();
+                        curseAuraRef.Init();
 
-                            //For the familiar
-                            combatActions.myCoopFamiliar.curseAuraRef = combatActions.myCoopFamiliar.CreateCurseAura();
-                            combatActions.myCoopFamiliar.curseAuraRef.Init();
+                        //For the familiar
+                        combatActions.myCoopFamiliar.curseAuraRef = combatActions.myCoopFamiliar.CreateCurseAura();
+                        combatActions.myCoopFamiliar.curseAuraRef.Init();
 
 
-                            Debug.Log("Created the curse aura");
-                        }
+                        Debug.Log("Created the curse aura");
+                    }
 
-                        if (curseAuraRef == null) {
-                            continue;
-                        }
+                    if (tal_.levelInvested >= 2) {
+                        totalDamageBonus += 8.0f;
+                    }
 
-                        if (i > 0 && i < 5) {
-                            totalDamageBonus += 8.0f;
+                    if (tal_.levelInvested >= 3) {
+                        totalRadiusBonus += 0.6f;
+                    }
 
-                        }
+                    if (tal_.levelInvested >= 4) {
+                        totalAttackIntervalBonus += 0.2f;
+                    }
 
-                        if (i >= 5 && i < 10) {
-                            totalAttackIntervalBonus += 0.2f;
-                            totalRadiusBonus += 0.6f;
-
-                        }
-
-                        if (i == 10) {
-                            blockProj = true;
-                        }
+                    if (tal_.levelInvested >= 5) {
+                        blockProj = true;
                     }
 
                     if (curseAuraRef == null) { break; }
@@ -1087,19 +1093,23 @@ public class CombatPlayerMovement : CombatControllerInterface
 
                 //New magic skill tree
                 case "Megido":
-                    for (int i = 0; i < tal_.levelInvested; i++) {
-                        if (i < 5) {
-                            megidoProjSpeed.amount += 0.5f;
-
-                        } 
-                        else if (i < 10) {
-                            megidoProjSize.amount += 0.5f;
-                        }
-                        else if(i == 10) {
-                            megidoProjSpecial.amount += 1.0f;
-                        }
-
+                    if (tal_.levelInvested >= 1) {
+                        megidoProjSize.amount += 2.5f;
                     }
+
+                    if(tal_.levelInvested >= 2) {
+                        megidoProjSpeed.amount += 2.5f;
+                    }
+
+                    if (tal_.levelInvested >= 3) {
+                        megidoProjLife.amount += 3.5f;
+                    }
+
+                    if (tal_.levelInvested >= 4) {
+                        megidoProjSpecial.amount += 1.0f;
+                    }
+
+                    
                     break;
             }
         }
@@ -1139,13 +1149,18 @@ public class CombatPlayerMovement : CombatControllerInterface
         AddExternalMod(swordLifeSteal);
 
 
-        combatActions.myFamiliar.CalculateAllModifiers();
-        combatActions.myCoopFamiliar.CalculateAllModifiers();
-
         //Megido
         AddExternalMod(megidoProjSpeed);
         AddExternalMod(megidoProjSize);
+        AddExternalMod(megidoProjLife);
         AddExternalMod(megidoProjSpecial);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpeed);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSize);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjLife);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpecial);
+
+        combatActions.myFamiliar.CalculateAllModifiers();
+        combatActions.myCoopFamiliar.CalculateAllModifiers();
 
     }
     public void UndeadExtraLife()

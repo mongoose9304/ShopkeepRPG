@@ -12,7 +12,7 @@ public enum Stat
 };
 public enum UniqueEquipEffect
 {
-    None, basicMeleeLifeSteal,SoulSteal,Thorns,HealthRegen,ManaRegen,basicRangedSpeed,basicMeleeSpeed,projectileSpeedIncrease, projectileRadiusIncrease, projectileSpecial
+    None, basicMeleeLifeSteal,SoulSteal,Thorns,HealthRegen,ManaRegen,basicRangedSpeed,basicMeleeSpeed,projectileSpeedIncrease, projectileRadiusIncrease, projectileLifeIncrease ,projectileSpecial
 };
 [System.Serializable]
 public struct EquipModifier
