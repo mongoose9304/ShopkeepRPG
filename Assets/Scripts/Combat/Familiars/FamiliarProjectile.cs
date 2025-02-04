@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FamiliarProjectile : MonoBehaviour
 {
@@ -9,6 +10,13 @@ public class FamiliarProjectile : MonoBehaviour
     public bool isMysticalDamage;
     public GameObject projectileExplosionObject;
     public string myTeam;
+
+    //Adriel stuff for ricocheting
+    public bool canRicochet = false;
+    public int ricochetCount = 0;
+    [HideInInspector] public UnityEvent<float> Ricochet; //The parameter is mostly for the speed boost
+     
+
     private void Start()
     {
         if (projectileExplosionObject)

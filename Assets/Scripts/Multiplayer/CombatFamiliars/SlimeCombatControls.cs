@@ -71,6 +71,21 @@ public class SlimeCombatControls : FamiliarCombatControls
     bool isJumping;
     bool isSlaming;
     bool isUltimateJumping;
+
+    //FOR TESTING THE COMBAT FAMILIAR'S PROJECTILE
+    //-Adriel
+    Coroutine projectileCoroutine;
+    private void FixedUpdate() {
+        if(projectileCoroutine == null) {
+            projectileCoroutine = StartCoroutine(fireProjectile());
+        }
+    }
+    IEnumerator fireProjectile() {
+        yield return new WaitForSeconds(0.6f);
+        RangedAttack();
+        projectileCoroutine = null;
+    }
+
     private void OnEnable()
     {
         EndWhirlWind();
@@ -189,12 +204,12 @@ public class SlimeCombatControls : FamiliarCombatControls
         if (target_!=null)
         {
             Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f);
-        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
+        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod * 2.0f, ForceMode.VelocityChange);
         }
         else
         {
             Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f);
-            objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
+            objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod , ForceMode.VelocityChange);
         }
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,

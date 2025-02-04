@@ -609,6 +609,9 @@ public class CombatCoopFamiliar : CombatControllerInterface
             case UniqueEquipEffect.basicMeleeLifeSteal:
                 combatControls.basicMeleelifeStealPercent += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileLifeIncrease:
+                combatControls.projectileLifeMod += mod_.amount;
+                break;
 
         }
     }
