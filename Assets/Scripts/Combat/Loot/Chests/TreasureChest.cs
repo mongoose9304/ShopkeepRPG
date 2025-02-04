@@ -66,5 +66,4 @@ public class TreasureChest : InteractableObject
         playerInRange = inRange_;
 
     }
-    
 }

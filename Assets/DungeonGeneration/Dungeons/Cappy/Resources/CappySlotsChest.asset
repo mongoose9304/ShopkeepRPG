@@ -9,17 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7301a4a16d5144c409ee71ccb78a7036, type: 3}
-  m_Name: CappyDungeon
+  m_Script: {fileID: 11500000, guid: a331fb071b67d8b46b14647aadae2f26, type: 3}
+  m_Name: CappySlotsChest
   m_EditorClassIdentifier: 
-  m_Root: {fileID: 11400000, guid: 0857e3ee56befd94e8079f74d5d89525, type: 2}
-  m_MaximumRooms: 20
-  m_MaximumDepth: 4
-  m_Variables: []
-  m_Conditions:
+  m_Prefab: CappyTreasureChest
+  m_Bounds: []
+  m_Anchors:
+  - name: decoration
+    mode: 5
+    offset: {x: 0, y: 0}
+    pool: {fileID: 0}
+    fallback: {fileID: 0}
+  m_Conditions: []
+  m_Operations:
   - m_Name: chest
-    m_Mode: 5
+    m_Mode: 0
     m_Value: 1
-  - m_Name: chest
-    m_Mode: 2
-    m_Value: 6
