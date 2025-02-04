@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class SlotMachineSingle : MonoBehaviour
     [SerializeField] UnityEvent jackpotEvent;
     //0=loss, 1= win, 2=big win
     [SerializeField] int[] outComesInOrder;
+    [SerializeField] MMF_Player slotEffect;
     private void Update()
     {
         if(isSpinning)
@@ -57,7 +59,9 @@ public class SlotMachineSingle : MonoBehaviour
     {
         isSpinning = true;
         isStopping = false;
-        SpinSpeedCurrent = SpinSpeedStart * Random.Range(1.0f, 2.0f); ;
+        SpinSpeedCurrent = SpinSpeedStart * Random.Range(1.0f, 2.0f);
+        if (slotEffect)
+            slotEffect.PlayFeedbacks();
     }
     public void EndSpinEvent()
     {

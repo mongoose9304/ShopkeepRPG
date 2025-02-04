@@ -15,7 +15,7 @@ public class TreasureChest : InteractableObject
     [SerializeField] ParticleSystem OpenEffect;
     [SerializeField] ParticleSystem OpenCursedEffect;
     [SerializeField] GameObject curseIcon;
-
+    [SerializeField] Animator anim;
 
     public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
@@ -25,9 +25,6 @@ public class TreasureChest : InteractableObject
     {
         if (isOpening)
             return;
-        value = DungeonManager.instance.currentDungeon.GetTreasureChestAmount();
-        CoinSpawner.instance_.CreateDemonCoins(value,spawnLocation);
-        OpenEffect.Play();
         myText.SetActive(false);
         playerInRange = false;
         isOpening = true;
@@ -37,7 +34,18 @@ public class TreasureChest : InteractableObject
             OpenCursedEffect.Play();
         }
         CombatPlayerManager.instance.RemoveInteractableObject(gameObject);
+        if(anim)
+        {
+            anim.SetBool("Open", true);
+        }
         gameObject.SetActive(false);
+        Invoke("OpenChestEffectDelay",0.3f);
+    }
+    virtual protected void OpenChestEffectDelay()
+    {
+        value = DungeonManager.instance.currentDungeon.GetTreasureChestAmount();
+        CoinSpawner.instance_.CreateDemonCoins(value, spawnLocation);
+        OpenEffect.Play();
     }
     virtual public void SetIsCursed(bool isCursed_,int severity_)
     {
