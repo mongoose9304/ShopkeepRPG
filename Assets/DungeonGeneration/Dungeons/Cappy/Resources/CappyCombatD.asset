@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a331fb071b67d8b46b14647aadae2f26, type: 3}
-  m_Name: CappyCombatA
+  m_Name: CappyCombatD
   m_EditorClassIdentifier: 
-  m_Prefab: CappyRandomBattleRoomA
+  m_Prefab: CappyRandomBattleRoomD
   m_Bounds:
   - serializedVersion: 2
     x: 0
-    y: 0
+    y: -24
     width: 24
-    height: 24
+    height: 48
   m_Anchors:
   - name: edge
-    mode: 0
-    offset: {x: 0, y: 20.5}
+    mode: 3
+    offset: {x: 12, y: 24}
     pool: {fileID: 11400000, guid: 2e7d78f414233eb4babf94ada3849250, type: 2}
-    fallback: {fileID: 11400000, guid: 6b426bd4d4bcbfe489a336b44cfd4ee8, type: 2}
+    fallback: {fileID: 11400000, guid: 849ec5c5e171fed40af8808af0ba9301, type: 2}
   - name: edge
     mode: 1
-    offset: {x: 20.5, y: 0}
+    offset: {x: 12, y: -24}
     pool: {fileID: 11400000, guid: 2e7d78f414233eb4babf94ada3849250, type: 2}
     fallback: {fileID: 11400000, guid: 849ec5c5e171fed40af8808af0ba9301, type: 2}
   - name: root
@@ -37,12 +37,17 @@ MonoBehaviour:
     fallback: {fileID: 0}
   - name: decoration
     mode: 4
-    offset: {x: 14, y: 11}
+    offset: {x: 16.3, y: 7.05}
     pool: {fileID: 11400000, guid: deb74727c06980e4c9ac9e4d8144f7a1, type: 2}
     fallback: {fileID: 0}
   - name: decoration
     mode: 4
-    offset: {x: 17.5, y: 20}
+    offset: {x: 17.8, y: 0.28}
+    pool: {fileID: 11400000, guid: deb74727c06980e4c9ac9e4d8144f7a1, type: 2}
+    fallback: {fileID: 0}
+  - name: decoration
+    mode: 4
+    offset: {x: 9.12, y: -11.1}
     pool: {fileID: 11400000, guid: deb74727c06980e4c9ac9e4d8144f7a1, type: 2}
     fallback: {fileID: 0}
   m_Conditions: []

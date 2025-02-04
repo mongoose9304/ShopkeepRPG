@@ -68,7 +68,7 @@ public class CombatRoom : BasicRoom
             {
                 if (!onlyEliteEnemies)
                 {
-                    if(Random.Range(0,1)<DungeonManager.instance.currentDungeon.eliteChance)
+                    if(Random.Range(0.0f,1.0f)<DungeonManager.instance.currentDungeon.eliteChance)
                         SpawnEliteEnemy();
                     else
                         SpawnBasicEnemy();
