@@ -50,6 +50,7 @@ public class CombatPlayerActions : MonoBehaviour
     public float projectileSpeedMod;
     public float projectileSizeMod;
     public float projectileLifeMod;
+    public int projectileExtraCountMod;
     public bool projectileSpecial = false;
 
     [Header("Familiar")]
@@ -257,34 +258,47 @@ public class CombatPlayerActions : MonoBehaviour
             if (combatMovement.GetCurrentMana() < fireCost)
                 return;
             combatMovement.UseMana(fireCost);
-            tempObj = GetAvailableProjectile();
-            tempObj.transform.position = spawnPosition.position;
-            tempObj.transform.rotation = spawnPosition.rotation;
-            tempObj.SetActive(true);
-            if (combatMovement.GetCurrentTarget() != null)
-                tempObj.GetComponent<HomingAttack>().target = combatMovement.GetCurrentTarget().transform;
-            else
-                tempObj.GetComponent<HomingAttack>().target = null;
 
-            //Setting the speed mod
-            tempObj.GetComponent<HomingAttack>().moveSpeedBonus = projectileSpeedMod;
+            //Spawning more than 1 projectiles
+            //Courtesy of Adriel
+            for (int i = 0; i <= projectileExtraCountMod; i++) {
+                tempObj = GetAvailableProjectile();
 
-            //setting the size mod
-            float projSize = 1 + projectileSizeMod;
-            tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
+                //Offseting the projectile's spawn position
+                Vector3 transformPosition = spawnPosition.position;
+                Vector3 deltaPos = spawnPosition.transform.right * -0.5f * i;
 
-            //setting the special mod
-            tempObj.GetComponent<MagicMissile>().canRicochet = projectileSpecial;
+                tempObj.transform.position = transformPosition + deltaPos;
+                tempObj.transform.rotation = spawnPosition.rotation;
+                tempObj.SetActive(true);
+                if (combatMovement.GetCurrentTarget() != null)
+                    tempObj.GetComponent<HomingAttack>().target = combatMovement.GetCurrentTarget().transform;
+                else
+                    tempObj.GetComponent<HomingAttack>().target = null;
 
-            //Setting the lifetime mod
-            tempObj.GetComponent<HomingAttack>().lifeTimeBonus = projectileLifeMod;
+                //Setting the speed mod
+                tempObj.GetComponent<HomingAttack>().moveSpeedBonus = projectileSpeedMod;
 
-            tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
-            tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
-            currentFireRate = fireRate;
-            MMSoundManager.Instance.PlaySound(basicRangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
-          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
-          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+                //setting the size mod
+                float projSize = 1 + projectileSizeMod;
+                tempObj.transform.localScale = new Vector3(projSize, projSize, projSize);
+
+                //setting the special mod
+                tempObj.GetComponent<MagicMissile>().canRicochet = projectileSpecial;
+
+                //Setting the lifetime mod
+                tempObj.GetComponent<HomingAttack>().lifeTimeBonus = projectileLifeMod;
+
+                //Printing the directions
+                Debug.DrawLine(transform.position, transform.position + deltaPos, Color.white, 2.0f);
+
+                tempObj.GetComponent<PlayerDamageCollider>().damage = basicRangedDamage;
+                tempObj.GetComponent<PlayerDamageCollider>().element = basicRangedElement;
+                currentFireRate = fireRate;
+                MMSoundManager.Instance.PlaySound(basicRangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
+              false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.9f, 1.1f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+              1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+            }
         }
     }
     private void UseSpecialAttack(bool specialA_)

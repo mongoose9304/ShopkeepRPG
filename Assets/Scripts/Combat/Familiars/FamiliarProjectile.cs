@@ -14,7 +14,7 @@ public class FamiliarProjectile : MonoBehaviour
     //Adriel stuff for ricocheting
     public bool canRicochet = false;
     public int ricochetCount = 0;
-    [HideInInspector] public UnityEvent<float> Ricochet; //The parameter is mostly for the speed boost
+    [HideInInspector] public UnityEvent<GameObject, GameObject> RichochetTravelEquation; //Gameobject 1 is for the projectile, Gameobject 2 is the target
      
 
     private void Start()
@@ -29,7 +29,11 @@ public class FamiliarProjectile : MonoBehaviour
     {
         if (other.tag == "Wall" || other.tag == "Ground")
         {
-            gameObject.SetActive(false);
+            if (canRicochet) { Ricochet();} 
+            else {
+                gameObject.SetActive(false);
+            }
+
             if (projectileExplosionObject)
             {
                 CreateExplosion();
@@ -37,7 +41,9 @@ public class FamiliarProjectile : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            gameObject.SetActive(false);
+            if (canRicochet) { Ricochet(); } else {
+                gameObject.SetActive(false);
+            }
             if (projectileExplosionObject)
             {
                 CreateExplosion();
@@ -45,7 +51,11 @@ public class FamiliarProjectile : MonoBehaviour
         }
         else if (other.tag == "Enemy")
         {
-            gameObject.SetActive(false);
+            if (canRicochet) { Ricochet(); } 
+            else {
+                gameObject.SetActive(false);
+            }
+
             if (projectileExplosionObject)
             {
                 CreateExplosion();
@@ -63,7 +73,9 @@ public class FamiliarProjectile : MonoBehaviour
                     return;
 
             }
-            gameObject.SetActive(false);
+            if (canRicochet) { Ricochet(); } else {
+                gameObject.SetActive(false);
+            }
             if (projectileExplosionObject)
             {
                 CreateExplosion();
@@ -82,5 +94,30 @@ public class FamiliarProjectile : MonoBehaviour
         projectileExplosionObject.transform.position = transform.position;
         projectileExplosionObject.GetComponent<ProjectileExplosion>().myTeam = myTeam;
         projectileExplosionObject.SetActive(true);
+    }
+
+    public void Ricochet() {
+        //if(RichochetTravelEquation.GetPersistentEventCount()  <= 0) { return;  }
+        if(ricochetCount <= 0) {
+            gameObject.SetActive(false);
+            return; 
+        } 
+        
+        //Check radius
+        float radius = 5.0f;
+        RaycastHit[] hit = Physics.SphereCastAll(transform.position, radius, transform.forward);
+        foreach (RaycastHit h in hit) {
+            if (h.collider.gameObject.tag == "Enemy") {
+                RichochetTravelEquation.Invoke(gameObject, h.collider.gameObject);
+                Debug.Log(string.Format("Found new target: {0}", h.collider.name));
+                Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
+
+                ricochetCount -= 1;
+                return;
+            }
+        }
+
+        //If you can't find a target just null
+        RichochetTravelEquation.Invoke(gameObject, null);
     }
 }

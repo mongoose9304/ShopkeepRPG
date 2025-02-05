@@ -3,6 +3,7 @@ using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -74,16 +75,9 @@ public class SlimeCombatControls : FamiliarCombatControls
 
     //FOR TESTING THE COMBAT FAMILIAR'S PROJECTILE
     //-Adriel
-    Coroutine projectileCoroutine;
     private void FixedUpdate() {
-        if(projectileCoroutine == null) {
-            projectileCoroutine = StartCoroutine(fireProjectile());
-        }
-    }
-    IEnumerator fireProjectile() {
-        yield return new WaitForSeconds(0.6f);
-        RangedAttack();
-        projectileCoroutine = null;
+        if (rangedCooldown <= 0)
+            RangedAttack();
     }
 
     private void OnEnable()
@@ -204,17 +198,58 @@ public class SlimeCombatControls : FamiliarCombatControls
         if (target_!=null)
         {
             Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f);
-        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod * 2.0f, ForceMode.VelocityChange);
+        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
         }
         else
         {
             Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f);
             objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod , ForceMode.VelocityChange);
         }
+
+        //Ricocheting
+        //-Adriel
+        if (projectileSpecial) {
+            FamiliarProjectile objRef = objB.GetComponent<FamiliarProjectile>();
+            objRef.canRicochet = projectileSpecial;
+
+            objRef.ricochetCount = 1 + (int)projectileLifeMod;
+
+            if (objRef.RichochetTravelEquation.GetPersistentEventCount() <= 0) {
+                objRef.RichochetTravelEquation.AddListener(SlimeRicochetFunction);
+            }
+        }
+
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
+    //Extra ricocheting function for fun 
+    public void SlimeRicochetFunction(GameObject proj, GameObject target) {
+        Rigidbody projRB = proj.GetComponent<Rigidbody>();
+        if (target != null) {
+
+            if((target.transform.position - proj.transform.position).magnitude <= 3.0f) {
+                Vector3 dir = (target.transform.position - proj.transform.position).normalized;
+                Vector3 v = Projectile.VelocityByA(proj.transform.position, proj.transform.position + dir * 3.0f, -0.1f);
+                projRB.AddForce(v, ForceMode.VelocityChange);
+                return;
+            }
+
+            Vector3 velResut = Projectile.VelocityByA(proj.transform.position, target.transform.position, -0.1f);
+            projRB.AddForce(velResut, ForceMode.VelocityChange);
+
+        } else {
+            //Getting a random dir
+            float randomAngle = Random.Range(0.0f, 360.0f);
+            randomAngle *= Mathf.Deg2Rad;
+            Vector3 dir = new Vector3(Mathf.Sin(randomAngle), 0.0f, Mathf.Cos(randomAngle));
+            dir.Normalize();
+
+            Vector3 velResut = Projectile.VelocityByA(proj.transform.position, proj.transform.position + dir * 3, -0.1f);
+            projRB.AddForce(velResut, ForceMode.VelocityChange);
+        }
+    }
+
     protected  void Update()
     {
         if (TempPause.instance.isPaused)
