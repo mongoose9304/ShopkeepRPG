@@ -171,7 +171,7 @@ public class CombatCoopFamiliar : CombatControllerInterface
         GetClosestInteractableObject();
         if (InteractHeld)
             InteractAction();
-        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
+        //moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
         //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
         if (moveInput != Vector3.zero)
         {
@@ -529,6 +529,7 @@ public class CombatCoopFamiliar : CombatControllerInterface
         combatControls.basicMeleelifeStealPercent = 0;
         combatControls.projectileSizeMod = 0;
         combatControls.projectileSpeedMod = 0;
+        combatControls.projectileLifeMod = 0;
     }
     /// <summary>
     /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.

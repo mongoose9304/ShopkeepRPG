@@ -40,7 +40,7 @@ public class HomingAttack : MonoBehaviour
                     break;
             }
             if(!target.gameObject.activeInHierarchy)
-            {
+            { 
                 target = null;
             }
         }

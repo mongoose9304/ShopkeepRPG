@@ -629,6 +629,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         combatActions.projectileSizeMod = 0;
         combatActions.projectileLifeMod = 0;
         combatActions.projectileSpeedMod = 0;
+        combatActions.projectileExtraCountMod = 0;
         combatActions.projectileSpecial = false;
     }
     public void CalculateAllModifiers()
@@ -784,6 +785,9 @@ public class CombatPlayerMovement : CombatControllerInterface
             case UniqueEquipEffect.projectileLifeIncrease:
                 combatActions.projectileLifeMod += mod_.amount;
                 break;
+            case UniqueEquipEffect.projectileCountIncrease:
+                combatActions.projectileExtraCountMod += (int)mod_.amount;
+                break;
         }
     }
 
@@ -878,7 +882,7 @@ public class CombatPlayerMovement : CombatControllerInterface
         dragonMDamage.amount = 1;
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
 
-        //Megido
+        //Megido/Projectile shenanigans
         EquipModifier megidoProjSpeed = new EquipModifier();
         megidoProjSpeed.isMultiplicative = false;
         megidoProjSpeed.modName = "megidoProjSpeed";
@@ -896,6 +900,12 @@ public class CombatPlayerMovement : CombatControllerInterface
         megidoProjSpecial.modName = "megidoProjSpecial";
         megidoProjSpecial.amount = 0;
         megidoProjSpecial.uniqueEffect = UniqueEquipEffect.projectileSpecial;
+
+        EquipModifier megidoProjCount = new EquipModifier();
+        megidoProjCount.isMultiplicative = false;
+        megidoProjCount.modName = "megidoProjC ount";
+        megidoProjCount.amount = 0;
+        megidoProjCount.uniqueEffect = UniqueEquipEffect.projectileCountIncrease;
 
         EquipModifier megidoProjLife = new EquipModifier();
         megidoProjLife.isMultiplicative = false;
@@ -1106,6 +1116,10 @@ public class CombatPlayerMovement : CombatControllerInterface
                     }
 
                     if (tal_.levelInvested >= 4) {
+                        megidoProjCount.amount += 1;
+                    }
+
+                    if (tal_.levelInvested >= 5) {
                         megidoProjSpecial.amount += 1.0f;
                     }
 
@@ -1154,9 +1168,11 @@ public class CombatPlayerMovement : CombatControllerInterface
         AddExternalMod(megidoProjSize);
         AddExternalMod(megidoProjLife);
         AddExternalMod(megidoProjSpecial);
+        AddExternalMod(megidoProjCount);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpeed);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjSize);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjLife);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoProjCount);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpecial);
 
         combatActions.myFamiliar.CalculateAllModifiers();
