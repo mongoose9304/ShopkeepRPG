@@ -68,6 +68,8 @@ public class DungeonManager : MonoBehaviour
     [Tooltip("REFERENCE to BGMs available")]
     public List<AudioClip> BGMs = new List<AudioClip>();
     public AudioClip tutBGM;
+    [Tooltip("REFERENCE to enviroments based on the sin zones")]
+    public List<GameObject> enviroments = new List<GameObject>();
     private void Awake()
     {
         instance = this;
@@ -135,7 +137,8 @@ public class DungeonManager : MonoBehaviour
         currentSin = sin_;
         PlayRandomBGM();
         SwitchSinDrops();
-        if(currentDungeon)
+        SwitchEnviroment(sin_);
+        if (currentDungeon)
         Destroy(currentDungeon.gameObject);
         StartCoroutine(WaitAFrameBeforeMoving());
 
@@ -422,5 +425,19 @@ public class DungeonManager : MonoBehaviour
     {
         MMSoundManager.Instance.StopTrack(MMSoundManager.MMSoundManagerTracks.Music);
         MMSoundManager.Instance.PlaySound(BGMs[Random.Range(0, BGMs.Count)], MMSoundManager.MMSoundManagerTracks.Music, Vector3.zero,true);
+    }
+    public void SwitchEnviroment(SinType sin_)
+    {
+        foreach(GameObject obj in enviroments)
+        {
+            obj.SetActive(false);
+        }
+        switch(sin_)
+        {
+            case SinType.Capriciousness:
+                enviroments[0].gameObject.SetActive(true);
+                break;
+
+        }
     }
 }
