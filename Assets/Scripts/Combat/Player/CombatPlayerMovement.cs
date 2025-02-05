@@ -385,6 +385,10 @@ public class CombatPlayerMovement : CombatControllerInterface
             transform.position = dashStartPos;
             moveInput = Vector3.zero;
             timeBeforePlayerCanMoveAfterFallingOffPlatform = 0.1f;
+            if(TutorialManager.instance_)
+            {
+                TutorialManager.instance_.GetComponent<CombatTutorialManager>().FailedDash();
+            }
             return false;
         }
         return true;
