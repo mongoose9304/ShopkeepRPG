@@ -118,7 +118,7 @@ public class DungeonManager : MonoBehaviour
         {
             CombatPickupManager.instance.ClearPickups();
         }
-        EnemyManager.instance.DisableAllEnemies();
+        
         currentDungeon.SetEnemyManagerTeams();
 
     }
@@ -130,6 +130,7 @@ public class DungeonManager : MonoBehaviour
         fadeToBlack.PlayFeedbacks();
         nextSin = sin_;
         Invoke("NextLevelStart", 0.5f);
+        EnemyManager.instance.DisableAllEnemies();
         PlayerManager.instance.DisablePlayerInputs();
     }
     private void NextLevelStart()
@@ -139,6 +140,7 @@ public class DungeonManager : MonoBehaviour
             EnemyManager.instance.HardClearEnemyList();
             TutorialManager.instance_.EndTutorial();
         }
+       
         CoinSpawner.instance_.ClearAllCoins();
         LootManager.instance.ClearAllLootItems();
         dungeonsCleared += 1;
@@ -453,6 +455,9 @@ public class DungeonManager : MonoBehaviour
         switch(sin_)
         {
             case SinType.Capriciousness:
+                enviroments[0].gameObject.SetActive(true);
+                break;
+            default:
                 enviroments[0].gameObject.SetActive(true);
                 break;
 

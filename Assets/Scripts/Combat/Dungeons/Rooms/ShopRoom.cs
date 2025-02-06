@@ -40,22 +40,8 @@ public class ShopRoom : BasicRoom
     }
     public void PurchaseItem(ItemData item_,Transform loc_)
     {
-        if(item_.type==ItemData.ItemType.consumable)
-        {
-            if(CombatPlayerManager.instance.playerHotbar.AddItemToHotbar(item_))
-            {
-                return;
-            }
-            else
-            {
-                SpawnWorldItem(item_, loc_);
-                return;
-            }
-        }
-        else
-        {
+
             SpawnWorldItem(item_, loc_);
-        }
         if(!isBeingRobbed)
         {
             MMSoundManager.Instance.PlaySound(purchaseSounds[Random.Range(0,purchaseSounds.Length)], MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,

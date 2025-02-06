@@ -243,6 +243,7 @@ public class EnemyManager : MonoBehaviour
             currentEnemiesList[i].SetActive(false);
 
         }
+        currentEnemiesList.Clear();
     }
     /// <summary>
     /// An enemy has died, inform the player for any on Kill abilities 
