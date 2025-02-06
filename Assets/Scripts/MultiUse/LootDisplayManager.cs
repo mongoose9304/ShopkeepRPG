@@ -26,7 +26,6 @@ public class LootDisplayManager : MonoBehaviour
     [SerializeField] List<Sprite> resourcesSprites = new List<Sprite>();
     [SerializeField] private GameObject playerFireworkObject;
     [SerializeField] private GameObject playerLossObject;
-    [SerializeField] private GameObject playerFamiliarHolderObject;
     [SerializeField] UnityEvent startVictoryEvent;
     [SerializeField] UnityEvent endVictoryEvent;
     private bool isPlaying;
@@ -151,7 +150,7 @@ public class LootDisplayManager : MonoBehaviour
     {
         hasLost = hasLost_;
         isPlaying = true;
-        playerFamiliarHolderObject.SetActive(true);
+        
         startVictoryEvent.Invoke();
         if(itemsToDisplay.Count> maxObjectsCollectedDisplayTime*2)
         maxTimeBetweenAdds = maxObjectsCollectedDisplayTime/ itemsToDisplay.Count;
