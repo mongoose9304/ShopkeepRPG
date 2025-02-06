@@ -101,6 +101,8 @@ MonoBehaviour:
   - {fileID: 6635742876923167999}
   - {fileID: 2211938713032737750}
   - {fileID: 6137200183581979303}
+  - {fileID: 1546368140723733187}
+  - {fileID: 7942348458115261445}
 --- !u!1001 &526226885458077888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -197,10 +199,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TalentTree, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3485063659156825332, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Name
       value: PlayerTalentHolder (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: myTree
+      value: 
+      objectReference: {fileID: 6847878473035756287}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -211,6 +245,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2581838952990711826, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
   m_PrefabInstance: {fileID: 526226885458077888}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7942348458115261445 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+  m_PrefabInstance: {fileID: 526226885458077888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29823de97a92c5040a19ff94fa9ffd19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3847076539849787450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -791,15 +836,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6847878473035756287}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InvestPoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TalentTree, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2871538599890310641, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3485063659156825332, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
       propertyPath: m_Name
       value: PlayerTalentHolder (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+      propertyPath: myTree
+      value: 
+      objectReference: {fileID: 6847878473035756287}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+--- !u!114 &1546368140723733187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7599097902478773445, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
+  m_PrefabInstance: {fileID: 8935325168909684230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29823de97a92c5040a19ff94fa9ffd19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6905194978549378580 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2581838952990711826, guid: f5f8d49b72804cb4aa51bb82c683e6ed, type: 3}
