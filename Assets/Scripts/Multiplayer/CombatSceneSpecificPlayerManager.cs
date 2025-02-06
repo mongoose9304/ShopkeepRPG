@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.Tools;
 
 /// <summary>
 /// What happens when player join in the combat scene
@@ -9,7 +10,8 @@ public class CombatSceneSpecificPlayerManager : SceneSpecificPlayerManager
 {
     public CombatPlayerMovement player1;
     public CombatCoopFamiliar player2;
-    
+    public MMFaderRound fader;
+
     public override void CreatePlayer1(PlayerController controller)
     {
         foreach (GameObject obj in objectsToDisableWhenPlayer1Joins)
@@ -23,6 +25,7 @@ public class CombatSceneSpecificPlayerManager : SceneSpecificPlayerManager
         player1.SetUpControls(controller.input);
         player1.combatActions.ChangeFamiliar(PlayerManager.instance.currentFamiliar);
         player1.gameObject.SetActive(true);
+        fader.TargetCamera= controller.myCam;
     }
 
         public override void CreatePlayer2(PlayerController controller)

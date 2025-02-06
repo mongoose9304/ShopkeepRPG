@@ -75,6 +75,7 @@ public class DungeonManager : MonoBehaviour
     public MMF_Player fadeToBlack;
     public MMF_Player fadeFromBlack;
     private SinType nextSin;
+    [SerializeField] Transform loadingPlayerLocation;
     private void Awake()
     {
         instance = this;
@@ -129,6 +130,7 @@ public class DungeonManager : MonoBehaviour
         fadeToBlack.PlayFeedbacks();
         nextSin = sin_;
         Invoke("NextLevelStart", 0.5f);
+        PlayerManager.instance.DisablePlayerInputs();
     }
     private void NextLevelStart()
     {
@@ -159,16 +161,20 @@ public class DungeonManager : MonoBehaviour
     IEnumerator WaitAFrameBeforeMoving()
     {
         yield return new WaitForSeconds(0.001f);
+        CombatPlayerManager.instance.MovePlayers(loadingPlayerLocation);
         BasicDungeon d = GameObject.Instantiate(dungeonList[dungeonsCleared].gameObject, levelSpawn).GetComponent<BasicDungeon>();
         ChangeLevel(d);
         yield return new WaitForSeconds(1.501f);
         surface.BuildNavMesh();
-        yield return new WaitForSeconds(0.01f);
-        AddSinBlessing(currentSin);
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
+        yield return new WaitForSeconds(0.01f);
+
+        AddSinBlessing(currentSin);
+        
         CombatPlayerManager.instance.ReturnFamiliars();
         if (fadeFromBlack)
             fadeFromBlack.PlayFeedbacks();
+        PlayerManager.instance.EnablePlayerInputs();
     }
     /// <summary>
     /// Used to wait a few frame to ensure everything loads correctly 

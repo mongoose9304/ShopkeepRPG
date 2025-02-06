@@ -11968,7 +11968,7 @@ MonoBehaviour:
         DebugActive: 0
         FadeType: 1
         ID: 666
-        Duration: 4
+        Duration: 0.5
         Curve:
           MMTweenDefinitionType: 0
           MMTweenCurve: 4
@@ -11999,7 +11999,7 @@ MonoBehaviour:
           Initialized: 0
         IgnoreTimeScale: 1
         TargetAlpha: 0
-        PositionMode: 0
+        PositionMode: 1
         TargetTransform: {fileID: 1873975153}
         TargetPosition: {x: 0, y: 0, z: 0}
         PositionOffset: {x: 0, y: 0, z: 0}
@@ -13308,6 +13308,7 @@ Transform:
   - {fileID: 900806160}
   - {fileID: 1386589698}
   - {fileID: 886616559}
+  - {fileID: 2041461333}
   m_Father: {fileID: 1932757578}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1239716476
@@ -13409,6 +13410,7 @@ MonoBehaviour:
   - {fileID: 673494164}
   fadeToBlack: {fileID: 2143429107}
   fadeFromBlack: {fileID: 900806161}
+  loadingPlayerLocation: {fileID: 2041461333}
 --- !u!1001 &1264870065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15884,6 +15886,7 @@ MonoBehaviour:
   player2Canvases: []
   player1: {fileID: 1873975154}
   player2: {fileID: 1596406815}
+  fader: {fileID: 1396665728}
 --- !u!43 &1695062727
 Mesh:
   m_ObjectHideFlags: 0
@@ -16871,6 +16874,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CombatPlayer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4624179972124685972, guid: e8f1b50f4e88dcc4bae0269d48179b7a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16903,6 +16910,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e79e7e0eaf9aef45a48416a2223be88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1873975156 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 582302194936325065, guid: e8f1b50f4e88dcc4bae0269d48179b7a, type: 3}
+  m_PrefabInstance: {fileID: 1873975152}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1879586628
 GameObject:
   m_ObjectHideFlags: 0
@@ -17691,6 +17703,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1569693272}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2041461332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2041461333}
+  m_Layer: 0
+  m_Name: LoadingPlayerLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2041461333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041461332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 150, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1239716475}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2054635956
 GameObject:
   m_ObjectHideFlags: 0
@@ -18306,7 +18349,7 @@ MonoBehaviour:
         DebugActive: 0
         FadeType: 0
         ID: 666
-        Duration: 0.4
+        Duration: 0.5
         Curve:
           MMTweenDefinitionType: 0
           MMTweenCurve: 4
@@ -18337,7 +18380,7 @@ MonoBehaviour:
           Initialized: 0
         IgnoreTimeScale: 1
         TargetAlpha: 0
-        PositionMode: 0
+        PositionMode: 1
         TargetTransform: {fileID: 1873975153}
         TargetPosition: {x: 0, y: 0, z: 0}
         PositionOffset: {x: 0, y: 0, z: 0}
@@ -23521,7 +23564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17cf468b19036442b6492a84b8c02f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1873975153}
+  target: {fileID: 1873975156}
 --- !u!198 &8121193505123500546
 ParticleSystem:
   m_ObjectHideFlags: 0

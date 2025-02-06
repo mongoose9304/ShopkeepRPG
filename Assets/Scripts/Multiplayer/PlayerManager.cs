@@ -122,4 +122,18 @@ public class PlayerManager : MonoBehaviour
         PlayerPrefs.SetString("currentFamiliar", currentFamiliar.ToString());
         Debug.Log(currentFamiliar.ToString());
     }
+    public void DisablePlayerInputs()
+    {
+        foreach(PlayerController playa in players)
+        {
+            playa.input.enabled= false;
+        }
+    }
+    public void EnablePlayerInputs()
+    {
+        foreach (PlayerController playa in players)
+        {
+            playa.input.enabled = true;
+        }
+    }
 }
