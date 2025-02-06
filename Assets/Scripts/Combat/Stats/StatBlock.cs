@@ -28,27 +28,15 @@ public class StatBlock : ScriptableObject
     public int StartMysticalProwess;
     public int StartPhysicalDefense;
     public int StartMysticalDefense;
-
     private int LevelFormula(int lv_)
     {
-        int expNeeded= ((lv_ * ascension) * 10);
-        if(lv_>50)
-        {
-            expNeeded *= 2;
-        }
-        if (lv_ > 90)
-        {
-            expNeeded *= 2;
-        }
+        int expNeeded = Mathf.RoundToInt((500 * Mathf.Pow(lv_, 1.25f))+500* lv_);
         return expNeeded;
     }
     public int GetEXPToLevelUp()
     {
         int temp = 0;
-        for(int i=0;i<Level;i++)
-        {
-            temp += LevelFormula(i+1);
-        }
+        temp += LevelFormula(Level);
         temp -= savedExp;
         return temp;
     }
@@ -61,5 +49,12 @@ public class StatBlock : ScriptableObject
         PhysicalDefense = StartPhysicalDefense;
         MysticalDefense = StartMysticalDefense;
         remainingSkillPoints = totalSkillPoints;
+    }
+    public void DebugDisplayExpNeeded()
+    {
+        for(int i=0;i<100;i++)
+        {
+            Debug.Log("Exp for level " + i +"="+LevelFormula(i));
+        }
     }
 }
