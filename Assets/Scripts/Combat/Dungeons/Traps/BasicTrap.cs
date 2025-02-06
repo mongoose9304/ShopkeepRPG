@@ -17,7 +17,7 @@ public class BasicTrap : MonoBehaviour
     [Tooltip("REFERENCE to all the damage colliders")]
     [SerializeField]protected TrapDamageCollider[] damageColliders;
 
-    private void Start()
+    protected virtual void Start()
     {
         CalculateDamage();
     }
