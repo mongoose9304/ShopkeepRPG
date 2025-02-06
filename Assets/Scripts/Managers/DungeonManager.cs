@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.AI.Navigation;
 using MoreMountains.Tools;
+using MoreMountains.Feedbacks;
 public static class CombatDamageCalculator
 {
     
@@ -70,6 +71,10 @@ public class DungeonManager : MonoBehaviour
     public AudioClip tutBGM;
     [Tooltip("REFERENCE to enviroments based on the sin zones")]
     public List<GameObject> enviroments = new List<GameObject>();
+    [Tooltip("REFERENCE to fade effect to hide loading")]
+    public MMF_Player fadeToBlack;
+    public MMF_Player fadeFromBlack;
+    private SinType nextSin;
     private void Awake()
     {
         instance = this;
@@ -121,7 +126,13 @@ public class DungeonManager : MonoBehaviour
     /// </summary>
     public void NextLevel(SinType sin_)
     {
-        if(TutorialManager.instance_.inTut)
+        fadeToBlack.PlayFeedbacks();
+        nextSin = sin_;
+        Invoke("NextLevelStart", 0.5f);
+    }
+    private void NextLevelStart()
+    {
+        if (TutorialManager.instance_.inTut)
         {
             EnemyManager.instance.HardClearEnemyList();
             TutorialManager.instance_.EndTutorial();
@@ -129,19 +140,18 @@ public class DungeonManager : MonoBehaviour
         CoinSpawner.instance_.ClearAllCoins();
         LootManager.instance.ClearAllLootItems();
         dungeonsCleared += 1;
-        if(dungeonsCleared>=dungeonList.Count)
+        if (dungeonsCleared >= dungeonList.Count)
         {
             WinLevel();
             return;
         }
-        currentSin = sin_;
+        currentSin = nextSin;
         PlayRandomBGM();
         SwitchSinDrops();
-        SwitchEnviroment(sin_);
+        SwitchEnviroment(nextSin);
         if (currentDungeon)
-        Destroy(currentDungeon.gameObject);
+            Destroy(currentDungeon.gameObject);
         StartCoroutine(WaitAFrameBeforeMoving());
-
     }
     /// <summary>
     /// Used to wait a few frame to ensure everything loads correctly 
@@ -157,6 +167,8 @@ public class DungeonManager : MonoBehaviour
         AddSinBlessing(currentSin);
         CombatPlayerManager.instance.MovePlayers(currentDungeon.playerStart);
         CombatPlayerManager.instance.ReturnFamiliars();
+        if (fadeFromBlack)
+            fadeFromBlack.PlayFeedbacks();
     }
     /// <summary>
     /// Used to wait a few frame to ensure everything loads correctly 
