@@ -28,6 +28,7 @@ public class BasicMonsterData : ScriptableObject
     public float damagePerLevel;
     public float physicalDefencePerLevel;
     public float mysticalDefencePerLevel;
+    public float expModifier = 1.0f;
 
     public float CalculateHealth(int level=1)
     {
