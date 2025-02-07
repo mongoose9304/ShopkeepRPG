@@ -342,25 +342,29 @@ public class PlayerInventory : MonoBehaviour
     public void DebugResetPlayerAndFamiliarLevel()
     {
         PlayerPrefs.SetInt("FamiliarSavedExp", 0);
-        PlayerPrefs.SetInt("FamiliarRemainingSkillPoints", 0);
-        PlayerPrefs.SetInt("FamiliarTotalSkillPoints",0);
-        PlayerPrefs.SetInt("FamiliarLevel", 0);
+        PlayerPrefs.SetInt("FamiliarRemainingSkillPoints", 10);
+        PlayerPrefs.SetInt("FamiliarTotalSkillPoints", 10);
+        PlayerPrefs.SetInt("FamiliarLevel", 1);
         
 
         PlayerPrefs.SetInt("PlayerSavedExp", 0);
         PlayerPrefs.SetInt("PlayerRemainingSkillPoints", 0);
         PlayerPrefs.SetInt("PlayerTotalSkillPoints", 0);
-        PlayerPrefs.SetInt("PlayerLevel", 0);
+        PlayerPrefs.SetInt("PlayerLevel", 1);
 
 
         familiarStats.savedExp = PlayerPrefs.GetInt("FamiliarSavedExp", 0);
-        familiarStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 0);
-        familiarStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 0);
+        familiarStats.remainingSkillPoints = PlayerPrefs.GetInt("FamiliarRemainingSkillPoints", 10);
+        familiarStats.totalSkillPoints = PlayerPrefs.GetInt("FamiliarTotalSkillPoints", 10);
         familiarStats.Level = PlayerPrefs.GetInt("FamiliarLevel", 0);
 
         playerStats.savedExp = PlayerPrefs.GetInt("PlayerSavedExp", 0);
         playerStats.remainingSkillPoints = PlayerPrefs.GetInt("PlayerRemainingSkillPoints", 0);
         playerStats.totalSkillPoints = PlayerPrefs.GetInt("PlayerTotalSkillPoints", 0);
         playerStats.Level = PlayerPrefs.GetInt("PlayerLevel", 0);
+        if(DungeonManager.instance&&LootManager.instance)
+        {
+            LootManager.instance.SetExpToNextLevel();
+        }
     }
 }
