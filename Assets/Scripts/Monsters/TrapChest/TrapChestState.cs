@@ -176,6 +176,7 @@ public class PatrolRotateState : MonoBehaviour, IState {
 
 public class ChasePlayerState : MonoBehaviour, IState {
 
+    LootManager playerLoot;
     float chaseTime = 5.0f;
     float timer = 0.0f;
     float chaseSpeed = 1.0f;
@@ -188,7 +189,13 @@ public class ChasePlayerState : MonoBehaviour, IState {
     public void Enter() {
         Debug.Log("Entering Chase State");
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
         playerTransform = playerObject.transform;
+        playerLoot = LootManager.instance;
+        if (playerLoot == null)
+        {
+            Debug.LogError("LootManager component not found on the player object!");
+        }
     }
 
     public void Exit()
@@ -201,10 +208,17 @@ public class ChasePlayerState : MonoBehaviour, IState {
         if (timer <= chaseTime && playerCaught == false)
         {
             timer += Time.deltaTime;
-            Debug.Log(timer);
+            //Debug.Log(timer);
             if (Vector3.Distance(transform.position, playerTransform.position) < minCloseDistance)
             {
                 Debug.Log("Player Caught");
+           
+             
+                LootItem stolenItem = playerLoot.StealAnItem();
+                if (stolenItem != null)
+                {
+                    Debug.Log($"Stole {stolenItem.amount} {stolenItem.name}!");
+                }
                 playerCaught = true;
             }
             StartChase();
@@ -217,10 +231,6 @@ public class ChasePlayerState : MonoBehaviour, IState {
               
             }
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 3.0f);
-            //if (transform.localScale.magnitude <= 0.01f) {
-            //    Destroy(gameObject);
-            //}
-
 
         }
     }

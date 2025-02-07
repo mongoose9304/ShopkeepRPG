@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using System.Linq;
+using Unity.VisualScripting;
 [System.Serializable]
 public class LootItem
 {
@@ -27,7 +29,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private float cashMultiplier = 1;
     [SerializeField] private float expMultiplier = 1;
     [SerializeField] public float lootDropRateMultiplier = 1;
-  public List<LootItem> currentLootItems = new List<LootItem>();
+    public List<LootItem> currentLootItems = new List<LootItem>();
     bool hasFoundItem;
     public MMMiniObjectPooler pooler;
     [SerializeField] MMMiniObjectPooler worldObjectPool;
@@ -38,7 +40,7 @@ public class LootManager : MonoBehaviour
     public float maxTimeCollectionUIWillBeOut = 6.0f;
     public float currentTimeCollectionUIWillBeOut;
 
-   public MMF_Player[] demonCashPickUpFeedBacks;
+    public MMF_Player[] demonCashPickUpFeedBacks;
     public int demonCurrentCash;
     public TextMeshProUGUI demonCurrentCashText;
     public MMF_Player[] regularCashPickUpFeedBacks;
@@ -50,23 +52,23 @@ public class LootManager : MonoBehaviour
     public MMF_Player[] expPickUpFeedBacks;
     public int expToNextLevel;
     public TextMeshProUGUI expToNextLevelText;
-    public List<LootItem> AquiredLootItems =new List<LootItem>();
-    public List<LootItem> WaitingLootItemPool =new List<LootItem>();
+    public List<LootItem> AquiredLootItems = new List<LootItem>();
+    public List<LootItem> WaitingLootItemPool = new List<LootItem>();
     public float maxDelayBetweenPopUps;
     float currentDelayBetweenPopUps;
     MMF_TMPCountTo expCounter;
     [SerializeField] MMF_Player expFeedback;
     private void Awake()
     {
-        if(expFeedback)
-        expCounter = expFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
+        if (expFeedback)
+            expCounter = expFeedback.GetFeedbackOfType<MMF_TMPCountTo>();
 
     }
     private void Start()
     {
         instance = this;
-        if(expFeedback)
-        SetExpToNextLevel();
+        if (expFeedback)
+            SetExpToNextLevel();
     }
     public void ClearAllLootItems()
     {
@@ -74,33 +76,33 @@ public class LootManager : MonoBehaviour
     }
     private void Update()
     {
-       // scrollRect.normalizedPosition = new Vector2(0, 1);
+        // scrollRect.normalizedPosition = new Vector2(0, 1);
         scrollRect.DOVerticalNormalizedPos(1, 1);
 
         currentTimeCollectionUIWillBeOut -= Time.deltaTime;
-        if(currentTimeCollectionUIWillBeOut<=0)
+        if (currentTimeCollectionUIWillBeOut <= 0)
         {
             PutAwaylootCollectionUIObject();
         }
-        if(WaitingLootItemPool.Count>0)
+        if (WaitingLootItemPool.Count > 0)
         {
             currentDelayBetweenPopUps -= Time.deltaTime;
-            if(currentDelayBetweenPopUps<=0)
+            if (currentDelayBetweenPopUps <= 0)
             {
-                currentTimeCollectionUIWillBeOut=maxTimeCollectionUIWillBeOut;
+                currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
                 currentDelayBetweenPopUps = maxDelayBetweenPopUps;
                 DisplayUILootObject(WaitingLootItemPool[0]);
                 WaitingLootItemPool.RemoveAt(0);
-               
+
             }
         }
     }
     public void AddLootItem(LootItem item_)
     {
         hasFoundItem = false;
-        foreach(LootItem item in currentLootItems)
+        foreach (LootItem item in currentLootItems)
         {
-            if(item.name==item_.name)
+            if (item.name == item_.name)
             {
                 item.amount += item_.amount;
                 hasFoundItem = true;
@@ -110,7 +112,7 @@ public class LootManager : MonoBehaviour
         }
         if (!hasFoundItem)
         {
-             LootItem x=new LootItem();
+            LootItem x = new LootItem();
             x.amount = item_.amount;
             x.name = item_.name;
             currentLootItems.Add(x);
@@ -118,14 +120,14 @@ public class LootManager : MonoBehaviour
         }
         AquiredLootItems.Add(item_);
     }
-    public void AddUILootObject(LootItem item_,bool isNew=false)
+    public void AddUILootObject(LootItem item_, bool isNew = false)
     {
         WaitingLootItemPool.Add(item_);
-       // scrollRect.normalizedPosition = new Vector2(0, 1);
+        // scrollRect.normalizedPosition = new Vector2(0, 1);
         BringlootCollectionUIObjectOut();
         currentTimeCollectionUIWillBeOut = maxTimeCollectionUIWillBeOut;
-       
-        
+
+
     }
     private void DisplayUILootObject(LootItem item_)
     {
@@ -138,7 +140,7 @@ public class LootManager : MonoBehaviour
     {
         demonCurrentCash += Mathf.RoundToInt(money_ * cashMultiplier);
         demonCurrentCashText.text = demonCurrentCash.ToString("#,#");
-           foreach(MMF_Player player_ in demonCashPickUpFeedBacks)
+        foreach (MMF_Player player_ in demonCashPickUpFeedBacks)
         {
             player_.PlayFeedbacks();
         }
@@ -154,8 +156,8 @@ public class LootManager : MonoBehaviour
     }
     public void AddRegularMoney(int money_)
     {
-       
-        regularCurrentCash+=Mathf.RoundToInt(money_ * cashMultiplier);
+
+        regularCurrentCash += Mathf.RoundToInt(money_ * cashMultiplier);
         regularCurrentCashText.text = regularCurrentCash.ToString("#,#");
         foreach (MMF_Player player_ in regularCashPickUpFeedBacks)
         {
@@ -172,7 +174,7 @@ public class LootManager : MonoBehaviour
         {
             player_.PlayFeedbacks();
         }
-        if(expToNextLevel<=0)
+        if (expToNextLevel <= 0)
         {
             CombatPlayerManager.instance.LevelUp();
             SetExpToNextLevel();
@@ -185,9 +187,9 @@ public class LootManager : MonoBehaviour
     {
         //1303.8
         //1003
-         lootCollectionUIObject.transform.DOLocalMoveX(1003,1);
-      
-       // Debug.Log("Loot Pos "+lootCollectionUIObject.transform.localPosition.x);
+        lootCollectionUIObject.transform.DOLocalMoveX(1003, 1);
+
+        // Debug.Log("Loot Pos "+lootCollectionUIObject.transform.localPosition.x);
     }
     public void PutAwaylootCollectionUIObject()
     {
@@ -226,9 +228,9 @@ public class LootManager : MonoBehaviour
     }
     public bool AttemptDemonPayment(int cost_)
     {
-        if(demonCurrentCash>=cost_)
+        if (demonCurrentCash >= cost_)
         {
-            demonCurrentCash -=cost_;
+            demonCurrentCash -= cost_;
             demonCurrentCashText.text = demonCurrentCash.ToString("#,#");
             return true;
         }
@@ -238,6 +240,49 @@ public class LootManager : MonoBehaviour
     {
         expToNextLevel = CombatPlayerManager.instance.GetExpToNextLevel();
         expToNextLevelText.text = expToNextLevel.ToString();
+    }
+
+
+    //for the mining
+    public LootItem StealAnItem()
+    {
+        //if item has a Ruby, Sapphire, Emerald name
+        string[] OreNames = { "Ruby", "Sapphire", "Emerald" };
+        List<LootItem> stealableLootList = new List<LootItem>();
+
+        //look through the inventory
+        //find if there are any suitable ores to steal
+        //put them in a list
+        for (int i = 0; i < currentLootItems.Count(); i++) {
+            for (int j = 0; j < OreNames.Length; j++) {
+                if (currentLootItems[i].name.Contains(OreNames[j])){
+                    stealableLootList.Add(currentLootItems[i]);
+                    break;
+                }
+            }
+        }
+
+        if (stealableLootList.Count == 0) { 
+            return null;
+        }
+
+        int indexOfItemToSteal = Random.Range(0, stealableLootList.Count());
+        LootItem itemToSteal = stealableLootList[indexOfItemToSteal];
+
+        LootItem stolenItem = new LootItem();
+        stolenItem.name = itemToSteal.name;
+        stolenItem.amount = 1;
+
+        itemToSteal.amount -= 1;
+        // delete it from the inventory
+        if (itemToSteal.amount <= 0)
+        {
+            currentLootItems.Remove(itemToSteal);
+        }
+
+    
+
+        return stolenItem;
     }
 
 }
