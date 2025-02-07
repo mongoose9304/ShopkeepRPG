@@ -76,8 +76,8 @@ public class SlimeCombatControls : FamiliarCombatControls
     //FOR TESTING THE COMBAT FAMILIAR'S PROJECTILE
     //-Adriel
     private void FixedUpdate() {
-        if (rangedCooldown <= 0)
-            RangedAttack();
+        //if (rangedCooldown <= 0)
+        //    RangedAttack();
     }
 
     private void OnEnable()

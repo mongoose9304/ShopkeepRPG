@@ -26,6 +26,9 @@ public static class CombatDamageCalculator
 /// </summary>
 public class DungeonManager : MonoBehaviour
 {
+    [Tooltip("True==Skip tutorial")]
+    public bool skipTutorial = false;
+    
     public bool in2PlayerMode;
     [Tooltip("The singleton instance")]
     public static DungeonManager instance;
@@ -87,7 +90,7 @@ public class DungeonManager : MonoBehaviour
 
         //Turning off the tutorial
         StartTutorial();
-        //NextLevel(SinType.Greed);
+        if (skipTutorial) { NextLevel(SinType.Capriciousness); } 
 
         //For Testing purchases, use responsibly 
         LootManager.instance.AddDemonMoney(1000);

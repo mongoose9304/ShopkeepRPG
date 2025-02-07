@@ -171,8 +171,8 @@ public class CombatCoopFamiliar : CombatControllerInterface
         GetClosestInteractableObject();
         if (InteractHeld)
             InteractAction();
-        //moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
-        //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
+        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
         if (moveInput != Vector3.zero)
         {
             if(!combatControls.isControllingRotation)
