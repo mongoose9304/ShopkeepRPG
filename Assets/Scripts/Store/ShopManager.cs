@@ -138,12 +138,8 @@ public class ShopManager : MonoBehaviour
     //pedestals and bins are all collected at runtime since players can move/remove them
     [Tooltip("all the human pedestals not near windows")]
     public List<Pedestal> regularPedestals = new List<Pedestal>();
-    [Tooltip("all the human pedestals near windows")]
-    public List<Pedestal> windowPedestals = new List<Pedestal>();
     [Tooltip("all the hell pedestals not near windows")]
     public List<Pedestal> regularPedestalsHell = new List<Pedestal>();
-    [Tooltip("all the hell pedestals near windows")]
-    public List<Pedestal> windowPedestalsHell = new List<Pedestal>();
     [Tooltip("all the human bargain bins")]
     public List<BarginBin> barginBins = new List<BarginBin>();
     [Tooltip("all the hell bargain bins")]
@@ -450,11 +446,6 @@ public class ShopManager : MonoBehaviour
     {
         if (!inHell)
         {
-            if (windowPedestals.Count > 0)
-            {
-                if (Random.Range(0, 1.0f) < chanceToTargetWindows)
-                    return windowPedestals[Random.Range(0, windowPedestals.Count)].gameObject;
-            }
             if (regularPedestals.Count > 0)
             {
                 return regularPedestals[Random.Range(0, regularPedestals.Count)].gameObject;
@@ -463,11 +454,6 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            if (windowPedestalsHell.Count > 0)
-            {
-                if (Random.Range(0, 1.0f) < chanceToTargetWindows)
-                    return windowPedestalsHell[Random.Range(0, windowPedestalsHell.Count)].gameObject;
-            }
             if (regularPedestalsHell.Count > 0)
             {
                 return regularPedestalsHell[Random.Range(0, regularPedestalsHell.Count)].gameObject;
@@ -687,8 +673,6 @@ public class ShopManager : MonoBehaviour
     public void SetPedestalList()
     {
         //need to add hell
-        windowPedestals.Clear();
-        windowPedestalsHell.Clear();
         regularPedestals.Clear();
         regularPedestalsHell.Clear();
         for(int i=0;i<MoveableObjectManager.instance.humanSlots.Count;i++)
@@ -697,14 +681,7 @@ public class ShopManager : MonoBehaviour
             {
                 if (MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>())
                 {
-                    if(MoveableObjectManager.instance.humanSlots[i].isWindow)
-                    {
-                        windowPedestals.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>());
-                    }
-                    else
-                    {
-                        regularPedestals.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>());
-                    }
+                    regularPedestals.Add(MoveableObjectManager.instance.humanSlots[i].worldObject.GetComponentInChildren<Pedestal>());
                 }
             }
         }
@@ -714,14 +691,7 @@ public class ShopManager : MonoBehaviour
             {
                 if (MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>())
                 {
-                    if (MoveableObjectManager.instance.hellSlots[i].isWindow)
-                    {
-                        windowPedestalsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>());
-                    }
-                    else
-                    {
-                        regularPedestalsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>());
-                    }
+                    regularPedestalsHell.Add(MoveableObjectManager.instance.hellSlots[i].worldObject.GetComponentInChildren<Pedestal>());
                 }
             }
         }
@@ -760,9 +730,7 @@ public class ShopManager : MonoBehaviour
     private void InitPedestalList()
     {
         allPedestals.Clear();
-        allPedestals.AddRange(windowPedestals);
         allPedestals.AddRange(regularPedestals);
-        allPedestals.AddRange(windowPedestalsHell);
         allPedestals.AddRange(regularPedestalsHell);
     }
     private void InitBarginBinList()

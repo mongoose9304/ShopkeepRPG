@@ -54,10 +54,12 @@ public class MoveableObjectSlot : MonoBehaviour
             if(worldObject.GetComponentInChildren<Pedestal>())
             {
                 worldObject.GetComponentInChildren<Pedestal>().inHell = inHell;
+                worldObject.GetComponentInChildren<Pedestal>().nearWindow = isWindow;
             }
             if (worldObject.GetComponentInChildren<BarginBin>())
             {
                 worldObject.GetComponentInChildren<BarginBin>().inHell = inHell;
+                worldObject.GetComponentInChildren<Pedestal>().nearWindow = isWindow;
             }
         }
     }

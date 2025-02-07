@@ -42,7 +42,7 @@ public class Customer : MonoBehaviour
     [Tooltip("Is this customer currently in hell")]
     public bool isInHell;
     [Tooltip("REFERNCE to my navnesh agent")]
-    [SerializeField]public NavMeshAgent myAgent;
+    [SerializeField] public NavMeshAgent myAgent;
     [Tooltip("the target I am currently moving towards")]
     [SerializeField] protected GameObject tempTarget;
     [Tooltip("how much cash I owe for items picked up from bins")]
@@ -61,13 +61,13 @@ public class Customer : MonoBehaviour
     [Tooltip("Has my mood been bosted by small talk yet?")]
     public bool hasBeenSmallTalked;
     [Tooltip("REFERENCE to the ! above the NPC when they can be interacted with")]
-    [SerializeField]protected GameObject haggleIndicator;
+    [SerializeField] protected GameObject haggleIndicator;
     [Tooltip("all the pedestals I have already seen so I don't keep looking at the same items")]
     [SerializeField] List<GameObject> pedestalsSeen = new List<GameObject>();
     [Tooltip("items I am holding in case of returns/steals")]
     [SerializeField] List<TempItem> heldItems = new List<TempItem>();
     [Tooltip("REFERENCE to the ... above the NPC when they are waiting")]
-    [SerializeField]protected GameObject waitingObject;
+    [SerializeField] protected GameObject waitingObject;
     [Tooltip("am I currently being used")]
     public bool isInUse;
     [Tooltip("am I leaving the shop")]
@@ -98,10 +98,14 @@ public class Customer : MonoBehaviour
     [Range(-1, 1)]
     public int GrossFavorability;
 
+    [SerializeField]
+    private Animator anim;
+
     protected virtual void Update()
     {
+        anim.SetBool("isWalking", isMoving);
         //SetTarget(tempTarget);
-       if(isMoving)
+        if (isMoving)
         {
             if (!isLeavingShop)
             {
@@ -225,7 +229,6 @@ public class Customer : MonoBehaviour
                     case 1:
                         PurchaseBarginItem(Mathf.RoundToInt(bSlot.discountedCost * ShopManager.instance.GetHotItemMultiplier()));
                         break;
-                        break;
                     case 2:
                         PurchaseBarginItem(Mathf.RoundToInt(bSlot.discountedCost * ShopManager.instance.GetColdItemMultiplier()));
                         break;
@@ -302,33 +305,42 @@ public class Customer : MonoBehaviour
     /// <summary>
     ///The player is attempting to make a deal with this NPC. return 0 if the cost is ok, 1 if it exceeeds my cost and 2 if I want it cheaper
     /// </summary>
-    public int AttemptHaggle(int itemCost_,float haggleAmount,bool itemHot=false,bool itemCold=false)
+
+    //atm outputs either 0.5 for undesireable, 1.5 for neutral, 3.0 for desireable
+    public float GetWeight(int customerFavorability, int itemFactor)
     {
-        //the customer should spend more to buy hot items and less for cold items
-        if (itemHot)
+        float weight = 0;
+        if (customerFavorability == 0 && itemFactor == 0)
         {
-            if (itemCost_ > cashOnHand * ShopManager.instance.GetHotItemMultiplier())
-            {
-                ChangeMood(-0.1f);
-                return 1;
-            }
-            if (haggleAmount < haggleValueMax*ShopManager.instance.GetHotItemMultiplier()*mood)
-            {
-                ChangeMood(0.1f);
-                return 0;
-                //if they get a good deal they should be happy
-            }
+            weight = 2;
         }
-        else if (itemCold)
+        else
         {
-            if (haggleAmount > haggleValueMax* ShopManager.instance.GetColdItemMultiplier())
-            {
-                ChangeMood(-0.1f);
-                return 1;
-            }
+            weight = Mathf.Abs(customerFavorability + itemFactor);
+        }
+        if (weight == 2)
+        {
+            weight += 0.5f;
+        }
+        return weight + 0.5f;
+    }
+    
+    public int AttemptHaggle(int itemCost_,float haggleAmount)
+    {
+        if (itemCost_ > cashOnHand * ShopManager.instance.GetHotItemMultiplier())
+        {
+            ChangeMood(-0.1f);
+            return 1;
+        }
+        if (haggleAmount < haggleValueMax * ShopManager.instance.GetHotItemMultiplier() * mood)
+        {
+            ChangeMood(0.1f);
+            return 0;
+            //if they get a good deal they should be happy
         }
 
-            if (itemCost_ == 0)
+
+        if (itemCost_ == 0)
             {
                 ChangeMood(0.3f);
                 //no one refuses free stuff

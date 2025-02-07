@@ -768,6 +768,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc573a87c0b398c46ad6797fb8214051, type: 3}
   - {fileID: 21300000, guid: 22218f599343f774dbe66d810009cf23, type: 3}
   - {fileID: 21300000, guid: cdb9402387ff5c446bbc69a3c9a3b7d5, type: 3}
+  characterImage: {fileID: 0}
+  characterEmotions: []
 --- !u!114 &10659736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75473,6 +75475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inHell: 0
+  nearWindow: 0
   myItem: {fileID: 0}
   amount: 0
   myItemPrevious: {fileID: 0}
@@ -81679,6 +81682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002326532}
   - component: {fileID: 1002326531}
+  - component: {fileID: 1002326533}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -81763,6 +81767,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1002326533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002326530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1002723283
 GameObject:
   m_ObjectHideFlags: 0
@@ -86395,9 +86422,7 @@ MonoBehaviour:
   player2InHaggle: 0
   player2InMenu: 0
   regularPedestals: []
-  windowPedestals: []
   regularPedestalsHell: []
-  windowPedestalsHell: []
   barginBins: []
   barginBinsHell: []
   currentThieves: []
@@ -87091,6 +87116,12 @@ MonoBehaviour:
   - Make this quick, ugly one.
   - Stock better be good.
   - Good stuff here.
+  WarmFavorability: 0
+  OccultFavorability: 0
+  LivingFavorability: 0
+  ViolentFavorability: 0
+  GrossFavorability: 0
+  anim: {fileID: 0}
   leaveEffect: {fileID: 3685622042315514182, guid: ff73fe2ea3f73b94da78004bd1fd6e84, type: 3}
   tutState: 4
 --- !u!195 &1093496283
@@ -87212,11 +87243,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
   m_PrefabInstance: {fileID: 6930351}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1097908082 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7890629626598877295, guid: 082bdfa14329626489fafbd9fd1bb99b, type: 3}
-  m_PrefabInstance: {fileID: 7731607813184092993}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1099247727 stripped
 Transform:
@@ -127300,7 +127326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0fc884726948c514ca7b01c1fdc796b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd0b758eae2719b4c86767b0c53501f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -129749,6 +129775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inHell: 0
+  nearWindow: 0
   myItem: {fileID: 11400000, guid: 2a183800f0d45f04bbea48e8162eb930, type: 2}
   amount: 1
   myItemPrevious: {fileID: 0}
@@ -143857,7 +143884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2e3aab8bd306249afbd26c52205f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameObjectToPool: {fileID: 1097908082}
+  GameObjectToPool: {fileID: 7890629626598877295, guid: 082bdfa14329626489fafbd9fd1bb99b, type: 3}
   PoolSize: 5
   PoolCanExpand: 1
   MutualizeWaitingPools: 0
@@ -194054,6 +194081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inHell: 0
+  nearWindow: 0
   myItem: {fileID: 0}
   amount: 0
   myItemPrevious: {fileID: 0}
@@ -195689,10 +195717,8 @@ MonoBehaviour:
   - {fileID: 1577527608}
   - {fileID: 718804756}
   - {fileID: 1721356497}
-  regularPedestalsWithItems: []
-  regularPedestalsWithItemsHell: []
-  windowPedestalsWithItems: []
-  windowPedestalsWithItemsHell: []
+  pedestalsWithItems: []
+  pedestalsWithItemsHell: []
   barginBinsWithItems: []
   barginBinsWithItemsHell: []
   stealAudio: {fileID: 8300000, guid: 2ec0209accd99b54fb053c99e42db248, type: 3}
@@ -221882,6 +221908,12 @@ MonoBehaviour:
   itemDiscount: 0.5
   discountText: {fileID: 1757944461846653706}
   inUse: 0
+  averageWarmFactor: 0
+  averageOccultFactor: 0
+  averageLivingFactor: 0
+  averageViolentFactor: 0
+  averageGrossFactor: 0
+  totalItems: 0
   tutStateIndex: 6
 --- !u!1001 &4840756154836279723
 PrefabInstance:
@@ -227502,6 +227534,12 @@ MonoBehaviour:
   - Make this quick, ugly one.
   - Stock better be good.
   - Good stuff here.
+  WarmFavorability: 0
+  OccultFavorability: 0
+  LivingFavorability: 0
+  ViolentFavorability: 0
+  GrossFavorability: 0
+  anim: {fileID: 0}
   leaveEffect: {fileID: 3685622042315514182, guid: ff73fe2ea3f73b94da78004bd1fd6e84, type: 3}
   tutState: 4
 --- !u!222 &5887258920976508754
@@ -234134,6 +234172,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4013173100327968745, guid: 082bdfa14329626489fafbd9fd1bb99b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4709982098535448154, guid: 082bdfa14329626489fafbd9fd1bb99b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.33
@@ -235694,6 +235736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inHell: 0
+  nearWindow: 0
   myItem: {fileID: 0}
   amount: 0
   myItemPrevious: {fileID: 0}

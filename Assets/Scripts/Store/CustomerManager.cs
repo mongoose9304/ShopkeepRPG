@@ -211,24 +211,7 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
-    //atm outputs either 0.5 for undesireable, 1.5 for neutral, 3.0 for desireable
-    public float GetWeight(int customerFavorability, int itemFactor)
-    {
-        float weight = 0;
-        if (customerFavorability == 0 && itemFactor == 0)
-        {
-            weight = 2;
-        }
-        else 
-        {
-            weight = Mathf.Abs(customerFavorability + itemFactor);
-        }
-        if(weight == 2) 
-        {
-            weight += 0.5f;
-        }
-        return weight + 0.5f; 
-    }
+    
 
     //lots of hardcoded values for now
     public GameObject ChoosePedestal(Customer customer, List<Pedestal> pedestals, List<BarginBin> bins) 
@@ -236,7 +219,7 @@ public class CustomerManager : MonoBehaviour
         //placeholder variables
         float windowModifier = 2.0f;
 
-        float favorabilityModifier = 1.0f;
+        //float favorabilityModifier = 1.5f;
 
         float totalWeight = 0f;
 
@@ -247,13 +230,13 @@ public class CustomerManager : MonoBehaviour
             foreach (var pedestal in pedestals)
             {
                 //first we need to check how strongly the customer aligns with the item on the pedestal
-                float warmWeight = GetWeight(customer.WarmFavorability, pedestal.myItem.WarmFactor);
-                float occultWeight = GetWeight(customer.OccultFavorability, pedestal.myItem.OccultFactor);
-                float livingWeight = GetWeight(customer.LivingFavorability, pedestal.myItem.LivingFactor);
-                float violentWeight = GetWeight(customer.ViolentFavorability, pedestal.myItem.ViolentFactor);
-                float grossWeight = GetWeight(customer.GrossFavorability, pedestal.myItem.GrossFactor);
+                float warmWeight = customer.GetWeight(customer.WarmFavorability, pedestal.myItem.WarmFactor);
+                float occultWeight = customer.GetWeight(customer.OccultFavorability, pedestal.myItem.OccultFactor);
+                float livingWeight = customer.GetWeight(customer.LivingFavorability, pedestal.myItem.LivingFactor);
+                float violentWeight = customer.GetWeight(customer.ViolentFavorability, pedestal.myItem.ViolentFactor);
+                float grossWeight = customer.GetWeight(customer.GrossFavorability, pedestal.myItem.GrossFactor);
 
-                float totalPedestalWeight = (warmWeight + occultWeight + livingWeight + violentWeight + grossWeight) * favorabilityModifier;
+                float totalPedestalWeight = (warmWeight + occultWeight + livingWeight + violentWeight + grossWeight);
 
                 //now we include window modifier
                 totalPedestalWeight *= pedestal.nearWindow ? windowModifier : 1.0f;
@@ -270,11 +253,10 @@ public class CustomerManager : MonoBehaviour
         {
             foreach(var bin in bins) 
             {
-                float totalBinWeight = 1;
+                float totalBinWeight = (bin.averageWarmFactor + bin.averageOccultFactor + bin.averageLivingFactor + bin.averageViolentFactor + bin.averageGrossFactor); //* bin favorability
                 objectWeights[bin.gameObject] = totalBinWeight;
                 totalWeight += totalBinWeight;
             }
-
         }
 
         if (totalWeight == 0) return null;

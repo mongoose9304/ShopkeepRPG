@@ -51,6 +51,8 @@ public class BarginBin : InteractableObject
     public int averageGrossFactor;
 
 
+    public int totalItems = 0;
+
     public override void Interact(GameObject interactingObject_ = null, InteractLockOnButton btn = null)
     {
         if (interactingObject_.TryGetComponent<StorePlayer>(out StorePlayer playa))
@@ -134,7 +136,7 @@ public class BarginBin : InteractableObject
         float violentFactor = 0;
         float grossFactor = 0;
 
-        int totalItems = 0;
+        totalItems = 0;
 
         foreach (BarginBinSlot slot_ in binSlots)
         {

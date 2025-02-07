@@ -124,7 +124,16 @@ public class HaggleUI : MonoBehaviour
     /// </summary>
     private void CalculateHagglePrice()
     {
+        float warmWeight = currentCustomer.GetWeight(currentCustomer.WarmFavorability, currentCustomer.hagglePedestal.myItem.WarmFactor);
+        float occultWeight = currentCustomer.GetWeight(currentCustomer.OccultFavorability, currentCustomer.hagglePedestal.myItem.OccultFactor);
+        float livingWeight = currentCustomer.GetWeight(currentCustomer.LivingFavorability, currentCustomer.hagglePedestal.myItem.LivingFactor);
+        float violentWeight = currentCustomer.GetWeight(currentCustomer.ViolentFavorability, currentCustomer.hagglePedestal.myItem.ViolentFactor);
+        float grossWeight = currentCustomer.GetWeight(currentCustomer.GrossFavorability, currentCustomer.hagglePedestal.myItem.GrossFactor);
+
         currentSellValue = Mathf.RoundToInt(openPedestal.GetItemCost() * currentHaggleAmount);
+        Debug.Log(currentSellValue);
+        currentSellValue += (int)(((warmWeight + occultWeight + livingWeight + violentWeight + grossWeight)/100f) * currentSellValue);
+
         haggleItemValue.text = currentSellValue.ToString();
     }
     /// <summary>
@@ -133,7 +142,7 @@ public class HaggleUI : MonoBehaviour
     public void Sell()
     {
         //0 = deal accepted, 1= way too high, 2 = mood too low
-        switch (currentCustomer.AttemptHaggle(currentSellValue, currentHaggleAmount,openPedestal.hotItem,openPedestal.coldItem))
+        switch (currentCustomer.AttemptHaggle(currentSellValue, currentHaggleAmount))
         {
             case 0:
                 currentCustomer.EndHaggle(currentSellValue);
