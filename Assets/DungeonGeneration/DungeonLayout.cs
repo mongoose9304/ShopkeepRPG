@@ -37,6 +37,12 @@ namespace Dungeons {
         public ReadOnlySpan<DungeonGenerator.Condition> Conditions {
             get => m_Conditions;
         }
+        /// <summary>
+        /// The dungeon constraints; These are used to define additional conditions for specific elements in the dungeon.
+        /// </summary>
+        public ReadOnlySpan<Constraint> Constraints {
+            get => m_Constraints;
+        }
 
         /// <summary>
         /// Returns true if the anchors can attach to eachother.
@@ -182,16 +188,46 @@ namespace Dungeons {
             [SerializeField]
             private float m_Value;
         }
+        [Serializable]
+        public struct Constraint {
+            /// <summary>
+            /// The constraint name; This is only used in the editor so that we can name consraints.
+            /// </summary>
+            public readonly string Name {
+                get => m_Name;
+            }
+            /// <summary>
+            /// The conditions only apply to these elements.
+            /// </summary>
+            public readonly ReadOnlySpan<DungeonLayoutElementProvider> Elements {
+                get => m_Elements;
+            }
+            /// <summary>
+            /// The conditions.
+            /// </summary>
+            public readonly ReadOnlySpan<DungeonGenerator.Condition> Conditions {
+                get => m_Conditions;
+            }
+            
+            [SerializeField, Tooltip("This is only used in the editor so that we can name consraints.")]
+            private string m_Name;
+            [SerializeField, Tooltip("The elements that will be excluded when any conditions are false.")]
+            private DungeonLayoutElementProvider[] m_Elements;
+            [SerializeField, Tooltip("The conditions that must be true for the elements to be placed.")]
+            private DungeonGenerator.Condition[] m_Conditions;
+        }
 
-        [SerializeField]
+        [SerializeField, Tooltip("The root room.")]
         private DungeonLayoutElementProvider m_Root;
-        [SerializeField]
+        [SerializeField, Tooltip("The maximum room generation count. Zero indicites no limit.")]
         private int m_MaximumRooms;
-        [SerializeField]
+        [SerializeField, Tooltip("The maximum room generation depth. Zero indicates no limit.")]
         private int m_MaximumDepth;
-        [SerializeField]
+        [SerializeField, Tooltip("These are used as initial values for the values accessed by element conditions and operations.")]
         private Variable[] m_Variables;
-        [SerializeField]
+        [SerializeField, Tooltip("These are used to validate dungeons. Failed dungeons will be regenerated.")]
         private DungeonGenerator.Condition[] m_Conditions;
+        [SerializeField, Tooltip("These are used to define additional conditions for specific elements in the dungeon.")]
+        private Constraint[] m_Constraints;
     }
 }
