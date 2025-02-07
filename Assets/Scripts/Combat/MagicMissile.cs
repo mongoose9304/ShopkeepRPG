@@ -55,5 +55,8 @@ public class MagicMissile : PlayerDamageCollider
                 return;
             }
         }
+
+        //if you can't find a target just move on lol
+        hAttack.target = null;
     }
 }

@@ -226,28 +226,19 @@ public class SlimeCombatControls : FamiliarCombatControls
     //Extra ricocheting function for fun 
     public void SlimeRicochetFunction(GameObject proj, GameObject target) {
         Rigidbody projRB = proj.GetComponent<Rigidbody>();
+        Vector3 dir;
         if (target != null) {
 
-            if((target.transform.position - proj.transform.position).magnitude <= 3.0f) {
-                Vector3 dir = (target.transform.position - proj.transform.position).normalized;
-                Vector3 v = Projectile.VelocityByA(proj.transform.position, proj.transform.position + dir * 3.0f, -0.1f);
-                projRB.AddForce(v, ForceMode.VelocityChange);
-                return;
-            }
-
-            Vector3 velResut = Projectile.VelocityByA(proj.transform.position, target.transform.position, -0.1f);
-            projRB.AddForce(velResut, ForceMode.VelocityChange);
-
+            dir = (target.transform.position - proj.transform.position).normalized;
         } else {
             //Getting a random dir
-            float randomAngle = Random.Range(0.0f, 360.0f);
-            randomAngle *= Mathf.Deg2Rad;
-            Vector3 dir = new Vector3(Mathf.Sin(randomAngle), 0.0f, Mathf.Cos(randomAngle));
+            dir = projRB.velocity.normalized * -1;
             dir.Normalize();
 
-            Vector3 velResut = Projectile.VelocityByA(proj.transform.position, proj.transform.position + dir * 3, -0.1f);
-            projRB.AddForce(velResut, ForceMode.VelocityChange);
         }
+        Vector3 velResut = Projectile.VelocityByA(proj.transform.position, proj.transform.position + (dir * 2), -0.1f);
+        Debug.DrawLine(proj.transform.position, proj.transform.position + dir * 3, Color.white, 2.0f);
+        projRB.AddForce(velResut, ForceMode.VelocityChange);
     }
 
     protected  void Update()

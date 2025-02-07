@@ -314,6 +314,11 @@ public class DungeonManager : MonoBehaviour
                 case "Slow":
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.2f;
                     break;
+                case "Hunger": //Opposite of gluttony
+                    break;
+                case "Cowardice": //Opposite of pride
+                    break;
+
 
                     //blessings
                 case "Greed":
