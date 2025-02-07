@@ -13,10 +13,24 @@ MonoBehaviour:
   m_Name: Dun
   m_EditorClassIdentifier: 
   m_Root: {fileID: 11400000, guid: afc6b277443982643aeb7380e9577055, type: 2}
-  m_MaximumRooms: 1000
+  m_MaximumRooms: 100000
   m_MaximumDepth: 15
-  m_Variables: []
-  m_Conditions:
+  m_Variables:
   - m_Name: steve
-    m_Mode: 4
-    m_Value: 3
+    m_Value: 5
+  m_Conditions: []
+  m_Constraints:
+  - m_Name: big_room
+    m_Elements:
+    - {fileID: 11400000, guid: 9a511d2ec1a125946aa7c07e21603fed, type: 2}
+    m_Conditions:
+    - m_Name: elementDepthRemaining
+      m_Mode: 3
+      m_Value: 3
+  - m_Name: decorations
+    m_Elements:
+    - {fileID: 11400000, guid: ccb80a295bc539941a8f5c6d2857b85f, type: 2}
+    m_Conditions:
+    - m_Name: elementDepthRemaining
+      m_Mode: 3
+      m_Value: 0
