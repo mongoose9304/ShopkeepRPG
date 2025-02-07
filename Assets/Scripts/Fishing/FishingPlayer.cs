@@ -2,6 +2,7 @@ using Cinemachine;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,8 @@ public class FishingPlayer : MonoBehaviour
     [SerializeField] LayerMask wallMask;
     [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    [SerializeField] GameObject menuObject;
+    bool menuOpen;
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
@@ -56,6 +59,14 @@ public class FishingPlayer : MonoBehaviour
     public GameObject steeringWheel;
     public GameObject ship;
     public GameObject cooler;
+    public GameObject inventoryUI;
+
+    private Vector3 shipVelocity;
+    private Vector3 shipAcceleration;
+
+    // Rod strength affects how close the bobber floats to your player during the minigame
+    // as a ratio between your rod's strength and the other fish's strength.
+    public float rodStrength = 2.5f;
 
     public float raycastDistance = 15.0f;
 
@@ -68,12 +79,60 @@ public class FishingPlayer : MonoBehaviour
         playerActionMap.FindAction("XAction").canceled += OnCastReleased;
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
+        playerActionMap.FindAction("RBAction").performed += OnOpenMenu;
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
+    }
+
+    private void GenerateRareFishSpawnLocations()
+    {
+        // This function will get all rare fish spawners then turn 2 of them on
+        GameObject[] rareSpawners = GameObject.FindGameObjectsWithTag("RareFishSpawner");
+        if (rareSpawners.Length >= 2)
+        {
+
+        }
+
+        int index1 = Random.Range(0, rareSpawners.Length);
+
+        // Scuffed way to make sure the same one doesn't get selected twice
+        int index2 = index1;
+        while (index2 == index1)
+        {
+            index2 = Random.Range(0, rareSpawners.Length);
+        }
+
+        rareSpawners.ElementAt(index1).GetComponent<FishSpawner>().isActive = true;
+        rareSpawners.ElementAt(index2).GetComponent<FishSpawner>().isActive = true;
+    }
+
+    private void OnOpenMenu(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        if (isPlayer2)
+            return;
+        if (!menuOpen)
+            OpenMenuAction();
+        else
+            CloseMenuAction();
+    }
+
+    private void OpenMenuAction()
+    {
+        menuObject.SetActive(true);
+        menuOpen = true;
+    }
+    private void CloseMenuAction()
+    {
+        menuObject.SetActive(false);
+        menuOpen = false;
     }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        GenerateRareFishSpawnLocations();
     }
     void Update()
     {
@@ -126,10 +185,22 @@ public class FishingPlayer : MonoBehaviour
                     {
                         if (Vector3.Magnitude(moveInput) > 0.5f)
                         {
-                            ship.transform.forward = Vector3.Lerp(ship.transform.forward, transform.forward, 0.1f);
+                            shipAcceleration = moveInput * 5.0f;
+                            shipVelocity += shipAcceleration * Time.deltaTime;
+                            ship.transform.forward = Vector3.Lerp(ship.transform.forward, shipVelocity.normalized, 0.1f);
                         }
-                        ship.transform.position += PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
-                        //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                        else
+                        {
+                            shipAcceleration = Vector3.zero;
+                            shipVelocity = Vector3.Lerp(shipVelocity, Vector3.zero, 0.005f);
+                        }
+
+                        if (shipVelocity.magnitude > 5.0f)
+                        {
+                            shipVelocity = shipVelocity.normalized * 5.0f;
+                        }
+
+                            ship.transform.position += shipVelocity * Time.deltaTime;
                     }
                 }
                 else
@@ -217,7 +288,8 @@ public class FishingPlayer : MonoBehaviour
         {
             if (Vector2.Distance(cooler.transform.position, transform.position) < 1.0f)
             {
-                //ShowCoolerUI();
+                //FishUIScript fishUI = GameObject.Find("PlayerInventoryUI").GetComponent<FishUIScript>();
+                //fishUI.enabled = !fishUI.enabled;
             }
             else if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 1.0f)
             {
@@ -245,6 +317,12 @@ public class FishingPlayer : MonoBehaviour
     {
         if (TempPause.instance.isPaused)
             return;
+
+        if (shipMode)
+        {
+            return;
+        }
+
         if (dashCoolDown <= 0)
         {
             dashCoolDown = maxdashCoolDown;
@@ -433,18 +511,14 @@ public class FishingPlayer : MonoBehaviour
         }
     }
 
-    private void ShowCoolerUI()
-    {
-        GameObject storage = GameObject.Find("FishStorage");
-        storage.GetComponent<StorageUIScript>().Activate();
-    }
-
     public void InitiateMinigame(Fish _fish)
     {
         if (menu == null)
         {
             menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
         }
-        menu.Activate(_fish);
+
+        // TODO: Replace 3.0f with player's rod strength
+        menu.Activate(_fish, 3.0f);
     }
 }

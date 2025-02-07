@@ -18,6 +18,10 @@ public class FishingMinigame : MonoBehaviour
     // Experimental - a turbulent current pushes objects around
     public float currentStrength = 1.0f;
 
+    // Expiremental - weighted pull based on relative strength
+    private float playerStrength;
+    private float fishStrength;
+
     public bool isActive;
     public float winRadius = 60.0f;
 
@@ -77,7 +81,7 @@ public class FishingMinigame : MonoBehaviour
         }
     }
 
-    public void Activate(Fish f)
+    public void Activate(Fish f, float rodStrength)
     {
         fish = f;
         FishBehaviours.Initialize();
@@ -92,12 +96,17 @@ public class FishingMinigame : MonoBehaviour
             case FishType.Trout:
                 behaviour = FishBehaviours.Trout;
                 break;
+            case FishType.GoldScaleSturgeon:
+                behaviour = FishBehaviours.GoldScaleSturgon;
+                break;
 
             default:
                 Debug.LogWarning("Trying to use the unfinished fish behaviour " + f.species + ".");
                 break;
         }
 
+        fishStrength = fish.strength;
+        playerStrength = rodStrength;
 
         // Default positions for the 3 objects. 0, 0 is the center of the screen.
         playerPosition = new Vector2(-100.0f, 0.0f);
@@ -160,14 +169,21 @@ public class FishingMinigame : MonoBehaviour
     private void MoveBobber()
     {
         Vector2 directionToPlayer = playerPosition - bobberPosition;
-        float playerDistance = directionToPlayer.magnitude;
         directionToPlayer.Normalize();
+
         Vector2 directionToFish = fishPosition - bobberPosition;
-        float fishDistance = directionToFish.magnitude;
         directionToFish.Normalize();
 
-        bobberPosition += directionToPlayer * playerDistance * 0.015f;
-        bobberPosition += directionToFish * fishDistance * 0.01f;
+        float totalStrength = playerStrength + fishStrength;
+        float playerMult = playerStrength / totalStrength;
+
+        // Minimum value, if your relative strength is less than 35% clamp it so you can always make progress even if the fish is on the outer rim
+        playerMult = Mathf.Clamp(playerMult, 0.35f, 1.0f);
+
+        bobberPosition = Vector2.Lerp(fishPosition, playerPosition, playerMult);
+
+        //bobberPosition += directionToPlayer * playerDistance * 0.01f;
+        //bobberPosition += directionToFish * fishDistance * 0.01f;
 
         // Check bobber distance to middle
         if (bobberPosition.magnitude <= winRadius)
@@ -176,7 +192,7 @@ public class FishingMinigame : MonoBehaviour
         }
         else
         {
-            catchProgress -= 3.5f * Time.deltaTime;
+            catchProgress -= 4.5f * Time.deltaTime;
         }
          
         progressBar.value = catchProgress;
@@ -219,7 +235,7 @@ public class FishingMinigame : MonoBehaviour
     {
         if (hasWon)
         {
-            StorageUIScript storage = GameObject.Find("FishStorage").GetComponent<StorageUIScript>();
+            FishStorage storage = GameObject.Find("FishStorage").GetComponent<FishStorage>();
             storage.AddFish(fish);
         }
         else

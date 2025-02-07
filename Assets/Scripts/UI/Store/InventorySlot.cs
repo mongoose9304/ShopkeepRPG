@@ -20,6 +20,12 @@ public class InventorySlot : MonoBehaviour
         myAmountText.text = amount.ToString();
         myItemImage.sprite = myItem.itemSprite;
     }
+
+    public void SetFish(string name, float size)
+    {
+        myAmountText.text = name + "\n" + size.ToString();
+        myItemImage.sprite = myItemImage.sprite;
+    }
     public void SetMoveableItem(MoveableObject item_, int amount_)
     {
         myMoveableObject = item_;

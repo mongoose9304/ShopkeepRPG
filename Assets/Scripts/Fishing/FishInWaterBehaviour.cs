@@ -8,7 +8,8 @@ public enum FishType
     Bass,
     Trout,
     Carp,
-    Pike
+    Pike,
+    GoldScaleSturgeon
 }
 
 public class Fish
@@ -17,17 +18,54 @@ public class Fish
     {
         species = _species;
         size = _size;
+
+        switch (species)
+        {
+            case FishType.Bass:
+                name = "Bass";
+                strength = 5.0f;
+                break;
+            case FishType.Pike:
+                name = "Pike";
+                strength = 5.0f;
+                break;
+            case FishType.Trout:
+                name = "Trout";
+                strength = 3.0f;
+                break;
+            case FishType.Carp:
+                name = "Carp";
+                strength = 1.5f;
+                break;
+            case FishType.GoldScaleSturgeon:
+                name = "Gold Scale Sturgeon";
+                strength = 12.0f;
+                break;
+            default:
+                name = "Undefined";
+                strength = 1.0f;
+                break;
+        }
     }
 
     public Fish()
     {
         species = FishType.Pike;
         size = 1.0f;
+        strength = 1.0f;
+        name = "Undefined";
+    }
+
+    public string GetName()
+    {
+        return name;
     }
 
     // Final fishItem stats:
     public FishType species;
     public float size;
+    public string name;
+    public float strength;
 }
 
 public class FishInWaterBehaviour : MonoBehaviour
@@ -36,6 +74,7 @@ public class FishInWaterBehaviour : MonoBehaviour
     public Rigidbody playerRB = null;
     public GameObject playerRef;
     public GameObject ship = null;
+    public Material goldMaterial;
 
     private float ystart;
 
@@ -71,6 +110,13 @@ public class FishInWaterBehaviour : MonoBehaviour
         ystart = transform.position.y;
 
         ship = GameObject.Find("Ship");
+
+        // Make the rare fish appear as a different material.
+        // Can add a seperate mesh too once art starts coming in.
+        if (fish.species == FishType.GoldScaleSturgeon)
+        {
+            GetComponent<Renderer>().material = goldMaterial;
+        }
     }
 
     // Update is called once per frame

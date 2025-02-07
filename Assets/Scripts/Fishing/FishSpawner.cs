@@ -11,6 +11,7 @@ public class FishSpawner : MonoBehaviour
     public float fishSpawnHeight = 0.0f;
     public int maxFishSpawned = 5;
     public float maxSpawnRadius = 60.0f;
+    public bool isActive = true;
 
     public List<FishType> spawnTypes = new List<FishType>();
     public List<float> weights = new List<float>();
@@ -32,6 +33,13 @@ public class FishSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isActive == false)
+        {
+            // Need to be able to enable or disable these for
+            // rare fish management.
+            return;
+        }
+
         if (allFish.Count < maxFishSpawned)
         {
             GameObject newFish = Instantiate(fishPrefab);
@@ -39,8 +47,8 @@ public class FishSpawner : MonoBehaviour
             newFish.transform.position = transform.position + new Vector3(xz.x, fishSpawnHeight - 3.0f, xz.y);
             FishInWaterBehaviour fwb = newFish.GetComponent<FishInWaterBehaviour>();
             fwb.targetY = fishSpawnHeight;
-            fwb.fish.species = GetRandomFish();
-            fwb.fish.size = GetSize(fwb.fish.species);
+            FishType species = GetRandomFish();
+            fwb.fish = new Fish(species, GetSize(species));
             allFish.Add(newFish);
         }
 

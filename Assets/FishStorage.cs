@@ -8,12 +8,12 @@ using UnityEngine.UI;
 
 
 
-public class StorageUIScript : MonoBehaviour
+public class FishStorage : MonoBehaviour
 {
     public CanvasGroup canvas;
     public GameObject uiFish;
     public Texture fishTexture;
-    private List<Fish> allFish = new List<Fish>();
+    public List<Fish> allFish = new List<Fish>();
     public int maxFish = 10;
 
 
