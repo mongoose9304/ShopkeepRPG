@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using MoreMountains.Tools;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 
 public class PedestalScreen : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class PedestalScreen : MonoBehaviour
     public TextMeshProUGUI currentItemNameText;
     public TextMeshProUGUI previousItemNameText;
     public TextMeshProUGUI currentItemValue;
+    public Slider slider;
+    private int oldSliderVal;
     [SerializeField] AudioClip placeItemAudio;
     [SerializeField] AudioClip takeItemAudio;
     public InputSystemUIInputModule model;
@@ -80,36 +83,46 @@ public class PedestalScreen : MonoBehaviour
         CalculateItemValue();
         
     }
-    public void AddAmountOfCurrentItem(int amount_)
+    public void ChangeAmountCurrentItem()
     {
-       if (currentInventorySlot.amount >= amount_)
+        if(slider.value > oldSliderVal) 
         {
-            currentInventorySlot.UpdateAmount(currentInventorySlot.amount -= amount_);
-            currentPedestalSlot.UpdateAmount(currentPedestalSlot.amount += amount_);
+            currentInventorySlot.UpdateAmount(currentInventorySlot.amount -= 1);
+            currentPedestalSlot.UpdateAmount(currentPedestalSlot.amount += 1);
             CalculateItemValue();
+            oldSliderVal = (int)slider.value;
         }
-
-    }
-    public void AddMaxAmountOfCurrentItem()
-    {
-        AddAmountOfCurrentItem(currentInventorySlot.amount);
-
-    }
-    public void AddHalfAmountOfCurrentItem()
-    {
-        if(currentInventorySlot.amount==1)
+        else if (slider.value < oldSliderVal) 
         {
-            AddAmountOfCurrentItem(1);
-            return;
+            currentInventorySlot.UpdateAmount(currentInventorySlot.amount += 1);
+            currentPedestalSlot.UpdateAmount(currentPedestalSlot.amount -= 1);
+            CalculateItemValue();
+            oldSliderVal = (int)slider.value;
         }
-        AddAmountOfCurrentItem(currentInventorySlot.amount/2);
+       
 
     }
+    //public void AddMaxAmountOfCurrentItem()
+    //{
+    //    AddAmountOfCurrentItem(currentInventorySlot.amount);
+
+    //}
+    //public void AddHalfAmountOfCurrentItem()
+    //{
+    //    if(currentInventorySlot.amount==1)
+    //    {
+    //        AddAmountOfCurrentItem(1);
+    //        return;
+    //    }
+    //    AddAmountOfCurrentItem(currentInventorySlot.amount/2);
+
+    //}
     public void ClearButton()
     {
         PutItemBackInInventory();
         currentPedestalSlot.SetNullItem();
         currentInventorySlot.SetNullItem();
+        OpenInventorySection();
         SetItemName();
         SetButtonsActive(false);
         openPedestal.ClearItem();
@@ -137,8 +150,10 @@ public class PedestalScreen : MonoBehaviour
         if (amount_ >0)
         {
             currentPedestalSlot.SetItem(data_, 1);
-            currentInventorySlot.SetItem(data_, amount_ - 1);
+            currentInventorySlot.SetItem(data_, amount_ - 1);                              
             currentInventorySlot.gameObject.SetActive(true);
+            slider.value = currentPedestalSlot.amount;
+            slider.maxValue = amount_;                                                                                                      
             SetButtonsActive(true);
         }
         else
@@ -202,7 +217,7 @@ public class PedestalScreen : MonoBehaviour
     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
-    private void PutItemBackInInventory()
+    public void PutItemBackInInventory()
     {
         if (currentPedestalSlot.myItem)
         {

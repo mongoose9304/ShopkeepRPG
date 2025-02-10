@@ -47,6 +47,12 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] int customerCountHell;
     [Tooltip("REFERNCE to the regular customers")]
     [SerializeField]protected MMMiniObjectPooler basicCustomerPool;
+    [Tooltip("REFERNCE to the rich customers")]
+    [SerializeField] protected MMMiniObjectPooler richCustomerPool;
+    [Tooltip("REFERNCE to the poor customers")]
+    [SerializeField] protected MMMiniObjectPooler poorCustomerPool;
+    [Tooltip("REFERNCE to linford")]
+    [SerializeField] protected MMMiniObjectPooler linfordPool;
     [Tooltip("REFERNCE to the regular customers in hell")]
     [SerializeField]protected MMMiniObjectPooler basicCustomerPoolHell;
     [Tooltip("REFERNCE to the regular thieves")]
@@ -77,6 +83,9 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] AudioClip stealAudio;
     [SerializeField] AudioClip thiefCaughtAudio;
     [SerializeField] AudioClip haggleAudio;
+
+    bool testLinfordSpawnedToday = false;
+
     private void Awake()
     {
         instance = this;
@@ -139,7 +148,44 @@ public class CustomerManager : MonoBehaviour
                 return;
             }
             customerCount += 1;
-            SpawnBasicCustomer();
+     
+            int val = 0;
+            int[] values = { 0, 1, 2, 3 };
+            float[] weights = {0.75f, 0.0833f, 0.0833f, 0.0833f };
+
+            float randomValue = Random.value;
+            float cumulative = 0f;
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                cumulative += weights[i];
+                if (randomValue <= cumulative) 
+                {
+                    val = values[i];
+                    break;
+                }          
+            }
+            Debug.Log(val);
+            switch (val) 
+            {
+                case 0:
+                    SpawnBasicCustomer();
+                    break;
+                case 1:
+                    SpawnRichCustomer();
+                    break;
+                case 2:
+                    SpawnPoorCustomer();
+                    break;
+                case 3:
+                    if (testLinfordSpawnedToday) SpawnBasicCustomer();
+                    else 
+                    {
+                        SpawnLinford();
+                        testLinfordSpawnedToday = true;
+                    }
+                    break;
+            }
         }
         else
         {
@@ -211,7 +257,184 @@ public class CustomerManager : MonoBehaviour
         }
     }
 
-    
+    /// <summary>
+    /// Manages a Rich customer
+    /// </summary>
+    private void SpawnRichCustomer(bool inHell = false)
+    {
+        if (!inHell)
+        {
+            Customer c = richCustomerPool.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = false;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f) * 5));
+            //cap mood after setting it
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.ChangeMood(0);
+            c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(c.transform.position, out hit, 3.0f, NavMesh.AllAreas))
+            {
+                c.myAgent.Warp(hit.position);
+                //transform.position = hit.position;
+            }
+            lastNPCSpawnIndex += 1;
+            if (lastNPCSpawnIndex >= customerSpawns.Length)
+            {
+                lastNPCSpawnIndex = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItems, barginBinsWithItems);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+        else
+        {
+            Customer c = basicCustomerPoolHell.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = true;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.transform.position = customerSpawnsHell[lastNPCSpawnIndexHell].position;
+            lastNPCSpawnIndexHell += 1;
+            if (lastNPCSpawnIndexHell >= customerSpawnsHell.Length)
+            {
+                lastNPCSpawnIndexHell = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItemsHell, barginBinsWithItemsHell);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst, true);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+    }
+
+    /// <summary>
+    /// Manages a Poor customer
+    /// </summary>
+    private void SpawnPoorCustomer(bool inHell = false)
+    {
+        if (!inHell)
+        {
+            Customer c = poorCustomerPool.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = false;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f) * 0.25f));
+            //cap mood after setting it
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.ChangeMood(0);
+            c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(c.transform.position, out hit, 3.0f, NavMesh.AllAreas))
+            {
+                c.myAgent.Warp(hit.position);
+                //transform.position = hit.position;
+            }
+            lastNPCSpawnIndex += 1;
+            if (lastNPCSpawnIndex >= customerSpawns.Length)
+            {
+                lastNPCSpawnIndex = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItems, barginBinsWithItems);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+        else
+        {
+            Customer c = basicCustomerPoolHell.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = true;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.transform.position = customerSpawnsHell[lastNPCSpawnIndexHell].position;
+            lastNPCSpawnIndexHell += 1;
+            if (lastNPCSpawnIndexHell >= customerSpawnsHell.Length)
+            {
+                lastNPCSpawnIndexHell = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItemsHell, barginBinsWithItemsHell);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst, true);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+    }
+
+    /// <summary>
+    /// Manages a Poor customer
+    /// </summary>
+    private void SpawnLinford(bool inHell = false)
+    {
+        if (!inHell)
+        {
+            Customer c = linfordPool.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = false;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f) * 2.0f));
+            //cap mood after setting it
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.ChangeMood(0);
+            c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(c.transform.position, out hit, 3.0f, NavMesh.AllAreas))
+            {
+                c.myAgent.Warp(hit.position);
+                //transform.position = hit.position;
+            }
+            lastNPCSpawnIndex += 1;
+            if (lastNPCSpawnIndex >= customerSpawns.Length)
+            {
+                lastNPCSpawnIndex = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItems, barginBinsWithItems);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+        else
+        {
+            Customer c = basicCustomerPoolHell.GetPooledGameObject().GetComponent<Customer>();
+            c.isInHell = true;
+            c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+            c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+            c.transform.position = customerSpawnsHell[lastNPCSpawnIndexHell].position;
+            lastNPCSpawnIndexHell += 1;
+            if (lastNPCSpawnIndexHell >= customerSpawnsHell.Length)
+            {
+                lastNPCSpawnIndexHell = 0;
+            }
+            GameObject target = ChoosePedestal(c, pedestalsWithItemsHell, barginBinsWithItemsHell);
+            if (target == null)
+            {
+                target = ShopManager.instance.GetRandomTargetPedestal(chanceToCheckWindowsFirst, true);
+            }
+            c.gameObject.SetActive(true);
+            c.SetTarget(target);
+            c.StartShopping();
+            currentCustomersInStore.Add(c);
+        }
+    }
+
+
 
     //lots of hardcoded values for now
     public GameObject ChoosePedestal(Customer customer, List<Pedestal> pedestals, List<BarginBin> bins) 
@@ -253,7 +476,7 @@ public class CustomerManager : MonoBehaviour
         {
             foreach(var bin in bins) 
             {
-                float totalBinWeight = (bin.averageWarmFactor + bin.averageOccultFactor + bin.averageLivingFactor + bin.averageViolentFactor + bin.averageGrossFactor); //* bin favorability
+                float totalBinWeight = (bin.averageWarmFactor + bin.averageOccultFactor + bin.averageLivingFactor + bin.averageViolentFactor + bin.averageGrossFactor) + customer.chanceToLookAtBArginBin; //* bin favorability
                 objectWeights[bin.gameObject] = totalBinWeight;
                 totalWeight += totalBinWeight;
             }

@@ -252,6 +252,7 @@ public class ShopManager : MonoBehaviour
     {
         pedScreen.gameObject.SetActive(true);
         pedScreen.OpenMenu(p_,isPlayer2);
+        pedScreen.OpenInventorySection();
         inMenu = true;
         tutScreen.SetActive(false);
         EnableExitMenuButton(true);
@@ -307,6 +308,13 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     public void CloseMenu(bool player2=false)
     {
+        if (pedScreen.slider.gameObject.activeSelf) 
+        {
+            pedScreen.slider.gameObject.SetActive(false);
+            pedScreen.slider.value = pedScreen.currentPedestalSlot.amount;
+            pedScreen.ResetSelectedItem();
+            return;
+        }
         if (!player2&&inHaggle)
         {
             haggleScreenOriginal.haggleScreen.gameObject.SetActive(false);
