@@ -117,6 +117,7 @@ public class DungeonManager : MonoBehaviour
         currentDungeon = dungeon_;
         currentDungeon.SetUpEnemies();
         currentDungeon.ChangeSin(currentSin);
+        LootManager.instance.SetDropChances(currentDungeon.t2ItemChance, currentDungeon.t3ItemChance, currentDungeon.t4ItemChance, currentDungeon.t5ItemChance);
         if(CombatPickupManager.instance)
         {
             CombatPickupManager.instance.ClearPickups();

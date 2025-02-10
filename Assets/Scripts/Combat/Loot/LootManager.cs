@@ -23,6 +23,11 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager instance;
     [SerializeField] private ItemDropList currentItemDropList;
+    //% chance from 0-1 (0%-100% for an item of that tier to drop. Default is T1 or common item. t5 would be legendary.
+    public float chanceForT2Item;
+    public float chanceForT3Item;
+    public float chanceForT4Item;
+    public float chanceForT5Item;
     public LootItem testItem;
     [SerializeField] private float cashMultiplier = 1;
     [SerializeField] private float expMultiplier = 1;
@@ -213,6 +218,14 @@ public class LootManager : MonoBehaviour
     public void SetItemDropList(ItemDropList list_)
     {
         currentItemDropList = list_;
+       
+    }
+    public void SetDropChances(float t2 = 0, float t3 = 0, float t4 = 0, float t5 = 0)
+    {
+        chanceForT2Item = t2;
+        chanceForT3Item = t3;
+        chanceForT4Item = t4;
+        chanceForT5Item = t5;
     }
     public ItemDropList GetItemDropList()
     {

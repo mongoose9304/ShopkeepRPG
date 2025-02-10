@@ -45,6 +45,16 @@ public class BasicDungeon : MonoBehaviour
     [SerializeField] int basicEnemyExpValueMin;
     [Tooltip("The max exp enemies can drop")]
     [SerializeField] int basicEnemyExpValueMax;
+    [Tooltip("Chance for an item of this tier from 0-1 with 1 being 100%")]
+    [SerializeField] public float t2ItemChance;
+    [Tooltip("Chance for an item of this tier from 0-1 with 1 being 100%")]
+    [SerializeField] public float t3ItemChance;
+    [Tooltip("Chance for an item of this tier from 0-1 with 1 being 100%")]
+    [SerializeField] public float t4ItemChance;
+    [Tooltip("Chance for an item of this tier from 0-1 with 1 being 100%")]
+    [SerializeField]public float t5ItemChance;
+
+
     [Tooltip("Should we spawn one team or use many?")]
     public bool useRandomTeams;
 
