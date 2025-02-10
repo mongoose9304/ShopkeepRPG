@@ -52,8 +52,8 @@ public class PatrolRotateState : MonoBehaviour, IState {
     //Ray casting for the cone-like field of views
     Vector3 RayOrigin;
     Vector3 RayDirection;
-    private float viewDistance = 10.0f;
-    private float viewAngle = 90.0f;
+    public float viewDistance = 10.0f;
+    public float viewAngle = 90.0f;
     private int amountOfRays = 15;
 
 
@@ -186,15 +186,28 @@ public class ChasePlayerState : MonoBehaviour, IState {
     bool playerCaught = false; 
 
     Transform playerTransform;
+    public ChaseTimeBar chaseTimeBar;
     public void Enter() {
         Debug.Log("Entering Chase State");
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         playerTransform = playerObject.transform;
         playerLoot = LootManager.instance;
+        
+       // chaseTimeBar.UpdateTheVar(timer, chaseTime);
         if (playerLoot == null)
         {
-            Debug.LogError("LootManager component not found on the player object!");
+            Debug.LogError("LootManager is not here");
+        }
+
+        if (chaseTimeBar == null)
+        {
+            chaseTimeBar = FindObjectOfType<ChaseTimeBar>();
+            if (chaseTimeBar == null)
+            {
+                Debug.LogError("ChaseTimeBar is not here");
+                return;
+            }
         }
     }
 
@@ -208,7 +221,9 @@ public class ChasePlayerState : MonoBehaviour, IState {
         if (timer <= chaseTime && playerCaught == false)
         {
             timer += Time.deltaTime;
-            //Debug.Log(timer);
+        
+            chaseTimeBar.UpdateTheVar(timer, chaseTime);
+
             if (Vector3.Distance(transform.position, playerTransform.position) < minCloseDistance)
             {
                 Debug.Log("Player Caught");
@@ -220,12 +235,13 @@ public class ChasePlayerState : MonoBehaviour, IState {
                     Debug.Log($"Stole {stolenItem.amount} {stolenItem.name}!");
                 }
                 playerCaught = true;
+
             }
             StartChase();
         }
         else {
             if (timer >= chaseTime) {
-                if (timer <= chaseTime + 5.0f) {
+                if (timer <= chaseTime + 10.0f) {
                     RunAway();
                 }
               
@@ -254,7 +270,7 @@ public class ChasePlayerState : MonoBehaviour, IState {
 public class TrapChestState : MonoBehaviour
 {
     TrapChestStateMachine trapChestStateMachine;
-    public PatrolRotateState patrolState;
+    PatrolRotateState patrolState;
    
 
     void Start()
