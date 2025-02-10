@@ -136,7 +136,8 @@ public class FishInWaterBehaviour : MonoBehaviour
                     if (cosBobberAngle <= Mathf.Cos(maxVisionAngle))
                     {
                         Debug.Log("Start fishing minigame...");
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().InitiateMinigame(fish);
+                        GameObject.Find("FishingPlayer").GetComponent<FishingPlayer>().InitiateMinigame(fish);
+                       
                         Destroy(gameObject);
                         Destroy(bobber);
                     }

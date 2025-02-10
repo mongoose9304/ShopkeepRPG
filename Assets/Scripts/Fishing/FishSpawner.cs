@@ -18,10 +18,13 @@ public class FishSpawner : MonoBehaviour
     private float totalWeight;
 
     private List<GameObject> allFish;
+    private FishingLevelManager levelManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        levelManager = GameObject.Find("FishingSceneManager").GetComponent<FishingLevelManager>();
+
         allFish = new List<GameObject>();
         totalWeight = 0.0f;
         for (int i = 0; i < weights.Count; ++i)
@@ -40,7 +43,7 @@ public class FishSpawner : MonoBehaviour
             return;
         }
 
-        if (allFish.Count < maxFishSpawned)
+        if (allFish.Count < maxFishSpawned * levelManager.prosperity)
         {
             GameObject newFish = Instantiate(fishPrefab);
             Vector2 xz = Random.insideUnitCircle * maxSpawnRadius;

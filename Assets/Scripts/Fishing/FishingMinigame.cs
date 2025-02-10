@@ -243,7 +243,8 @@ public class FishingMinigame : MonoBehaviour
             // TODO: Negative consequences for losing? For now just close the game.
         }
 
-        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().canMove = true;
+        FishingPlayer player = GameObject.Find("FishingPlayer").GetComponent<FishingPlayer>();
+        player.TransitionOutOfMinigame();
         Deactivate();
     }
 }

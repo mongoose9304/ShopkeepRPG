@@ -52,6 +52,7 @@ public class FishingPlayer : MonoBehaviour
     public float castSpeed = 4.0f;
     private int castMultiplier = 1;
     private Vector3 castDirection;
+    private bool inMinigame = false;
 
     public bool canMove = true;
     public bool shipMode = false;
@@ -211,23 +212,8 @@ public class FishingPlayer : MonoBehaviour
             }
             else
             {
-                if (dashTime > 0)
-                {
-                    dashTime -= Time.deltaTime;
-                    if (CheckForWallHit())
-                    {
-                        dashTime = 0;
-
-                    }
-                    if (dashTime <= 0)
-                    {
-                        isDashing = false;
-                        GroundCheck();
-                        return;
-                    }
-                    Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-                    transform.position = PreventGoingThroughWalls(temp);
-                }
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
+                transform.position = PreventGoingThroughWalls(temp);
             }
         }
         else
@@ -243,6 +229,11 @@ public class FishingPlayer : MonoBehaviour
     /// </summary>
     private void OnCast(InputAction.CallbackContext obj)
     {
+        if (shipMode == true || inMinigame == true) 
+        {
+            return;
+        }
+
         castHeld = true;
         if (currentBobber == null)
         {
@@ -257,6 +248,11 @@ public class FishingPlayer : MonoBehaviour
     /// </summary>
     private void OnCastReleased(InputAction.CallbackContext obj)
     {
+        if (shipMode == true || inMinigame == true)
+        {
+            return;
+        }
+
         castHeld = false;
 
         // Potentially cast fishing line
@@ -308,6 +304,12 @@ public class FishingPlayer : MonoBehaviour
 
     private void OnPause(InputAction.CallbackContext obj)
     {
+        if (inMinigame == true)
+        {
+            // Can't pause during the minigame!
+            return;
+        }
+
         if (TempPause.instance)
         {
             TempPause.instance.TogglePause();
@@ -315,19 +317,7 @@ public class FishingPlayer : MonoBehaviour
     }
     private void OnDash(InputAction.CallbackContext obj)
     {
-        if (TempPause.instance.isPaused)
-            return;
 
-        if (shipMode)
-        {
-            return;
-        }
-
-        if (dashCoolDown <= 0)
-        {
-            dashCoolDown = maxdashCoolDown;
-            DashAction();
-        }
     }
 
     void GetInput()
@@ -520,5 +510,12 @@ public class FishingPlayer : MonoBehaviour
 
         // TODO: Replace 3.0f with player's rod strength
         menu.Activate(_fish, 3.0f);
+        inMinigame = true;
+    }
+
+    public void TransitionOutOfMinigame()
+    {
+        canMove = true;
+        inMinigame = false;
     }
 }

@@ -25,6 +25,11 @@ public class FishBehaviours
     // Catch progress, used in some fish to change behaviour based on how close the player is to catching them.
     private static float catchProgress;
 
+    private static float restTime;
+    private static float totalTime;
+    private static int phase;
+    private static bool resetFlag;
+
     public static void Initialize()
     {
         moveDelay = 0.0f;
@@ -32,6 +37,10 @@ public class FishBehaviours
         moveType = MoveType.None;
         targetAngleDegrees = Random.Range(0.0f, 360.0f);
         targetDistance = 100.0f;
+        restTime = 2.7f;
+        totalTime = 0.0f;
+        phase = 0;
+        resetFlag = false;
     }
 
     public static void UpdateGameState(Vector2 playerPos_, float catchProgress_)
@@ -244,12 +253,30 @@ public class FishBehaviours
     {
         Debug.Log("Gold Scale Sturgeon");
 
-        if (catchProgress > 25.0f)
-        {
-            // Relative angle to right
-            float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
-            float currentDistance = currentPos.magnitude;
+        // The reason I used totalTime instead of Time.fixedTime is that this gives me more precise control over which part of the cycle to start at.
+        totalTime += Time.deltaTime;
 
+        if (restTime > 0.0f)
+        {
+            currentPos.y += Mathf.Sin(totalTime * 3.0f) / restTime * 0.8f;
+            restTime -= Time.deltaTime;
+
+            return currentPos;
+        }
+
+        // Relative angle to right
+        float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
+        float currentDistance = currentPos.magnitude;
+
+        Debug.Log(currentDistance);
+
+        if (currentDistance < 32.5f && phase == 0)
+        {
+            phase = 1;
+        }
+
+        if (phase == 0)
+        {
             currentAngleDegrees += 0.5f;
             float targetDistance = Mathf.Abs(Mathf.Sin(Time.fixedTime * 0.3f)) * 190.0f + 20.0f;
             currentDistance = Mathf.Lerp(currentDistance, targetDistance, 0.01f);
@@ -259,37 +286,8 @@ public class FishBehaviours
         }
         else
         {
-            // Relative angle to right
-            float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
-            float currentDistance = currentPos.magnitude;
-
-            // This will be called like an Update
-            if (isMoving == false)
-            {
-                moveDelay -= Time.deltaTime;
-                if (moveDelay <= 0.0f)
-                {
-                    targetDistance = Random.Range(0.0f, 250.0f);
-                    targetAngleDegrees = Random.Range(0.0f, 360.0f);
-                    isMoving = true;
-                }
-            }
-            else
-            {
-                float angleDifference = Mathf.DeltaAngle(currentAngleDegrees, targetAngleDegrees);
-                currentAngleDegrees += angleDifference * 0.005f; // move .5% of the way there each frame.
-
-                currentDistance = Mathf.Lerp(currentDistance, targetDistance, 0.001f);
-
-                if (Mathf.Abs(angleDifference) < 2.0f)
-                {
-                    isMoving = false;
-                    moveDelay = Random.Range(0.5f, 3.5f);
-                }
-            }
-
-            // Reconstruct the position vector using current angle and distance
-            return new Vector2(Mathf.Cos(currentAngleDegrees * Mathf.Deg2Rad), Mathf.Sin(currentAngleDegrees * Mathf.Deg2Rad)) * currentDistance;
+            return Pike(currentPos);
         }
+
     }
 }
