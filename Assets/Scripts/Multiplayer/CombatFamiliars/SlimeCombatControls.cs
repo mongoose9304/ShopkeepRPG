@@ -228,17 +228,21 @@ public class SlimeCombatControls : FamiliarCombatControls
         Rigidbody projRB = proj.GetComponent<Rigidbody>();
         Vector3 dir;
         if (target != null) {
-
             dir = (target.transform.position - proj.transform.position).normalized;
+
         } else {
-            //Getting a random dir
             dir = projRB.velocity.normalized * -1;
             dir.Normalize();
-
         }
-        Vector3 velResut = Projectile.VelocityByA(proj.transform.position, proj.transform.position + (dir * 2), -0.1f);
-        Debug.DrawLine(proj.transform.position, proj.transform.position + dir * 3, Color.white, 2.0f);
-        projRB.AddForce(velResut, ForceMode.VelocityChange);
+
+        Vector3 velResut = dir * projRB.velocity.magnitude * 0.5f;
+        Vector3 upForce = Vector3.up * projRB.velocity.magnitude * 0.5f;
+
+        Quaternion rotation = Quaternion.LookRotation(dir, transform.up);
+        proj.transform.rotation = rotation;
+        Debug.DrawLine(proj.transform.position, proj.transform.position + velResut, Color.white, 2.0f);
+        projRB.velocity = velResut + upForce;
+
     }
 
     protected  void Update()
