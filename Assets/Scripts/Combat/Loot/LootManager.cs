@@ -237,6 +237,28 @@ public class LootManager : MonoBehaviour
             t_ = currentItemDropList.myTable.Count;
         return currentItemDropList.myTable[t_].myTable[Random.Range(0, currentItemDropList.myTable[t_].myTable.Count)].item;
     }
+    public int GetRandomItemTier()
+    {
+        float chance = Random.Range(0, 1.0f);
+
+        if(chance<chanceForT5Item)
+        {
+            return 4;
+        }
+        else if (chance < chanceForT4Item)
+        {
+            return 3;
+        }
+        else if(chance < chanceForT3Item)
+        {
+            return 2;
+        }
+        else if(chance < chanceForT2Item)
+        {
+            return 1;
+        }
+        return 0;
+    }
     public bool AttemptDemonPayment(int cost_)
     {
         if(demonCurrentCash>=cost_)

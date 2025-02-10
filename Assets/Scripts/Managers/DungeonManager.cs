@@ -48,8 +48,6 @@ public class DungeonManager : MonoBehaviour
     public BasicDungeon tutDungeon;
     [Tooltip("The current Sin, used for dynamically changing elements of the dungeon")]
     public SinType currentSin;
-    [Tooltip("The current tier of Items to drop, used with lootmanager's currentItemDropList")]
-    public int currentItemTier;
     [Tooltip("Sprites for collected resources ")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("Current Curses on Player, Reset when changing levels")]

@@ -16,7 +16,7 @@ public class RouletteRumble : BasicRoom
     [Tooltip("REFERENCE to the coin rain effect if the player hits a jackpot")]
     [SerializeField] CoinRain coinRain;
     [Tooltip("REFERENCE to the treasure chest that will be enabled if the player wins")]
-    [SerializeField] TreasureChest chest;
+    [SerializeField] SinItemChest chest;
     [Tooltip("REFERENCE to the object that will be activated once the spin has stopped")]
     [SerializeField] Image winImage;
     [Tooltip("REFERENCE images for each slot")]
@@ -81,7 +81,8 @@ public class RouletteRumble : BasicRoom
     private void ActivateChest()
     {
         Debug.Log("getChest");
-        chest.gameObject.SetActive(true);
+        chest.itemTier = LootManager.instance.GetRandomItemTier();
+        chest.transform.parent.gameObject.SetActive(true);
         winImage.sprite = slotSprites[1];
     }
     private void ActivateJackpot()
