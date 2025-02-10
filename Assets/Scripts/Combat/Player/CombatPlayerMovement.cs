@@ -717,7 +717,7 @@ public class CombatPlayerMovement : CombatControllerInterface
     public void AddExternalMod(EquipModifier mod_)
     {
        foreach(EquipModifier modX in externalModifiers)
-        {
+       {
             if (modX.modName == mod_.modName)
             {
                 externalModifiers.Remove(modX);

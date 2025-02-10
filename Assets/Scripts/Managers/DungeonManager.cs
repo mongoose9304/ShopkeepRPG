@@ -314,11 +314,34 @@ public class DungeonManager : MonoBehaviour
                 case "Slow":
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.2f;
                     break;
+
                 case "Hunger": //Opposite of gluttony
-                    break;
-                case "Cowardice": //Opposite of pride
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Hunger");
                     break;
 
+                case "Cowardice": //Opposite of pride
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Cowardice");
+                    break;
+
+                case "Misery": //Opposite of capriciousness
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Misery");
+                    break;
+
+                case "Submission": //Opposite of vainglory
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Submission");
+                    break;
+
+                case "Celibacy": //Opposite of lust
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Celibacy");
+                    break;
+
+                case "Altruist": //Opposite of envy
+                    LootManager.instance.lootDropRateMultiplier -= 0.2f;
+                    break;
+
+                case "Pacifism":
+                    //Recruit monsters harder???
+                    break;
 
                     //blessings
                 case "Greed":

@@ -530,6 +530,7 @@ public class CombatCoopFamiliar : CombatControllerInterface
         combatControls.projectileSizeMod = 0;
         combatControls.projectileSpeedMod = 0;
         combatControls.projectileLifeMod = 0;
+        combatControls.projectileCountMod = 0;
     }
     /// <summary>
     /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.
@@ -612,6 +613,9 @@ public class CombatCoopFamiliar : CombatControllerInterface
                 break;
             case UniqueEquipEffect.projectileLifeIncrease:
                 combatControls.projectileLifeMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.projectileCountIncrease:
+                combatControls.projectileCountMod += mod_.amount;
                 break;
 
         }

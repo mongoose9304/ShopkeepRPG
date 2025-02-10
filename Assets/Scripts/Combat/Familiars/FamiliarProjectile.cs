@@ -87,6 +87,7 @@ public class FamiliarProjectile : MonoBehaviour
             }
         }
     }
+
     public void CreateExplosion()
     {
         projectileExplosionObject.GetComponent<ProjectileExplosion>().damage = damage;

@@ -182,46 +182,46 @@ public class SlimeCombatControls : FamiliarCombatControls
     {
         rangedCooldown = rangedCooldownMax;
         anim.SetTrigger("basicAttack");
-        GameObject objB = rangedProjectilePool.GetPooledGameObject();
-        objB.transform.position = rangedAttackSpawn.transform.position;
-        //add real damage here
-        objB.GetComponent<FamiliarProjectile>().damage = rangedDamage;
-        objB.SetActive(true);
-        objB.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        //Applying some Mods here
-        //SizeMod
-        float projSize = 1 + projectileSizeMod;
-        objB.transform.localScale = new Vector3(projSize, projSize, projSize);
+        for (int i = 0; i <= projectileCountMod; i++) {
+            GameObject objB = rangedProjectilePool.GetPooledGameObject();
+            objB.transform.position = rangedAttackSpawn.transform.position + rangedAttackSpawn.transform.right * 0.7f * i;
+            //add real damage here
+            objB.GetComponent<FamiliarProjectile>().damage = rangedDamage;
+            objB.SetActive(true);
+            objB.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-        //Applying the proj speed mod there
-        if (target_!=null)
-        {
-            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f);
-        objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod, ForceMode.VelocityChange);
-        }
-        else
-        {
-            Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f);
-            objB.GetComponent<Rigidbody>().AddForce(velResut + velResut.normalized * projectileSpeedMod , ForceMode.VelocityChange);
-        }
+            //Applying some Mods here
+            //SizeMod
+            float projSize = 1.0f + (projectileSizeMod / 5.0f);
+            objB.transform.localScale = new Vector3(projSize, projSize, projSize);
 
-        //Ricocheting
-        //-Adriel
-        if (projectileSpecial) {
-            FamiliarProjectile objRef = objB.GetComponent<FamiliarProjectile>();
-            objRef.canRicochet = projectileSpecial;
+            //Applying the proj speed mod there
+            if (target_ != null) {
+                Vector3 velResut = Projectile.VelocityByA(objB.transform.position, target_.transform.position, -0.1f + (3.0f * projectileSpeedMod / 100.0f));
+                objB.GetComponent<Rigidbody>().AddForce(velResut, ForceMode.VelocityChange);
+            } else {
+                Vector3 velResut = Projectile.VelocityByA(objB.transform.position, transform.position + transform.forward * 5, -0.1f + (3.0f * projectileSpeedMod / 100.0f));
+                objB.GetComponent<Rigidbody>().AddForce(velResut, ForceMode.VelocityChange);
+            }
 
-            objRef.ricochetCount = 1 + (int)projectileLifeMod;
+            //Ricocheting
+            //-Adriel
+            if (projectileSpecial) {
+                FamiliarProjectile objRef = objB.GetComponent<FamiliarProjectile>();
+                objRef.canRicochet = projectileSpecial;
 
-            if (objRef.RichochetTravelEquation.GetPersistentEventCount() <= 0) {
-                objRef.RichochetTravelEquation.AddListener(SlimeRicochetFunction);
+                objRef.ricochetCount = 1 + (int)projectileLifeMod;
+
+                if (objRef.RichochetTravelEquation.GetPersistentEventCount() <= 0) {
+                    objRef.RichochetTravelEquation.AddListener(SlimeRicochetFunction);
+                }
             }
         }
-
         MMSoundManager.Instance.PlaySound(rangedAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
          false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
          1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
+    
     }
     //Extra ricocheting function for fun 
     public void SlimeRicochetFunction(GameObject proj, GameObject target) {
@@ -235,12 +235,13 @@ public class SlimeCombatControls : FamiliarCombatControls
             dir.Normalize();
         }
 
-        Vector3 velResut = dir * projRB.velocity.magnitude * 0.5f;
-        Vector3 upForce = Vector3.up * projRB.velocity.magnitude * 0.5f;
+        Vector3 velResut = dir * projRB.velocity.magnitude;
+        //FamiliarProjectile projFam = proj.GetComponent<FamiliarProjectile>();
+        Vector3 upForce = Vector3.up * projRB.velocity.magnitude * 0.4f;
 
-        Quaternion rotation = Quaternion.LookRotation(dir, transform.up);
+        Quaternion rotation = Quaternion.LookRotation((velResut + upForce).normalized);
         proj.transform.rotation = rotation;
-        Debug.DrawLine(proj.transform.position, proj.transform.position + velResut, Color.white, 2.0f);
+        Debug.DrawLine(proj.transform.position, proj.transform.position + (velResut + upForce).normalized * 3.0f, Color.yellow, 2.0f);
         projRB.velocity = velResut + upForce;
 
     }

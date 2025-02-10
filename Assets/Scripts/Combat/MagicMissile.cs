@@ -6,6 +6,8 @@ public class MagicMissile : PlayerDamageCollider
 {
     HomingAttack hAttack;
     public bool canRicochet = false;
+    GameObject currentRicochetTarget;
+
     private void Awake()
     {
         hAttack = GetComponent<HomingAttack>();
@@ -49,6 +51,9 @@ public class MagicMissile : PlayerDamageCollider
                 if(hAttack.target == h.collider.gameObject) {
                     continue;
                 }
+                if(currentRicochetTarget == hAttack.target.gameObject) { continue; }
+
+                currentRicochetTarget = hAttack.target.gameObject;
                 hAttack.target = h.collider.gameObject.transform;
                 Debug.Log(string.Format("Found new target: {0}", h.collider.name));
                 Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
