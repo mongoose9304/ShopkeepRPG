@@ -34,6 +34,7 @@ public class FamiliarCombatControls : MonoBehaviour
     [HideInInspector] public float projectileSpeedMod;
     [HideInInspector] public float projectileSizeMod;
     [HideInInspector] public float projectileLifeMod;
+    [HideInInspector] public float projectileCountMod;
     [HideInInspector] public bool projectileSpecial = false;
 
     [Header("Modifiers")]

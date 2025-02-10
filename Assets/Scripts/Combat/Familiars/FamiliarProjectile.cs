@@ -14,6 +14,7 @@ public class FamiliarProjectile : MonoBehaviour
     //Adriel stuff for ricocheting
     public bool canRicochet = false;
     public int ricochetCount = 0;
+    private GameObject ricochetTarget;
     [HideInInspector] public UnityEvent<GameObject, GameObject> RichochetTravelEquation; //Gameobject 1 is for the projectile, Gameobject 2 is the target
      
 
@@ -86,6 +87,7 @@ public class FamiliarProjectile : MonoBehaviour
             }
         }
     }
+
     public void CreateExplosion()
     {
         projectileExplosionObject.GetComponent<ProjectileExplosion>().damage = damage;
@@ -100,19 +102,27 @@ public class FamiliarProjectile : MonoBehaviour
         //if(RichochetTravelEquation.GetPersistentEventCount()  <= 0) { return;  }
         if(ricochetCount <= 0) {
             gameObject.SetActive(false);
-            return; 
-        } 
-        
+            canRicochet = false;
+        }
+
+        ricochetCount -= 1;
         //Check radius
         float radius = 5.0f;
         RaycastHit[] hit = Physics.SphereCastAll(transform.position, radius, transform.forward);
         foreach (RaycastHit h in hit) {
             if (h.collider.gameObject.tag == "Enemy") {
+                if(h.collider.gameObject == ricochetTarget) { continue; }
+                ricochetTarget = h.collider.gameObject;
                 RichochetTravelEquation.Invoke(gameObject, h.collider.gameObject);
                 Debug.Log(string.Format("Found new target: {0}", h.collider.name));
-                Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
 
-                ricochetCount -= 1;
+                if (projectileExplosionObject) {
+                    CreateExplosion();
+                } else {
+                    h.collider.gameObject.GetComponent<BasicEnemy>().ApplyDamage(damage, 0, myElement, 0, this.gameObject, "", isMysticalDamage);
+                }
+
+                Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
                 return;
             }
         }
