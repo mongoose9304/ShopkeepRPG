@@ -105,6 +105,55 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2386568996778854445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1533670135930709362}
+  - component: {fileID: 3589696981128457173}
+  m_Layer: 10
+  m_Name: ItemSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1533670135930709362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386568996778854445}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8472702515253509257}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3589696981128457173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386568996778854445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myTable: []
+  itemsToDrop: []
+  DropOnlyOneItem: 1
+  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
+  dropNothing: 0
 --- !u!1 &5481066163749314478
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +270,6 @@ GameObject:
   - component: {fileID: 8472702515253509257}
   - component: {fileID: 7517142860253828793}
   - component: {fileID: 6296510985002322822}
-  - component: {fileID: 9004553522860519442}
   m_Layer: 10
   m_Name: LootInteraction
   m_TagString: Interactable
@@ -241,7 +289,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.641, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1533670135930709362}
   m_Father: {fileID: 7817844148822068146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7517142860253828793
@@ -277,28 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d34cedc7feb3149a06b2661c5b146a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropper: {fileID: 9004553522860519442}
+  dropper: {fileID: 3589696981128457173}
   numberOfItemsToDrop: 1
-  OpenEffect: {fileID: 0}
+  OpenEffect: {fileID: 7110529260595554320}
   objectToDisable: {fileID: 5888351694054372769}
   objectToEnable: {fileID: 7791503787527424113}
---- !u!114 &9004553522860519442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8962514085610914821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d951f8e95566c745ad87951046e3e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTable: []
-  itemsToDrop: []
-  DropOnlyOneItem: 1
-  lootObject: {fileID: 6032790710050581370, guid: c7321db1a19cf0f48b499220db572611, type: 3}
-  dropNothing: 0
 --- !u!1001 &2275362250905806201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,6 +388,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c7c233b754c17d4caf4ba077dee8d17, type: 3}
+--- !u!198 &7110529260595554320 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 9024678573780454761, guid: 5c7c233b754c17d4caf4ba077dee8d17, type: 3}
+  m_PrefabInstance: {fileID: 2275362250905806201}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8081545502450535816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8049303867259267313, guid: 5c7c233b754c17d4caf4ba077dee8d17, type: 3}
