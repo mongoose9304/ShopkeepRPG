@@ -31,7 +31,6 @@ public class MagicMissile : PlayerDamageCollider
                 }
                 if (canPierceEnemies)
                     hAttack.target = null;
-
                 else
                     canRicochet = true;
                     hAttack.homingType = HomingAttack.HomingType.smooth;
@@ -51,10 +50,13 @@ public class MagicMissile : PlayerDamageCollider
                 if(hAttack.target == h.collider.gameObject) {
                     continue;
                 }
-                if(currentRicochetTarget == hAttack.target.gameObject) { continue; }
+                if (hAttack.target)
+                {
+                    if (currentRicochetTarget == hAttack.target.gameObject) { continue; }
+                }
 
-                currentRicochetTarget = hAttack.target.gameObject;
                 hAttack.target = h.collider.gameObject.transform;
+                currentRicochetTarget = hAttack.target.gameObject;
                 Debug.Log(string.Format("Found new target: {0}", h.collider.name));
                 Debug.DrawLine(transform.position, h.collider.gameObject.transform.position, Color.green, 2.0f);
                 return;
