@@ -72,6 +72,10 @@ public class DungeonManager : MonoBehaviour
     public AudioClip tutBGM;
     [Tooltip("REFERENCE to enviroments based on the sin zones")]
     public List<GameObject> enviroments = new List<GameObject>();
+    [Tooltip("REFERENCE to Post processing based on the sin zones")]
+    public List<GameObject> postProcesses = new List<GameObject>();
+    [Tooltip("REFERENCE to skyboxes based on the sin zones")]
+    public List<Material> skyboxes = new List<Material>();
     [Tooltip("REFERENCE to fade effect to hide loading")]
     public MMF_Player fadeToBlack;
     public MMF_Player fadeFromBlack;
@@ -482,13 +486,26 @@ public class DungeonManager : MonoBehaviour
         {
             obj.SetActive(false);
         }
-        switch(sin_)
+        foreach (GameObject obj in postProcesses)
+        {
+            obj.SetActive(false);
+        }
+        switch (sin_)
         {
             case SinType.Capriciousness:
                 enviroments[0].gameObject.SetActive(true);
+                postProcesses[0].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[0];
+                break;
+            case SinType.Envy:
+                enviroments[1].gameObject.SetActive(true);
+                postProcesses[1].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[1];
                 break;
             default:
                 enviroments[0].gameObject.SetActive(true);
+                postProcesses[0].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[0];
                 break;
 
         }
