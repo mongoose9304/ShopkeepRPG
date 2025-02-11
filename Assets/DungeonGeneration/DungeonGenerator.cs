@@ -1,3 +1,4 @@
+using Language.Lua;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +51,12 @@ namespace Dungeons {
             get => m_Elements.AsSpan(0, m_ElementsCount);
         }
         /// <summary>
+        /// The constraints.
+        /// </summary>
+        public IReadOnlyDictionary<DungeonLayoutElementProvider, Condition[]> Constraints {
+            get => m_Constraints;
+        }
+        /// <summary>
         /// The potentials.
         /// </summary>
         public ref DungeonGeneratorElementPool Potentials {
@@ -75,6 +82,19 @@ namespace Dungeons {
             m_ElementsCount = 0;
             m_ElementsCapacity = 100;
             m_ElementsInstantiated = 0;
+            //Initialize the generator conditions.
+            m_Constraints = new();
+            Dictionary<DungeonLayoutElementProvider, List<Condition>> constraintsTemp = new();
+            foreach (ref readonly var constraint in m_Layout.Constraints) {
+                foreach (var element in constraint.Elements) {
+                    if (!constraintsTemp.TryGetValue(element, out var list))
+                        constraintsTemp.Add(element, list = new());
+                    foreach (var condition in constraint.Conditions)
+                        list.Add(condition);
+                }
+            }
+            foreach ((var k, var v) in constraintsTemp)
+                m_Constraints[k] = v.ToArray();
             //Initialize pending anchors.
             m_Pending = new();
             PushPending(new() {
@@ -365,6 +385,7 @@ namespace Dungeons {
         private DungeonLayout m_Layout;
         private Queue<DungeonLayout.AnchorConcrete> m_Pending;
         private readonly Dictionary<string, float> m_Counters;
+        private readonly Dictionary<DungeonLayoutElementProvider, Condition[]> m_Constraints;
         private BoundingRectangleHierarchy m_BoundingRectangleHierarchy;
         private DungeonGeneratorElementPool m_ElementSpawningPotentials;
         private DungeonGeneratorElement[] m_Elements;

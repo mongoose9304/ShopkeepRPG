@@ -8,11 +8,20 @@ namespace Dungeons {
     [CreateAssetMenu(menuName = "Dungeons/DungeonElementPool", order = 3)]
     public class DungeonLayoutElementPool : DungeonLayoutElementProvider {
         public override void ProvideLayoutElements(DungeonGenerator dungeon, in DungeonLayout.AnchorConcrete anchor, float weight) {
+            //validate conditions defined by self.
             var conditions = m_Conditions;
             var conditionsLength = conditions.Length;
             for (int i = 0; i < conditionsLength; ++i)
                 if (!dungeon.CompareCounter(conditions[i].Name, conditions[i].Value, conditions[i].Mode))
                     return;
+            //validate conditions defined by dungeon layout.
+            if (dungeon.Constraints.TryGetValue(this, out conditions)) {
+                conditionsLength = conditions.Length;
+                for (int i = 0; i < conditionsLength; ++i)
+                    if (!dungeon.CompareCounter(conditions[i].Name, conditions[i].Value, conditions[i].Mode))
+                        return;
+            }
+            //push valid elements.
             var elements = m_Elements;
             var elementsLength = elements.Length;
             for (int i = 0; i < elementsLength; ++i) {

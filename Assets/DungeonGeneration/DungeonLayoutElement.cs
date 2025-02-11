@@ -39,11 +39,20 @@ namespace Dungeons {
         }
         
         public override void ProvideLayoutElements(DungeonGenerator dungeon, in DungeonLayout.AnchorConcrete anchor, float weight) {
+            //validate conditions defined by self.
             var conditions = m_Conditions;
             var conditionsLength = conditions.Length;
             for (int i = 0; i < conditionsLength; ++i)
                 if (!dungeon.CompareCounter(conditions[i].Name, conditions[i].Value, conditions[i].Mode))
                     return;
+            //validate conditions defined by dungeon layout.
+            if (dungeon.Constraints.TryGetValue(this, out conditions)) {
+                conditionsLength = conditions.Length;
+                for (int i = 0; i < conditionsLength; ++i)
+                    if (!dungeon.CompareCounter(conditions[i].Name, conditions[i].Value, conditions[i].Mode))
+                        return;
+            }
+            //push valid anchors.
             var anchors = m_Anchors;
             var anchorsLength = anchors.Length;
             for (int i = 0; i < anchorsLength; ++i) {
