@@ -13,6 +13,7 @@ public class RoomWallController : MonoBehaviour
     [SerializeField] LayerMask connectorLayer;
     private void OnEnable()
     {
+        return;
         SetUpRoom();
     }
 
