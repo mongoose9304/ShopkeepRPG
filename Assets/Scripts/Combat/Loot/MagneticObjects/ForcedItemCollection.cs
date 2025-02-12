@@ -19,8 +19,16 @@ public class ForcedItemCollection : MonoBehaviour
         {
             if (other.tag == tag_)
             {
-                if(!objectsToPull.Contains(other.gameObject))
-                objectsToPull.Add(other.gameObject);
+                if (!objectsToPull.Contains(other.gameObject))
+                {
+                    objectsToPull.Add(other.gameObject);
+                    if(other.gameObject.TryGetComponent(out Rigidbody rb))
+                    {
+                        rb.isKinematic = true;
+                    }
+
+                }
+
                 //  Vector3 temp = Vector3.Lerp(other.transform.position, this.transform.position, pullSpeed * Time.deltaTime);
                 // other.transform.position = Vector3.SmoothDamp(other.transform.position, temp, ref velocity, dampModifier);
             }

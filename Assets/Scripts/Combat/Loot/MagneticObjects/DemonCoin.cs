@@ -10,8 +10,11 @@ public class DemonCoin : MonoBehaviour
     public void SetUpCoin(int Value_)
     {
         value = Value_;
-
-        switch(Value_)
+        if (gameObject.TryGetComponent(out Rigidbody rb))
+        {
+            rb.isKinematic = false;
+        }
+        switch (Value_)
         {
             case 1:
                 materialToSwitch.material = myMaterials[0];
