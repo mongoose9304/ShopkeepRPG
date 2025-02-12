@@ -14,10 +14,6 @@ public class FishingScript : MonoBehaviour
     public GameObject Bait;
     public GameObject String;
     public GameObject FishingRod;
-    
-
-    
-
 
 
     

@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class SetInventorySelected : MonoBehaviour
+public class SetInventorySelectedFish : MonoBehaviour
 {
-    public InventoryUI inv;
+    public FishUIScript inv;
 
     private void OnEnable()
     {
-       if(inv.slots.Count > 0)
+        if (inv.slots.Count > 0)
         {
-            if(UnityEngine.EventSystems.EventSystem.current)
+            if (UnityEngine.EventSystems.EventSystem.current)
             {
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(inv.slots[0].gameObject);
             }

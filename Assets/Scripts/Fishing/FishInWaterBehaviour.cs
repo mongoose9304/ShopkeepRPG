@@ -8,7 +8,64 @@ public enum FishType
     Bass,
     Trout,
     Carp,
-    Pike
+    Pike,
+    GoldScaleSturgeon
+}
+
+public class Fish
+{
+    public Fish(FishType _species, float _size)
+    {
+        species = _species;
+        size = _size;
+
+        switch (species)
+        {
+            case FishType.Bass:
+                name = "Bass";
+                strength = 5.0f;
+                break;
+            case FishType.Pike:
+                name = "Pike";
+                strength = 5.0f;
+                break;
+            case FishType.Trout:
+                name = "Trout";
+                strength = 3.0f;
+                break;
+            case FishType.Carp:
+                name = "Carp";
+                strength = 1.5f;
+                break;
+            case FishType.GoldScaleSturgeon:
+                name = "Gold Scale Sturgeon";
+                strength = 12.0f;
+                break;
+            default:
+                name = "Undefined";
+                strength = 1.0f;
+                break;
+        }
+    }
+
+    public Fish()
+    {
+        species = FishType.Pike;
+        size = 1.0f;
+        strength = 1.0f;
+        name = "Undefined";
+    }
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    // Final fishItem stats:
+    public FishType species;
+    public float size;
+    public string name;
+    public float strength;
 }
 
 public class FishInWaterBehaviour : MonoBehaviour
@@ -16,18 +73,20 @@ public class FishInWaterBehaviour : MonoBehaviour
     private Rigidbody rb;
     public Rigidbody playerRB = null;
     public GameObject playerRef;
-    public FishType type;
+    public GameObject ship = null;
+    public Material goldMaterial;
+
+    private float ystart;
+
 
     // How skittish this fish is: how much time you need to spend inside their radius before
     // they will swim deep under water
     public float skittishness = 0.4f;
     // How close you can get without the fish swimming away
-    public float scareRadius = 4.0f;
+    public float scareRadius = 30.0f;
     // The time this fish will wait after moving before moving again.
     // Randomized after each movement.
     public float moveDelay = 1.8f;
-
-    
 
     public float baitRadius = 3.0f;
     public float maxVisionAngle = 25.0f;
@@ -35,6 +94,10 @@ public class FishInWaterBehaviour : MonoBehaviour
     private float angle;
     private float speed;
     private bool isFleeing;
+    public float targetY;
+
+    public Fish fish = new Fish();
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,11 +107,23 @@ public class FishInWaterBehaviour : MonoBehaviour
         RotateToFace();
         speed = Random.Range(1.0f, 5.0f);
         isFleeing = false;
+        ystart = transform.position.y;
+
+        ship = GameObject.Find("Ship");
+
+        // Make the rare fish appear as a different material.
+        // Can add a seperate mesh too once art starts coming in.
+        if (fish.species == FishType.GoldScaleSturgeon)
+        {
+            GetComponent<Renderer>().material = goldMaterial;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.position = new Vector3(transform.position.x, Mathf.Lerp(transform.position.y, targetY, 0.01f), transform.position.z);
+
         GameObject bobber = GameObject.FindGameObjectWithTag("Bobber");
         if (bobber != null)
         {
@@ -61,7 +136,8 @@ public class FishInWaterBehaviour : MonoBehaviour
                     if (cosBobberAngle <= Mathf.Cos(maxVisionAngle))
                     {
                         Debug.Log("Start fishing minigame...");
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<FishingPlayer>().InitiateMinigame(type);
+                        GameObject.Find("FishingPlayer").GetComponent<FishingPlayer>().InitiateMinigame(fish);
+                       
                         Destroy(gameObject);
                         Destroy(bobber);
                     }
@@ -73,7 +149,7 @@ public class FishInWaterBehaviour : MonoBehaviour
         if (playerRB != null)
         {
             // Check if player is too close
-            if (Vector3.Distance(rb.position, playerRB.position) < scareRadius)
+            if (Vector3.Distance(rb.position,   ship.transform.position) < scareRadius)
             {
                 skittishness -= Time.deltaTime;
                 if (skittishness <= 0.0f)

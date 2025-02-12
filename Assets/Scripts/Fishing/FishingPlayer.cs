@@ -1,6 +1,8 @@
+using Cinemachine;
 using MoreMountains.Tools;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,7 +20,7 @@ public class FishingPlayer : MonoBehaviour
 
     //references and inputs
     [SerializeField] GameObject interactableObjectTarget;
-    [SerializeField] InteractLockOnButton interactableObjectLockOnObject;
+    [SerializeField] GameObject interactableObjectLockOnObject;
     public List<GameObject> myInteractableObjects = new List<GameObject>();
     Vector3 moveInput;
     Vector3 newInput;
@@ -29,6 +31,8 @@ public class FishingPlayer : MonoBehaviour
     [SerializeField] LayerMask wallMask;
     [SerializeField] LayerMask groundMask;
     [SerializeField] GameObject dashEffect;
+    [SerializeField] GameObject menuObject;
+    bool menuOpen;
 
     [SerializeField] string enemyTag;
     public AudioClip dashAudio;
@@ -48,9 +52,24 @@ public class FishingPlayer : MonoBehaviour
     public float castSpeed = 4.0f;
     private int castMultiplier = 1;
     private Vector3 castDirection;
+    private bool inMinigame = false;
 
     public bool canMove = true;
+    public bool shipMode = false;
     FishingMinigame menu = null;
+    public GameObject steeringWheel;
+    public GameObject ship;
+    public GameObject cooler;
+    public GameObject inventoryUI;
+
+    private Vector3 shipVelocity;
+    private Vector3 shipAcceleration;
+
+    // Rod strength affects how close the bobber floats to your player during the minigame
+    // as a ratio between your rod's strength and the other fish's strength.
+    public float rodStrength = 2.5f;
+
+    public float raycastDistance = 15.0f;
 
     public void SetUpControls(PlayerInput myInput)
     {
@@ -61,12 +80,60 @@ public class FishingPlayer : MonoBehaviour
         playerActionMap.FindAction("XAction").canceled += OnCastReleased;
         playerActionMap.FindAction("YAction").performed += OnInteract;
         playerActionMap.FindAction("YAction").canceled += OnInteractReleased;
+        playerActionMap.FindAction("RBAction").performed += OnOpenMenu;
         playerActionMap.FindAction("StartAction").performed += OnPause;
         playerActionMap.Enable();
+    }
+
+    private void GenerateRareFishSpawnLocations()
+    {
+        // This function will get all rare fish spawners then turn 2 of them on
+        GameObject[] rareSpawners = GameObject.FindGameObjectsWithTag("RareFishSpawner");
+        if (rareSpawners.Length >= 2)
+        {
+
+        }
+
+        int index1 = Random.Range(0, rareSpawners.Length);
+
+        // Scuffed way to make sure the same one doesn't get selected twice
+        int index2 = index1;
+        while (index2 == index1)
+        {
+            index2 = Random.Range(0, rareSpawners.Length);
+        }
+
+        rareSpawners.ElementAt(index1).GetComponent<FishSpawner>().isActive = true;
+        rareSpawners.ElementAt(index2).GetComponent<FishSpawner>().isActive = true;
+    }
+
+    private void OnOpenMenu(InputAction.CallbackContext obj)
+    {
+        if (TempPause.instance.isPaused)
+            return;
+        if (isPlayer2)
+            return;
+        if (!menuOpen)
+            OpenMenuAction();
+        else
+            CloseMenuAction();
+    }
+
+    private void OpenMenuAction()
+    {
+        menuObject.SetActive(true);
+        menuOpen = true;
+    }
+    private void CloseMenuAction()
+    {
+        menuObject.SetActive(false);
+        menuOpen = false;
     }
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        GenerateRareFishSpawnLocations();
     }
     void Update()
     {
@@ -84,6 +151,7 @@ public class FishingPlayer : MonoBehaviour
 
             // Set bobber trial position
             currentBobber.transform.position = rb.position + castDirection * castPower;
+
             // Zero out the y so that it lies flat on the water surface
             currentBobber.transform.position = new Vector3(currentBobber.transform.position.x, 0.0f, currentBobber.transform.position.z);
 
@@ -95,6 +163,7 @@ public class FishingPlayer : MonoBehaviour
                 castDirection = Vector3.Normalize(moveInput);
             }
             transform.LookAt(rb.position + castDirection);
+
         }
 
         if (canMove == true)
@@ -109,7 +178,31 @@ public class FishingPlayer : MonoBehaviour
 
                 if (timeBeforePlayerCanMoveAfterFallingOffPlatform <= 0)
                 {
-                    transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                    if (shipMode == false)
+                    {
+                        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+                    }
+                    else
+                    {
+                        if (Vector3.Magnitude(moveInput) > 0.5f)
+                        {
+                            shipAcceleration = moveInput * 5.0f;
+                            shipVelocity += shipAcceleration * Time.deltaTime;
+                            ship.transform.forward = Vector3.Lerp(ship.transform.forward, shipVelocity.normalized, 0.1f);
+                        }
+                        else
+                        {
+                            shipAcceleration = Vector3.zero;
+                            shipVelocity = Vector3.Lerp(shipVelocity, Vector3.zero, 0.005f);
+                        }
+
+                        if (shipVelocity.magnitude > 5.0f)
+                        {
+                            shipVelocity = shipVelocity.normalized * 5.0f;
+                        }
+
+                            ship.transform.position += shipVelocity * Time.deltaTime;
+                    }
                 }
                 else
                     timeBeforePlayerCanMoveAfterFallingOffPlatform -= Time.deltaTime;
@@ -119,23 +212,8 @@ public class FishingPlayer : MonoBehaviour
             }
             else
             {
-                if (dashTime > 0)
-                {
-                    dashTime -= Time.deltaTime;
-                    if (CheckForWallHit())
-                    {
-                        dashTime = 0;
-
-                    }
-                    if (dashTime <= 0)
-                    {
-                        isDashing = false;
-                        GroundCheck();
-                        return;
-                    }
-                    Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
-                    transform.position = PreventGoingThroughWalls(temp);
-                }
+                Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
+                transform.position = PreventGoingThroughWalls(temp);
             }
         }
         else
@@ -151,6 +229,11 @@ public class FishingPlayer : MonoBehaviour
     /// </summary>
     private void OnCast(InputAction.CallbackContext obj)
     {
+        if (shipMode == true || inMinigame == true) 
+        {
+            return;
+        }
+
         castHeld = true;
         if (currentBobber == null)
         {
@@ -165,6 +248,11 @@ public class FishingPlayer : MonoBehaviour
     /// </summary>
     private void OnCastReleased(InputAction.CallbackContext obj)
     {
+        if (shipMode == true || inMinigame == true)
+        {
+            return;
+        }
+
         castHeld = false;
 
         // Potentially cast fishing line
@@ -192,6 +280,22 @@ public class FishingPlayer : MonoBehaviour
     {
         InteractHeld = true;
 
+        if (shipMode == false)
+        {
+            if (Vector2.Distance(cooler.transform.position, transform.position) < 1.0f)
+            {
+                //FishUIScript fishUI = GameObject.Find("PlayerInventoryUI").GetComponent<FishUIScript>();
+                //fishUI.enabled = !fishUI.enabled;
+            }
+            else if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 1.0f)
+            {
+                GoShipMode();
+            }
+        }
+        else
+        {
+            ExitShipMode();
+        }
     }
     private void OnInteractReleased(InputAction.CallbackContext obj)
     {
@@ -200,6 +304,12 @@ public class FishingPlayer : MonoBehaviour
 
     private void OnPause(InputAction.CallbackContext obj)
     {
+        if (inMinigame == true)
+        {
+            // Can't pause during the minigame!
+            return;
+        }
+
         if (TempPause.instance)
         {
             TempPause.instance.TogglePause();
@@ -207,13 +317,7 @@ public class FishingPlayer : MonoBehaviour
     }
     private void OnDash(InputAction.CallbackContext obj)
     {
-        if (TempPause.instance.isPaused)
-            return;
-        if (dashCoolDown <= 0)
-        {
-            dashCoolDown = maxdashCoolDown;
-            DashAction();
-        }
+
     }
 
     void GetInput()
@@ -241,7 +345,7 @@ public class FishingPlayer : MonoBehaviour
         {
             if (interactableObjectTarget.TryGetComponent<InteractableObject>(out InteractableObject obj))
             {
-                obj.Interact(gameObject,interactableObjectLockOnObject);
+                obj.Interact(gameObject);
             }
         }
     }
@@ -250,7 +354,7 @@ public class FishingPlayer : MonoBehaviour
         if (myInteractableObjects.Count == 0)
         {
             interactableObjectTarget = null;
-            interactableObjectLockOnObject.gameObject.SetActive(false);
+            interactableObjectLockOnObject.SetActive(false);
             return;
         }
         for (int i = 0; i < myInteractableObjects.Count; i++)
@@ -268,7 +372,7 @@ public class FishingPlayer : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, myInteractableObjects[i].transform.position) < Vector3.Distance(transform.position, interactableObjectTarget.transform.position))
                 interactableObjectTarget = myInteractableObjects[i];
-            interactableObjectLockOnObject.gameObject.SetActive(true);
+            interactableObjectLockOnObject.SetActive(true);
             interactableObjectLockOnObject.transform.position = interactableObjectTarget.transform.position;
         }
         if (myInteractableObjects.Count <= 1)
@@ -306,32 +410,30 @@ public class FishingPlayer : MonoBehaviour
     }
     private Vector3 PreventGoingThroughWalls(Vector3 temp_)
     {
-
         var dir = -transform.up;
         newInput = temp_;
         // Up
-        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, -0.5f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, -0.5f), dir, raycastDistance, wallMask))
             if (newInput.z < 0)
                 newInput.z = 0;
 
         // Down
         //Debug.DrawLine(transform.position + new Vector3(0f, 5.0f, 0.5f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, .5f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0f, 10.0f, .5f), dir, raycastDistance, wallMask))
             if (newInput.z > 0)
                 newInput.z = 0;
         //Left
         //Debug.DrawLine(transform.position + new Vector3(0.5f, 5.0f, 0f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(0.5f, 10.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(0.5f, 10.0f, 0f), dir, raycastDistance, wallMask))
             if (newInput.x > 0)
                 newInput.x = 0;
         //Right
         //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0f), dir * 2);
-        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 10.0f, 0f), dir, 15, wallMask))
+        if (Physics.Raycast(transform.position + new Vector3(-0.5f, 10.0f, 0f), dir, raycastDistance, wallMask))
             if (newInput.x < 0)
                 newInput.x = 0;
+
         return newInput;
-
-
     }
     private bool CheckForWallHit()
     {
@@ -365,15 +467,55 @@ public class FishingPlayer : MonoBehaviour
         myInteractableObjects.Remove(obj_);
         if (interactableObjectTarget = obj_)
             interactableObjectTarget = null;
-        interactableObjectLockOnObject.gameObject.SetActive(false);
+        interactableObjectLockOnObject.SetActive(false);
     }
 
-    public void InitiateMinigame(FishType behaviourType)
+    public void GoShipMode()
+    {
+        shipMode = true;
+        raycastDistance = 90.0f;
+        transform.SetParent(ship.transform);
+
+        CinemachineVirtualCamera camera = GameObject.Find("VCamLookAtPlayer").GetComponent<CinemachineVirtualCamera>();
+        camera.Follow = ship.transform;
+        var componentBase = camera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        if (componentBase is CinemachineFramingTransposer)
+        {
+            (componentBase as CinemachineFramingTransposer).m_CameraDistance = 32.0f;
+        }
+    }
+    
+    private void ExitShipMode()
+    {
+        shipMode = false;
+        canMove = true;
+        raycastDistance = 15.0f;
+        transform.SetParent(null);
+
+        CinemachineVirtualCamera camera = GameObject.Find("VCamLookAtPlayer").GetComponent<CinemachineVirtualCamera>();
+        camera.Follow = transform;
+        var componentBase = camera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        if (componentBase is CinemachineFramingTransposer)
+        {
+            (componentBase as CinemachineFramingTransposer).m_CameraDistance = 15.0f;
+        }
+    }
+
+    public void InitiateMinigame(Fish _fish)
     {
         if (menu == null)
         {
             menu = GameObject.Find("MinigameUI").GetComponent<FishingMinigame>();
         }
-        menu.Activate(behaviourType);
+
+        // TODO: Replace 3.0f with player's rod strength
+        menu.Activate(_fish, 3.0f);
+        inMinigame = true;
+    }
+
+    public void TransitionOutOfMinigame()
+    {
+        canMove = true;
+        inMinigame = false;
     }
 }
