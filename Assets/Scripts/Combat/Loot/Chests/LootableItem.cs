@@ -22,7 +22,9 @@ public class LootableItem : InteractableObject
             dropper.DropSpecificItem(LootManager.instance.GetTieredItem(LootManager.instance.GetRandomItemTier()));
         }
         gameObject.SetActive(false);
-        objectToDisable.gameObject.SetActive(false);
+        if (objectToDisable)
+            objectToDisable.gameObject.SetActive(false);
+        if(objectToEnable)
         objectToEnable.gameObject.SetActive(true);
         CombatPlayerManager.instance.RemoveInteractableObject(gameObject);
         if(OpenEffect)
