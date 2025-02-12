@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a331fb071b67d8b46b14647aadae2f26, type: 3}
+  m_Name: EnvySampleE
+  m_EditorClassIdentifier: 
+  m_Prefab: EnvySmallRoomEVariant
+  m_Bounds:
+  - serializedVersion: 2
+    x: 0
+    y: 0
+    width: 24
+    height: 24
+  m_Anchors:
+  - name: edge
+    mode: 3
+    offset: {x: 12, y: 24}
+    pool: {fileID: 11400000, guid: 4f4ee445c5cf83d4fbb2845cc20f862c, type: 2}
+    fallback: {fileID: 11400000, guid: 733142c6f7cf20c4bb17ecb22d3f39d2, type: 2}
+  - name: edge
+    mode: 1
+    offset: {x: 12, y: 0}
+    pool: {fileID: 11400000, guid: 4f4ee445c5cf83d4fbb2845cc20f862c, type: 2}
+    fallback: {fileID: 11400000, guid: 733142c6f7cf20c4bb17ecb22d3f39d2, type: 2}
+  - name: edge
+    mode: 2
+    offset: {x: 24, y: 12}
+    pool: {fileID: 11400000, guid: 4f4ee445c5cf83d4fbb2845cc20f862c, type: 2}
+    fallback: {fileID: 11400000, guid: 0b44278246149d442bd61a14d5678299, type: 2}
+  - name: edge
+    mode: 0
+    offset: {x: 0, y: 12}
+    pool: {fileID: 11400000, guid: 4f4ee445c5cf83d4fbb2845cc20f862c, type: 2}
+    fallback: {fileID: 11400000, guid: 0b44278246149d442bd61a14d5678299, type: 2}
+  - name: root
+    mode: 5
+    offset: {x: 12, y: 12}
+    pool: {fileID: 0}
+    fallback: {fileID: 0}
+  m_Conditions: []
+  m_Operations: []

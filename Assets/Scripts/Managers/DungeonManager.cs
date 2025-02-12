@@ -26,6 +26,9 @@ public static class CombatDamageCalculator
 /// </summary>
 public class DungeonManager : MonoBehaviour
 {
+    [Tooltip("True==Skip tutorial")]
+    public bool skipTutorial = false;
+    
     public bool in2PlayerMode;
     [Tooltip("The singleton instance")]
     public static DungeonManager instance;
@@ -45,8 +48,6 @@ public class DungeonManager : MonoBehaviour
     public BasicDungeon tutDungeon;
     [Tooltip("The current Sin, used for dynamically changing elements of the dungeon")]
     public SinType currentSin;
-    [Tooltip("The current tier of Items to drop, used with lootmanager's currentItemDropList")]
-    public int currentItemTier;
     [Tooltip("Sprites for collected resources ")]
     public List<Sprite> resourceSprites = new List<Sprite>();
     [Tooltip("Current Curses on Player, Reset when changing levels")]
@@ -71,6 +72,10 @@ public class DungeonManager : MonoBehaviour
     public AudioClip tutBGM;
     [Tooltip("REFERENCE to enviroments based on the sin zones")]
     public List<GameObject> enviroments = new List<GameObject>();
+    [Tooltip("REFERENCE to Post processing based on the sin zones")]
+    public List<GameObject> postProcesses = new List<GameObject>();
+    [Tooltip("REFERENCE to skyboxes based on the sin zones")]
+    public List<Material> skyboxes = new List<Material>();
     [Tooltip("REFERENCE to fade effect to hide loading")]
     public MMF_Player fadeToBlack;
     public MMF_Player fadeFromBlack;
@@ -87,7 +92,7 @@ public class DungeonManager : MonoBehaviour
 
         //Turning off the tutorial
         StartTutorial();
-        //NextLevel(SinType.Greed);
+        if (skipTutorial) { NextLevel(SinType.Capriciousness); } 
 
         //For Testing purchases, use responsibly 
         LootManager.instance.AddDemonMoney(1000);
@@ -114,6 +119,7 @@ public class DungeonManager : MonoBehaviour
         currentDungeon = dungeon_;
         currentDungeon.SetUpEnemies();
         currentDungeon.ChangeSin(currentSin);
+        LootManager.instance.SetDropChances(currentDungeon.t2ItemChance, currentDungeon.t3ItemChance, currentDungeon.t4ItemChance, currentDungeon.t5ItemChance);
         if(CombatPickupManager.instance)
         {
             CombatPickupManager.instance.ClearPickups();
@@ -312,6 +318,34 @@ public class DungeonManager : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Player").GetComponent<CombatPlayerMovement>().moveSpeedModifier -= 0.2f;
                     break;
 
+                case "Hunger": //Opposite of gluttony
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Hunger");
+                    break;
+
+                case "Cowardice": //Opposite of pride
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Cowardice");
+                    break;
+
+                case "Misery": //Opposite of capriciousness
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Misery");
+                    break;
+
+                case "Submission": //Opposite of vainglory
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Submission");
+                    break;
+
+                case "Celibacy": //Opposite of lust
+                    CombatExtrenalModManager.instance.AddModToAllPlayers("Celibacy");
+                    break;
+
+                case "Altruist": //Opposite of envy
+                    LootManager.instance.lootDropRateMultiplier -= 0.2f;
+                    break;
+
+                case "Pacifism":
+                    //Recruit monsters harder???
+                    break;
+
                     //blessings
                 case "Greed":
                     LootManager.instance.AddToCashMultiplier(0.25f);
@@ -452,13 +486,26 @@ public class DungeonManager : MonoBehaviour
         {
             obj.SetActive(false);
         }
-        switch(sin_)
+        foreach (GameObject obj in postProcesses)
+        {
+            obj.SetActive(false);
+        }
+        switch (sin_)
         {
             case SinType.Capriciousness:
                 enviroments[0].gameObject.SetActive(true);
+                postProcesses[0].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[0];
+                break;
+            case SinType.Envy:
+                enviroments[1].gameObject.SetActive(true);
+                postProcesses[1].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[1];
                 break;
             default:
                 enviroments[0].gameObject.SetActive(true);
+                postProcesses[0].gameObject.SetActive(true);
+                RenderSettings.skybox = skyboxes[0];
                 break;
 
         }

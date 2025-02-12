@@ -53,6 +53,7 @@ public class HomingAttack : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
     private void OnEnable()
     {
         currentLifeTime = maxLifeTime + lifeTimeBonus;

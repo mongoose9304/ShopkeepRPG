@@ -171,8 +171,8 @@ public class CombatCoopFamiliar : CombatControllerInterface
         GetClosestInteractableObject();
         if (InteractHeld)
             InteractAction();
-        //moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
-        //transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
+        moveInput = new Vector3(movement.ReadValue<Vector2>().x, 0, movement.ReadValue<Vector2>().y);
+        transform.position = transform.position + PreventFalling() * moveSpeed * moveSpeedModifier * Time.deltaTime;
         if (moveInput != Vector3.zero)
         {
             if(!combatControls.isControllingRotation)
@@ -530,6 +530,7 @@ public class CombatCoopFamiliar : CombatControllerInterface
         combatControls.projectileSizeMod = 0;
         combatControls.projectileSpeedMod = 0;
         combatControls.projectileLifeMod = 0;
+        combatControls.projectileCountMod = 0;
     }
     /// <summary>
     /// Apply all stat modifiers and adjust the players stats. Additive stats will be applied first, then multiplicative.
@@ -612,6 +613,9 @@ public class CombatCoopFamiliar : CombatControllerInterface
                 break;
             case UniqueEquipEffect.projectileLifeIncrease:
                 combatControls.projectileLifeMod += mod_.amount;
+                break;
+            case UniqueEquipEffect.projectileCountIncrease:
+                combatControls.projectileCountMod += mod_.amount;
                 break;
 
         }

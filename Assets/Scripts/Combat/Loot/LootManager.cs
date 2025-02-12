@@ -23,6 +23,11 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager instance;
     [SerializeField] private ItemDropList currentItemDropList;
+    //% chance from 0-1 (0%-100% for an item of that tier to drop. Default is T1 or common item. t5 would be legendary.
+    public float chanceForT2Item;
+    public float chanceForT3Item;
+    public float chanceForT4Item;
+    public float chanceForT5Item;
     public LootItem testItem;
     [SerializeField] private float cashMultiplier = 1;
     [SerializeField] private float expMultiplier = 1;
@@ -213,6 +218,14 @@ public class LootManager : MonoBehaviour
     public void SetItemDropList(ItemDropList list_)
     {
         currentItemDropList = list_;
+       
+    }
+    public void SetDropChances(float t2 = 0, float t3 = 0, float t4 = 0, float t5 = 0)
+    {
+        chanceForT2Item = t2;
+        chanceForT3Item = t3;
+        chanceForT4Item = t4;
+        chanceForT5Item = t5;
     }
     public ItemDropList GetItemDropList()
     {
@@ -223,6 +236,28 @@ public class LootManager : MonoBehaviour
         if (t_ > currentItemDropList.myTable.Count)
             t_ = currentItemDropList.myTable.Count;
         return currentItemDropList.myTable[t_].myTable[Random.Range(0, currentItemDropList.myTable[t_].myTable.Count)].item;
+    }
+    public int GetRandomItemTier()
+    {
+        float chance = Random.Range(0, 1.0f);
+
+        if(chance<chanceForT5Item)
+        {
+            return 4;
+        }
+        else if (chance < chanceForT4Item)
+        {
+            return 3;
+        }
+        else if(chance < chanceForT3Item)
+        {
+            return 2;
+        }
+        else if(chance < chanceForT2Item)
+        {
+            return 1;
+        }
+        return 0;
     }
     public bool AttemptDemonPayment(int cost_)
     {

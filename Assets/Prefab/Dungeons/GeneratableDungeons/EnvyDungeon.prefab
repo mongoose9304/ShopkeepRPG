@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4287680058182391120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2610200364638163127}
+  - component: {fileID: 2316390052191034836}
+  - component: {fileID: 2628526535115041754}
+  m_Layer: 0
+  m_Name: EnvyDungeon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2610200364638163127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287680058182391120}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 25, y: 0, z: -5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9009726953604450847}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2316390052191034836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287680058182391120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07df4b34b3be8794ea640c9d95fe1316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  regularEnemies:
+  - {fileID: 2519484865883213000, guid: f5efe8eaf1c238848a7c7f5f92952cba, type: 3}
+  - {fileID: 6618822763816982608, guid: 2b4726ad8c86c2449a216e3d97a921d5, type: 3}
+  - {fileID: 6551820595359314126, guid: 0d1d7cc44c8487249b081aea504fbff9, type: 3}
+  eliteEnemies:
+  - {fileID: 8064418402044043358, guid: 9ceb2310ed2a4c54eb7602c39533b3d5, type: 3}
+  - {fileID: 1124081786286459366, guid: af435d886d6c4cd459ec6a7b352058cf, type: 3}
+  enemyLevel: 1
+  eliteEnemyLevel: 2
+  eliteChance: 0.1
+  trapLevel: 1
+  treasureChestAmount: 500
+  basicEnemyValueMin: 3
+  basicEnemyValueMax: 25
+  basicEnemyExpValueMin: 10
+  basicEnemyExpValueMax: 30
+  t2ItemChance: 0
+  t3ItemChance: 0
+  t4ItemChance: 0
+  t5ItemChance: 0
+  useRandomTeams: 0
+  regularRooms: []
+  mySin: 6
+  playerStart: {fileID: 9009726953604450847}
+  regularRoomSpots: []
+  availableTeams:
+  - Cappy
+  onlyTeam: Cappy
+  dungeonDev: {fileID: 2628526535115041754}
+--- !u!114 &2628526535115041754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287680058182391120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7f2a2b84645c948a509b6e8eecc943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layout: {fileID: 11400000, guid: 07c31b03156d754408d35409b105ba5d, type: 2}
+  speed: 0
+  steps: 25
+  point: {x: 0, y: 0}
+--- !u!1 &8838372097077772998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9009726953604450847}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9009726953604450847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8838372097077772998}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -25, y: 0.5, z: 7.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2610200364638163127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

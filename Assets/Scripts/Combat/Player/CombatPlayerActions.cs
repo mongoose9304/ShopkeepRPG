@@ -266,7 +266,7 @@ public class CombatPlayerActions : MonoBehaviour
 
                 //Offseting the projectile's spawn position
                 Vector3 transformPosition = spawnPosition.position;
-                Vector3 deltaPos = spawnPosition.transform.right * -0.5f * i;
+                Vector3 deltaPos = spawnPosition.transform.right * -0.7f * i;
 
                 tempObj.transform.position = transformPosition + deltaPos;
                 tempObj.transform.rotation = spawnPosition.rotation;

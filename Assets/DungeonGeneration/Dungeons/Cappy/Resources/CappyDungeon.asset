@@ -19,7 +19,7 @@ MonoBehaviour:
   m_Conditions:
   - m_Name: chest
     m_Mode: 5
-    m_Value: 1
+    m_Value: 2
   - m_Name: chest
     m_Mode: 2
     m_Value: 6
@@ -38,3 +38,40 @@ MonoBehaviour:
   - m_Name: shop
     m_Mode: 2
     m_Value: 3
+  - m_Name: loot
+    m_Mode: 4
+    m_Value: 3
+  m_Constraints:
+  - m_Name: loot
+    m_Elements:
+    - {fileID: 11400000, guid: f1a18d8e5e8bfc8449b3df1ff5840922, type: 2}
+    m_Conditions:
+    - m_Name: loot
+      m_Mode: 2
+      m_Value: 5
+  - m_Name: shops
+    m_Elements:
+    - {fileID: 11400000, guid: 59c8584d77edf404aaa21ef093ccf0e7, type: 2}
+    m_Conditions:
+    - m_Name: shop
+      m_Mode: 2
+      m_Value: 3
+  - m_Name: chest
+    m_Elements:
+    - {fileID: 11400000, guid: d855895256b1ce045a53a7bd70fc6e2d, type: 2}
+    m_Conditions:
+    - m_Name: chest
+      m_Mode: 2
+      m_Value: 6
+  - m_Name: combat
+    m_Elements:
+    - {fileID: 11400000, guid: 686fca3579b04fa4782313bbc6473580, type: 2}
+    - {fileID: 11400000, guid: 98b4bab7f48193a4193a20103c7057ce, type: 2}
+    - {fileID: 11400000, guid: 5d990300f0eb4b340bc4faa7d000617c, type: 2}
+    - {fileID: 11400000, guid: 19a00c8541431f243a0ad994f628d43d, type: 2}
+    - {fileID: 11400000, guid: 99f7f8e22063e364881870457ff9d5e2, type: 2}
+    - {fileID: 11400000, guid: a03eec54fa4fbbd4a990cfccc95a1b29, type: 2}
+    m_Conditions:
+    - m_Name: combat
+      m_Mode: 2
+      m_Value: 13

@@ -18,8 +18,4 @@ public class SinItemChest : TreasureChest
         base.OpenChest();
        
     }
-    private void OnEnable()
-    {
-        itemTier = DungeonManager.instance.currentItemTier;
-    }
 }

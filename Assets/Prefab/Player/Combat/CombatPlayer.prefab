@@ -4988,6 +4988,7 @@ GameObject:
   - component: {fileID: 3119525544902752512}
   - component: {fileID: 1983221473442537484}
   - component: {fileID: 6228539791519982407}
+  - component: {fileID: 8864394224043094524}
   m_Layer: 8
   m_Name: MagneticItemPuller
   m_TagString: Untagged
@@ -5024,8 +5025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pullableTags:
   - Item
-  - DemonCoin
-  pullSpeed: 5
+  pullSpeed: 10
   dampModifier: 0.2
   objectsToPull: []
 --- !u!65 &6228539791519982407
@@ -5047,8 +5047,26 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 2, z: 20}
+  m_Size: {x: 20, y: 8, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8864394224043094524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874421890430813999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e67232bfd7a31438ac1889010250d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullableTags:
+  - DemonCoin
+  pullSpeed: 8
+  lookSpeed: 2
+  dampModifier: 0
+  objectsToPull: []
 --- !u!1 &877511195085878333
 GameObject:
   m_ObjectHideFlags: 0
