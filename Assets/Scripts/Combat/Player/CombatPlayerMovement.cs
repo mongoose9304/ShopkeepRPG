@@ -236,7 +236,8 @@ public class CombatPlayerMovement : CombatControllerInterface
                 Vector3 temp = transform.position + (transform.forward * moveSpeed * Time.deltaTime * dashDistance);
                 // transform.position = Vector3.SmoothDamp(transform.position, PreventGoingThroughWalls(temp), ref velocity, dampModifier);
                 transform.position = PreventGoingThroughWalls(temp);
-
+                if (dashTime <= 0.1f)
+                    DashEdgeCheck();
 
             }
 
@@ -261,6 +262,24 @@ public class CombatPlayerMovement : CombatControllerInterface
         {
             dashCoolDown = maxdashCoolDown;
             DashAction();
+        }
+    }
+    /// <summary>
+    /// Stop the player from going over the edge near the end of their dash to make the dash feel smoother.
+    /// </summary>
+    private void DashEdgeCheck()
+    {
+        if (!Physics.Raycast(transform.position + transform.forward, transform.TransformDirection(Vector3.down), 10))
+        {
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), 10))
+            {
+                dashTime = 0;
+                isDashing = false;
+                if (physicalDashLevel > 0)
+                {
+                    DashPhysicalAttack();
+                }
+            }
         }
     }
     private void DashPhysicalAttack()
