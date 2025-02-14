@@ -898,6 +898,12 @@ public class CombatPlayerMovement : CombatControllerInterface
         dragonMDamage.uniqueEffect = UniqueEquipEffect.None;
 
         //Megido/Projectile shenanigans
+        EquipModifier megidoManaRegenIncrease = new EquipModifier();
+        megidoManaRegenIncrease.isMultiplicative = false;
+        megidoManaRegenIncrease.modName = "megidoManaRegenSpeed";
+        megidoManaRegenIncrease.amount = 0;
+        megidoManaRegenIncrease.uniqueEffect = UniqueEquipEffect.ManaRegen;
+
         EquipModifier megidoProjSpeed = new EquipModifier();
         megidoProjSpeed.isMultiplicative = false;
         megidoProjSpeed.modName = "megidoProjSpeed";
@@ -918,7 +924,7 @@ public class CombatPlayerMovement : CombatControllerInterface
 
         EquipModifier megidoProjCount = new EquipModifier();
         megidoProjCount.isMultiplicative = false;
-        megidoProjCount.modName = "megidoProjC ount";
+        megidoProjCount.modName = "megidoProjCount";
         megidoProjCount.amount = 0;
         megidoProjCount.uniqueEffect = UniqueEquipEffect.projectileCountIncrease;
 
@@ -1120,22 +1126,27 @@ public class CombatPlayerMovement : CombatControllerInterface
                 case "Megido":
                     if (tal_.levelInvested >= 1) {
                         megidoProjSize.amount += 2.5f;
+                        megidoManaRegenIncrease.amount += 0.05f;
                     }
 
                     if(tal_.levelInvested >= 2) {
                         megidoProjSpeed.amount += 2.5f;
+                        megidoManaRegenIncrease.amount += 0.05f;
                     }
 
                     if (tal_.levelInvested >= 3) {
                         megidoProjLife.amount += 3.5f;
+                        megidoManaRegenIncrease.amount += 0.05f;
                     }
 
                     if (tal_.levelInvested >= 4) {
                         megidoProjCount.amount += 1;
+                        megidoManaRegenIncrease.amount += 0.05f;
                     }
 
                     if (tal_.levelInvested >= 5) {
                         megidoProjSpecial.amount += 1.0f;
+                        megidoManaRegenIncrease.amount += 0.05f;
                     }
 
                     
@@ -1179,11 +1190,13 @@ public class CombatPlayerMovement : CombatControllerInterface
 
 
         //Megido
+        AddExternalMod(megidoManaRegenIncrease);
         AddExternalMod(megidoProjSpeed);
         AddExternalMod(megidoProjSize);
         AddExternalMod(megidoProjLife);
         AddExternalMod(megidoProjSpecial);
         AddExternalMod(megidoProjCount);
+        combatActions.myCoopFamiliar.AddExternalMod(megidoManaRegenIncrease);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjSpeed);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjSize);
         combatActions.myCoopFamiliar.AddExternalMod(megidoProjLife);
