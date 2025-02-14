@@ -48,14 +48,9 @@ public class PatrolRotateState : MonoBehaviour, IState {
     TrapChestStateMachine trapChestStateMachine;
     public ChasePlayerState chasePlayerState;
 
-
-    //Ray casting for the cone-like field of views
-    Vector3 RayOrigin;
-    Vector3 RayDirection;
-    public float viewDistance = 10.0f;
-    public float viewAngle = 90.0f;
-    private int amountOfRays = 15;
-
+    private GameObject coneVision;
+    private MeshCollider coneCollider;
+    private TrapChestState trapChestRef;
 
     private float timer = 0.0f;
     private float rotationCD = 4.0f;
@@ -79,19 +74,20 @@ public class PatrolRotateState : MonoBehaviour, IState {
         currentAngle = startingAngle;
 
         targetAngle = angles[1] + startingAngle;
-        RayOrigin = transform.position;
-        RayDirection = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
-
+      
         //for the state machine
         trapChestStateMachine = GetComponent<TrapChestStateMachine>();
         chasePlayerState = gameObject.AddComponent<ChasePlayerState>();
 
+        trapChestRef = GetComponent<TrapChestState>();
+
+        coneVision = trapChestRef.coneVision;
+        coneCollider = coneVision.GetComponent<MeshCollider>();
     }
     public void ExecuteState()
     {
         Rotate();
-        CastRays();
-
+      
         if (PlayerFound())
         {
             trapChestStateMachine.ChangeState(chasePlayerState);
@@ -130,7 +126,7 @@ public class PatrolRotateState : MonoBehaviour, IState {
             currentAngle = angle;
   
             transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
-          
+            coneVision.transform.rotation = Quaternion.Euler(180.0f, angle, 90.0f);
 
             if (Mathf.Approximately(currentAngle, targetAngle))
             {
@@ -139,43 +135,23 @@ public class PatrolRotateState : MonoBehaviour, IState {
         }
     }
 
-
-    void CastRays()
+    private void OnTriggerEnter(Collider other)
     {
-        RayOrigin = transform.position;
-        //this is to ganerate the cone- like field of view. 
-        //Since for this mob we cant use simple colliders
-
-        float startingPoint = -viewAngle / 2;
-        float angleBetweenRays = viewAngle / amountOfRays;
-
-        for (int i = 0; i < amountOfRays; i++)
+        if (other.CompareTag("Player"))
         {
-            float newAngle = startingPoint + angleBetweenRays * i;
-            RayDirection = Quaternion.Euler(0, newAngle, 0) * transform.forward;
 
-            Debug.DrawRay(RayOrigin, RayDirection * viewDistance, Color.red);
-
-            RaycastHit[] hit = Physics.RaycastAll(RayOrigin, RayDirection * viewDistance, viewDistance);
-            for (int j = 0; j < hit.Length; j++)
-            {
-                if (hit[j].collider.CompareTag("Player"))
-                {
-                    Debug.Log("Player Found!");
-                    playerInViewRange = true;
-                    break;
-                }
-            }
+            Debug.Log("Player Found!");
+            playerInViewRange = true;
         }
     }
 
-
+   
     bool PlayerFound() { return playerInViewRange; }
 }
 
 
 public class ChasePlayerState : MonoBehaviour, IState {
-
+    
     LootManager playerLoot;
     float chaseTime = 5.0f;
     float timer = 0.0f;
@@ -269,6 +245,9 @@ public class ChasePlayerState : MonoBehaviour, IState {
 
 public class TrapChestState : MonoBehaviour
 {
+  
+    public GameObject coneVision;
+
     TrapChestStateMachine trapChestStateMachine;
     PatrolRotateState patrolState;
    
