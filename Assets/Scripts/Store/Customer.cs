@@ -82,6 +82,8 @@ public class Customer : MonoBehaviour
     [Tooltip("REFERENCE to the things I can say when haggling when small talk button is pressed ")]
     public List<string> smallTalks = new List<string>();
 
+    [SerializeField]
+    bool useCustomFavorability;
     [Tooltip("Do I like warm items?")]
     [Range(-1, 1)]
     public int WarmFavorability;
@@ -100,6 +102,9 @@ public class Customer : MonoBehaviour
 
     [SerializeField]
     private Animator anim;
+
+    [SerializeField]
+    GameObject sword;
 
     protected virtual void Update()
     {
@@ -172,7 +177,7 @@ public class Customer : MonoBehaviour
         {
             if(p_.amount>0)
             {
-                if(Random.Range(0.0f,1.0f)<chanceToStealItem)
+                if (Random.Range(0.0f, 1.0f) < chanceToStealItem)
                 {
                     if (CustomerManager.instance.CheckStealLimit())
                     {
@@ -183,7 +188,7 @@ public class Customer : MonoBehaviour
                         return;
                     }
                 }
-                if(p_.myItem.basePrice*p_.amount<=cashOnHand)
+                if (p_.myItem.basePrice * p_.amount <= cashOnHand)
                 {
                     RequestHaggle(p_);
                     haggleIndicator.SetActive(true);
@@ -192,6 +197,7 @@ public class Customer : MonoBehaviour
                 {
                     GetNewTarget();
                 }
+
             }
         }
         else
@@ -506,15 +512,50 @@ public class Customer : MonoBehaviour
         }
         GetNewTarget();
     }
+
+    private int GetFavorability( float[] popularity) 
+    {
+        int[] favorability = { -1, 0, 1 };
+
+        float randomValue = Random.value; //between 0-1
+        float cumulative = 0f;
+
+        for (int i = 0; i < favorability.Length; i++)
+        {
+            cumulative += popularity[i];
+            if (randomValue <= cumulative)
+            {
+                return favorability[i];
+            }
+        }
+
+        return 0;
+    }
+
     /// <summary>
     /// Called when spawned
     /// </summary>
+    /// 
     public void StartShopping()
     {
         currentBrowseChances = maxBrowseChances;
+
+        if (!useCustomFavorability) 
+        {
+            WarmFavorability = GetFavorability(CustomerManager.instance.warmPopularity);
+            OccultFavorability = GetFavorability(CustomerManager.instance.occultPopularity);
+            LivingFavorability = GetFavorability(CustomerManager.instance.livingPopularity);
+            ViolentFavorability = GetFavorability(CustomerManager.instance.violentPopularity);
+            GrossFavorability = GetFavorability(CustomerManager.instance.grossPopularity);
+        }
+        
         isInUse = false;
         isLeavingShop = false;
         pedestalsSeen.Clear();
+        if(ViolentFavorability == 1) 
+        {
+            sword.SetActive(true);
+        }
         if (waitingObject)
             waitingObject.SetActive(false);
     }
@@ -578,12 +619,12 @@ public class Customer : MonoBehaviour
                         CustomerManager.instance.barginBinsWithItems);
                 if (x >= 6)
                 {
-                    target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                    target_ =  ShopManager.instance.GetRandomTargetPedestal(0.15f, false);
                     break;
                 }
             }
             if (target_ == null)
-                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.15f, false);
             myAgent.SetDestination(target_.transform.position);
             tempTarget = target_;
             if (target_.TryGetComponent<Pedestal>(out Pedestal p))
@@ -609,12 +650,13 @@ public class Customer : MonoBehaviour
                         CustomerManager.instance.barginBinsWithItemsHell);
                 if (x >= 6)
                 {
-                    target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                    target_ = CustomerManager.instance.ChoosePedestal(this, CustomerManager.instance.pedestalsWithItemsHell,
+                        CustomerManager.instance.barginBinsWithItemsHell);
                     break;
                 }
             }
             if (target_ == null)
-                target_ = ShopManager.instance.GetRandomTargetPedestal(0.2f, isInHell);
+                target_ = ShopManager.instance.GetRandomTargetPedestal(0.15f, true);
             myAgent.SetDestination(target_.transform.position);
             tempTarget = target_;
             if (target_.TryGetComponent<Pedestal>(out Pedestal p))

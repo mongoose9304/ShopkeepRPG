@@ -5,6 +5,7 @@ using TMPro;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using Unity.AI.Navigation;
+using PixelCrushers.DialogueSystem.UnityGUI;
 
 /// <summary>
 /// The singleton that manages and controls the shop minigame
@@ -456,7 +457,11 @@ public class ShopManager : MonoBehaviour
         {
             if (regularPedestals.Count > 0)
             {
-                return regularPedestals[Random.Range(0, regularPedestals.Count)].gameObject;
+                for (int i = 0; i < 6; i++)
+                {
+                    int ran = Random.Range(0, regularPedestals.Count);
+                    return regularPedestals[ran].gameObject;
+                }         
             }
             return null;
         }
@@ -464,33 +469,13 @@ public class ShopManager : MonoBehaviour
         {
             if (regularPedestalsHell.Count > 0)
             {
-                return regularPedestalsHell[Random.Range(0, regularPedestalsHell.Count)].gameObject;
+                int ran = Random.Range(0, regularPedestalsHell.Count);
+                return regularPedestalsHell[ran].gameObject;
             }
             return null;
         }
     }
-    /// <summary>
-    /// Find a random bargin bin for targeting
-    /// </summary>
-    public GameObject GetRandomTargetBarginBin(bool inHell = false)
-    {
-        if (!inHell)
-        {
-            if (barginBins.Count > 0)
-            {
-             return barginBins[Random.Range(0, barginBins.Count)].gameObject;
-            }
-            return null;
-        }
-        else
-        {
-            if (barginBinsHell.Count > 0)
-            {
-                return barginBinsHell[Random.Range(0, barginBinsHell.Count)].gameObject;
-            }
-            return null;
-        }
-    }
+
     /// <summary>
     /// Send an NPC to the register to cash out
     /// </summary>
