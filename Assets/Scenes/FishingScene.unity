@@ -1893,7 +1893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: []
-  inventoryObject: {fileID: 0}
+  inventoryObject: {fileID: 259733264}
   storage: {fileID: 1959773971}
   clickFunctionIndex: 0
   selectedItemNameText: {fileID: 0}
@@ -2742,9 +2742,9 @@ MonoBehaviour:
   canMove: 1
   shipMode: 0
   steeringWheel: {fileID: 1373331147}
-  ship: {fileID: 1692202831}
   cooler: {fileID: 1959773964}
   inventoryUI: {fileID: 0}
+  ship: {fileID: 1692202831}
   rodStrength: 2.5
   raycastDistance: 15
 --- !u!1001 &527701380
@@ -5251,6 +5251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 521325399383285079, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 706119143545744559, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: m_Name
       value: OilSlick (1)
@@ -5632,9 +5636,10 @@ GameObject:
   - component: {fileID: 1007945793}
   - component: {fileID: 1007945792}
   - component: {fileID: 1007945791}
+  - component: {fileID: 1007945795}
   m_Layer: 0
   m_Name: Cylinder (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5654,7 +5659,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5720,13 +5725,40 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007945790}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.20440045, y: -0.13977131, z: -0.2970896, w: 0.92218345}
-  m_LocalPosition: {x: 1, y: -9.1, z: 23.8}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.9, y: -5.6, z: 22.4}
   m_LocalScale: {x: 5.12, y: 17.03, z: 4.27}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -27.39, y: -8.833, z: -33.557}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1007945795
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007945790}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &1027691171
 GameObject:
   m_ObjectHideFlags: 0
@@ -5739,9 +5771,10 @@ GameObject:
   - component: {fileID: 1027691174}
   - component: {fileID: 1027691173}
   - component: {fileID: 1027691172}
+  - component: {fileID: 1027691176}
   m_Layer: 0
   m_Name: Cylinder (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5761,7 +5794,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -5827,13 +5860,40 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027691171}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.29007488, y: 0.0993153, z: -0.12766959, w: 0.9432357}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20.57, y: 0.76044494, z: -3.0193353}
   m_LocalScale: {x: 5.12, y: 17.03, z: 4.27}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.93, y: 7.943, z: -12.914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1027691176
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027691171}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1001 &1051575678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6599,6 +6659,10 @@ PrefabInstance:
       propertyPath: prosperityMin
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 521325399383285079, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 706119143545744559, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: m_Name
       value: OilSlick (3)
@@ -6720,6 +6784,10 @@ PrefabInstance:
     - target: {fileID: 199503970549506803, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: prosperityMin
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 521325399383285079, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 706119143545744559, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: m_Name
@@ -7057,9 +7125,10 @@ GameObject:
   - component: {fileID: 1252444364}
   - component: {fileID: 1252444363}
   - component: {fileID: 1252444362}
+  - component: {fileID: 1252444366}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7079,7 +7148,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -7145,13 +7214,40 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1252444361}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15866008, y: -0, z: -0, w: 0.9873333}
-  m_LocalPosition: {x: 14.3, y: 0.76044494, z: -3.0193353}
+  m_LocalRotation: {x: 0.06975647, y: 0, z: 0, w: 0.9975641}
+  m_LocalPosition: {x: 18.37, y: 0.76044494, z: -3.0193353}
   m_LocalScale: {x: 5.12, y: 17.03, z: 4.27}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -18.258, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8, y: 0, z: 0}
+--- !u!54 &1252444366
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1252444361}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!224 &1267818532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1666464827257439209, guid: b3558671a25dd0747b664c4907a0764c, type: 3}
@@ -7648,7 +7744,7 @@ GameObject:
   - component: {fileID: 1373331149}
   - component: {fileID: 1373331152}
   - component: {fileID: 1373331153}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: SteeringWheel
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -8016,6 +8112,10 @@ PrefabInstance:
     - target: {fileID: 199503970549506803, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: prosperityMin
       value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 521325399383285079, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 706119143545744559, guid: f0e7d85531c1e914ba6d9ea22a19adb8, type: 3}
       propertyPath: m_Name
@@ -8728,9 +8828,10 @@ GameObject:
   - component: {fileID: 1692202833}
   - component: {fileID: 1692202832}
   - component: {fileID: 1692202836}
-  m_Layer: 3
+  - component: {fileID: 1692202837}
+  m_Layer: 0
   m_Name: Ship
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8839,6 +8940,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df95b6bab915542458a21b1392ded786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &1692202837
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692202831}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &1706717855
 GameObject:
   m_ObjectHideFlags: 0
@@ -9761,7 +9889,7 @@ GameObject:
   - component: {fileID: 1959773968}
   - component: {fileID: 1959773966}
   - component: {fileID: 1959773971}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: FishStorage
   m_TagString: Wall
   m_Icon: {fileID: 0}

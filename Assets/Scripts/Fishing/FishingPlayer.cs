@@ -58,12 +58,13 @@ public class FishingPlayer : MonoBehaviour
     public bool shipMode = false;
     FishingMinigame menu = null;
     public GameObject steeringWheel;
-    public GameObject ship;
     public GameObject cooler;
     public GameObject inventoryUI;
 
     private Vector3 shipVelocity;
     private Vector3 shipAcceleration;
+    public GameObject ship;
+    private ShipController shipController;
 
     // Rod strength affects how close the bobber floats to your player during the minigame
     // as a ratio between your rod's strength and the other fish's strength.
@@ -132,6 +133,7 @@ public class FishingPlayer : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        shipController = ship.GetComponent<ShipController>();
 
         GenerateRareFishSpawnLocations();
     }
@@ -184,24 +186,7 @@ public class FishingPlayer : MonoBehaviour
                     }
                     else
                     {
-                        if (Vector3.Magnitude(moveInput) > 0.5f)
-                        {
-                            shipAcceleration = moveInput * 5.0f;
-                            shipVelocity += shipAcceleration * Time.deltaTime;
-                            ship.transform.forward = Vector3.Lerp(ship.transform.forward, shipVelocity.normalized, 0.1f);
-                        }
-                        else
-                        {
-                            shipAcceleration = Vector3.zero;
-                            shipVelocity = Vector3.Lerp(shipVelocity, Vector3.zero, 0.005f);
-                        }
-
-                        if (shipVelocity.magnitude > 5.0f)
-                        {
-                            shipVelocity = shipVelocity.normalized * 5.0f;
-                        }
-
-                            ship.transform.position += shipVelocity * Time.deltaTime;
+                        shipController.PassInputs(moveInput);
                     }
                 }
                 else
@@ -224,9 +209,7 @@ public class FishingPlayer : MonoBehaviour
             }
         }
     }
-    /// <summary>
-    /// The actions taken when the player presses the dash button
-    /// </summary>
+
     private void OnCast(InputAction.CallbackContext obj)
     {
         if (shipMode == true || inMinigame == true) 
@@ -243,9 +226,7 @@ public class FishingPlayer : MonoBehaviour
         }
         currentBobber.GetComponent<BobberLogic>().isActive = false;
     }
-    /// <summary>
-    /// The actions taken when the player presses the dash button
-    /// </summary>
+
     private void OnCastReleased(InputAction.CallbackContext obj)
     {
         if (shipMode == true || inMinigame == true)
@@ -284,8 +265,9 @@ public class FishingPlayer : MonoBehaviour
         {
             if (Vector2.Distance(cooler.transform.position, transform.position) < 1.0f)
             {
+                Debug.Log("Opening Cooler");
                 //FishUIScript fishUI = GameObject.Find("PlayerInventoryUI").GetComponent<FishUIScript>();
-                //fishUI.enabled = !fishUI.enabled;
+                //fishUI.Activate();
             }
             else if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 1.0f)
             {
@@ -490,7 +472,6 @@ public class FishingPlayer : MonoBehaviour
         shipMode = false;
         canMove = true;
         raycastDistance = 15.0f;
-        transform.SetParent(null);
 
         CinemachineVirtualCamera camera = GameObject.Find("VCamLookAtPlayer").GetComponent<CinemachineVirtualCamera>();
         camera.Follow = transform;

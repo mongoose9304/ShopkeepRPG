@@ -18,11 +18,12 @@ public class FishUIScript : MonoBehaviour
     public Image selectedItemImage;
 
 
-    private void OnEnable()
+    public void Activate()
     {
         LoadInventory();
+        OpenMenu(true);
     }
-    public void LoadInventory()
+    private void LoadInventory()
     {
         int index = 0;
         foreach (InventorySlot slot_ in slots)
@@ -38,21 +39,9 @@ public class FishUIScript : MonoBehaviour
             slots[index].gameObject.SetActive(true);
             index += 1;
         }
-
-        //foreach (InventoryItem item_ in PlayerInventory.instance.masterItemList)
-        //{
-        //    if (item_.myItemName != null)
-        //    {
-        //        if (item_.amount == 0)
-        //            continue;
-        //        slots[index].SetItem(PlayerInventory.instance.GetItem(item_.myItemName), item_.amount);
-        //        slots[index].gameObject.SetActive(true);
-        //        index += 1;
-        //    }
-        //}
     }
 
-    public InventorySlot GetSlotWithName(string name_)
+    private InventorySlot GetSlotWithName(string name_)
     {
         foreach (InventorySlot slot_ in slots)
         {
