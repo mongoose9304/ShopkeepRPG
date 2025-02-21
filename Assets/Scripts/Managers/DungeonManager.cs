@@ -493,9 +493,17 @@ public class DungeonManager : MonoBehaviour
         switch (sin_)
         {
             case SinType.Capriciousness:
-                enviroments[0].gameObject.SetActive(true);
-                postProcesses[0].gameObject.SetActive(true);
-                RenderSettings.skybox = skyboxes[0];
+                if (enviroments.Count > 0.0f) {
+                    enviroments[0].gameObject.SetActive(true);
+                }
+
+                if (postProcesses.Count > 0.0f) {
+                    postProcesses[0].gameObject.SetActive(true);
+                }
+
+                if (skyboxes.Count > 0.0f) {
+                    RenderSettings.skybox = skyboxes[0];
+                }
                 break;
             case SinType.Envy:
                 enviroments[1].gameObject.SetActive(true);

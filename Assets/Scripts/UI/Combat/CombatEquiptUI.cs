@@ -128,6 +128,7 @@ public class CombatEquiptUI : MonoBehaviour
     }
     public void QuitGame()
     {
-        Application.Quit();
+        TempPause.instance.TogglePause();
+        DungeonManager.instance.WinLevel(false); 
     }
 }

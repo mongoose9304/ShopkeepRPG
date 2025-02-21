@@ -6,6 +6,8 @@ public class SandboxDebugScripts : MonoBehaviour
 {
     public bool AddHungerCurse = false;
     public bool AddCowardiceCurse = false;
+    public bool QuitEarly = false;
+    public CombatPlayerMovement cpm;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,11 @@ public class SandboxDebugScripts : MonoBehaviour
         if (AddCowardiceCurse) {
             AddCowardiceCurse = false;
             CombatExtrenalModManager.instance.AddModToAllPlayers("Cowardice");
+        }
+
+        if (QuitEarly) {
+            QuitEarly = false;
+            cpm.TrueDeath();
         }
     }
 }
