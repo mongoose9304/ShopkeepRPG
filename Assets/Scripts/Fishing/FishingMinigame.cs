@@ -99,6 +99,9 @@ public class FishingMinigame : MonoBehaviour
             case FishType.GoldScaleSturgeon:
                 behaviour = FishBehaviours.GoldScaleSturgon;
                 break;
+            case FishType.Burbot:
+                behaviour = FishBehaviours.Burbot;
+                break;
 
             default:
                 Debug.LogWarning("Trying to use the unfinished fish behaviour " + f.species + ".");

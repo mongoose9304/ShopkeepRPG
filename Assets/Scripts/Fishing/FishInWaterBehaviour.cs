@@ -9,6 +9,7 @@ public enum FishType
     Trout,
     Carp,
     Pike,
+    Burbot,
     GoldScaleSturgeon
 }
 
@@ -40,6 +41,10 @@ public class Fish
             case FishType.GoldScaleSturgeon:
                 name = "Gold Scale Sturgeon";
                 strength = 12.0f;
+                break;
+            case FishType.Burbot:
+                name = "Burbot";
+                strength = 200.0f;
                 break;
             default:
                 name = "Undefined";
@@ -88,7 +93,7 @@ public class FishInWaterBehaviour : MonoBehaviour
     // Randomized after each movement.
     public float moveDelay = 1.8f;
 
-    public float baitRadius = 3.0f;
+    public float baitRadius = 5.0f;
     public float maxVisionAngle = 25.0f;
 
     private float angle;
@@ -98,6 +103,9 @@ public class FishInWaterBehaviour : MonoBehaviour
 
     public Fish fish = new Fish();
 
+    private bool hasNoticedBobber = false;
+    private float bobberDistance = 0.0f;
+    private float targetBobberDistance = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -129,21 +137,34 @@ public class FishInWaterBehaviour : MonoBehaviour
         {
             if (bobber.GetComponent<BobberLogic>().isActive == true)
             {
-                float bobberDistance = Vector3.Distance(rb.position, bobber.transform.position);
-                if (bobberDistance <= baitRadius)
+                float bobberDistance = Vector3.Distance(transform.position, bobber.transform.position);
+                if (bobberDistance <= baitRadius && bobber.GetComponent<BobberLogic>().isActive == true)
                 {
-                    float cosBobberAngle = Vector3.Dot(transform.forward, Vector3.Normalize(bobber.transform.position - transform.position));
-                    if (cosBobberAngle <= Mathf.Cos(maxVisionAngle))
-                    {
-                        Debug.Log("Start fishing minigame...");
-                        GameObject.Find("FishingPlayer").GetComponent<FishingPlayer>().InitiateMinigame(fish);
-                       
-                        Destroy(gameObject);
-                        Destroy(bobber);
-                    }
+                    hasNoticedBobber = true;
+                    targetBobberDistance = 0.5f;
+                }
+            }
+
+            if (hasNoticedBobber == true)
+            {
+                Vector3 targetPos = new Vector3(bobber.transform.position.x, -0.5f, bobber.transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPos, 0.01f);
+
+                if (Vector3.Distance(transform.position, bobber.transform.position) <= 1.0f)
+                {
+                    // Biting the hook
+                    GameObject.Find("FishingPlayer").GetComponent<FishingPlayer>().InitiateMinigame(fish);
+                    Destroy(gameObject);
+                    Destroy(bobber);
                 }
             }
         }
+        else
+        {
+            hasNoticedBobber = false;
+        }
+
+     
 
         // If the player exists
         if (playerRB != null)
@@ -157,7 +178,7 @@ public class FishInWaterBehaviour : MonoBehaviour
                     isFleeing = true;
                 }
 
-                Vector3 runDirection = rb.position - playerRB.position;
+                Vector3 runDirection = rb.position - ship.transform.position;
                 angle = Mathf.Rad2Deg * Mathf.Atan2(runDirection.z, runDirection.x);
                 RotateToFace();
                 speed = 7.0f;

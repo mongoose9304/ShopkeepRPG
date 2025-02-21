@@ -238,12 +238,34 @@ public class FishBehaviours
     public static Vector2 Burbot(Vector2 currentPos)
     {
         Debug.Log("Burbot");
-
+        // Opposite angle, change distance
         // Relative angle to right
+        float playerAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), playerPosition);
         float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
 
-        currentAngleDegrees += 0.5f;
-        float currentDistance = Mathf.Abs(Mathf.Sin(Time.fixedTime * 0.3f)) * 190.0f + 20.0f;
+        float currentDistance = currentPos.magnitude;
+
+        if (isMoving == false)
+        {
+            moveDelay -= Time.deltaTime;
+            if (moveDelay <= 0.0f)
+            {
+                targetDistance = Random.Range(20.0f, 210.0f);
+                targetAngleDegrees = playerAngleDegrees + 180.0f + Random.Range(-35.0f, 35.0f);
+                isMoving = true;
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(targetDistance - currentDistance) < 3.0f)
+            {
+                isMoving = false;
+                moveDelay = 0.1f;
+            }
+        }
+
+        currentDistance = Mathf.Lerp(currentDistance, targetDistance, 0.1f);
+        currentAngleDegrees = Mathf.LerpAngle(currentAngleDegrees, targetAngleDegrees, 0.01f);
 
         // Reconstruct the position vector using current angle and distance
         return new Vector2(Mathf.Cos(currentAngleDegrees * Mathf.Deg2Rad), Mathf.Sin(currentAngleDegrees * Mathf.Deg2Rad)) * currentDistance;

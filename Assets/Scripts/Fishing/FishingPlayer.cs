@@ -244,9 +244,11 @@ public class FishingPlayer : MonoBehaviour
             currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 1.0f);
 
             // Set bobber final position
-            currentBobber.transform.position = rb.position + castDirection * castPower;
-            currentBobber.transform.position = new Vector3(currentBobber.transform.position.x, 0.0f, currentBobber.transform.position.z);
-
+            currentBobber.transform.position = transform.position;
+            currentBobber.GetComponent<BobberLogic>().targetPosition = rb.position + castDirection * castPower;
+            currentBobber.GetComponent<BobberLogic>().targetPosition.y = 0.0f;
+            currentBobber.GetComponent<BobberLogic>().startPosition = rb.position;
+            currentBobber.GetComponent<BobberLogic>().t = 0.0f;
             currentBobber.GetComponent<BobberLogic>().isActive = true;
         }
         else
