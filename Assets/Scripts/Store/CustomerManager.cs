@@ -242,7 +242,7 @@ public class CustomerManager : MonoBehaviour
         }
         if (!inHell)
         {
-            currentTimeBetweenCustomerSpawns = Random.Range(minTimeBetweenCustomerSpawns, maxTimeBetweenCustomerSpawns);
+            currentTimeBetweenCustomerSpawns = UnityEngine.Random.Range(minTimeBetweenCustomerSpawns, maxTimeBetweenCustomerSpawns);
             if (customerCount >= maxCustomers)
             {
                 return;
@@ -253,7 +253,7 @@ public class CustomerManager : MonoBehaviour
             int[] values = { 0, 1, 2, 3 };
             float[] weights = {0.75f, 0.0833f, 0.0833f, 0.0833f };
 
-            float randomValue = Random.value;
+            float randomValue = UnityEngine.Random.value;
             float cumulative = 0f;
 
             for (int i = 0; i < values.Length; i++)
@@ -288,7 +288,7 @@ public class CustomerManager : MonoBehaviour
         }
         else
         {
-            currentTimeBetweenCustomerSpawnsHell = Random.Range(minTimeBetweenCustomerSpawnsHell,maxTimeBetweenCustomerSpawnsHell);
+            currentTimeBetweenCustomerSpawnsHell = UnityEngine.Random.Range(minTimeBetweenCustomerSpawnsHell,maxTimeBetweenCustomerSpawnsHell);
             if (customerCountHell >= maxCustomersHell)
             {
                 return;
@@ -302,9 +302,9 @@ public class CustomerManager : MonoBehaviour
     {
         Customer c = pool.GetPooledGameObject().GetComponent<Customer>();
         c.isInHell = false;
-        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * Random.Range(0.5f, 2.0f)));
+        c.GiveStartingCash(Mathf.RoundToInt(averageCustomerCash * UnityEngine.Random.Range(0.5f, 2.0f)));
         //cap mood after setting it
-        c.mood = averageCustomerMood * Random.Range(0.5f, 2.0f);
+        c.mood = averageCustomerMood * UnityEngine.Random.Range(0.5f, 2.0f);
         c.ChangeMood(0);
         c.transform.position = customerSpawns[lastNPCSpawnIndex].position;
         NavMeshHit hit;
@@ -378,7 +378,7 @@ public class CustomerManager : MonoBehaviour
 
         if (totalWeight == 0) return null;
 
-        float randomValue = Random.Range(0f, totalWeight);
+        float randomValue = UnityEngine.Random.Range(0f, totalWeight);
 
         float cumulativeWeight = 0;
 
@@ -495,7 +495,7 @@ public class CustomerManager : MonoBehaviour
         obj.GetComponent<Thief>().SetHeldItems(heldItems);
         ShopManager.instance.currentThieves.Add(obj.GetComponent<Thief>());
         MMSoundManager.Instance.PlaySound(stealAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
-     false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+     false, 1.0f, 0, false, 0, 1, null, false, null, null, UnityEngine.Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
      1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     /// <summary>
@@ -535,7 +535,7 @@ public class CustomerManager : MonoBehaviour
         }
         if(!gotAway)
         MMSoundManager.Instance.PlaySound(thiefCaughtAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
-    false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+    false, 1.0f, 0, false, 0, 1, null, false, null, null, UnityEngine.Random.Range(0.98f, 1.02f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
     1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
     }
     /// <summary>
@@ -576,7 +576,7 @@ public class CustomerManager : MonoBehaviour
 
             case 0:
                 MMSoundManager.Instance.PlaySound(haggleAudio, MMSoundManager.MMSoundManagerTracks.Sfx, transform.position,
-  false, 1.0f, 0, false, 0, 1, null, false, null, null, Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
+  false, 1.0f, 0, false, 0, 1, null, false, null, null, UnityEngine.Random.Range(0.95f, 1.05f), 0, 0.0f, false, false, false, false, false, false, 128, 1f,
   1f, 0, AudioRolloffMode.Logarithmic, 1f, 500f, false, 0f, 0f, null, false, null, false, null, false, null, false, null);
                 break;
             case 1:
