@@ -271,6 +271,17 @@ public class FishBehaviours
         return new Vector2(Mathf.Cos(currentAngleDegrees * Mathf.Deg2Rad), Mathf.Sin(currentAngleDegrees * Mathf.Deg2Rad)) * currentDistance;
     }
 
+    public static Vector2 Eel(Vector2 currentPos)
+    {
+        float currentAngleDegrees = Vector2.SignedAngle(new Vector2(1.0f, 0.0f), currentPos);
+        float currentDistance = currentPos.magnitude;
+
+        Vector2 pos = new Vector2(Mathf.Sin(Time.fixedTime * 1.5f) * 150.0f, Mathf.Sin(Time.fixedTime * 3.0f) * 150.0f);
+
+        // Reconstruct the position vector using current angle and distance
+        return pos;
+    }
+
     public static Vector2 GoldScaleSturgon(Vector2 currentPos)
     {
         Debug.Log("Gold Scale Sturgeon");

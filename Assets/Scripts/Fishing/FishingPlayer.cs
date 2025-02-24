@@ -221,8 +221,6 @@ public class FishingPlayer : MonoBehaviour
         if (currentBobber == null)
         {
             currentBobber = Instantiate(bobberPrefab);
-            //Color currentColour = currentBobber.GetComponent<Renderer>().material.color;
-            //currentBobber.GetComponent<Renderer>().material.color = new Color(currentColour.r, currentColour.g, currentColour.b, 0.5f);
         }
         currentBobber.GetComponent<BobberLogic>().isActive = false;
     }
@@ -233,7 +231,6 @@ public class FishingPlayer : MonoBehaviour
         {
             return;
         }
-
         castHeld = false;
 
         // Potentially cast fishing line
@@ -268,8 +265,6 @@ public class FishingPlayer : MonoBehaviour
             if (Vector2.Distance(cooler.transform.position, transform.position) < 1.0f)
             {
                 Debug.Log("Opening Cooler");
-                //FishUIScript fishUI = GameObject.Find("PlayerInventoryUI").GetComponent<FishUIScript>();
-                //fishUI.Activate();
             }
             else if (Vector2.Distance(steeringWheel.transform.position, transform.position) < 1.0f)
             {

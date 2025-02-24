@@ -102,6 +102,9 @@ public class FishingMinigame : MonoBehaviour
             case FishType.Burbot:
                 behaviour = FishBehaviours.Burbot;
                 break;
+            case FishType.Eel:
+                behaviour = FishBehaviours.Eel;
+                break;
 
             default:
                 Debug.LogWarning("Trying to use the unfinished fish behaviour " + f.species + ".");

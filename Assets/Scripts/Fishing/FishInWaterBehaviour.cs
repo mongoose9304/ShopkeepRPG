@@ -10,6 +10,7 @@ public enum FishType
     Carp,
     Pike,
     Burbot,
+    Eel,
     GoldScaleSturgeon
 }
 
@@ -45,6 +46,10 @@ public class Fish
             case FishType.Burbot:
                 name = "Burbot";
                 strength = 200.0f;
+                break;
+            case FishType.Eel:
+                name = "Eel";
+                strength = 2.5f;
                 break;
             default:
                 name = "Undefined";
