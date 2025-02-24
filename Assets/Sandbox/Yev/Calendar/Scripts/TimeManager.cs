@@ -40,22 +40,23 @@ public class TimeManager : MonoBehaviour
         Debug.Log("Event 2 Test");
     }
 
-    private void ProgressTimeByAmount(int amount){
-        if(currentTimeBlock == TimePeriod.EndPeriod) 
+    private void ProgressTimeByAmount(int amount)
+    {
+        if (currentTimeBlock == TimePeriod.EndPeriod)
         {
             ProgressDay(1);
             return;
         }
         int newTimeBlock = (int)currentTimeBlock + amount;
         newTimeBlock = Mathf.Clamp(newTimeBlock, 0, numTimePeriods - 1);
-        currentTimeBlock = (TimePeriod)newTimeBlock;      
+        currentTimeBlock = (TimePeriod)newTimeBlock;
     }
 
-    private void ProgressDay(int days) 
+    private void ProgressDay(int days)
     {
         totalDays += days;
         int allocatedDays = 0;
-        while(allocatedDays < days) 
+        while (allocatedDays < days)
         {
             if (currentDay == Day.Sunday)
             {
@@ -73,7 +74,7 @@ public class TimeManager : MonoBehaviour
 
     private void ProgressWeek()
     {
-        if(currentWeek == Week.Fourth) 
+        if (currentWeek == Week.Fourth)
         {
             currentWeek = Week.First;
             ProgressSeason();
@@ -91,7 +92,7 @@ public class TimeManager : MonoBehaviour
         {
             currentSeason = Season.Spring;
         }
-        else 
+        else
         {
             int newSeason = (int)currentSeason + 1;
             currentSeason = (Season)newSeason;
@@ -101,16 +102,16 @@ public class TimeManager : MonoBehaviour
         currentTimeBlock = TimePeriod.Morning;
     }
 
-    public void PassTime() 
+    public void PassTime()
     {
         ProgressTimeByAmount(1);
     }
 
-    public NPCBehavior GetBehavior(string id) 
+    public NPCBehavior GetBehavior(string id)
     {
-        foreach(var specialEvent in calendarConfig.SpecialEvents) 
+        foreach (var specialEvent in calendarConfig.SpecialEvents)
         {
-            if(specialEvent.timePeriod == currentTimeBlock && specialEvent.day == currentDay && specialEvent.week == currentWeek && specialEvent.season == currentSeason) 
+            if (specialEvent.timePeriod == currentTimeBlock && specialEvent.day == currentDay && specialEvent.week == currentWeek && specialEvent.season == currentSeason)
             {
                 foreach (var npc in specialEvent.NPC)
                 {
@@ -124,7 +125,7 @@ public class TimeManager : MonoBehaviour
 
         foreach (var npc in calendarConfig.Seasons[(int)currentSeason].Days[(int)currentWeek].TimeBlocks[(int)currentDay].NPC)
         {
-            if(npc.ID == id) 
+            if (npc.ID == id)
             {
                 return npc;
             }
