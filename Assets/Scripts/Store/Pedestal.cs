@@ -34,6 +34,8 @@ public class Pedestal : InteractableObject
     public GameObject hotEffect;
     [Tooltip("REFERENCE to the effect that activates when a cold item is placed down")]
     public GameObject coldEffect;
+
+    public Vector2Int gridPos = Vector2Int.zero;
     /// <summary>
     /// The virtual function all interactbale objects will override to set thier specific functionality
     /// </summary>

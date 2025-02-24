@@ -10,10 +10,10 @@ public class MoveableObjectSlot : MonoBehaviour
     public bool inHell;
     public void PickUpObject()
     {
-        if(worldObject.GetComponentInChildren<Pedestal>())
+        if (worldObject.GetComponentInChildren<Pedestal>())
         {
             Pedestal p = worldObject.GetComponentInChildren<Pedestal>();
-            if (p.amount>0&&p.myItem!=null)
+            if (p.amount > 0 && p.myItem != null)
             {
                 ShopManager.instance.invScreen.AddItemToInventory(p.myItem, p.amount);
             }
@@ -21,9 +21,9 @@ public class MoveableObjectSlot : MonoBehaviour
         if (worldObject.GetComponentInChildren<BarginBin>())
         {
             BarginBin b = worldObject.GetComponentInChildren<BarginBin>();
-            foreach(BarginBinSlot slot in b.binSlotsWithItems)
+            foreach (BarginBinSlot slot in b.binSlotsWithItems)
             {
-                if(slot.amount>0&&slot.myItem)
+                if (slot.amount > 0 && slot.myItem)
                 {
                     ShopManager.instance.invScreen.AddItemToInventory(slot.myItem, slot.amount);
                 }
@@ -33,7 +33,7 @@ public class MoveableObjectSlot : MonoBehaviour
         {
             Destroy(worldObject);
         }
-       
+
 
 
         placedObject = null;
@@ -44,14 +44,15 @@ public class MoveableObjectSlot : MonoBehaviour
         {
             placedObject = object_;
             SpawnPlacedObject();
+            GetNeighbors();
         }
     }
     protected void SpawnPlacedObject()
     {
-        if(placedObject)
+        if (placedObject)
         {
             worldObject = GameObject.Instantiate(placedObject.myPrefab, transform.position, transform.rotation);
-            if(worldObject.GetComponentInChildren<Pedestal>())
+            if (worldObject.GetComponentInChildren<Pedestal>())
             {
                 worldObject.GetComponentInChildren<Pedestal>().inHell = inHell;
                 worldObject.GetComponentInChildren<Pedestal>().nearWindow = isWindow;
@@ -65,7 +66,7 @@ public class MoveableObjectSlot : MonoBehaviour
     }
     public bool CheckForObject()
     {
-        if(worldObject)
+        if (worldObject)
         {
             return true;
         }
@@ -76,7 +77,7 @@ public class MoveableObjectSlot : MonoBehaviour
     }
     public void InitObject(MoveableObject object_)
     {
-        if(worldObject)
+        if (worldObject)
         {
             Destroy(worldObject);
         }
@@ -92,6 +93,9 @@ public class MoveableObjectSlot : MonoBehaviour
         worldObject = null;
         placedObject = null;
     }
-   
 
+    public List<Transform> GetNeighbors()
+    {
+        return MoveableObjectGrid.instance.GetNeighbors(transform);
+    }
 }
