@@ -4,6 +4,8 @@ using UnityEngine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using System;
 
 /// <summary>
 /// Manages all the customers that will be spanwd in the store
@@ -71,6 +73,7 @@ public class CustomerManager : MonoBehaviour
     public Transform[] customerSpawnsHell;
     [Tooltip("all the pedestals with items, needs to be calculated any time there is a change")]
     public List<Pedestal> pedestalsWithItems = new List<Pedestal>();
+
     [Tooltip("all the pedestals with items in hell, needs to be calculated any time there is a change")]
     public List<Pedestal> pedestalsWithItemsHell = new List<Pedestal>();
     [Tooltip("all the pedestals with items at windows, needs to be calculated any time there is a change")]
@@ -85,12 +88,99 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] AudioClip haggleAudio;
 
     bool testLinfordSpawnedToday = false;
+   
+    public float WarmFactorTotal = 0;
+    public float OccultFactorTotal = 0;
+    public float LivingFactorTotal = 0;
+    public float ViolentFactorTotal = 0;
+    public float GrossFactorTotal = 0;
 
+    //default percentage -1/ 0 / 1
     public float[] warmPopularity = { 0.333f, 0.333f, 0.333f };
     public float[] occultPopularity = { 0.333f, 0.333f, 0.333f };
     public float[] livingPopularity = { 0.333f, 0.333f, 0.333f };
     public float[] violentPopularity = { 0.333f, 0.333f, 0.333f };
     public float[] grossPopularity = { 0.333f, 0.333f, 0.333f };
+
+    public void CalculateReputation_ItemBased() {
+        int count = pedestalsWithItems.Count;
+        Dictionary<string, float[]> popularityMap = new Dictionary<string, float[]>
+          {
+             { "Warm", warmPopularity },
+             { "Occult", occultPopularity },
+             { "Living", livingPopularity },
+             { "Violent", violentPopularity },
+             { "Gross", grossPopularity }
+           };
+        string dominantFactorName = "";
+
+        for (int i = 0; i < count; i++) {
+            WarmFactorTotal += pedestalsWithItems[i].myItem.WarmFactor;
+            OccultFactorTotal += pedestalsWithItems[i].myItem.OccultFactor;
+            LivingFactorTotal += pedestalsWithItems[i].myItem.LivingFactor;
+            ViolentFactorTotal += pedestalsWithItems[i].myItem.ViolentFactor;
+            GrossFactorTotal += pedestalsWithItems[i].myItem.GrossFactor;
+        }
+        WarmFactorTotal /= count;
+        OccultFactorTotal /= count;
+        LivingFactorTotal /= count;
+        ViolentFactorTotal /= count;
+        GrossFactorTotal /= count;
+
+        
+
+        float dominantFactor = Mathf.Max(WarmFactorTotal, OccultFactorTotal, LivingFactorTotal, ViolentFactorTotal, GrossFactorTotal) ;
+        int domCount = 0;
+        if (WarmFactorTotal == dominantFactor) {
+            domCount++;
+            dominantFactorName = "Warm";
+        }
+        if (OccultFactorTotal == dominantFactor)
+        {
+            domCount++;
+            dominantFactorName = "Occult";
+        }
+        if (LivingFactorTotal == dominantFactor) {
+            domCount++;
+            dominantFactorName = "Living";
+        }
+        if (ViolentFactorTotal == dominantFactor) {
+            domCount++;
+            dominantFactorName = "Violent";
+        }
+        if (GrossFactorTotal == dominantFactor) {
+            domCount++;
+            dominantFactorName = "Gross";
+        }
+
+        if (domCount > 1)
+        {
+            //increase a bit the percentage of popularity of the one with the same amount (subdom)
+            Debug.Log("no clear dominant factor");
+            if (popularityMap.ContainsKey(dominantFactorName))
+            {
+                popularityMap[dominantFactorName][0] = 0.20f;
+                popularityMap[dominantFactorName][1] = 0.30f;
+                popularityMap[dominantFactorName][2] = 0.50f;
+            }
+
+        }
+        else {
+            //increase a bit the percentage of popularity of the one that has the biggest factor (dom)
+
+            //We will have to test this later, if those values are too crazy
+            Debug.Log(dominantFactorName);
+            Debug.Log(dominantFactor);
+
+            if (popularityMap.ContainsKey(dominantFactorName))
+            {
+                popularityMap[dominantFactorName][0] = 0.10f;
+                popularityMap[dominantFactorName][1] = 0.25f;
+                popularityMap[dominantFactorName][2] = 0.65f;
+            }
+        }
+       
+    }
 
     private void Awake()
     {
@@ -98,6 +188,8 @@ public class CustomerManager : MonoBehaviour
     }
     private void Update()
     {
+      
+
         currentTimeBetweenCustomerSpawns -= Time.deltaTime;
         currentTimeBetweenCustomerSpawnsHell -= Time.deltaTime;
         if(currentTimeBetweenCustomerSpawns<=0)
@@ -108,6 +200,7 @@ public class CustomerManager : MonoBehaviour
         {
             SpawnRandomCustomer(true);
         }
+      
     }
     /// <summary>
     /// Open the shop and spawn a burst of customers, this must be called again if you want to open both hell and human shops
@@ -116,6 +209,7 @@ public class CustomerManager : MonoBehaviour
     {
         CheckPedestalsforItems();
         CheckBarginBinsForItems();
+        CalculateReputation_ItemBased();
         currentSteals = 0;
         if (!inHell)
         {
@@ -531,5 +625,49 @@ public class CustomerManager : MonoBehaviour
             currentCustomersInStore[i].gameObject.SetActive(false);
             currentCustomersInStore.RemoveAt(i);
         }
+    }
+}
+
+internal struct NewStruct
+{
+    public float Item1;
+    public float Item2;
+    public float Item3;
+
+    public NewStruct(float item1, float item2, float item3)
+    {
+        Item1 = item1;
+        Item2 = item2;
+        Item3 = item3;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is NewStruct other &&
+               Item1 == other.Item1 &&
+               Item2 == other.Item2 &&
+               Item3 == other.Item3;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Item1, Item2, Item3);
+    }
+
+    public void Deconstruct(out float item1, out float item2, out float item3)
+    {
+        item1 = Item1;
+        item2 = Item2;
+        item3 = Item3;
+    }
+
+    public static implicit operator (float, float, float)(NewStruct value)
+    {
+        return (value.Item1, value.Item2, value.Item3);
+    }
+
+    public static implicit operator NewStruct((float, float, float) value)
+    {
+        return new NewStruct(value.Item1, value.Item2, value.Item3);
     }
 }
