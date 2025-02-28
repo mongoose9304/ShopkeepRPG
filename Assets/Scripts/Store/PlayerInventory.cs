@@ -339,4 +339,15 @@ public class PlayerInventory : MonoBehaviour
         }
         return 0;
     }
+
+    public void SubtractItems(string itemName_, int amount_)
+    {
+        foreach (InventoryItem item_ in masterItemList)
+        {
+            if (item_.myItemName == itemName_)
+            {
+                item_.amount -= amount_;
+            }
+        }
+    }
 }
