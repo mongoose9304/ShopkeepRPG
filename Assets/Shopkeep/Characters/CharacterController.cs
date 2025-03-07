@@ -17,15 +17,23 @@ public class CharacterController_ : MonoBehaviour
 
     CharacterAction currentAction;
 
+    void ChangeAction(ref CharacterAction newAction) {
+        if (newAction.getActionPriority() > currentAction.getActionPriority())
+        {
+            currentAction = newAction;
+        }
+    
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-
+        currentAction = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 }
