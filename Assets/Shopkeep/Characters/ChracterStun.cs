@@ -1,27 +1,34 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ChracterStun : MonoBehaviour
-{
-    float timeRemaining;
-    public UnityEvent Start;
-    public UnityEvent End;
 
-    public void ApplyStun(float stunDuration) {
-        //Stun code
-        timeRemaining = stunDuration;
-        Stun();
-        Start.Invoke(); 
-    }
-    public void Stun() {
-        //stun code
-    }
+namespace Shopkeeper {
+    public class ChracterStun : MonoBehaviour {
+        float timeRemaining;
+        Stun current;
 
-    public void Update() { 
-        timeRemaining -= Time.deltaTime;
-        if(timeRemaining <= 0) {
-            End.Invoke();
+        public UnityEvent OnStart;
+        public UnityEvent OnEnd;
+
+        public void ApplyStun(Stun s) {
+            //Stun code
+            if(current != null) { return; }
+            current = s;
+            timeRemaining = s.duration;
+            Stun();
+            OnStart.Invoke();
+        }
+
+        void Stun() {
+            //stun code
+        }
+
+        public void Update() {
+            timeRemaining -= Time.deltaTime;
+            if (timeRemaining <= 0 && current != null) {
+                OnEnd.Invoke();
+                current = null;
+            }
         }
     }
 }
