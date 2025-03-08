@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 
 namespace Shopkeeper {
-    public class ChracterStun : MonoBehaviour {
+    public class CharacterStun : MonoBehaviour {
         float timeRemaining;
         Stun current;
 
