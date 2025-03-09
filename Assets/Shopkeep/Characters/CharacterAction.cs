@@ -52,7 +52,7 @@ public class Attack : CharacterAction{
 
 public class Walking : CharacterAction
 {
-    CharacterWalking walkingAction;
+    Shopkeeper.CharacterWalking walkingAction;
     Vector3 moveDirection = Vector3.zero;
     float animationLength = 1.0f;
     public override bool Start()
