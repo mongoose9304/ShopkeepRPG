@@ -11,6 +11,10 @@ namespace Shopkeeper {
     /// Responsible for saving and loading games.
     /// </summary>
     public class UniversalSaveManager : MonoBehaviour {
+        private void Start() {
+            Save(SaveSlot.Autosave);
+        }
+
         /// <summary>
         /// Starts new game.
         /// </summary>
