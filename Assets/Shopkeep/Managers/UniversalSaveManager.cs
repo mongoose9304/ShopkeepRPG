@@ -38,6 +38,7 @@ namespace Shopkeeper {
             using var fstream = File.OpenWrite(path);
             using var fwriter = new StreamWriter(fstream);
             using var jwriter = new JsonTextWriter(fwriter);
+            jwriter.Formatting = Formatting.Indented;
             jobj.WriteTo(jwriter);
         }
         /// <summary>
@@ -140,32 +141,32 @@ namespace Shopkeeper {
             /// Called when the game is saved.
             /// </summary>
             /// <param name="json">The json.</param>
-            void Save(JObject json);
+            public void Save(JObject json);
             /// <summary>
             /// Called before the game is saved.
             /// </summary>
             /// <param name="json">The json.</param>
-            void SavePre(JObject json);
+            public void SavePre(JObject json);
             /// <summary>
             /// Called after the game is saved.
             /// </summary>
             /// <param name="json">The json.</param>
-            void SavePost(JObject json);
+            public void SavePost(JObject json);
             /// <summary>
             /// Called when the game is loaded.
             /// </summary>
             /// <param name="json">The json.</param>
-            void Load(JObject json);
+            public void Load(JObject json);
             /// <summary>
             /// Called before the game is loaded.
             /// </summary>
             /// <param name="json">The json.</param>
-            void LoadPre(JObject json);
+            public void LoadPre(JObject json);
             /// <summary>
             /// Called after the game is loader.
             /// </summary>
             /// <param name="json">The json.</param>
-            void LoadPost(JObject json);
+            public void LoadPost(JObject json);
         }
         
         [SerializeField] private string m_MainmenuScene;

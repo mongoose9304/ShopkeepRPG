@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,14 @@ namespace Shopkeeper
         {
             item = _item;
             amount = _amount;
+        }
+
+        public JObject ToJObject() 
+        {
+            return new JObject
+            {
+                [item.name] = amount
+            };
         }
     }
 }
