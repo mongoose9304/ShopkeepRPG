@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private void Start() {
         controller = GetComponent<CharacterController>();
         inputMap = GetComponent<PlayerInput>().currentActionMap;
+        MapInput();
     }
 
     void MapInput() {
@@ -18,11 +19,6 @@ public class Player : MonoBehaviour
         if(inputMap == null) return;
 
         //map the input here
-        inputMap.FindAction("Action").performed += context => {
-            
-        };
-
-
     }
 
 
