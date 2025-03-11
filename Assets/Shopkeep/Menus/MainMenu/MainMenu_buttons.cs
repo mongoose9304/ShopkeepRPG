@@ -26,13 +26,8 @@ namespace Shopkeeper.Menus
         }
         public void BtnSettings()
         {
-            Debug.Log("Settings button clicked!");
-            Debug.Log("Settings menu prefab: " + (settingsMenu.prefab_ != null ? settingsMenu.prefab_.name : "NULL"));
-            //Debug.Log("Menu parent: " + (menuManager.menuParent != null ? menuManager.menuParent.name : "NULL"));
             MenuManager.instance.OpenMenu(settingsMenu);
             Debug.Log("OpenMenu called!");
-            //menuManager.OpenMenu(settingsMenu);
-            //Debug.Log("Settings button!");
         }
         public void BtnLanguage()
         {
