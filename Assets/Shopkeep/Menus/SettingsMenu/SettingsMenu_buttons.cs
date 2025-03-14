@@ -36,6 +36,7 @@ namespace Shopkeeper.Menus
         public void BtnQuit()
         {
             menuManager.CloseMenu();
+            Application.Quit();
             Debug.Log("Back to menu");
         }
     }

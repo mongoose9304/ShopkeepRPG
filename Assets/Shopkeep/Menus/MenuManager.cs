@@ -12,10 +12,14 @@ public class MenuManager : MonoBehaviour
     public GameObject topMenu;
     public Transform menuParent; //canvas
 
+    //will use it a sort order in Canvas section
+    public float stackCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //ADD STACK COUNT FOR THESORT ORDER
+
         if (instance == null)
             instance = this;
         else
