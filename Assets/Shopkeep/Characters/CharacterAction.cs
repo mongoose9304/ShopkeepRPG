@@ -19,7 +19,6 @@ public abstract class CharacterAction : ScriptableObject
     int actionPriority = 0;
 
     public abstract bool Start();
-
     public abstract bool Exit();
     public abstract IEnumerator actionDuration();
 
