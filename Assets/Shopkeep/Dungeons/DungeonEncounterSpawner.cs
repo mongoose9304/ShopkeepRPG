@@ -9,7 +9,6 @@ public class DungeonEncounterSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -18,8 +17,13 @@ public class DungeonEncounterSpawner : MonoBehaviour
         
     }
 
-    public void Activate()
+    public void Spawn()
     {
-        Instantiate(enemyPrefab);
+        GameObject obj = Instantiate(enemyPrefab);
+        if (obj.GetComponent<DungeonDestructible>() != null)
+        {
+
+        }
+        
     }
 }
