@@ -6,7 +6,7 @@ Narrator: Oh, hi! #line:1
 {$characterName}: Hi, where am I? #line:2
     Narrator: You're in Unity! What's your name? #line:3
         -> {$characterName}: Bob. #line:4
-            <<ChangeSprite GameObject whatever>>
+            <<ChangeSprite OtherCharacter whatever>>
             <<set $characterName to "Bob">>
             <<jump Oh>>
         -> {$characterName}: Jim #line:5
