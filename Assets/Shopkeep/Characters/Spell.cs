@@ -6,11 +6,10 @@ using UnityEngine.Events;
 namespace Shopkeeper {
     [CreateAssetMenu(fileName = "Data", menuName = "Spells/Spell")]
     public class Spell : ScriptableObject {
-
         public float cooldownDuration;
         public Coroutine cooldown;
 
-        public virtual void Cast() {
+        public virtual void Cast(GameObject caster) {
            
         }
 

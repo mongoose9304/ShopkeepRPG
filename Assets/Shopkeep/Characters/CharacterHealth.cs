@@ -20,7 +20,7 @@ namespace Shopkeeper {
             }
         }
 
-        public UnityEvent<FloatWrapper> OnDamageTaken;
+        public UnityEvent<float> OnDamageTaken;
         public UnityEvent<float> OnCurrHealthChange;
         public UnityEvent<float> OnMaxHealthChange;
 
