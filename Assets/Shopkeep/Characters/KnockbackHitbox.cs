@@ -1,10 +1,13 @@
 using UnityEngine;
 
-namespace Shopkeeper {
-    public class KnockbackHitbox : MonoBehaviour {
+namespace Shopkeeper 
+{
+    public class KnockbackHitbox : MonoBehaviour 
+    {
         public Knockback effect;
 
-        public void ApplyKnockback(CharacterKnockback c) {
+        public void ApplyKnockback(CharacterKnockback c) 
+        {
             Knockback finalEffect = effect;
             finalEffect.direction = transform.forward;
             c.ApplyKnockback(finalEffect);
@@ -16,7 +19,6 @@ namespace Shopkeeper {
             {
                 ApplyKnockback(other.GetComponentInParent<CharacterKnockback>());
             }
-      
         }
     }
 }
