@@ -8,6 +8,7 @@ public class AdrielsDebugCircus : MonoBehaviour
 {
     public GameObject playerPrefab;
     public Spell MeleeSpell;
+    public Spell ProjectileSpell;
 
     // Start is called before the first frame update
     void Start()
@@ -37,5 +38,14 @@ public class AdrielsDebugCircus : MonoBehaviour
         if (SP == null) return;
 
         SP.CastSpell(MeleeSpell);
+    }
+
+    public void ProjectileCallback(InputAction.CallbackContext context) {
+        Debug.Log("Projectile");
+        SpellComponent SP = playerPrefab.GetComponent<SpellComponent>();
+
+        if (SP == null) return;
+
+        SP.CastSpell(ProjectileSpell);
     }
 }

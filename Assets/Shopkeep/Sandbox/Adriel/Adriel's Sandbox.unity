@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1464970536}
   MeleeSpell: {fileID: 11400000, guid: 84611b04137ab26458a628a1bbc3a868, type: 2}
+  ProjectileSpell: {fileID: 11400000, guid: 52a42f118d465e84ba727f4984069133, type: 2}
 --- !u!1 &1464970536 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6657550863804714947, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
@@ -533,7 +534,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
@@ -541,7 +550,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 104318971}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 104318971}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
@@ -549,11 +566,23 @@ PrefabInstance:
       value: MeleeCallback
       objectReference: {fileID: 0}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ProjectileCallback
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: AdrielsDebugCircus, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AdrielsDebugCircus, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286184675218676334, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -561,6 +590,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ccf12911e47c314c8c145b4e3474faa, type: 3}
+--- !u!1001 &8386055886528939033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 491114382568883298, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1484147099577927161, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
+      propertyPath: m_Name
+      value: BasicProjectilePrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3da6c65f40f00d243967e4cd5979a6b1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -570,3 +656,4 @@ SceneRoots:
   - {fileID: 1772635716}
   - {fileID: 544121782007335653}
   - {fileID: 104318970}
+  - {fileID: 8386055886528939033}
