@@ -1,23 +1,19 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Shopkeeper {
     [CreateAssetMenu(fileName = "Data", menuName = "Spells/Spell")]
     public class Spell : ScriptableObject {
 
         public float cooldownDuration;
-        public bool isCooldown = false;
+        public Coroutine cooldown;
+        public UnityEvent Cast;
 
-        //Implement the actual cast function here;
-        public virtual void Cast() {
-            //Code here
-            StartCooldown();
-        }
-
-        public virtual void StartCooldown() {
-            isCooldown = true;
-            //cooldown code
+        public IEnumerator CooldownCoroutine() {
+            yield return new WaitForSeconds(cooldownDuration);
+            cooldown = null;
         }
     }
 }
