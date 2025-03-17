@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Shopkeeper;
+using UnityEngine.InputSystem;
 
 public class AdrielsDebugCircus : MonoBehaviour
 {
+    public GameObject playerPrefab;
+    public Spell MeleeSpell;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +29,13 @@ public class AdrielsDebugCircus : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void MeleeCallback(InputAction.CallbackContext context) {
+        Debug.Log("Meleee");
+        SpellComponent SP = playerPrefab.GetComponent<SpellComponent>();
+        if (SP == null) return;
+
+        SP.CastSpell(MeleeSpell);
     }
 }
