@@ -1,9 +1,11 @@
 using UnityEngine;
 
-namespace Shopkeeper {
+namespace Shopkeeper 
+{
 
     [System.Serializable]
-    public struct Knockback {
+    public struct Knockback 
+    {
         [HideInInspector]
         public Vector3 direction; //normalized direction
         public float amount;

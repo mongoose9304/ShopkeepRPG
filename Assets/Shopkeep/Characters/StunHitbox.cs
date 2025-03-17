@@ -1,13 +1,22 @@
 using UnityEngine;
 
-namespace Shopkeeper {
-    public class StunHitbox : MonoBehaviour {
+namespace Shopkeeper 
+{
+    public class StunHitbox : MonoBehaviour 
+    {
         public Stun effect;
 
-        private void OnTriggerEnter(Collider other) {
-            CharacterStun stunComp = other.gameObject.GetComponent<CharacterStun>();
-            if (stunComp == null) { return; }
-            stunComp.ApplyStun(effect);
+        public void ApplyStun(CharacterStun c) 
+        {
+            c.ApplyStun(effect);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponentInParent<CharacterStun>())
+            {
+                ApplyStun(other.GetComponentInParent<CharacterStun>());
+            }
         }
     }
 }
