@@ -10,6 +10,8 @@ namespace Shopkeeper.Menus
         MenuManager menuManager;
         public MenuBase audioMenu;
         public MenuBase creditsMenu;
+        public MenuBase controlsMenu;
+        public MenuBase graphicsMenu;
 
         private void Start()
         {
@@ -23,10 +25,13 @@ namespace Shopkeeper.Menus
         }
         public void BtnGraphics()
         {
+            
+            MenuManager.instance.OpenMenu(graphicsMenu);
             Debug.Log("Graphics settings");
         }
         public void BtnControls()
         {
+            MenuManager.instance.OpenMenu(controlsMenu);
             Debug.Log("Controls settings");
         }
         public void BtnCredits()

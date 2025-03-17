@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 7801912344916065001}
   - component: {fileID: 3936557165192924864}
   - component: {fileID: 5692058376801175659}
-  - component: {fileID: 3113730259974146884}
+  - component: {fileID: 3387953841644077253}
   m_Layer: 5
   m_Name: ControlsMenu
   m_TagString: Untagged
@@ -358,7 +358,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3113730259974146884
+--- !u!114 &3387953841644077253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,14 +367,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 362424053029611569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36d482e1e567b443867d7ff0fa07d11, type: 3}
+  m_Script: {fileID: 11500000, guid: 7fd8c30799d4a044d8c505f24d364f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  devices_dropDown: {fileID: 0}
   settingsMenu: {fileID: 11400000, guid: e7570638c8ad70e40b3b7ae8aaefc8ef, type: 2}
-  slider_masterVolume: {fileID: 0}
-  slider_musicVolume: {fileID: 0}
-  slider_SFXVolume: {fileID: 0}
 --- !u!1 &430222560722284062
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,9 +3406,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3113730259974146884}
-        m_TargetAssemblyTypeName: Shopkeeper.Menus.AudioMenu_button, Assembly-CSharp
-        m_MethodName: BtnBack
+      - m_Target: {fileID: 3387953841644077253}
+        m_TargetAssemblyTypeName: ControlsMenu_buttons, Assembly-CSharp
+        m_MethodName: Btn_Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

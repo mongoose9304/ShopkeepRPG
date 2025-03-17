@@ -53,7 +53,6 @@ namespace Shopkeeper.Menus
             SaveAudioSettings();
             menuManager.CloseMenu();
             Application.Quit();
-            Debug.Log("Leaving the Audio Menu");
         }
 
 

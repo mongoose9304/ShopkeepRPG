@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreditsMenu_buttons : MonoBehaviour
+public class GraphicsMenu_buttons : MonoBehaviour
 {
     MenuManager menuManager;
     public MenuBase settingsMenu;
@@ -11,10 +11,10 @@ public class CreditsMenu_buttons : MonoBehaviour
     {
         menuManager = MenuManager.instance;
     }
-
-    public void Btn_Back() {
+    public void Btn_Back()
+    {
         menuManager.CloseMenu();
         Application.Quit();
-        Debug.Log("Leaving the Credits Menu");
+        Debug.Log("Leaving the Graphics Menu");
     }
 }
