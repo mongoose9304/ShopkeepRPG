@@ -20,14 +20,20 @@ namespace Shopkeeper {
             }
         }
 
-        public UnityEvent<float> OnDamageTaken;
+        public UnityEvent<FloatWrapper> OnDamageTaken;
         public UnityEvent<float> OnCurrHealthChange;
         public UnityEvent<float> OnMaxHealthChange;
 
 
         public void TakeDamage(float damage) {
-            OnDamageTaken.Invoke(damage);
-            currentHealth -= damage;
+            FloatWrapper f = new FloatWrapper(damage);
+            OnDamageTaken.Invoke(f);
+            currentHealth -= f.value;
+
+            if (currentHealth < 0.0000001) {
+                Debug.Log("Character died.");
+                Destroy(gameObject);
+            }
         }
     }
 }
