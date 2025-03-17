@@ -9,7 +9,10 @@ namespace Shopkeeper {
 
         public float cooldownDuration;
         public Coroutine cooldown;
-        public UnityEvent Cast;
+
+        public virtual void Cast() {
+           
+        }
 
         public IEnumerator CooldownCoroutine() {
             yield return new WaitForSeconds(cooldownDuration);

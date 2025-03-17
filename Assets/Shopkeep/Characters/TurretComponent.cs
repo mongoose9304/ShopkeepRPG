@@ -7,7 +7,7 @@ namespace Shopkeeper {
         Spell spell;
 
         public void Update() {
-            spell.Cast.Invoke();
+            spell.Cast();
         }
 
         public void OnDeath() { }
