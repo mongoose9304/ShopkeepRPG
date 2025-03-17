@@ -16,12 +16,11 @@ public abstract class CharacterAction : ScriptableObject
     //ACTIONS: stunned, knocked back, attack, dash, run, walk
     //They all will have their own implementation in separate files and in THIS file we will just call them.
 
-    [SerializeField]
-    private int actionPriority = 0;
+    int actionPriority = 0;
 
     public abstract bool Start();
     public abstract bool Exit();
-    public abstract IEnumerator actionDuration(GameObject character);
+    public abstract IEnumerator actionDuration();
 
     public void setActionPriority(int priorityVal) { actionPriority = priorityVal; }
     public int getActionPriority() { return actionPriority; }
@@ -43,7 +42,7 @@ public class Attack : CharacterAction{
     }
 
     //This is our Coroutine|Update
-    public override IEnumerator actionDuration(GameObject character)
+    public override IEnumerator actionDuration()
     {
         //whatever we want the attack to do
         yield return new WaitForSeconds(update);
@@ -52,6 +51,7 @@ public class Attack : CharacterAction{
 
 public class Walking : CharacterAction
 {
+    Shopkeeper.CharacterWalking walkingAction;
     Vector3 moveDirection = Vector3.zero;
     float animationLength = 1.0f;
     public override bool Start()
@@ -67,8 +67,9 @@ public class Walking : CharacterAction
     }
 
     //This is our Coroutine|Update
-    public override IEnumerator actionDuration(GameObject character)
+    public override IEnumerator actionDuration()
     {
+        //whatever we want the attack to do
         yield return new WaitForSeconds(animationLength);
     }
 }
