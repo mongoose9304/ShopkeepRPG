@@ -9,6 +9,7 @@ namespace Shopkeeper.Menus
     {
         MenuManager menuManager;
         public MenuBase audioMenu;
+        public MenuBase creditsMenu;
 
         private void Start()
         {
@@ -30,6 +31,7 @@ namespace Shopkeeper.Menus
         }
         public void BtnCredits()
         {
+            MenuManager.instance.OpenMenu(creditsMenu);
             Debug.Log("Credits");
         }
 
