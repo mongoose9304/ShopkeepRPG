@@ -26,11 +26,10 @@ namespace Shopkeeper {
 
 
         public void TakeDamage(float damage) {
-            FloatWrapper f = new FloatWrapper(damage);
-            OnDamageTaken.Invoke(f);
-            currentHealth -= f.value;
-
-            if (currentHealth < 0.0000001) {
+            OnDamageTaken.Invoke(damage);
+            currentHealth -= damage;
+            if(currentHealth < 0.0000001) 
+            {
                 Debug.Log("Character died.");
                 Destroy(gameObject);
             }
