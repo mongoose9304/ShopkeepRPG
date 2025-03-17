@@ -8,7 +8,7 @@ namespace Shopkeeper.Menus
     public class SettingsMenu_buttons : MonoBehaviour
     {
         MenuManager menuManager;
-        public MenuBase settingsMenu;
+        public MenuBase audioMenu;
 
         private void Start()
         {
@@ -17,6 +17,7 @@ namespace Shopkeeper.Menus
         }
         public void BtnAudio()
         {
+            MenuManager.instance.OpenMenu(audioMenu);
             Debug.Log("Audio settings!");
         }
         public void BtnGraphics()
@@ -35,6 +36,7 @@ namespace Shopkeeper.Menus
         public void BtnQuit()
         {
             menuManager.CloseMenu();
+            Application.Quit();
             Debug.Log("Back to menu");
         }
     }

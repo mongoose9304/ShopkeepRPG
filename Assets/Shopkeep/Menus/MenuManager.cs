@@ -9,12 +9,17 @@ public class MenuManager : MonoBehaviour
     public static MenuManager instance { get; private set; }
     //Menu stack
     public Stack<GameObject> menuStack = new Stack<GameObject>();
-
+    public GameObject topMenu;
     public Transform menuParent; //canvas
+
+    //will use it a sort order in Canvas section
+    public float stackCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        //ADD STACK COUNT FOR THESORT ORDER
+
         if (instance == null)
             instance = this;
         else
@@ -26,10 +31,7 @@ public class MenuManager : MonoBehaviour
             return;
         }
      
-        if (menuStack.Count > 0)
-        {
-            CloseMenu();
-        }
+    
         GameObject newMenu = Instantiate(menu.prefab_);
         menuStack.Push(newMenu);
     }
@@ -37,8 +39,10 @@ public class MenuManager : MonoBehaviour
     public void CloseMenu() {
         if (menuStack.Count > 0)
         {
-            GameObject topMenu = menuStack.Pop();
+            topMenu= menuStack.Pop();
             Destroy(topMenu);
+            Application.Quit();
+
         }
     }
 }
