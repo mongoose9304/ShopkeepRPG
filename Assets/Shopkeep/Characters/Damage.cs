@@ -1,6 +1,25 @@
 namespace Shopkeeper {
-    [System.Serializable]
+
+    public enum DamageType
+    {
+        NEUTRAL,
+        FIRE,
+        ICE,
+        LIGHTNING
+    }
     public struct Damage {
-        public float value;
+        public Damage(float a)
+        {
+            amount = a;
+            type = DamageType.NEUTRAL;
+        }
+
+        public Damage(float a, DamageType t)
+        {
+            amount = a;
+            type = t;
+        }
+        public float amount;
+        public DamageType type;
     }
 }

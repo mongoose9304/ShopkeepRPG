@@ -25,13 +25,24 @@ namespace Shopkeeper {
         public UnityEvent<float> OnMaxHealthChange;
 
 
-        public void TakeDamage(float damage) {
-            OnDamageTaken.Invoke(damage);
-            currentHealth -= damage;
-            if(currentHealth < 0.0000001) 
+        public void TakeDamage(Damage damage) {
+            OnDamageTaken.Invoke(damage.amount);
+            currentHealth -= damage.amount;
+
+            switch (damage.type)
             {
-                Debug.Log("Character died.");
-                Destroy(gameObject);
+                case DamageType.NEUTRAL:
+                    // Nothing
+                    break;
+                case DamageType.FIRE:
+                    gameObject.AddComponent<StatusEffect>().SetEffect(DamageType.FIRE);
+                    break;
+                case DamageType.ICE:
+                    gameObject.AddComponent<StatusEffect>().SetEffect(DamageType.ICE);
+                    break;
+                case DamageType.LIGHTNING:
+                    gameObject.AddComponent<StatusEffect>().SetEffect(DamageType.LIGHTNING);
+                    break;
             }
         }
     }
