@@ -18,7 +18,8 @@ namespace Shopkeeper
         // Start is called before the first frame update
         void Start()
         {
-            type = DamageType.NEUTRAL;
+            type = DamageType.ICE;
+            duration = 1.0f;
         }
 
         // Update is called once per frame
@@ -37,6 +38,9 @@ namespace Shopkeeper
                     gameObject.GetComponent<CharacterHealth>().TakeDamage(new Damage(0.1f));
                     break;
                 case DamageType.ICE:
+                    Stun s = new Stun();
+                    s.duration = 1.0f;
+                    gameObject.GetComponent<CharacterStun>().ApplyStun(s);
                     break;
                 case DamageType.LIGHTNING:
                     // Find nearby enemies

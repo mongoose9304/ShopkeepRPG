@@ -26,6 +26,7 @@ namespace Shopkeeper {
         public void Update() {
             timeRemaining -= Time.deltaTime;
             if (timeRemaining <= 0 && current != null) {
+                Debug.Log("Invoking end");
                 OnEnd.Invoke();
                 current = null;
             }
