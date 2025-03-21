@@ -4,20 +4,33 @@ using UnityEngine.Events;
 //Stat is in all lowercase because 'Stats' and 'Statistics' are already taken
 
 namespace Shopkeeper {
+    /// <summary>
+    /// Wraps floats for use in UnityEvents
+    /// </summary>
+    public class FloatWrapper {
+        public FloatWrapper(float v) { value = v; }
+        public float value;
+    };
+
     public struct Stat {
-        public float Value {
+        public float value {
             private get;
             set;
         }
 
-        public UnityEvent<float> modifier;
+        public UnityEvent<FloatWrapper> modifier;
         public float GetValue() {
-            float temp = Value;
+            FloatWrapper temp = new FloatWrapper(value);
             modifier.Invoke(temp);
-            return temp;
+            return temp.value;
         }
 
         //To get the original value without any modifications
-        public float GetValueRaw() { return Value; }
+        public float GetValueRaw() { return value; }
+
+        public Stat(float v) {
+            value = v;
+            modifier = new UnityEvent<FloatWrapper>();
+        }
     }
 }

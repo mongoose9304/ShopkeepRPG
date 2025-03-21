@@ -4,8 +4,10 @@ namespace Shopkeeper {
     public class StunHitbox : MonoBehaviour {
         public Stun effect;
 
-        public void ApplyStun(CharacterStun c) {
-            c.ApplyStun(effect);
+        private void OnTriggerEnter(Collider other) {
+            CharacterStun stunComp = other.gameObject.GetComponent<CharacterStun>();
+            if (stunComp == null) { return; }
+            stunComp.ApplyStun(effect);
         }
     }
 }
