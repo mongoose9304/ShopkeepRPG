@@ -8,6 +8,11 @@ namespace Shopkeeper {
             StartCoroutine(LifeCoroutine(duration));
         }
 
+        //apply spell
+        public virtual void OnTriggerEnter(Collider other)
+        {
+
+        }
         IEnumerator LifeCoroutine(float duration) {
             yield return new WaitForSeconds(duration);
             Destroy(gameObject);

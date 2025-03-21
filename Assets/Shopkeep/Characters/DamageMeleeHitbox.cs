@@ -4,19 +4,18 @@ using UnityEngine;
 
 namespace Shopkeeper
 {
-    [CreateAssetMenu(fileName = "DamageRay", menuName = "Spells/DamageRay")]
-    public class DamageRay : Ray
+    public class DamageMeleeHitbox : MeleeHitbox
     {
         [SerializeField]
         private Damage damage;
-        public override void ApplySpell(RaycastHit hit)
+        //apply spell
+        public override void OnTriggerEnter(Collider other)
         {
-            CharacterHealth health = hit.rigidbody.GetComponent<CharacterHealth>();
+            CharacterHealth health = other.GetComponent<CharacterHealth>();
             if (health)
             {
                 health.TakeDamage(damage);
             }
-
         }
     }
 }

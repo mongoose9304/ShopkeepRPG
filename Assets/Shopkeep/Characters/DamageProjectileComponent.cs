@@ -14,7 +14,7 @@ namespace Shopkeeper
             CharacterHealth health = other.GetComponent<CharacterHealth>();
             if (health)
             {
-                health.TakeDamage(damage.value);
+                health.TakeDamage(damage);
             }
         }
     }
