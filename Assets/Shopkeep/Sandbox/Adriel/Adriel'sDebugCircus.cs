@@ -32,6 +32,12 @@ public class AdrielsDebugCircus : MonoBehaviour
         
     }
 
+
+    public void WalkCallback(InputAction.CallbackContext context) {
+        Debug.Log(context.ReadValue<Vector2>());
+    }
+
+
     public void MeleeCallback(InputAction.CallbackContext context) {
         Debug.Log("Meleee");
         SpellComponent SP = playerPrefab.GetComponent<SpellComponent>();
