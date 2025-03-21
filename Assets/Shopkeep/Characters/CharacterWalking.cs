@@ -17,7 +17,7 @@ namespace Shopkeeper {
         void Update() {
             //Make the player face the directions
             //We can make it look nicer with interpolation
-            transform.rotation = Quaternion.LookRotation(facingDirection.normalized, Vector3.up);
+            //transform.rotation = Quaternion.LookRotation(facingDirection.normalized, Vector3.up);
 
             if (rbComponent != null) {
                 rbComponent.velocity = moveDirection * moveSpeed;
