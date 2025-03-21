@@ -20,7 +20,7 @@ namespace Shopkeeper {
         Coroutine currentActionCoroutine;
 
         public void ChangeAction(CharacterAction newAction) {
-            if(newAction == currentAction) { return; }
+            //if(newAction == currentAction) { return; }
             if (currentAction != null) {
                 if (newAction.actionPriority < currentAction.actionPriority) {
                     return;
