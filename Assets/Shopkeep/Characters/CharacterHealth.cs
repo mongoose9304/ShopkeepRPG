@@ -3,20 +3,25 @@ using UnityEngine.Events;
 
 namespace Shopkeeper {
     public class CharacterHealth : MonoBehaviour {
-        public float currentHealth {
-            get { return currentHealth; }
-            set {
-                currentHealth = value;
-                OnCurrHealthChange.Invoke(currentHealth);
+        [SerializeField]
+        private float _currentHealth;
+        [SerializeField]
+        private float _maxHealth;
+        public float currentHealth
+        {
+            get { return _currentHealth; }
+            set
+            {
+                _currentHealth = value;
+                OnCurrHealthChange?.Invoke(_currentHealth);
             }
-
         }
 
         public float maxHealth {
-            get { return currentHealth; }
+            get { return _maxHealth; }
             set {
-                currentHealth = value;
-                OnMaxHealthChange.Invoke(currentHealth);
+                _maxHealth = value;
+                OnMaxHealthChange.Invoke(_maxHealth);
             }
         }
 

@@ -12,8 +12,10 @@ namespace Shopkeeper {
             rbComponent = GetComponent<Rigidbody>();
         }
 
-        private void OnTriggerEnter(Collider other) {
-            
+        //apply spell
+        public virtual void OnTriggerEnter(Collider other)
+        {
+
         }
 
         public void Init(Vector3 dir) {
