@@ -9,44 +9,48 @@ public class EnemySlime : Enemy
     [SerializeField]
     private Spell spell;
 
+    [SerializeField]
+    CapsuleCollider trigger;
+
     private void Start()
     {
         spellComponent = gameObject.GetComponent<SpellComponent>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        trigger.enabled = false;
     }
 
     private void Update()
     {
-        if (!isAttacking && Time.time - lastAttackTime > cooldown && Vector3.Distance(transform.position, playerTransform.position) < 2.5f)
+        if (Time.time - lastAttackTime > cooldown)
         {
-            Attack();
-        }
+            enemyState = EnemyState.Move;
+            Move();
 
-        Move();
-        
+            //need to turn towards player before attack
+            if (enemyState != EnemyState.Attack && Vector3.Distance(transform.position, target.position) < 2.5f)
+            {
+                Attack();
+            }
+        }    
     }
 
     protected override void Move()
     {
-        if (playerTransform != null)
+        if (target != null)
         {
-            agent.SetDestination(playerTransform.position);
+            agent.SetDestination(target.position);
         }
     }
 
     protected override void Attack() 
     {
-        isAttacking = true;
-        //yield return new WaitForSeconds(0.35f);
         StartCoroutine(CastSpell());
-
-        //yield return new WaitForSeconds(lungeDuration);
-
-        isAttacking = false;
-        lastAttackTime = Time.time;
     }
 
     private IEnumerator CastSpell()
     {
+        enemyState = EnemyState.Attack;
+        trigger.enabled = true;
         agent.isStopped = true;
         agent.updatePosition = false;
         rb.isKinematic = false;
@@ -62,7 +66,10 @@ public class EnemySlime : Enemy
         agent.Warp(transform.position); 
         agent.isStopped = false;
         agent.updatePosition = true;
-        
+
+        enemyState = EnemyState.Idle;
+        trigger.enabled = false;
+        lastAttackTime = Time.time;
     }
 
 }

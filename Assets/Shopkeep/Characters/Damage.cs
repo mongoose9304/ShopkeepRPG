@@ -1,3 +1,5 @@
+using System;
+
 namespace Shopkeeper {
 
     public enum DamageType
@@ -7,7 +9,8 @@ namespace Shopkeeper {
         ICE,
         LIGHTNING
     }
-    public struct Damage {
+    [Serializable]
+    public class Damage {
         public Damage(float a)
         {
             amount = a;

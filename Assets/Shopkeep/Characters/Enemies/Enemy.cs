@@ -14,10 +14,9 @@ public abstract class Enemy : MonoBehaviour
     protected NavMeshAgent agent;
     protected Rigidbody rb;
     protected CharacterHealth health;
-    public Transform playerTransform;
-    protected EnemyState enemyState;
+    public Transform target;
+    public EnemyState enemyState;
 
-    protected bool isAttacking = false;
     protected float cooldown = 2f;
     protected float lastAttackTime = -999f;
 
