@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ namespace Shopkeeper
     {
         private float duration;
         private DamageType type;
+
+        // NO idea where this will come from but idk how else to run lightning
+        [SerializeField]
+        private List<GameObject> enemies;
 
         public void SetEffect(DamageType effect)
         {
@@ -43,6 +48,39 @@ namespace Shopkeeper
                     gameObject.GetComponent<CharacterStun>().ApplyStun(s);
                     break;
                 case DamageType.LIGHTNING:
+
+                    int myTeam = 0;
+                    
+                    if (gameObject.GetComponent<CharacterTeam>() != null)
+                    {
+                        myTeam = gameObject.GetComponent<CharacterTeam>().GetTeam();
+                    }
+
+                    GameObject nearestEnemy = null;
+                    float nearestEnemyDistance = float.MaxValue;
+
+                    GameObject[] objects = GameObject.FindObjectsOfType<GameObject>();
+                    
+                    for (int i = 0; i > objects.Count(); ++i)
+                    {
+                        if (objects.ElementAt(i).GetComponent<CharacterTeam>() != null)
+                        {
+                            int team = objects.ElementAt(i).GetComponent<CharacterTeam>().GetTeam();
+
+                            if (team == myTeam)
+                            {
+                                continue;
+                            }
+
+                            float dist = Vector3.Distance(objects.ElementAt(i).transform.position, gameObject.transform.position);
+                            if (dist < nearestEnemyDistance)
+                            {
+                                nearestEnemyDistance = dist;
+                                nearestEnemy = objects.ElementAt(i);
+                            }
+                        }
+                    }
+
                     // Find nearby enemies
                     // Check if they're close enough for lightning to chain to them
                     // Check if we still have chains available
