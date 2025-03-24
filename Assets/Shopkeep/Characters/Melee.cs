@@ -5,6 +5,8 @@ namespace Shopkeeper {
 
         public float meleeDuration;
         public GameObject meleePrefab;
+        [SerializeField]
+        public Damage damage;
 
         public override void Cast(GameObject caster) {
            if(meleePrefab == null) { return; }
