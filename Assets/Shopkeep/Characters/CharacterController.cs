@@ -20,14 +20,13 @@ namespace Shopkeeper {
         Coroutine currentActionCoroutine;
 
         public void ChangeAction(CharacterAction newAction) {
-            //if(newAction == currentAction) { return; }
             if (currentAction != null) {
                 if (newAction.actionPriority < currentAction.actionPriority) {
                     return;
                 }
 
                 if (!currentAction.Exit(gameObject)) { return; }
-                StopCoroutine(currentActionCoroutine);
+                if (currentActionCoroutine != null) { StopCoroutine(currentActionCoroutine); }
             }
 
             currentAction = newAction;
