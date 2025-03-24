@@ -1,35 +1,35 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
-
-namespace Shopkeeper {
-    public class CharacterStun : MonoBehaviour {
-        float timeRemaining;
-        Stun current;
+namespace Shopkeeper 
+{
+    public class CharacterStun : MonoBehaviour 
+    {
+        private float timeRemaining = 0;
+        bool stunned = false;
 
         public UnityEvent OnStart;
         public UnityEvent OnEnd;
-
-        public void ApplyStun(Stun s) {
-            //Stun code
-            if(current != null) { return; }
-            current = s;
+        public void ApplyStun(Stun s) 
+        {
             timeRemaining = s.duration;
-            Stun();
+            stunned = true;
             OnStart.Invoke();
         }
 
-        void Stun() {
-            //stun code
-        }
-
-        public void Update() {
-            timeRemaining -= Time.deltaTime;
-            if (timeRemaining <= 0 && current != null) {
-                Debug.Log("Invoking end");
-                OnEnd.Invoke();
-                current = null;
+        public void Update() 
+        {
+            if (stunned) 
+            {
+                timeRemaining -= Time.deltaTime;
+                if (timeRemaining < 0.000001)
+                {
+                    OnEnd.Invoke();
+                    stunned = false;
+                }
             }
+            
         }
     }
 }

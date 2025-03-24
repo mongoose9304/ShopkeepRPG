@@ -66,7 +66,6 @@ public class CameraTargetRectangle : MonoBehaviour
     public CameraRectangle GetTargetRectangle()
     {
         CameraTarget[] cameraTargets = FindObjectsOfType<CameraTarget>();
-        Debug.Log("Found " + cameraTargets.Length + " targets");
         if (cameraTargets.Length >= 2)
         {
             // Need at least 2 targets for the rectangle method to work. Will handle the special case of 1 in the else
