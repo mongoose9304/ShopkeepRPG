@@ -11,6 +11,9 @@ namespace Shopkeeper
         private float duration;
         private DamageType type;
 
+        [SerializeField]
+        private float maxLightningChainDistance = 30.0f;
+
         // NO idea where this will come from but idk how else to run lightning
         [SerializeField]
         private List<GameObject> enemies;
@@ -73,11 +76,33 @@ namespace Shopkeeper
                             }
 
                             float dist = Vector3.Distance(objects.ElementAt(i).transform.position, gameObject.transform.position);
-                            if (dist < nearestEnemyDistance)
+                            if (objects.ElementAt(i).GetComponent<CharacterTeam>().isLightninged == false)
                             {
-                                nearestEnemyDistance = dist;
-                                nearestEnemy = objects.ElementAt(i);
+                                if (dist < nearestEnemyDistance)
+                                {
+                                    nearestEnemyDistance = dist;
+                                    nearestEnemy = objects.ElementAt(i);
+                                }
                             }
+                        }
+                    }
+
+                    // We've found the nearest enemy
+                    if (nearestEnemy != null)
+                    {
+                        float dist = Vector3.Distance(nearestEnemy.transform.position, gameObject.transform.position);
+                        if (dist <= maxLightningChainDistance && nearestEnemy.GetComponent<CharacterTeam>().isLightninged == true)
+                        {
+                            nearestEnemy.GetComponent<CharacterHealth>().TakeDamage(new Damage(5.0f, DamageType.NEUTRAL));
+                        }
+                    }
+
+                    // Loop over all objects and said isLightninged back to false
+                    for (int i = 0; i > objects.Count(); ++i)
+                    {
+                        if (objects.ElementAt(i).GetComponent<CharacterTeam>() != null)
+                        {
+                            objects.ElementAt(i).GetComponent<CharacterTeam>().isLightninged = false;
                         }
                     }
 

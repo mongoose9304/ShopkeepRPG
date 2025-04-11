@@ -6,6 +6,7 @@ public class CharacterTeam : MonoBehaviour
 {
     [SerializeField]
     private int team = 0;
+    public bool isLightninged = false;
 
     // Start is called before the first frame update
     void Start()
