@@ -2,8 +2,9 @@ using Shopkeeper;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemySlime : Enemy
+public class EnemyFlying: Enemy
 {
     private SpellComponent spellComponent;
     [SerializeField]
@@ -11,6 +12,14 @@ public class EnemySlime : Enemy
 
     [SerializeField]
     CapsuleCollider trigger;
+
+    [SerializeField] private float fleeChance = 0.2f; // 20% chance to flee on cooldown
+    [SerializeField] private float fleeDuration = 0.5f;
+    private bool isFleeing = false;
+    private float fleeTimer = 0f;
+
+    [SerializeField] private float fleeCooldown = 5f;
+    private float lastFleeTime = -Mathf.Infinity;
 
     private void Start()
     {
@@ -21,6 +30,20 @@ public class EnemySlime : Enemy
 
     private void Update()
     {
+        if (isFleeing)
+        {
+            fleeTimer -= Time.deltaTime;
+            FleeFromPlayer();
+
+            if (fleeTimer <= 0f)
+            {
+                isFleeing = false;
+                enemyState = EnemyState.Idle;
+            }
+
+            return;
+        }
+
         if (Time.time - lastAttackTime > cooldown)
         {
             enemyState = EnemyState.Move;
@@ -30,7 +53,29 @@ public class EnemySlime : Enemy
             {
                 Attack();
             }
-        }    
+        }
+    }
+
+    private void StartFleeing()
+    {
+        isFleeing = true;
+        fleeTimer = fleeDuration;
+        lastFleeTime = Time.time;
+        enemyState = EnemyState.Move;
+    }
+
+    private void FleeFromPlayer()
+    {
+        if (target == null) return;
+
+        Vector3 dirAway = (transform.position - target.position).normalized;
+        Vector3 fleeTarget = transform.position + dirAway * 5f;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(fleeTarget, out hit, 5f, NavMesh.AllAreas))
+        {
+            agent.SetDestination(hit.position);
+        }
     }
 
     protected override void Move()
@@ -41,7 +86,7 @@ public class EnemySlime : Enemy
         }
     }
 
-    protected override void Attack() 
+    protected override void Attack()
     {
         StartCoroutine(CastSpell());
     }
@@ -54,26 +99,26 @@ public class EnemySlime : Enemy
         agent.updatePosition = false;
         rb.isKinematic = false;
 
-        //this rotates instantly, can be changed later
         Vector3 dir = (target.position - transform.position).normalized;
         dir.y = 0;
         transform.forward = dir;
 
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.15f);
 
         spellComponent.CastSpell(spell);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
-        agent.Warp(transform.position); 
+        agent.Warp(transform.position);
         agent.isStopped = false;
         agent.updatePosition = true;
 
-        enemyState = EnemyState.Idle;
         trigger.enabled = false;
         lastAttackTime = Time.time;
+
+        StartFleeing();
     }
 
 }

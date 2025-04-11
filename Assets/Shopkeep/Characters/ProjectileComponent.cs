@@ -15,7 +15,7 @@ namespace Shopkeeper {
         //apply spell
         public virtual void OnTriggerEnter(Collider other)
         {
-
+            Debug.Log(other.name);
         }
 
         public void Init(Vector3 dir) {
