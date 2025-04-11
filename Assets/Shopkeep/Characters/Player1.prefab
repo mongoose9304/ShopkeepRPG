@@ -156,7 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8118debbada6340ae61e3dc69bd9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walking: {fileID: 11400000, guid: 54ddd3442fc91d24cb5a3e90699dc006, type: 2}
+  walking: {fileID: 11400000, guid: 1189a40fea4818b4792f9b00a5914cef, type: 2}
+  meleeAction: {fileID: 11400000, guid: c8342760ed3165948b8cbaec75dc07fe, type: 2}
+  spell1Action: {fileID: 11400000, guid: 291be6d9fe4307644a4641e9df278681, type: 2}
+  spell2Action: {fileID: 11400000, guid: 291be6d9fe4307644a4641e9df278681, type: 2}
+  melee: {fileID: 11400000, guid: 84611b04137ab26458a628a1bbc3a868, type: 2}
+  spell1: {fileID: 11400000, guid: 52a42f118d465e84ba727f4984069133, type: 2}
+  spell2: {fileID: 11400000, guid: 26def8fb8f173f04c8c0287473f10c5f, type: 2}
 --- !u!114 &7286184675218676334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,13 +205,57 @@ MonoBehaviour:
     m_ActionId: 4076f3db-ecb8-41e3-b881-7c890f9e0282
     m_ActionName: player/move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7033221598977203845}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Melee
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: dfd37602-1b64-445b-a77d-cc3420f48089
     m_ActionName: player/melee[/Keyboard/h,/Keyboard/1]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 12c91df8-4121-412c-8183-75d9d6c33c00
     m_ActionName: player/dash[/Keyboard/j,/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7033221598977203845}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Spell1Action
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0b5e9840-14c5-4ecf-a875-e3f9f2d97aa0
+    m_ActionName: player/spell1
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7033221598977203845}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Spell2Action
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 880ea029-ae09-4fff-9fcb-3c74b4820b6f
+    m_ActionName: player/spell2
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: player
@@ -280,10 +330,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1fbb406d25d7a4f94abe5049db555c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnKnockback:
+  OnStart:
     m_PersistentCalls:
       m_Calls: []
-  OnKnockbackEnd:
+  OnEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4094756319032191390
@@ -298,6 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d357b05b3cbc64f96cd7e301505c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentHealth: 0
+  _maxHealth: 0
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls: []
