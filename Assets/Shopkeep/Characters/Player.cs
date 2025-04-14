@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
     }
 
     public void Spell2Action(InputAction.CallbackContext context) {
-        UseSpell spellAction = (UseSpell)spell1Action;
+        UseSpell spellAction = (UseSpell)spell2Action;
         if (spellAction == null) { return; }
         spellAction.spell = spell2;
         spellAction.inputContext = context;

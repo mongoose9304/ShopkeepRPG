@@ -156,7 +156,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c8118debbada6340ae61e3dc69bd9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walking: {fileID: 11400000, guid: 54ddd3442fc91d24cb5a3e90699dc006, type: 2}
+  walking: {fileID: 11400000, guid: 3c93ffa732b9c214c8c84e327b08fb60, type: 2}
+  meleeAction: {fileID: 0}
+  spell1Action: {fileID: 0}
+  spell2Action: {fileID: 0}
+  melee: {fileID: 0}
+  spell1: {fileID: 0}
+  spell2: {fileID: 0}
 --- !u!114 &7286184675218676334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +200,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 12c91df8-4121-412c-8183-75d9d6c33c00
     m_ActionName: player/dash[/Keyboard/j,/Keyboard/2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0b5e9840-14c5-4ecf-a875-e3f9f2d97aa0
+    m_ActionName: player/spell1[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 880ea029-ae09-4fff-9fcb-3c74b4820b6f
+    m_ActionName: player/spell2[/Keyboard/l]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: player
@@ -268,10 +282,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f1fbb406d25d7a4f94abe5049db555c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnKnockback:
+  OnStart:
     m_PersistentCalls:
       m_Calls: []
-  OnKnockbackEnd:
+  OnEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &4094756319032191390
@@ -286,6 +300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d357b05b3cbc64f96cd7e301505c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentHealth: 0
+  _maxHealth: 0
   OnDamageTaken:
     m_PersistentCalls:
       m_Calls: []
